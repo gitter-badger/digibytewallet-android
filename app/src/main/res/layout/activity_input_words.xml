@@ -3,6 +3,8 @@
 
     <data>
         <variable name="description" type="String"/>
+        <variable name="callback"
+                  type="io.digibyte.presenter.activities.callbacks.ActivityInputWordsCallback"/>
     </data>
 
     <io.digibyte.presenter.customviews.BRLinearLayout
@@ -25,6 +27,15 @@
 
         <View android:layout_width="match_parent" android:layout_height="0dp"
               android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/continue_button"
+            style="@style/ButtonTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:onClick="@{() -> callback.onContinueClick()}"
+            android:text="@string/RecoverWallet.next"/>
 
     </io.digibyte.presenter.customviews.BRLinearLayout>
 

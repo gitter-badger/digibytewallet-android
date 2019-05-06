@@ -2,8 +2,6 @@ package io.digibyte.presenter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -12,6 +10,7 @@ import com.noahseidman.digiid.PhraseRestore;
 
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityInputWordsBinding;
+import io.digibyte.presenter.activities.callbacks.ActivityInputWordsCallback;
 import io.digibyte.presenter.activities.intro.IntroActivity;
 import io.digibyte.presenter.activities.util.BRActivity;
 import io.digibyte.tools.animation.BRDialog;
@@ -22,8 +21,16 @@ import io.digibyte.tools.security.SmartValidator;
 import io.digibyte.tools.util.Utils;
 import io.digibyte.wallet.BRWalletManager;
 
-public class InputWordsActivity extends BRActivity {
+public class InputWordsActivity extends BRActivity implements ActivityInputWordsCallback {
     private static final String INPUT_WORDS_TYPE = "InputWordsActivity:Type";
+
+    @Override
+    public void onContinueClick() {
+        PhraseRestore.Companion.show(
+                InputWordsActivity.this,
+                this::processPhrase,
+                InputWordsActivity.this::finish);
+    }
 
     public enum Type {
         WIPE, RESET_PIN, RESTORE
@@ -40,6 +47,7 @@ public class InputWordsActivity extends BRActivity {
         super.onCreate(savedInstanceState);
         ActivityInputWordsBinding binding = DataBindingUtil.setContentView(this,
                 R.layout.activity_input_words);
+        binding.setCallback(this);
         setupToolbar();
         switch(getType()) {
             case WIPE:
@@ -55,13 +63,6 @@ public class InputWordsActivity extends BRActivity {
                 binding.setDescription(getString(R.string.RecoverWallet_subheader_reset_pin));
                 break;
         }
-        new Handler(Looper.getMainLooper()).postDelayed(
-                () -> PhraseRestore.Companion.show(
-                        InputWordsActivity.this,
-                        this::processPhrase,
-                        InputWordsActivity.this::finish),
-                1000
-        );
     }
 
     private Type getType() {
