@@ -40,6 +40,6 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="16dp"
-        app:srcCompat="@drawable/ic_check_mark_grey"/>
+        android:src="@drawable/ic_check_mark_grey"/>
 
 </RelativeLayout>

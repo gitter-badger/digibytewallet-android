@@ -113,7 +113,7 @@
                                                                       android:layout_marginTop="4dp"
                                                                       android:layout_height="24dp"
                                                                       android:id="@+id/sync_button"
-                                                                      app:srcCompat="@drawable/sync_alt"/>
+                                                                      android:src="@drawable/sync_alt"/>
 
                     </LinearLayout>
 
@@ -183,7 +183,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:foreground="?android:attr/selectableItemBackground"
-                    app:srcCompat="@drawable/ic_main_action"/>
+                    android:src="@drawable/ic_main_action"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/digiid_button"
@@ -194,7 +194,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_toEndOf="@id/main_action"
                     android:foreground="?android:attr/selectableItemBackground"
-                    app:srcCompat="@drawable/ic_digiid"/>
+                    android:src="@drawable/ic_digiid"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/qr_button"
@@ -203,7 +203,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
                     android:foreground="?android:attr/selectableItemBackground"
-                    app:srcCompat="@drawable/ic_qrcode"/>
+                    android:src="@drawable/ic_qrcode"/>
 
             </io.digibyte.presenter.customviews.BRRelativeLayout>
         </FrameLayout>
@@ -242,7 +242,7 @@
                             android:layout_height="65dp"
                             android:layout_marginEnd="22dp"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/shield"/>
+                            android:src="@drawable/shield"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -270,7 +270,7 @@
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_marginEnd="22dp"
-                            app:srcCompat="@drawable/settings"/>
+                            android:src="@drawable/settings"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -297,7 +297,7 @@
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_marginEnd="22dp"
-                            app:srcCompat="@drawable/locked"/>
+                            android:src="@drawable/locked"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -323,7 +323,7 @@
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="50dp"
-                    app:srcCompat="@drawable/digi_byte_symbol"/>
+                    android:src="@drawable/digi_byte_symbol"/>
 
             </FrameLayout>
 

@@ -50,7 +50,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/bread_margin"
                     android:layout_marginStart="12dp"
-                    app:srcCompat="@drawable/ic_close_black_24dp"
+                    android:src="@drawable/ic_close_black_24dp"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:onClick="@{() -> callback.closeClick()}"/>
 
@@ -198,7 +198,7 @@
                                 android:foreground="?android:attr/selectableItemBackground"
                                 android:onClick="@{() -> callback.shareEmailClick()}"
                                 android:padding="6dp"
-                                app:srcCompat="@drawable/receive_share_qr"/>
+                                android:src="@drawable/receive_share_qr"/>
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/share_text"
@@ -208,7 +208,7 @@
                                 android:foreground="?android:attr/selectableItemBackground"
                                 android:onClick="@{() -> callback.shareTextClick()}"
                                 android:padding="6dp"
-                                app:srcCompat="@drawable/share_sms"/>
+                                android:src="@drawable/share_sms"/>
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/share_copy"
@@ -218,7 +218,7 @@
                                 android:foreground="?android:attr/selectableItemBackground"
                                 android:onClick="@{() -> callback.shareCopyClick()}"
                                 android:padding="6dp"
-                                app:srcCompat="@drawable/share_copy"/>
+                                android:src="@drawable/share_copy"/>
 
                         </LinearLayout>
                     </ViewAnimator>

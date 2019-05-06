@@ -31,14 +31,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:elevation="8dp"
-                app:srcCompat="@drawable/ic_paper_phrase"/>
+                android:src="@drawable/ic_paper_phrase"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
-                app:srcCompat="@drawable/ic_pen"
+                android:src="@drawable/ic_pen"
                 android:elevation="8dp"/>
 
         </FrameLayout>

@@ -23,7 +23,7 @@
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:elevation="8dp"
-                app:srcCompat="@drawable/ic_fingerprint_large"/>
+                android:src="@drawable/ic_fingerprint_large"/>
 
         </LinearLayout>
 

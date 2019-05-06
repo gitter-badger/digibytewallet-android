@@ -30,6 +30,7 @@
                           android:background="@null"
                           android:layout_height="wrap_content" android:textSize="14sp"
                           android:textColor="@color/green_text"
+                          android:textColorHint="#ffffff"
                           android:paddingStart="6dp" android:paddingTop="6dp"
                           android:paddingEnd="6dp"/>
                 <TextView android:padding="6dp"
@@ -44,7 +45,7 @@
                 android:layout_marginTop="16dp"
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="400dp"
                 app:anchor="start"
                 app:scrollSpeed="2000"
                 app:orientation="horizontal"/>

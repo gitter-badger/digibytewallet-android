@@ -2,20 +2,22 @@ package com.noahseidman.digiid
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import io.digibyte.R
 import io.digibyte.databinding.FragmentPhraseRestoreBinding
 import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter
 import io.digibyte.presenter.fragments.NotificationFragment
 import io.digibyte.presenter.fragments.interfaces.DialogCompleteCallback
 import io.digibyte.presenter.fragments.interfaces.PhraseCallback
+import io.digibyte.presenter.fragments.interfaces.PhraseCompleteCallback
 import io.digibyte.presenter.fragments.models.LetterColumnViewModel
 import io.digibyte.presenter.fragments.models.PhraseViewModel
+import io.digibyte.tools.animation.BRDialog
 import io.digibyte.tools.util.SeedUtil
 import io.digibyte.wallet.BRWalletManager
 import kotlinx.android.synthetic.main.fragment_phrase_restore.*
@@ -25,6 +27,7 @@ class PhraseRestore : NotificationFragment(), PhraseCallback, TextWatcher, View.
     private lateinit var binding: FragmentPhraseRestoreBinding
     private val letters = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
     private lateinit var words: List<String>
+    private var phraseCompleteCallback: PhraseCompleteCallback? = null
 
     @SuppressLint("SetTextI18n")
     override fun onClick(string: String?) {
@@ -43,9 +46,10 @@ class PhraseRestore : NotificationFragment(), PhraseCallback, TextWatcher, View.
     }
 
     companion object {
-        fun show(activity: AppCompatActivity, completion: DialogCompleteCallback?) {
+        fun show(activity: AppCompatActivity, phraseCallback: PhraseCompleteCallback?, dialogCompleteCallback: DialogCompleteCallback) {
             val phraseRestore = PhraseRestore()
-            phraseRestore.setCompletion(completion)
+            phraseRestore.setPhraseCompleteCallback(phraseCallback)
+            phraseRestore.setCompletion(dialogCompleteCallback)
             val transaction = activity.supportFragmentManager.beginTransaction()
             transaction.setCustomAnimations(
                     R.animator.from_bottom, R.animator.to_bottom,
@@ -57,10 +61,9 @@ class PhraseRestore : NotificationFragment(), PhraseCallback, TextWatcher, View.
         }
     }
 
-    override fun autoDismiss(): Boolean {
-        return false
+    fun setPhraseCompleteCallback(phraseCompleteCallback: PhraseCompleteCallback?) {
+        this.phraseCompleteCallback = phraseCompleteCallback;
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentPhraseRestoreBinding.inflate(inflater)
@@ -89,7 +92,7 @@ class PhraseRestore : NotificationFragment(), PhraseCallback, TextWatcher, View.
 
         background = binding.background
         binding.background.setOnClickListener(this)
-        return binding.root;
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -118,9 +121,14 @@ class PhraseRestore : NotificationFragment(), PhraseCallback, TextWatcher, View.
 
     fun processSeed(s: String) {
         if (BRWalletManager.validateRecoveryPhrase(words.toTypedArray(), s.trim()) && getSeedLength() == 24) {
-
+            phraseCompleteCallback?.phrase(s)
         } else if (getSeedLength() == 24) {
-
+            context?.let {
+                BRDialog.showCustomDialog(it, "",
+                        getString(R.string.RecoverWallet_invalid),
+                        getString(R.string.AccessibilityLabels_close), null,
+                        { brDialogView -> brDialogView.dismissWithAnimation() }, null, null, 0)
+            }
         }
     }
 }

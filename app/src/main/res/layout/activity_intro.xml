@@ -22,7 +22,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/intro_top_left"/>
+            android:src="@drawable/intro_top_left"/>
 
         <ImageView
             android:id="@+id/introBottomRight"
@@ -31,7 +31,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/intro_bottom_right"/>
+            android:src="@drawable/intro_bottom_right"/>
 
         <LinearLayout
             android:id="@+id/bottom_container"
@@ -83,8 +83,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="48dp"
             android:layout_marginTop="125dp"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/intro_dgb"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/intro_dgb"/>
 
     </io.digibyte.presenter.customviews.BRRelativeLayout>
 

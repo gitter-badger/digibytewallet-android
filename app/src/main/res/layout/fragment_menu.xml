@@ -44,7 +44,7 @@
                 android:layout_marginTop="0dp"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:onClick="@{() -> callback.onCancelClick()}"
-                app:srcCompat="@drawable/menu_close"/>
+                android:src="@drawable/menu_close"/>
 
         </LinearLayout>
 

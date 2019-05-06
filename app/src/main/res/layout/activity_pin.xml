@@ -44,7 +44,7 @@
                 android:scaleType="fitCenter"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:onClick="@{() -> callback.onFingerprintClick()}"
-                app:srcCompat="@drawable/ic_digiid"/>
+                android:src="@drawable/ic_digiid"/>
 
         </LinearLayout>
 
