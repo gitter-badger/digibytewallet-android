@@ -58,7 +58,7 @@
         android:launchMode="singleTask"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:label, android:icon, android:theme, android:allowBackup, android:appComponentFactory">
+        tools:replace="android:label, android:icon, android:theme, android:allowBackup">
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -222,7 +222,7 @@
                   android:theme="@style/Theme.AppCompat.Translucent"/>
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="io.digibyte.fileprovider"
             android:grantUriPermissions="true">
             <meta-data

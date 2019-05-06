@@ -1,9 +1,9 @@
 package io.digibyte.presenter.fragments.models;
 
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class FragmentSignalViewModel extends BaseObservable {
 

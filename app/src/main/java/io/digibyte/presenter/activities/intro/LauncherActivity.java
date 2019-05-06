@@ -1,10 +1,9 @@
 package io.digibyte.presenter.activities.intro;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-import io.digibyte.R;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.security.PostAuth;
 import io.digibyte.wallet.BRWalletManager;

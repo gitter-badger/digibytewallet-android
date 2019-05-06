@@ -2,7 +2,7 @@ package io.digibyte.presenter.activities.settings;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -19,7 +19,6 @@ import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityFingerprintBinding;
 import io.digibyte.presenter.activities.util.BRActivity;
-import io.digibyte.presenter.interfaces.BRAuthCompletion;
 import io.digibyte.tools.animation.BRDialog;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.security.AuthManager;

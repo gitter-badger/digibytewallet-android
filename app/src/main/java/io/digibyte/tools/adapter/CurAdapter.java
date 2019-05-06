@@ -2,16 +2,14 @@ package io.digibyte.tools.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import io.digibyte.R;
 import io.digibyte.presenter.customviews.BRButton;
 import io.digibyte.tools.util.BRCurrency;
-import io.digibyte.tools.util.BRExchange;
 
 import java.util.ArrayList;
 import java.util.List;

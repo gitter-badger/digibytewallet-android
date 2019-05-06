@@ -9,11 +9,11 @@
                  android:layout_marginStart="12dp"
                  android:layout_marginEnd="12dp">
 
-        <android.support.v7.widget.RecyclerView android:id="@+id/recycler"
-                                                android:layout_width="match_parent"
-                                                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                                                app:adapter="@{data.adapter}"
-                                                android:layout_height="match_parent"/>
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/recycler"
+                                                   android:layout_width="match_parent"
+                                                   app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                                   app:adapter="@{data.adapter}"
+                                                   android:layout_height="match_parent"/>
 
         <com.trendyol.bubblescrollbarlib.BubbleScrollBar
             android:id="@+id/bubbleScrollBar"
