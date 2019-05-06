@@ -1,6 +1,5 @@
 package io.digibyte.presenter.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -94,7 +93,7 @@ public class PaperKeyActivity extends BRActivity {
                     "Paper Key error, please contact support at breadwallet.com: "
                             + wordArray.size()), true);
         } else {
-            if (wordArray.size() != 12) {
+            if (wordArray.size() != 24) {
                 BRReportsManager.reportBug(new IllegalArgumentException(
                         "Wrong number of paper keys: " + wordArray.size() + ", lang: "
                                 + Locale.getDefault().getLanguage()), true);
@@ -117,7 +116,7 @@ public class PaperKeyActivity extends BRActivity {
         int currentIndex = binding.phraseWordsPager.getCurrentItem();
         if (isNext) {
             setButtonEnabled(true);
-            if (currentIndex >= 11) {
+            if (currentIndex >= 23) {
                 PostAuth.instance.onPhraseProveAuth(this, false);
             } else {
                 binding.phraseWordsPager.setCurrentItem(currentIndex + 1);

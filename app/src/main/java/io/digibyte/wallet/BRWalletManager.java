@@ -155,13 +155,13 @@ public class BRWalletManager {
         }
         list = Bip39Reader.bip39List(ctx, languageCode);
         words = list.toArray(new String[list.size()]);
-        final byte[] randomSeed = sr.generateSeed(16);
+        final byte[] randomSeed = sr.generateSeed(32);
         if (words.length != 2048) {
             BRReportsManager.reportBug(
                     new IllegalArgumentException("the list is wrong, size: " + words.length), true);
             return false;
         }
-        if (randomSeed.length != 16) {
+        if (randomSeed.length != 32) {
             throw new NullPointerException(
                     "failed to create the seed, seed length is not 128: " + randomSeed.length);
         }
@@ -171,13 +171,13 @@ public class BRWalletManager {
             return false;
         }
         String[] splitPhrase = new String(strPhrase).split(" ");
-        if (splitPhrase.length != 12) {
+        if (splitPhrase.length != 24) {
             BRReportsManager.reportBug(new NullPointerException(
-                    "phrase does not have 12 words:" + splitPhrase.length + ", lang: "
+                    "phrase does not have 24 words:" + splitPhrase.length + ", lang: "
                             + languageCode), true);
             return false;
         }
-        boolean success = false;
+        boolean success;
         try {
             success = BRKeyStore.putPhrase(strPhrase, ctx,
                     BRConstants.PUT_PHRASE_NEW_WALLET_REQUEST_CODE);
@@ -806,7 +806,7 @@ public class BRWalletManager {
 
     public native void walletFreeEverything();
 
-    public native boolean validateRecoveryPhrase(String[] words, String phrase);
+    public native static boolean validateRecoveryPhrase(String[] words, String phrase);
 
     public native static String getFirstAddress(byte[] mpk);
 

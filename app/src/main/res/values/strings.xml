@@ -356,4 +356,6 @@
   <string name="current_amount">Current Value: %s</string>
   <string name="original_amount">Original Value: %s</string>
 
+    <string name="ClickYourWords">Click your words...</string>
+    <string name="Back">Back</string>
 </resources>

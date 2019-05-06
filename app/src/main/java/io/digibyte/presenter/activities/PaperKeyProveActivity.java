@@ -90,7 +90,7 @@ public class PaperKeyProveActivity extends BRActivity implements TextView.OnEdit
                 WindowManager.LayoutParams.FLAG_SECURE);
         String cleanPhrase = getCleanPhrase();
         String wordArray[] = cleanPhrase.split(" ");
-        if (wordArray.length == 12 && cleanPhrase.charAt(cleanPhrase.length() - 1) == '\0') {
+        if (wordArray.length == 24 && cleanPhrase.charAt(cleanPhrase.length() - 1) == '\0') {
             BRDialog.showCustomDialog(this, getString(R.string.JailbreakWarnings_title),
                     getString(R.string.Alert_keystore_generic_android),
                     getString(R.string.Button_ok), null,
@@ -117,10 +117,10 @@ public class PaperKeyProveActivity extends BRActivity implements TextView.OnEdit
     }
     private void randomWordsSetUp(String[] words) {
         final Random random = new Random();
-        int n = random.nextInt(10) + 1;
+        int n = random.nextInt(22) + 1;
         sparseArrayWords.append(n, words[n]);
         while (sparseArrayWords.get(n) != null) {
-            n = random.nextInt(10) + 1;
+            n = random.nextInt(22) + 1;
         }
         sparseArrayWords.append(n, words[n]);
     }

@@ -58,7 +58,7 @@
         android:launchMode="singleTask"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup,android:label">
+        tools:replace="android:label, android:icon, android:theme, android:allowBackup, android:appComponentFactory">
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -69,7 +69,7 @@
             android:label="@string/digi_wallet_name"
             android:noHistory="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
-            <intent-filter android:autoVerify="true">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -220,10 +220,6 @@
         <activity android:name=".presenter.activities.QRCodeActivity"
                   android:exported="false"
                   android:theme="@style/Theme.AppCompat.Translucent"/>
-
-        <service
-            android:name="com.evernote.android.job.gcm.PlatformGcmService"
-            tools:node="remove"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
