@@ -4,19 +4,22 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.LayoutTransition;
 import android.content.Intent;
-import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import com.google.android.material.appbar.AppBarLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.appcompat.content.res.AppCompatResources;
-import android.view.Gravity;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.GravityCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.appolica.flubber.Flubber;
+import com.google.android.material.appbar.AppBarLayout;
 
 import java.math.RoundingMode;
 import java.text.DateFormat;
@@ -25,8 +28,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Locale;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
@@ -35,11 +40,16 @@ import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityBreadBinding;
 import io.digibyte.presenter.activities.adapters.TxAdapter;
+import io.digibyte.presenter.activities.callbacks.AssetCallback;
+import io.digibyte.presenter.activities.models.AddressAssets;
+import io.digibyte.presenter.activities.models.AssetModel;
 import io.digibyte.presenter.activities.settings.SecurityCenterActivity;
 import io.digibyte.presenter.activities.settings.SettingsActivity;
 import io.digibyte.presenter.activities.settings.SyncBlockchainActivity;
 import io.digibyte.presenter.activities.util.ActivityUTILS;
 import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.util.RetrofitManager;
+import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter;
 import io.digibyte.presenter.entities.TxItem;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.list.items.ListItemTransactionData;
@@ -81,12 +91,16 @@ import io.digibyte.wallet.BRWalletManager;
 
 public class BreadActivity extends BRActivity implements BRWalletManager.OnBalanceChanged,
         BRPeerManager.OnTxStatusUpdate, BRSharedPrefs.OnIsoChangedListener,
-        TransactionDataSource.OnTxAddedListener, SyncManager.onStatusListener, onStatusListener {
+        TransactionDataSource.OnTxAddedListener, SyncManager.onStatusListener, onStatusListener,
+        AssetCallback {
 
     ActivityBreadBinding bindings;
     private Unbinder unbinder;
     private Handler handler = new Handler(Looper.getMainLooper());
     private TxAdapter adapter;
+    @BindView(R.id.assets_recycler)
+    RecyclerView assetRecycler;
+    private MultiTypeDataBoundAdapter assetAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +129,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         animator.setDuration(1000);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.start();
+        assetAdapter = new MultiTypeDataBoundAdapter(this, new LinkedList<>());
+        assetRecycler.setLayoutManager(new LinearLayoutManager(this));
+        assetRecycler.setAdapter(assetAdapter);
     }
 
     private Runnable showSyncButtonRunnable = new Runnable() {
@@ -214,6 +231,27 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             adapter.getReceivedAdapter().updateTransactions(newTransactions);
             notifyDataSetChangeForAll();
         }
+        for (ListItemTransactionData transaction : transactionsToAdd) {
+            RetrofitManager.instance.getAssets(transaction.getTransactionItem().getTo()[0],
+                    addressAssets -> {
+                        for (AddressAssets.Asset asset : addressAssets.getAssets()) {
+                            AssetModel model = new AssetModel(asset);
+                            if (!assetAdapter.containsItem(model)) {
+                                assetAdapter.addItem(model);
+                            }
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void onAssetClick(AssetModel assetModel) {
+
+    }
+
+    @Override
+    public void onMenuClick(AssetModel assetModel) {
+
     }
 
     private enum Adapter {
@@ -299,7 +337,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     @OnClick(R.id.nav_drawer)
     void onNavButtonClick(View view) {
         try {
-            bindings.drawerLayout.openDrawer(Gravity.START);
+            bindings.drawerLayout.openDrawer(GravityCompat.START);
         } catch (IllegalArgumentException e) {
             //Race condition inflating the hierarchy?
         }
@@ -405,8 +443,8 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
     @Override
     public void onBackPressed() {
-        if (bindings.drawerLayout.isDrawerOpen(Gravity.START)) {
-            handler.post(() -> bindings.drawerLayout.closeDrawer(Gravity.START));
+        if (bindings.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            handler.post(() -> bindings.drawerLayout.closeDrawer(GravityCompat.START));
         } else {
             super.onBackPressed();
         }

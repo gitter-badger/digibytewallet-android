@@ -3,14 +3,13 @@ package io.digibyte.presenter.fragments;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import junit.framework.Assert;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import io.digibyte.databinding.FragmentNotificationBinding;
 import io.digibyte.presenter.fragments.interfaces.OnBackPressListener;
@@ -62,9 +61,6 @@ public class FragmentSignal extends Fragment implements OnBackPressListener {
             String title = bundle.getString(TITLE, "");
             String description = bundle.getString(ICON_DESCRIPTION, "");
             int resId = bundle.getInt(RES_ID, 0);
-            Assert.assertNotSame(title, "");
-            Assert.assertNotSame(description, "");
-            Assert.assertNotSame(resId, 0);
             viewModel.setTitle(title);
             viewModel.setDescription(description);
             viewModel.setIcon(resId);

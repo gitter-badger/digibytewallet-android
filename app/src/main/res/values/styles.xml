@@ -85,4 +85,10 @@
     <style name="CaptureTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
     </style>
+
+    <style name="AssetPopup" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:itemBackground">@drawable/send_asset_popup_background</item>
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <item name="colorControlHighlight">@color/white</item>
+    </style>
 </resources>

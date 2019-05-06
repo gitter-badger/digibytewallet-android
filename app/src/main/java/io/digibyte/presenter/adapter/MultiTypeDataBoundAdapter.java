@@ -104,6 +104,10 @@ public class MultiTypeDataBoundAdapter extends BaseDataBoundAdapter {
         notifyItemInserted(mItems.size() - 1);
     }
 
+    public final boolean containsItem(Object item) {
+        return mItems.contains(item);
+    }
+
     public final void addItem(int position, Object item) {
         mItems.add(position, item);
         notifyItemInserted(position);

@@ -4,17 +4,16 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.jniwrappers.BRBIP32Sequence;
 import com.jniwrappers.BRKey;
 import com.platform.APIClient;
-
-import junit.framework.Assert;
 
 import org.json.JSONObject;
 
@@ -183,9 +182,6 @@ public class BRBitId {
         putVarInt(message.length(), dataBuffer);            //put message count
         dataBuffer.put(messageBytes);                       //put the message
         byte[] result = dataBuffer.array();
-
-        Assert.assertEquals(cap, result.length);
-
         return result;
     }
 
