@@ -1108,3 +1108,28 @@ JNIEXPORT jbyteArray JNICALL Java_io_digibyte_wallet_BRWalletManager_sweepBCash(
 
 }
 
+//parser serialize and sign an assets transaction
+JNIEXPORT jbyteArray JNICALL Java_io_digibyte_wallet_BRWalletManager_parseSerializeSign(JNIEnv *env,
+                                                                                        jobject thiz,
+                                                                                        jbyteArray assethex,
+                                                                                        jbyteArray phrase) {
+    int txLength = (*env)->GetArrayLength(env, assethex);
+    jbyte *byteTx = (*env)->GetByteArrayElements(env, assethex, 0);
+    BRTransaction *tx = BRTransactionParse((uint8_t *) byteTx, (size_t) txLength);
+
+    jbyte *bytePhrase = (*env)->GetByteArrayElements(env, phrase, 0);
+    UInt512 key = UINT512_ZERO;
+    char *charPhrase = (char *) bytePhrase;
+    BRBIP39DeriveKey(key.u8, charPhrase, NULL);
+    size_t seedSize = sizeof(key);
+
+    BRWalletSignTransaction(_wallet, tx, 0x40, key.u8, seedSize);
+    size_t len = BRTransactionSerialize(tx, NULL, 0);
+    uint8_t *buf = malloc(len);
+    len = BRTransactionSerialize(tx, buf, len);
+    jbyteArray result = (*env)->NewByteArray(env, (jsize) len);
+    (*env)->SetByteArrayRegion(env, result, 0, (jsize) len, (jbyte *) buf);
+    free(buf);
+    return result;
+}
+

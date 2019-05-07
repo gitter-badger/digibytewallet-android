@@ -7,15 +7,9 @@ import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import androidx.databinding.BindingAdapter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -24,6 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.BindingAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import io.digibyte.DigiByte;
 import io.digibyte.R;
@@ -63,11 +64,11 @@ import io.digibyte.tools.security.AuthManager;
 
 public class FragmentPin extends Fragment implements OnBackPressListener {
     private static final String TAG = FragmentPin.class.getName();
-    private static final String AUTH_TYPE = "FragmentPin:AuthType";
+    protected static final String AUTH_TYPE = "FragmentPin:AuthType";
 
     private BRAuthCompletion completion;
     private FragmentBreadPinBinding binding;
-    private StringBuilder pin = new StringBuilder();
+    protected StringBuilder pin = new StringBuilder();
     private boolean authComplete = false;
 
     private PinFragmentCallback mPinFragmentCallback = new PinFragmentCallback() {
@@ -173,7 +174,7 @@ public class FragmentPin extends Fragment implements OnBackPressListener {
         updateDots();
     }
 
-    private void updateDots() {
+    protected void updateDots() {
         if (authComplete) {
             return;
         }
@@ -192,11 +193,11 @@ public class FragmentPin extends Fragment implements OnBackPressListener {
                 });
     }
 
-    private BRAuthCompletion.AuthType getType() {
+    protected BRAuthCompletion.AuthType getType() {
         return (BRAuthCompletion.AuthType) getArguments().getSerializable(AUTH_TYPE);
     }
 
-    private void fadeOutRemove(boolean authenticated) {
+    protected void fadeOutRemove(boolean authenticated) {
         ObjectAnimator colorFade = BRAnimator.animateBackgroundDim(binding.mainLayout, true, null);
         colorFade.setDuration(500);
         Animator downToBottom = AnimatorInflater.loadAnimator(DigiByte.getContext(), R.animator.to_bottom);

@@ -358,4 +358,6 @@
 
     <string name="ClickYourWords">Click your words...</string>
     <string name="Back">Back</string>
+    <string name="NoClipData">No Clip Data</string>
+    <string name="EnterAssetQuantity">Enter asset quantity...</string>
 </resources>

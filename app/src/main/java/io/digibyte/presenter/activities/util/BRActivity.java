@@ -7,17 +7,20 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.google.common.io.BaseEncoding;
 import com.google.common.io.ByteStreams;
+import com.google.gson.Gson;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
@@ -29,18 +32,24 @@ import com.platform.tools.BRBitId;
 import com.scottyab.rootbeer.RootBeer;
 
 import java.io.InputStream;
+import java.security.InvalidKeyException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.presenter.activities.BreadActivity;
+import io.digibyte.presenter.activities.models.AssetTxModel;
 import io.digibyte.presenter.fragments.interfaces.OnBackPressListener;
 import io.digibyte.presenter.interfaces.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.security.AuthManager;
+import io.digibyte.tools.security.BRKeyStore;
 import io.digibyte.tools.security.BitcoinUrlHandler;
 import io.digibyte.tools.security.PostAuth;
 import io.digibyte.tools.threads.BRExecutor;
 import io.digibyte.tools.util.BRConstants;
+import io.digibyte.tools.util.TypesConverter;
+import io.digibyte.wallet.BRWalletManager;
 import spencerstudios.com.bungeelib.Bungee;
 
 /**
@@ -227,6 +236,28 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
             case DIGI_ID:
                 BRBitId.digiIDSignAndRespond(BRActivity.this, authType.bitId, authType.deepLink,
                         authType.callbackUrl);
+                break;
+            case SEND_ASSET:
+                Gson gson = new Gson();
+                String payload = gson.toJson(authType.sendAsset);
+                Log.d(BRActivity.class.getSimpleName(), payload);
+                RetrofitManager.instance.sendAsset(payload, sendAssetResponse -> {
+                    try {
+                        byte[] rawSeed = BRKeyStore.getPhrase(DigiByte.getContext(),
+                                BRConstants.PAY_REQUEST_CODE);
+                        byte[] seed = TypesConverter.getNullTerminatedPhrase(rawSeed);
+                        byte[] txBytes = BaseEncoding.base16().decode(sendAssetResponse.getTxHex());
+                        byte[] transaction = BRWalletManager.parseSerializeSign(txBytes, seed);
+                        String hex = BaseEncoding.base16().lowerCase().encode(transaction);
+                        AssetTxModel txModel = new AssetTxModel(hex);
+                        RetrofitManager.instance.broadcast(txModel,
+                                broadcastResponse -> {
+
+                                });
+                    } catch (InvalidKeyException e) {
+                        e.printStackTrace();
+                    }
+                });
                 break;
         }
     }

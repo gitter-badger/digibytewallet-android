@@ -862,5 +862,7 @@ public class BRWalletManager {
 
     public static native int getTxSize(byte[] serializedTx);
 
+    public static native byte[] parseSerializeSign(byte[] txhex, byte[] phrase);
+
 
 }

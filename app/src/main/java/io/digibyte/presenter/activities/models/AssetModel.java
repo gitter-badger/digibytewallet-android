@@ -1,12 +1,21 @@
 package io.digibyte.presenter.activities.models;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.databinding.BaseObservable;
@@ -14,6 +23,8 @@ import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 
 import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import io.digibyte.BR;
 import io.digibyte.R;
@@ -22,12 +33,16 @@ import io.digibyte.presenter.activities.util.RetrofitManager;
 import io.digibyte.presenter.adapter.DataBoundViewHolder;
 import io.digibyte.presenter.adapter.DynamicBinding;
 import io.digibyte.presenter.adapter.LayoutBinding;
+import io.digibyte.presenter.fragments.FragmentNumberPicker;
+import io.digibyte.presenter.interfaces.BRAuthCompletion;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
 
     private AddressAssets.Asset asset;
     private MetaModel metaModel;
-    double assetAmount = 100.1;
+    private double assetAmount = 100.1;
+    private static Handler handler = new Handler(Looper.getMainLooper());
+    private static Executor executor = Executors.newSingleThreadExecutor();
 
     public AssetModel(AddressAssets.Asset asset) {
         this.asset = asset;
@@ -83,22 +98,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         binding.assetMenu.setOnClickListener(v -> {
             ContextThemeWrapper context = new ContextThemeWrapper(v.getContext(),
                     R.style.AssetPopup);
-            PopupMenu popup = new PopupMenu(context, v);
-            MenuInflater inflater = popup.getMenuInflater();
-            inflater.inflate(R.menu.asset_menu, popup.getMenu());
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.send:
-//                            SendAsset sendAsset = new SendAsset(500, );
-//                            RetrofitManager.instance.sendAsset();
-                            break;
-                    }
-                    return true;
-                }
-            });
-            popup.show();
+            showAssetMenu(context, v);
         });
         RetrofitManager.instance.getAssetMeta(asset.assetId, asset.originatingTxId, asset.index,
                 metaModel -> {
@@ -109,12 +109,66 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                 });
     }
 
+    private void showAssetMenu(Context context, View v) {
+        PopupMenu popup = new PopupMenu(context, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.asset_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.send:
+                    showSendMenu(context, v);
+                    break;
+            }
+            return true;
+        });
+        popup.show();
+    }
+
+    private void showSendMenu(Context context, View v) {
+        PopupMenu popup = new PopupMenu(context, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.send_asset_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.qr:
+                    break;
+                case R.id.paste:
+                    ClipboardManager clipboard = (ClipboardManager) context.getSystemService(
+                            Context.CLIPBOARD_SERVICE);
+                    ClipData clipData = clipboard.getPrimaryClip();
+                    if (clipData.getItemCount() > 0) {
+                        CharSequence address = clipData.getItemAt(0).getText();
+                        Log.d(AssetModel.class.getSimpleName(), "Clipped Address: " + address);
+                        SendAsset sendAsset = new SendAsset(
+                                Integer.toString(500),
+                                asset.utxoAddress,
+                                address.toString(),
+                                metaModel.assetId
+                        );
+                        FragmentNumberPicker.show(
+                                (AppCompatActivity) v.getContext(),
+                                new BRAuthCompletion.AuthType(sendAsset)
+                        );
+                    } else {
+                        Toast.makeText(context, R.string.NoClipData, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+            return true;
+        });
+        popup.show();
+    }
+
     @BindingAdapter("remoteImage")
     public static void remoteImage(ImageView imageView, String imageData) {
         if (TextUtils.isEmpty(imageData)) {
             return;
         }
-        byte[] image = Base64.decode(imageData.substring(imageData.indexOf(",")), Base64.DEFAULT);
-        imageView.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.length));
+        executor.execute(() -> {
+            byte[] image = Base64.decode(imageData.substring(imageData.indexOf(",")),
+                    Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            handler.post(() -> imageView.setImageBitmap(bitmap));
+        });
     }
 }

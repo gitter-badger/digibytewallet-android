@@ -2,10 +2,19 @@ package io.digibyte.presenter.activities.util;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+
 import io.digibyte.presenter.activities.models.AddressAssets;
+import io.digibyte.presenter.activities.models.AssetTxModel;
 import io.digibyte.presenter.activities.models.MetaModel;
-import io.digibyte.presenter.activities.models.SendAsset;
 import io.digibyte.presenter.activities.models.SendAssetResponse;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -13,6 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -22,7 +32,7 @@ public class RetrofitManager {
 
     private RetrofitManager() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.digiassets.net/")
+                .baseUrl("https://api.digiassets.net:443/v3/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
@@ -36,7 +46,11 @@ public class RetrofitManager {
                 @Path("index") String index);
 
         @POST("sendasset/")
-        Call<SendAssetResponse> sendAsset(@Body SendAsset body);
+        @Headers({"cache-control: no-cache", "Content-Type: application/json"})
+        Call<ResponseBody> sendAsset(@Body RequestBody body);
+
+        @POST("broadcast/")
+        Call<String> broadcastTx(@Body AssetTxModel body);
     }
 
     public interface AssetsCallback {
@@ -88,18 +102,47 @@ public class RetrofitManager {
         void response(SendAssetResponse sendAssetResponse);
     }
 
-    public void sendAsset(SendAsset sendAsset, SendAssetCallback sendAssetCallback) {
+    public void sendAsset(String sendAsset, SendAssetCallback sendAssetCallback) {
         AssetEndpoints apiService = instance.retrofit.create(AssetEndpoints.class);
-        Call<SendAssetResponse> call = apiService.sendAsset(sendAsset);
-        call.enqueue(new Callback<SendAssetResponse>() {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), sendAsset);
+        Call<ResponseBody> call = apiService.sendAsset(body);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<SendAssetResponse> call,
-                    Response<SendAssetResponse> response) {
-                sendAssetCallback.response(response.body());
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Gson gson = new Gson();
+                Type listType = new TypeToken<SendAssetResponse>() {
+                }.getType();
+                try {
+                    SendAssetResponse sendAssetResponse = gson.fromJson(response.body().string(),
+                            listType);
+                    sendAssetCallback.response(sendAssetResponse);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
-            public void onFailure(Call<SendAssetResponse> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public interface BroadcastTransaction {
+        void response(String broadcastResponse);
+    }
+
+    public void broadcast(AssetTxModel assetTxModel, BroadcastTransaction broadcastTransaction) {
+        AssetEndpoints apiService = instance.retrofit.create(AssetEndpoints.class);
+        Call<String> call = apiService.broadcastTx(assetTxModel);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                broadcastTransaction.response(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
                 t.printStackTrace();
             }
         });

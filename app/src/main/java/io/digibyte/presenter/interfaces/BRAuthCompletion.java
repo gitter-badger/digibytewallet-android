@@ -2,6 +2,7 @@ package io.digibyte.presenter.interfaces;
 
 import java.io.Serializable;
 
+import io.digibyte.presenter.activities.models.SendAsset;
 import io.digibyte.presenter.entities.PaymentItem;
 
 /**
@@ -32,7 +33,7 @@ public interface BRAuthCompletion {
     class AuthType implements Serializable {
 
         public enum Type {
-            DIGI_ID, LOGIN, POST_AUTH, SPENDING_LIMIT, SEND
+            DIGI_ID, LOGIN, POST_AUTH, SPENDING_LIMIT, SEND, SEND_ASSET
         }
 
         public Type type;
@@ -40,12 +41,18 @@ public interface BRAuthCompletion {
         public boolean deepLink;
         public String callbackUrl;
         public PaymentItem paymentItem;
+        public SendAsset sendAsset;
 
         public AuthType(Type type) {
             this.type = type;
             if (type == Type.DIGI_ID || type == Type.SEND) {
                 throw new RuntimeException("Wrong constructor, use the one with the corresponding params");
             }
+        }
+
+        public AuthType(SendAsset sendAsset) {
+            this.type = Type.SEND_ASSET;
+            this.sendAsset = sendAsset;
         }
 
         /**

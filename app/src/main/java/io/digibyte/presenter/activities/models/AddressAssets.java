@@ -1,5 +1,7 @@
 package io.digibyte.presenter.activities.models;
 
+import android.util.Log;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,6 +45,7 @@ public class AddressAssets {
         int divisibility;
         boolean lockStatus;
         String aggregationPolicy;
+        String utxoAddress;
         String originatingTxId;
         String index;
 
@@ -70,8 +73,10 @@ public class AddressAssets {
         List<Asset> assets = new LinkedList<>();
         for (UTXO utxo : utxos) {
             for (Asset asset : utxo.assets) {
+                asset.utxoAddress = utxo.address;
                 asset.originatingTxId = utxo.txid;
                 asset.index = Integer.toString(utxo.index);
+                Log.d(AddressAssets.class.getSimpleName(), "TX ID: " + asset.originatingTxId);
                 assets.add(asset);
             }
         }

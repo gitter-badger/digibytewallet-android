@@ -239,6 +239,12 @@ JNIEXPORT jlong JNICALL Java_io_digibyte_wallet_BRWalletManager_defaultFee(JNIEn
 JNIEXPORT jlong JNICALL Java_io_digibyte_wallet_BRWalletManager_maxFee(JNIEnv *env,
                                                                            jobject thiz);
 
+JNIEXPORT jbyteArray JNICALL Java_io_digibyte_wallet_BRWalletManager_parseSerializeSign(JNIEnv *env,
+                                                                                        jobject thiz,
+                                                                                        jbyteArray assetHex,
+                                                                                        jbyteArray phrasr);
+
+
 #ifdef __cplusplus
 }
 #endif
