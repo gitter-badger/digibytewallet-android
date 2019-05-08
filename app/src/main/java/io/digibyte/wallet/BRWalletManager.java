@@ -810,7 +810,8 @@ public class BRWalletManager {
 
     public native static String getFirstAddress(byte[] mpk);
 
-    public native byte[] publishSerializedTransaction(byte[] serializedTransaction, byte[] phrase);
+    public native static byte[] publishSerializedTransaction(byte[] serializedTransaction,
+            byte[] phrase);
 
     public native long getTotalSent();
 
@@ -862,7 +863,7 @@ public class BRWalletManager {
 
     public static native int getTxSize(byte[] serializedTx);
 
-    public static native byte[] parseSerializeSign(byte[] txhex, byte[] phrase);
+    public static native byte[] parseSignSerialize(byte[] txhex, byte[] phrase);
 
 
 }

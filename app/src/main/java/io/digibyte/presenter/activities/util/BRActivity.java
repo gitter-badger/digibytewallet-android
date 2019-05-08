@@ -18,7 +18,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.common.io.BaseEncoding;
 import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
 import com.google.zxing.BinaryBitmap;
@@ -31,14 +30,14 @@ import com.google.zxing.common.HybridBinarizer;
 import com.platform.tools.BRBitId;
 import com.scottyab.rootbeer.RootBeer;
 
+import org.apache.commons.codec.binary.Hex;
+
 import java.io.InputStream;
-import java.security.InvalidKeyException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.presenter.activities.BreadActivity;
-import io.digibyte.presenter.activities.models.AssetTxModel;
 import io.digibyte.presenter.fragments.interfaces.OnBackPressListener;
 import io.digibyte.presenter.interfaces.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
@@ -242,19 +241,16 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
                 String payload = gson.toJson(authType.sendAsset);
                 Log.d(BRActivity.class.getSimpleName(), payload);
                 RetrofitManager.instance.sendAsset(payload, sendAssetResponse -> {
+                    Log.d(BRActivity.class.getSimpleName(),
+                            "TX Hex: " + sendAssetResponse.getTxHex());
                     try {
                         byte[] rawSeed = BRKeyStore.getPhrase(DigiByte.getContext(),
-                                BRConstants.PAY_REQUEST_CODE);
+                                BRConstants.ASSETS_REQUEST_CODE);
                         byte[] seed = TypesConverter.getNullTerminatedPhrase(rawSeed);
-                        byte[] txBytes = BaseEncoding.base16().decode(sendAssetResponse.getTxHex());
-                        byte[] transaction = BRWalletManager.parseSerializeSign(txBytes, seed);
-                        String hex = BaseEncoding.base16().lowerCase().encode(transaction);
-                        AssetTxModel txModel = new AssetTxModel(hex);
-                        RetrofitManager.instance.broadcast(txModel,
-                                broadcastResponse -> {
-
-                                });
-                    } catch (InvalidKeyException e) {
+                        byte[] txBytes = Hex.decodeHex(sendAssetResponse.getTxHex().toCharArray());
+                        byte[] transaction = BRWalletManager.parseSignSerialize(txBytes, seed);
+                        BRWalletManager.publishSerializedTransaction(transaction, seed);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
@@ -265,5 +261,21 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
     @Override
     public void onCancel(AuthType type) {
 
+    }
+
+    private void showSendConfirmDialog(int error, String message) {
+        BRExecutor.getInstance().forMainThreadTasks().execute(() -> {
+            BRAnimator.showBreadSignal(BRActivity.this,
+                    error == 0 ? getString(R.string.Alerts_sendSuccess)
+                            : getString(R.string.Alert_error),
+                    error == 0 ? getString(R.string.Alerts_sendSuccessSubheader)
+                            : message, error == 0 ? R.raw.success_check
+                            : R.raw.error_check, () -> {
+                        try {
+                            getSupportFragmentManager().popBackStack();
+                        } catch (IllegalStateException e) {
+                        }
+                    });
+        });
     }
 }

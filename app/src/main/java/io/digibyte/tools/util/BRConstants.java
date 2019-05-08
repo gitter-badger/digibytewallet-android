@@ -43,6 +43,7 @@ public class BRConstants {
     /**
      * Request codes for auth
      */
+    public static final int ASSETS_REQUEST_CODE = 110;
     public static final int SHOW_PHRASE_REQUEST_CODE = 111;
     public static final int PAY_REQUEST_CODE = 112;
     public static final int CANARY_REQUEST_CODE = 113;
