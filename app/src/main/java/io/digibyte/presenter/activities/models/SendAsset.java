@@ -5,13 +5,14 @@ import java.util.Arrays;
 public class SendAsset {
     String fee;
     String[] from;
+    String[] financeAddresses;
     To[] to;
 
-    SendAsset(String fee, String from, String to, String assetId) {
+    SendAsset(String fee, String from, String[] financeAddresses, String to, String assetId) {
         this.fee = fee;
         this.from = new String[1];
-        this.from[0] = "";
         this.from[0] = from;
+        this.financeAddresses = financeAddresses;
         this.to = new To[1];
         this.to[0] = new To();
         this.to[0].address = to;

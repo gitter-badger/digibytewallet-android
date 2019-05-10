@@ -25,13 +25,16 @@
 #include "wallet.h"
 #include "PeerManager.h"
 #include "BRPeerManager.h"
+#include "BRWallet.h"
 #include "BRBIP39Mnemonic.h"
 #include "BRBase58.h"
+#include "BRArray.h"
 #include <assert.h>
 #include <BRBIP38Key.h>
 #include <BRInt.h>
 #include <BRTransaction.h>
 #include <BRAddress.h>
+#include <BRSet.h>
 
 static JavaVM *_jvmW;
 BRWallet *_wallet;
@@ -1117,10 +1120,6 @@ JNIEXPORT jbyteArray JNICALL Java_io_digibyte_wallet_BRWalletManager_parseSignSe
     int txLength = (*env)->GetArrayLength(env, assethex);
     jbyte *byteTx = (*env)->GetByteArrayElements(env, assethex, 0);
     BRTransaction *tx = BRTransactionParse((uint8_t *) byteTx, (size_t) txLength);
-    for (size_t i = 0; i < sizeof(tx->inputs); i++) {
-        tx->inputs[i].sigLen = 0;
-        tx->inputs[i].signature = NULL;
-    }
 
     //Sign
     jbyte *bytePhrase = (*env)->GetByteArrayElements(env, phrase, 0);
@@ -1129,7 +1128,6 @@ JNIEXPORT jbyteArray JNICALL Java_io_digibyte_wallet_BRWalletManager_parseSignSe
     BRBIP39DeriveKey(key.u8, charPhrase, NULL);
     size_t seedSize = sizeof(key);
     BRWalletSignTransaction(_wallet, tx, 0x01, key.u8, seedSize);
-    assert(BRTransactionIsSigned(tx));
 
     //Serialize
     uint8_t buf[BRTransactionSerialize(tx, NULL, 0)];
@@ -1137,5 +1135,27 @@ JNIEXPORT jbyteArray JNICALL Java_io_digibyte_wallet_BRWalletManager_parseSignSe
     jbyteArray result = (*env)->NewByteArray(env, (jsize) len);
     (*env)->SetByteArrayRegion(env, result, 0, (jsize) len, (jbyte *) buf);
     return result;
+}
+
+JNIEXPORT jobjectArray JNICALL
+Java_io_digibyte_presenter_activities_models_AssetModel_getNeededUTXO(JNIEnv *env,
+                                                                      jobject thiz,
+                                                                      jint amount) {
+
+    UInt256 *addresses;
+    array_new(addresses, 1);
+    uint8_t length = BRGetUTXO(_wallet, addresses, (uint64_t) amount);
+
+    //Serialize
+    jobjectArray ret = (jobjectArray) (*env)->NewObjectArray(env, length,
+                                                             (*env)->FindClass(env,
+                                                                               "java/lang/String"),
+                                                             (*env)->NewStringUTF(env, ""));
+    for (int i = 0; i < length; i++) {
+        UInt256 reversedHash = UInt256Reverse(addresses[i]);
+        jstring jAddress = (*env)->NewStringUTF(env, u256hex(reversedHash));
+        (*env)->SetObjectArrayElement(env, ret, i, jAddress);
+    }
+    return ret;
 }
 

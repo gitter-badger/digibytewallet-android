@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.common.io.BaseEncoding;
 import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
 import com.google.zxing.BinaryBitmap;
@@ -38,6 +39,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.presenter.activities.BreadActivity;
+import io.digibyte.presenter.activities.models.SendAssetResponse;
 import io.digibyte.presenter.fragments.interfaces.OnBackPressListener;
 import io.digibyte.presenter.interfaces.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
@@ -240,20 +242,36 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
                 Gson gson = new Gson();
                 String payload = gson.toJson(authType.sendAsset);
                 Log.d(BRActivity.class.getSimpleName(), payload);
-                RetrofitManager.instance.sendAsset(payload, sendAssetResponse -> {
-                    Log.d(BRActivity.class.getSimpleName(),
-                            "TX Hex: " + sendAssetResponse.getTxHex());
-                    try {
-                        byte[] rawSeed = BRKeyStore.getPhrase(DigiByte.getContext(),
-                                BRConstants.ASSETS_REQUEST_CODE);
-                        byte[] seed = TypesConverter.getNullTerminatedPhrase(rawSeed);
-                        byte[] txBytes = Hex.decodeHex(sendAssetResponse.getTxHex().toCharArray());
-                        byte[] transaction = BRWalletManager.parseSignSerialize(txBytes, seed);
-                        BRWalletManager.publishSerializedTransaction(transaction, seed);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
+                RetrofitManager.instance.sendAsset(payload,
+                        new RetrofitManager.SendAssetCallback() {
+                            @Override
+                            public void success(SendAssetResponse sendAssetResponse) {
+                                try {
+                                    byte[] rawSeed = BRKeyStore.getPhrase(DigiByte.getContext(),
+                                            BRConstants.ASSETS_REQUEST_CODE);
+                                    byte[] seed = TypesConverter.getNullTerminatedPhrase(rawSeed);
+                                    String txid = BaseEncoding.base16().encode(
+                                            BRWalletManager.publishSerializedTransaction(
+                                                    Hex.decodeHex(
+                                                            sendAssetResponse.getTxHex().toCharArray()),
+                                                    seed));
+                                    Log.d(BRActivity.class.getSimpleName(), txid);
+
+//                                    byte[] signed = BRWalletManager.parseSignSerialize
+//                                    (sendAssetResponse.getTxHex().getBytes(), seed);
+//                                    String hex = BaseEncoding.base16().encode(signed);
+//                                    RetrofitManager.instance.broadcast(hex, broadcastResponse -> {
+//                                    });
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void error(String message) {
+                                Log.d(BRActivity.class.getSimpleName(), message);
+                            }
+                        });
                 break;
         }
     }

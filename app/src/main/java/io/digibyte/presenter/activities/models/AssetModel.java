@@ -38,13 +38,15 @@ import io.digibyte.presenter.interfaces.BRAuthCompletion;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
 
-    private AddressAssets.Asset asset;
+    private AddressInfo.Asset asset;
     private MetaModel metaModel;
     private double assetAmount = 100.1;
     private static Handler handler = new Handler(Looper.getMainLooper());
     private static Executor executor = Executors.newSingleThreadExecutor();
 
-    public AssetModel(AddressAssets.Asset asset) {
+    private static native String[] getNeededUTXO(int amount);
+
+    public AssetModel(AddressInfo.Asset asset) {
         this.asset = asset;
     }
 
@@ -74,7 +76,12 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         if (metaModel == null) {
             return "";
         }
-        return Double.toString(asset.amount);
+        if (asset.divisibility == 0) {
+            return Double.toString(asset.amount);
+        } else {
+            return Double.toString((double) asset.amount / (Math.pow(10, asset.divisibility)));
+
+        }
     }
 
     @Override
@@ -100,7 +107,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     R.style.AssetPopup);
             showAssetMenu(context, v);
         });
-        RetrofitManager.instance.getAssetMeta(asset.assetId, asset.originatingTxId, asset.index,
+        RetrofitManager.instance.getAssetMeta(asset.assetId, asset.assetUtxoTxId, asset.index,
                 metaModel -> {
                     AssetModel.this.metaModel = metaModel;
                     notifyPropertyChanged(BR.assetName);
@@ -136,19 +143,24 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     ClipboardManager clipboard = (ClipboardManager) context.getSystemService(
                             Context.CLIPBOARD_SERVICE);
                     ClipData clipData = clipboard.getPrimaryClip();
-                    if (clipData.getItemCount() > 0) {
+                    if (clipData != null && clipData.getItemCount() > 0) {
                         CharSequence address = clipData.getItemAt(0).getText();
-                        Log.d(AssetModel.class.getSimpleName(), "Clipped Address: " + address);
-                        SendAsset sendAsset = new SendAsset(
-                                Integer.toString(500),
-                                asset.utxoAddress,
-                                address.toString(),
-                                metaModel.assetId
-                        );
-                        FragmentNumberPicker.show(
-                                (AppCompatActivity) v.getContext(),
-                                new BRAuthCompletion.AuthType(sendAsset)
-                        );
+                        try {
+                            Log.d(AssetModel.class.getSimpleName(), "Clipped Address: " + address);
+                            SendAsset sendAsset = new SendAsset(
+                                    Integer.toString(500),
+                                    asset.utxoAddress,
+                                    getNeededUTXO(500),
+                                    address.toString(),
+                                    metaModel.assetId
+                            );
+                            FragmentNumberPicker.show(
+                                    (AppCompatActivity) v.getContext(),
+                                    new BRAuthCompletion.AuthType(sendAsset)
+                            );
+                        } catch (Throwable t) {
+                            t.printStackTrace();
+                        }
                     } else {
                         Toast.makeText(context, R.string.NoClipData, Toast.LENGTH_SHORT).show();
                     }

@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class AddressAssets {
+public class AddressInfo {
     String address;
     UTXO[] utxos;
 
@@ -46,7 +46,7 @@ public class AddressAssets {
         boolean lockStatus;
         String aggregationPolicy;
         String utxoAddress;
-        String originatingTxId;
+        public String assetUtxoTxId;
         String index;
 
         @Override
@@ -74,20 +74,30 @@ public class AddressAssets {
         for (UTXO utxo : utxos) {
             for (Asset asset : utxo.assets) {
                 asset.utxoAddress = utxo.address;
-                asset.originatingTxId = utxo.txid;
+                asset.assetUtxoTxId = utxo.txid;
                 asset.index = Integer.toString(utxo.index);
-                Log.d(AddressAssets.class.getSimpleName(), "TX ID: " + asset.originatingTxId);
+                Log.d(AddressInfo.class.getSimpleName(), "TX ID: " + asset.assetUtxoTxId);
                 assets.add(asset);
             }
         }
         return assets;
     }
 
+    public List<String> getAssetsUtxo() {
+        List<String> assetsUtxo = new LinkedList<>();
+        for (UTXO utxo : utxos) {
+            for (Asset asset : utxo.assets) {
+                assetsUtxo.add(utxo.txid);
+            }
+        }
+        return assetsUtxo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AddressAssets that = (AddressAssets) o;
+        AddressInfo that = (AddressInfo) o;
         return Objects.equals(address, that.address) &&
                 Arrays.equals(utxos, that.utxos);
     }

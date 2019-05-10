@@ -41,7 +41,7 @@ import io.digibyte.R;
 import io.digibyte.databinding.ActivityBreadBinding;
 import io.digibyte.presenter.activities.adapters.TxAdapter;
 import io.digibyte.presenter.activities.callbacks.AssetCallback;
-import io.digibyte.presenter.activities.models.AddressAssets;
+import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.AssetModel;
 import io.digibyte.presenter.activities.settings.SecurityCenterActivity;
 import io.digibyte.presenter.activities.settings.SettingsActivity;
@@ -233,8 +233,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         }
         for (ListItemTransactionData transaction : transactionsToAdd) {
             RetrofitManager.instance.getAssets(transaction.getTransactionItem().getTo()[0],
-                    addressAssets -> {
-                        for (AddressAssets.Asset asset : addressAssets.getAssets()) {
+                    addressInfo -> {
+                        if (addressInfo == null) {
+                            return;
+                        }
+                        for (AddressInfo.Asset asset : addressInfo.getAssets()) {
                             AssetModel model = new AssetModel(asset);
                             if (!assetAdapter.containsItem(model)) {
                                 assetAdapter.addItem(model);

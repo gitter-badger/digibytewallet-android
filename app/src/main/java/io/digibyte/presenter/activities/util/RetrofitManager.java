@@ -5,10 +5,13 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 
-import io.digibyte.presenter.activities.models.AddressAssets;
+import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.MetaModel;
 import io.digibyte.presenter.activities.models.SendAssetResponse;
 import okhttp3.MediaType;
@@ -38,7 +41,7 @@ public class RetrofitManager {
 
     private interface AssetEndpoints {
         @GET("addressinfo/{address}")
-        Call<AddressAssets> getAssets(@Path("address") String address);
+        Call<AddressInfo> getAssets(@Path("address") String address);
 
         @GET("assetmetadata/{assetid}/{utxotxid}:{index}")
         Call<MetaModel> getMeta(@Path("assetid") String assetid, @Path("utxotxid") String utxotxid,
@@ -53,22 +56,22 @@ public class RetrofitManager {
     }
 
     public interface AssetsCallback {
-        void assetsRetrieved(AddressAssets addressAssets);
+        void assetsRetrieved(AddressInfo addressAssets);
     }
 
     public void getAssets(String address, AssetsCallback assetsCallback) {
         AssetEndpoints apiService = api.create(AssetEndpoints.class);
-        Call<AddressAssets> call = apiService.getAssets(address);
-        call.enqueue(new Callback<AddressAssets>() {
+        Call<AddressInfo> call = apiService.getAssets(address);
+        call.enqueue(new Callback<AddressInfo>() {
             @Override
-            public void onResponse(Call<AddressAssets> call, Response<AddressAssets> response) {
+            public void onResponse(Call<AddressInfo> call, Response<AddressInfo> response) {
                 Log.d(RetrofitManager.class.getSimpleName(), "Assets retrieved for address: ");
                 assetsCallback.assetsRetrieved(response.body());
             }
 
             @Override
-            public void onFailure(Call<AddressAssets> call, Throwable t) {
-                Log.d(RetrofitManager.class.getSimpleName(), "Error Retrieving Asset");
+            public void onFailure(Call<AddressInfo> call, Throwable t) {
+                Log.d(RetrofitManager.class.getSimpleName(), "Error Retrieving Asset or no assets");
                 t.printStackTrace();
             }
         });
@@ -98,7 +101,9 @@ public class RetrofitManager {
     }
 
     public interface SendAssetCallback {
-        void response(SendAssetResponse sendAssetResponse);
+        void success(SendAssetResponse sendAssetResponse);
+
+        void error(String message);
     }
 
     public void sendAsset(String sendAsset, SendAssetCallback sendAssetCallback) {
@@ -109,12 +114,24 @@ public class RetrofitManager {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    Gson gson = new Gson();
-                    Type listType = new TypeToken<SendAssetResponse>() {
-                    }.getType();
-                    SendAssetResponse sendAssetResponse = gson.fromJson(response.body().string(),
-                            listType);
-                    sendAssetCallback.response(sendAssetResponse);
+                    if (response.code() != 200) {
+                        try {
+                            JSONObject error = new JSONObject(response.errorBody().string());
+                            String message = error.getString("message");
+                            Log.d(RetrofitManager.class.getSimpleName(),
+                                    "Send Asset Error: " + message);
+                            sendAssetCallback.error(message);
+                        } catch (JSONException e) {
+                            sendAssetCallback.error("");
+                        }
+                    } else {
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<SendAssetResponse>() {
+                        }.getType();
+                        SendAssetResponse sendAssetResponse = gson.fromJson(
+                                response.body().string(), listType);
+                        sendAssetCallback.success(sendAssetResponse);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

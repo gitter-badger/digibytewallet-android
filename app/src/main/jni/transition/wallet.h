@@ -244,6 +244,10 @@ JNIEXPORT jbyteArray JNICALL Java_io_digibyte_wallet_BRWalletManager_parseSignSe
                                                                                         jbyteArray assetHex,
                                                                                         jbyteArray phrasr);
 
+JNIEXPORT jobjectArray JNICALL
+Java_io_digibyte_presenter_activities_models_AssetModel_getNeededUTXO(JNIEnv *env,
+                                                                      jobject thiz,
+                                                                      jint amount);
 
 #ifdef __cplusplus
 }
