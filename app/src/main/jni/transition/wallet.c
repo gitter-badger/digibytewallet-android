@@ -1112,14 +1112,31 @@ JNIEXPORT jbyteArray JNICALL Java_io_digibyte_wallet_BRWalletManager_sweepBCash(
 }
 
 //parse sign and serialize an asset transaction
-JNIEXPORT jbyteArray JNICALL Java_io_digibyte_wallet_BRWalletManager_parseSignSerialize(JNIEnv *env,
-                                                                                        jobject thiz,
-                                                                                        jbyteArray assethex,
-                                                                                        jbyteArray phrase) {
-    //Parse
+JNIEXPORT jbyteArray JNICALL
+Java_io_digibyte_wallet_BRWalletManager_parseSignSerializeSend(JNIEnv *env,
+                                                               jobject thiz,
+                                                               jbyteArray assethex,
+                                                               jbyteArray phrase) {
+
+
     int txLength = (*env)->GetArrayLength(env, assethex);
     jbyte *byteTx = (*env)->GetByteArrayElements(env, assethex, 0);
     BRTransaction *tx = BRTransactionParse((uint8_t *) byteTx, (size_t) txLength);
+
+    //Remove outputs with null addresses
+    size_t *removeIndexes;
+    uint8_t totalRemoveIndexes = 0;
+    array_new(removeIndexes, 0);
+    for (uint8_t i = 0; i < tx->outCount; i++) {
+        if (!*tx->outputs[i].address) {
+            array_add(removeIndexes, i);
+            totalRemoveIndexes++;
+        }
+    }
+    for (size_t p = 0; p < totalRemoveIndexes; p++) {
+        array_rm(tx->outputs, removeIndexes[p]);
+        tx->outCount = array_count(tx->outputs);
+    }
 
     //Sign
     jbyte *bytePhrase = (*env)->GetByteArrayElements(env, phrase, 0);
@@ -1129,12 +1146,18 @@ JNIEXPORT jbyteArray JNICALL Java_io_digibyte_wallet_BRWalletManager_parseSignSe
     size_t seedSize = sizeof(key);
     BRWalletSignTransaction(_wallet, tx, 0x01, key.u8, seedSize);
 
-    //Serialize
+    //Broadcast
+    BRPeerManagerPublishTx(_peerManager, tx, tx, callback);
+    (*env)->ReleaseByteArrayElements(env, phrase, bytePhrase, JNI_ABORT);
+    __android_log_print(ANDROID_LOG_DEBUG, "Message from C: ", "returning true");
+
+    //Serialize tx to hex
     uint8_t buf[BRTransactionSerialize(tx, NULL, 0)];
     size_t len = BRTransactionSerialize(tx, buf, sizeof(buf));
-    jbyteArray result = (*env)->NewByteArray(env, (jsize) len);
-    (*env)->SetByteArrayRegion(env, result, 0, (jsize) len, (jbyte *) buf);
-    return result;
+    jbyteArray txBytes = (*env)->NewByteArray(env, (jsize) len);
+    (*env)->SetByteArrayRegion(env, txBytes, 0, (jsize) len, (jbyte *) buf);
+
+    return txBytes;
 }
 
 JNIEXPORT jobjectArray JNICALL
@@ -1142,7 +1165,7 @@ Java_io_digibyte_presenter_activities_models_AssetModel_getNeededUTXO(JNIEnv *en
                                                                       jobject thiz,
                                                                       jint amount) {
 
-    UInt256 *addresses;
+    char **addresses;
     array_new(addresses, 1);
     uint8_t length = BRGetUTXO(_wallet, addresses, (uint64_t) amount);
 
@@ -1152,8 +1175,7 @@ Java_io_digibyte_presenter_activities_models_AssetModel_getNeededUTXO(JNIEnv *en
                                                                                "java/lang/String"),
                                                              (*env)->NewStringUTF(env, ""));
     for (int i = 0; i < length; i++) {
-        UInt256 reversedHash = UInt256Reverse(addresses[i]);
-        jstring jAddress = (*env)->NewStringUTF(env, u256hex(reversedHash));
+        jstring jAddress = (*env)->NewStringUTF(env, addresses[i]);
         (*env)->SetObjectArrayElement(env, ret, i, jAddress);
     }
     return ret;

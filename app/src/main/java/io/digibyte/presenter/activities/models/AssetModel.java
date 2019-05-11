@@ -22,6 +22,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -147,10 +148,13 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                         CharSequence address = clipData.getItemAt(0).getText();
                         try {
                             Log.d(AssetModel.class.getSimpleName(), "Clipped Address: " + address);
+                            Log.d(AssetModel.class.getSimpleName(),
+                                    "Asset UTXO Addr: " + asset.utxoAddress);
+
                             SendAsset sendAsset = new SendAsset(
                                     Integer.toString(500),
                                     asset.utxoAddress,
-                                    getNeededUTXO(500),
+                                    trimNullEmpty(getNeededUTXO(500)),
                                     address.toString(),
                                     metaModel.assetId
                             );
@@ -169,6 +173,17 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
             return true;
         });
         popup.show();
+    }
+
+    private String[] trimNullEmpty(String[] values) {
+        LinkedList<String> newValues = new LinkedList<>();
+        for (String value : values) {
+            if (!TextUtils.isEmpty(value) && !value.toLowerCase().equals("null")) {
+                newValues.add(value);
+            }
+        }
+        String[] sNewValues = new String[newValues.size()];
+        return newValues.toArray(sNewValues);
     }
 
     @BindingAdapter("remoteImage")

@@ -1,15 +1,18 @@
 package io.digibyte.tools.adapter;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -135,12 +138,19 @@ public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransac
     private boolean isPositionOnscreen(int position) {
         LinearLayoutManager linearLayoutManager =
                 (LinearLayoutManager) recyclerView.getLayoutManager();
-        int firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition();
-        int lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition();
-        return position >= firstVisiblePosition && position <= lastVisiblePosition;
+        if (linearLayoutManager != null) {
+            int firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition();
+            int lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition();
+            return position >= firstVisiblePosition && position <= lastVisiblePosition;
+        } else {
+            return false;
+        }
     }
 
     public void addTransactions(ArrayList<ListItemTransactionData> transactions) {
+        Collections.sort(transactions,
+                (o1, o2) -> new Date(o1.transactionItem.getTimeStamp()).compareTo(
+                        new Date(o2.transactionItem.getTimeStamp())));
         for (ListItemTransactionData transaction : transactions) {
             saveFiatValue(transaction.transactionItem);
             listItemData.add(0, transaction);
@@ -152,8 +162,10 @@ public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransac
         return listItemData;
     }
 
+    @NonNull
     @Override
-    public ListItemTransactionViewHolder onCreateViewHolder(ViewGroup aParent, int aResourceId) {
+    public ListItemTransactionViewHolder onCreateViewHolder(@NonNull ViewGroup aParent,
+            int aResourceId) {
         LayoutInflater layoutInflater = LayoutInflater.from(aParent.getContext());
         ListItemTransactionBinding binding = ListItemTransactionBinding.inflate(layoutInflater);
         return new ListItemTransactionViewHolder(binding);
@@ -177,9 +189,11 @@ public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransac
         public void onClick(View view) {
             ListItemTransactionViewHolder listItemTransactionViewHolder =
                     (ListItemTransactionViewHolder) recyclerView.findContainingViewHolder(view);
-            int adapterPosition = listItemTransactionViewHolder.getAdapterPosition();
-            BRAnimator.showTransactionPager((AppCompatActivity) view.getContext(),
-                    listItemData, adapterPosition);
+            if (listItemTransactionViewHolder != null) {
+                int adapterPosition = listItemTransactionViewHolder.getAdapterPosition();
+                BRAnimator.showTransactionPager((AppCompatActivity) view.getContext(),
+                        listItemData, adapterPosition);
+            }
         }
     };
 
@@ -208,6 +222,5 @@ public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransac
         if (!Database.instance.containsTransaction(txItem.getTxHash())) {
             Database.instance.saveTransaction(txItem.getTxHash(), TransactionDetailsViewModel.getRawFiatAmount(txItem));
         }
-
     }
 }
