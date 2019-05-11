@@ -197,7 +197,7 @@ Java_io_digibyte_wallet_BRWalletManager_encodeSeed(JNIEnv *env, jobject thiz, jb
     int wordsCount = (*env)->GetArrayLength(env, stringArray);
     int seedLength = (*env)->GetArrayLength(env, seed);
     const char *wordList[wordsCount];
-    assert(seedLength == 32);
+    assert(seedLength == 16);
     assert(wordsCount == 2048);
     for (int i = 0; i < wordsCount; i++) {
         jstring string = (jstring) (*env)->GetObjectArrayElement(env, stringArray, i);

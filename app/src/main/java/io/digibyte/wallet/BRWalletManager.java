@@ -155,13 +155,13 @@ public class BRWalletManager {
         }
         list = Bip39Reader.bip39List(ctx, languageCode);
         words = list.toArray(new String[list.size()]);
-        final byte[] randomSeed = sr.generateSeed(32);
+        final byte[] randomSeed = sr.generateSeed(16);
         if (words.length != 2048) {
             BRReportsManager.reportBug(
                     new IllegalArgumentException("the list is wrong, size: " + words.length), true);
             return false;
         }
-        if (randomSeed.length != 32) {
+        if (randomSeed.length != 16) {
             throw new NullPointerException(
                     "failed to create the seed, seed length is not 128: " + randomSeed.length);
         }
@@ -171,9 +171,9 @@ public class BRWalletManager {
             return false;
         }
         String[] splitPhrase = new String(strPhrase).split(" ");
-        if (splitPhrase.length != 24) {
+        if (splitPhrase.length != 12) {
             BRReportsManager.reportBug(new NullPointerException(
-                    "phrase does not have 24 words:" + splitPhrase.length + ", lang: "
+                    "phrase does not have 12 words:" + splitPhrase.length + ", lang: "
                             + languageCode), true);
             return false;
         }
