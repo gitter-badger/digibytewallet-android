@@ -1,16 +1,17 @@
 package io.digibyte.presenter.activities;
 
 import android.content.Intent;
-import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.util.SparseArray;
+import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-import android.util.SparseArray;
-import android.view.WindowManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -116,7 +117,7 @@ public class PaperKeyActivity extends BRActivity {
         int currentIndex = binding.phraseWordsPager.getCurrentItem();
         if (isNext) {
             setButtonEnabled(true);
-            if (currentIndex >= 23) {
+            if (currentIndex >= 11) {
                 PostAuth.instance.onPhraseProveAuth(this, false);
             } else {
                 binding.phraseWordsPager.setCurrentItem(currentIndex + 1);
