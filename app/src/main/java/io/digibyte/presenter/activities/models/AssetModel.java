@@ -22,6 +22,8 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -188,22 +190,26 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
 
     @BindingAdapter("remoteImage")
     public static void remoteImage(ImageView imageView, String imageData) {
-        if (TextUtils.isEmpty(imageData) || !imageData.contains(",")) {
+        if (TextUtils.isEmpty(imageData)) {
             return;
         }
         executor.execute(() -> {
-            byte[] image = null;
-            try {
-                image = Base64.decode(imageData.substring(imageData.indexOf(",")),
-                        Base64.DEFAULT);
-            } catch (IllegalArgumentException e) {
+            if (imageData.contains(",")) {
+                byte[] image = null;
+                try {
+                    image = Base64.decode(imageData.substring(imageData.indexOf(",")),
+                            Base64.DEFAULT);
+                } catch (IllegalArgumentException e) {
 
-            }
-            if (image != null) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-                if (bitmap != null) {
-                    handler.post(() -> imageView.setImageBitmap(bitmap));
                 }
+                if (image != null) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+                    if (bitmap != null) {
+                        handler.post(() -> imageView.setImageBitmap(bitmap));
+                    }
+                }
+            } else if (imageData.contains("http")) {
+                Picasso.get().load(imageData).into(imageView);
             }
         });
     }
