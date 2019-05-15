@@ -188,14 +188,23 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
 
     @BindingAdapter("remoteImage")
     public static void remoteImage(ImageView imageView, String imageData) {
-        if (TextUtils.isEmpty(imageData)) {
+        if (TextUtils.isEmpty(imageData) || !imageData.contains(",")) {
             return;
         }
         executor.execute(() -> {
-            byte[] image = Base64.decode(imageData.substring(imageData.indexOf(",")),
-                    Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-            handler.post(() -> imageView.setImageBitmap(bitmap));
+            byte[] image = null;
+            try {
+                image = Base64.decode(imageData.substring(imageData.indexOf(",")),
+                        Base64.DEFAULT);
+            } catch (IllegalArgumentException e) {
+
+            }
+            if (image != null) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+                if (bitmap != null) {
+                    handler.post(() -> imageView.setImageBitmap(bitmap));
+                }
+            }
         });
     }
 }
