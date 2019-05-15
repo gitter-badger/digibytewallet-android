@@ -1123,21 +1123,6 @@ Java_io_digibyte_wallet_BRWalletManager_parseSignSerializeSend(JNIEnv *env,
     jbyte *byteTx = (*env)->GetByteArrayElements(env, assethex, 0);
     BRTransaction *tx = BRTransactionParse((uint8_t *) byteTx, (size_t) txLength);
 
-    //Remove outputs with null addresses
-    size_t *removeIndexes;
-    uint8_t totalRemoveIndexes = 0;
-    array_new(removeIndexes, 0);
-    for (uint8_t i = 0; i < tx->outCount; i++) {
-        if (!*tx->outputs[i].address) {
-            array_add(removeIndexes, i);
-            totalRemoveIndexes++;
-        }
-    }
-    for (size_t p = 0; p < totalRemoveIndexes; p++) {
-        array_rm(tx->outputs, removeIndexes[p]);
-        tx->outCount = array_count(tx->outputs);
-    }
-
     //Sign
     jbyte *bytePhrase = (*env)->GetByteArrayElements(env, phrase, 0);
     UInt512 key = UINT512_ZERO;
