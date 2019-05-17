@@ -38,6 +38,7 @@ import io.digibyte.presenter.adapter.DynamicBinding;
 import io.digibyte.presenter.adapter.LayoutBinding;
 import io.digibyte.presenter.fragments.FragmentNumberPicker;
 import io.digibyte.presenter.interfaces.BRAuthCompletion;
+import io.digibyte.wallet.BRWalletManager;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
 
@@ -59,11 +60,16 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     }
 
     @Bindable
-    public String getAssetImage() {
+    public MetaModel.Urls getAssetImage() {
         if (metaModel == null) {
-            return "";
+            return null;
         }
-        return metaModel.metadataOfIssuence.data.urls[0].url;
+        for (MetaModel.Urls urls : metaModel.metadataOfIssuence.data.urls) {
+            if ("icon".equals(urls.name)) {
+                return urls;
+            }
+        }
+        return null;
     }
 
     @Bindable
@@ -83,7 +89,14 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
             return Double.toString(asset.amount);
         } else {
             return Double.toString((double) asset.amount / (Math.pow(10, asset.divisibility)));
+        }
+    }
 
+    private double getAssetIntQuantity() {
+        if (asset.divisibility == 0) {
+            return asset.amount;
+        } else {
+            return (double) asset.amount / (Math.pow(10, asset.divisibility));
         }
     }
 
@@ -92,9 +105,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AssetModel that = (AssetModel) o;
-        return Double.compare(that.assetAmount, assetAmount) == 0 &&
-                Objects.equals(asset, that.asset) &&
-                Objects.equals(metaModel, that.metaModel);
+        return asset.issueTxid.equals(that.asset.issueTxid);
     }
 
     @Override
@@ -147,17 +158,18 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                             Context.CLIPBOARD_SERVICE);
                     ClipData clipData = clipboard.getPrimaryClip();
                     if (clipData != null && clipData.getItemCount() > 0) {
-                        CharSequence address = clipData.getItemAt(0).getText();
+                        CharSequence destinationAddress = clipData.getItemAt(0).getText();
                         try {
-                            Log.d(AssetModel.class.getSimpleName(), "Clipped Address: " + address);
+                            Log.d(AssetModel.class.getSimpleName(), "Clipped Address: " + destinationAddress);
                             Log.d(AssetModel.class.getSimpleName(),
                                     "Asset UTXO Addr: " + asset.utxoAddress);
 
                             SendAsset sendAsset = new SendAsset(
                                     Integer.toString(500),
                                     asset.utxoAddress,
-                                    trimNullEmpty(getNeededUTXO(500)),
-                                    address.toString(),
+                                    BRWalletManager.getReceiveAddress(),
+                                    destinationAddress.toString(),
+                                    Double.valueOf(getAssetIntQuantity()).intValue(),
                                     metaModel.assetId
                             );
                             FragmentNumberPicker.show(
@@ -189,15 +201,15 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     }
 
     @BindingAdapter("remoteImage")
-    public static void remoteImage(ImageView imageView, String imageData) {
-        if (TextUtils.isEmpty(imageData)) {
+    public static void remoteImage(ImageView imageView, MetaModel.Urls imageData) {
+        if (imageData == null || TextUtils.isEmpty(imageData.url)) {
             return;
         }
         executor.execute(() -> {
-            if (imageData.contains(",")) {
+            if (imageData.url.contains(",")) {
                 byte[] image = null;
                 try {
-                    image = Base64.decode(imageData.substring(imageData.indexOf(",")),
+                    image = Base64.decode(imageData.url.substring(imageData.url.indexOf(",")),
                             Base64.DEFAULT);
                 } catch (IllegalArgumentException e) {
 
@@ -208,8 +220,8 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                         handler.post(() -> imageView.setImageBitmap(bitmap));
                     }
                 }
-            } else if (imageData.contains("http")) {
-                Picasso.get().load(imageData).into(imageView);
+            } else if (imageData.url.contains("http")) {
+                handler.post(() -> Picasso.get().load(imageData.url).into(imageView));
             }
         });
     }

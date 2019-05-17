@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -39,6 +40,12 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
     }
 
     @Override
+    protected void handleDigitClick(@NonNull String dig) {
+        pin.append(dig);
+        updateDots();
+    }
+
+    @Override
     protected void updateDots() {
         ((TextView) getView().findViewById(R.id.quantity_edit)).setText(pin.toString());
         // Not updating dots for just number entry
@@ -52,7 +59,13 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
     @Override
     protected BRAuthCompletion.AuthType getType() {
         BRAuthCompletion.AuthType authType = super.getType();
-        authType.sendAsset.setQuantity(Integer.parseInt(pin.toString()));
+        if (pin.length() == 0) {
+            try {
+                authType.sendAsset.setQuantity(Integer.parseInt(pin.toString()));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
         return authType;
     }
 }

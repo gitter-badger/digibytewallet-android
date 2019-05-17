@@ -5,23 +5,44 @@ import java.util.Arrays;
 public class SendAsset {
     String fee;
     String[] from;
-    String[] financeAddresses;
     To[] to;
 
-    SendAsset(String fee, String from, String[] financeAddresses, String to, String assetId) {
+    private static final int TO_DESTINATION = 0;
+    private static final int TO_CHANGE = 1;
+
+
+    SendAsset(String fee, String fromAddress, String changeAddress, String destinationAddress,
+              int totalAssetQuantity, String assetId) {
         this.fee = fee;
+
         this.from = new String[1];
-        this.from[0] = from;
-        this.financeAddresses = financeAddresses;
-        this.to = new To[1];
-        this.to[0] = new To();
-        this.to[0].address = to;
-        this.to[0].assetId = assetId;
+        this.from[0] = fromAddress;
+
+        to = new To[2];
+        to[TO_DESTINATION] = new To();
+        to[TO_DESTINATION].address = destinationAddress;
+        to[TO_DESTINATION].assetId = assetId;
+
+        to[TO_CHANGE] = new To();
+        to[TO_CHANGE].address = changeAddress;
+        to[TO_CHANGE].assetId = assetId;
+        to[TO_CHANGE].amount = totalAssetQuantity;
     }
 
     public SendAsset setQuantity(int amount) {
-        this.to[0].amount = amount;
+        to[TO_DESTINATION].amount = amount;
+        to[TO_CHANGE].amount -= amount;
+        //If the total amount has been consumed, remove the change
+        if (to[TO_CHANGE].amount == 0) {
+            To[] single = new To[1];
+            single[TO_DESTINATION] = to[TO_DESTINATION];
+            to = single;
+        }
         return this;
+    }
+
+    public boolean isValidAmount() {
+        return to[TO_DESTINATION].amount > 0;
     }
 
     @Override
