@@ -245,30 +245,30 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
                 Gson gson = new Gson();
                 String payload = gson.toJson(authType.sendAsset);
                 Log.d(BRActivity.class.getSimpleName(), payload);
-//                RetrofitManager.instance.sendAsset(payload,
-//                        new RetrofitManager.SendAssetCallback() {
-//                            @Override
-//                            public void success(SendAssetResponse sendAssetResponse) {
-//                                try {
-//                                    byte[] sendAddressHex = Hex.decodeHex(
-//                                            sendAssetResponse.getTxHex().toCharArray());
-//                                    byte[] rawSeed = BRKeyStore.getPhrase(DigiByte.getContext(),
-//                                            BRConstants.ASSETS_REQUEST_CODE);
-//                                    byte[] seed = TypesConverter.getNullTerminatedPhrase(rawSeed);
-//                                    byte[] transaction = BRWalletManager.parseSignSerializeSend(
-//                                            sendAddressHex, seed);
-//                                    String txHex = BaseEncoding.base16().encode(transaction);
-//                                    Log.d(BRActivity.class.getSimpleName(), "Tx Hex: " + txHex);
-//                                } catch (Exception e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void error(String message) {
-//                                Log.d(BRActivity.class.getSimpleName(), message);
-//                            }
-//                        });
+                RetrofitManager.instance.sendAsset(payload,
+                        new RetrofitManager.SendAssetCallback() {
+                            @Override
+                            public void success(SendAssetResponse sendAssetResponse) {
+                                try {
+                                    byte[] sendAddressHex = Hex.decodeHex(
+                                            sendAssetResponse.getTxHex().toCharArray());
+                                    byte[] rawSeed = BRKeyStore.getPhrase(DigiByte.getContext(),
+                                            BRConstants.ASSETS_REQUEST_CODE);
+                                    byte[] seed = TypesConverter.getNullTerminatedPhrase(rawSeed);
+                                    byte[] transaction = BRWalletManager.parseSignSerializeSend(
+                                            sendAddressHex, seed);
+                                    String txHex = BaseEncoding.base16().encode(transaction);
+                                    Log.d(BRActivity.class.getSimpleName(), "Tx Hex: " + txHex);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void error(String message) {
+                                Log.d(BRActivity.class.getSimpleName(), message);
+                            }
+                        });
                 break;
         }
     }

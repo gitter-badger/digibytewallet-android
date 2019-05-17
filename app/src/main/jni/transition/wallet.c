@@ -1122,6 +1122,7 @@ Java_io_digibyte_wallet_BRWalletManager_parseSignSerializeSend(JNIEnv *env,
     int txLength = (*env)->GetArrayLength(env, assethex);
     jbyte *byteTx = (*env)->GetByteArrayElements(env, assethex, 0);
     BRTransaction *tx = BRTransactionParse((uint8_t *) byteTx, (size_t) txLength);
+    BRFixAssetInputs(_wallet, tx);
 
     //Sign
     jbyte *bytePhrase = (*env)->GetByteArrayElements(env, phrase, 0);
@@ -1142,8 +1143,6 @@ Java_io_digibyte_wallet_BRWalletManager_parseSignSerializeSend(JNIEnv *env,
     jbyteArray txBytes = (*env)->NewByteArray(env, (jsize) len);
     (*env)->SetByteArrayRegion(env, txBytes, 0, (jsize) len, (jbyte *) buf);
 
-    //Free the transaction
-    BRTransactionFree(tx);
     return txBytes;
 }
 

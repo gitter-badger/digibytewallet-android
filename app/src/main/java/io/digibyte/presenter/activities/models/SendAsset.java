@@ -32,8 +32,11 @@ public class SendAsset {
     public SendAsset setQuantity(int amount) {
         to[TO_DESTINATION].amount = amount;
         to[TO_CHANGE].amount -= amount;
-        //If the total amount has been consumed, remove the change
-        if (to[TO_CHANGE].amount == 0) {
+        if (to[TO_CHANGE].amount < 0) {
+            //Too much selected, invalid amount
+            to[TO_DESTINATION].amount = -1;
+        } else if (to[TO_CHANGE].amount == 0) {
+            //Total amount consumed, remove the change output
             To[] single = new To[1];
             single[TO_DESTINATION] = to[TO_DESTINATION];
             to = single;

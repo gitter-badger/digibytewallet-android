@@ -47,8 +47,8 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
 
     @Override
     protected void updateDots() {
-        ((TextView) getView().findViewById(R.id.quantity_edit)).setText(pin.toString());
         // Not updating dots for just number entry
+        ((TextView) getView().findViewById(R.id.quantity_edit)).setText(pin.toString());
     }
 
     @Override
@@ -59,7 +59,7 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
     @Override
     protected BRAuthCompletion.AuthType getType() {
         BRAuthCompletion.AuthType authType = super.getType();
-        if (pin.length() == 0) {
+        if (pin.length() > 0) {
             try {
                 authType.sendAsset.setQuantity(Integer.parseInt(pin.toString()));
             } catch (NumberFormatException e) {
