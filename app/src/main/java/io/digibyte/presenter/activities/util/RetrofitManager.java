@@ -1,5 +1,6 @@
 package io.digibyte.presenter.activities.util;
 
+import android.util.ArrayMap;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Map;
 
 import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.MetaModel;
@@ -30,10 +32,10 @@ import retrofit2.http.Path;
 
 public class RetrofitManager {
     public static RetrofitManager instance = new RetrofitManager();
-    private Retrofit api;
+    private Retrofit assetsApi;
 
     private RetrofitManager() {
-        api = new Retrofit.Builder()
+        assetsApi = new Retrofit.Builder()
                 .baseUrl("https://api.digiassets.net:443/v3/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -52,6 +54,7 @@ public class RetrofitManager {
         Call<ResponseBody> sendAsset(@Body RequestBody body);
 
         @POST("broadcast/")
+        @Headers({"cache-control: no-cache", "Content-Type: application/x-www-form-urlencoded"})
         Call<ResponseBody> broadcastTx(@Body RequestBody body);
     }
 
@@ -60,7 +63,7 @@ public class RetrofitManager {
     }
 
     public void getAssets(String address, AssetsCallback assetsCallback) {
-        AssetEndpoints apiService = api.create(AssetEndpoints.class);
+        AssetEndpoints apiService = assetsApi.create(AssetEndpoints.class);
         Call<AddressInfo> call = apiService.getAssets(address);
         call.enqueue(new Callback<AddressInfo>() {
             @Override
@@ -83,7 +86,7 @@ public class RetrofitManager {
 
     public void getAssetMeta(String assetid, String utxotdid, String index,
             MetaCallback metaCallback) {
-        AssetEndpoints apiService = api.create(AssetEndpoints.class);
+        AssetEndpoints apiService = assetsApi.create(AssetEndpoints.class);
         Call<MetaModel> call = apiService.getMeta(assetid, utxotdid, index);
         call.enqueue(new Callback<MetaModel>() {
             @Override
@@ -107,7 +110,7 @@ public class RetrofitManager {
     }
 
     public void sendAsset(String sendAsset, SendAssetCallback sendAssetCallback) {
-        AssetEndpoints apiService = api.create(AssetEndpoints.class);
+        AssetEndpoints apiService = assetsApi.create(AssetEndpoints.class);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), sendAsset);
         Call<ResponseBody> call = apiService.sendAsset(body);
         call.enqueue(new Callback<ResponseBody>() {
@@ -128,8 +131,7 @@ public class RetrofitManager {
                         Gson gson = new Gson();
                         Type listType = new TypeToken<SendAssetResponse>() {
                         }.getType();
-                        SendAssetResponse sendAssetResponse = gson.fromJson(
-                                response.body().string(), listType);
+                        SendAssetResponse sendAssetResponse = gson.fromJson(response.body().string(), listType);
                         sendAssetCallback.success(sendAssetResponse);
                     }
                 } catch (IOException e) {
@@ -148,17 +150,23 @@ public class RetrofitManager {
         void response(String broadcastResponse);
     }
 
-    public void broadcast(String transactionHex, BroadcastTransaction broadcastTransaction) {
-        AssetEndpoints apiService = instance.api.create(AssetEndpoints.class);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), transactionHex);
-        Call<ResponseBody> call = apiService.broadcastTx(body);
+    public void broadcast(String txHex, BroadcastTransaction broadcastTransaction) {
+        Map<String, Object> jsonParams = new ArrayMap<>();
+        jsonParams.put("txHex", txHex);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (new JSONObject(jsonParams)).toString());
+
+        AssetEndpoints explorerService = assetsApi.create(AssetEndpoints.class);
+        Call<ResponseBody> call = explorerService.broadcastTx(body);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.d(RetrofitManager.class.getSimpleName(), "Status Code: " + response.code());
-                Log.d(RetrofitManager.class.getSimpleName(),
-                        "Status Message: " + response.message());
-                //broadcastTransaction.response(response.body());
+                Log.d(RetrofitManager.class.getSimpleName(), "Status Message: " + response.message());
+                try {
+                    broadcastTransaction.response(response.body().string());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -166,5 +174,6 @@ public class RetrofitManager {
                 t.printStackTrace();
             }
         });
+
     }
 }

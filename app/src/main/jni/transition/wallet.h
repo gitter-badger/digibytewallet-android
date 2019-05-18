@@ -240,10 +240,10 @@ JNIEXPORT jlong JNICALL Java_io_digibyte_wallet_BRWalletManager_maxFee(JNIEnv *e
                                                                            jobject thiz);
 
 JNIEXPORT jbyteArray JNICALL
-Java_io_digibyte_wallet_BRWalletManager_parseSignSerializeSend(JNIEnv *env,
-                                                               jobject thiz,
-                                                               jbyteArray assetHex,
-                                                               jbyteArray phrasr);
+Java_io_digibyte_wallet_BRWalletManager_parseSignSerialize(JNIEnv *env,
+                                                           jobject thiz,
+                                                           jbyteArray assetHex,
+                                                           jbyteArray phrasr);
 
 JNIEXPORT jobjectArray JNICALL
 Java_io_digibyte_presenter_activities_models_AssetModel_getNeededUTXO(JNIEnv *env,

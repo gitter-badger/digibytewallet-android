@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
@@ -20,6 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.appolica.flubber.Flubber;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.common.io.BaseEncoding;
+import com.google.gson.Gson;
+
+import org.apache.commons.codec.binary.Hex;
 
 import java.math.RoundingMode;
 import java.text.DateFormat;
@@ -43,6 +48,7 @@ import io.digibyte.presenter.activities.adapters.TxAdapter;
 import io.digibyte.presenter.activities.callbacks.AssetCallback;
 import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.AssetModel;
+import io.digibyte.presenter.activities.models.SendAssetResponse;
 import io.digibyte.presenter.activities.settings.SecurityCenterActivity;
 import io.digibyte.presenter.activities.settings.SettingsActivity;
 import io.digibyte.presenter.activities.settings.SyncBlockchainActivity;
@@ -58,8 +64,11 @@ import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.manager.SyncManager;
 import io.digibyte.tools.manager.TxManager;
 import io.digibyte.tools.manager.TxManager.onStatusListener;
+import io.digibyte.tools.security.BRKeyStore;
 import io.digibyte.tools.sqlite.TransactionDataSource;
 import io.digibyte.tools.threads.BRExecutor;
+import io.digibyte.tools.util.BRConstants;
+import io.digibyte.tools.util.TypesConverter;
 import io.digibyte.tools.util.ViewUtils;
 import io.digibyte.wallet.BRPeerManager;
 import io.digibyte.wallet.BRWalletManager;
@@ -451,5 +460,70 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onComplete(AuthType authType) {
+        super.onComplete(authType);
+        switch (authType.type) {
+            case SEND_ASSET:
+                if (!authType.sendAsset.isValidAmount()) {
+                    return;
+                }
+                Gson gson = new Gson();
+                String payload = gson.toJson(authType.sendAsset);
+                Log.d(BRActivity.class.getSimpleName(), payload);
+                RetrofitManager.instance.sendAsset(payload,
+                        new RetrofitManager.SendAssetCallback() {
+                            @Override
+                            public void success(SendAssetResponse sendAssetResponse) {
+                                broadcast(sendAssetResponse);
+                            }
+
+                            @Override
+                            public void error(String message) {
+                                Log.d(BRActivity.class.getSimpleName(), message);
+                            }
+                        });
+                break;
+        }
+
+    }
+
+    private void broadcast(SendAssetResponse sendAssetResponse) {
+        try {
+            byte[] sendAddressHex = Hex.decodeHex(
+                    sendAssetResponse.getTxHex().toCharArray());
+            byte[] rawSeed = BRKeyStore.getPhrase(DigiByte.getContext(),
+                    BRConstants.ASSETS_REQUEST_CODE);
+            byte[] seed = TypesConverter.getNullTerminatedPhrase(rawSeed);
+            byte[] transaction = BRWalletManager.parseSignSerialize(sendAddressHex, seed);
+            String txHex = BaseEncoding.base16().encode(transaction);
+            Log.d(BRActivity.class.getSimpleName(), "Broadcast Payload: " + txHex);
+            RetrofitManager.instance.broadcast(txHex, new RetrofitManager.BroadcastTransaction() {
+                @Override
+                public void response(String broadcastResponse) {
+                    Log.d(BRActivity.class.getSimpleName(), "Send Respone: " + broadcastResponse);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showSendConfirmDialog(int error, String message) {
+        BRExecutor.getInstance().forMainThreadTasks().execute(() -> {
+            BRAnimator.showBreadSignal(BreadActivity.this,
+                    error == 0 ? getString(R.string.Alerts_sendSuccess)
+                            : getString(R.string.Alert_error),
+                    error == 0 ? getString(R.string.Alerts_sendSuccessSubheader)
+                            : message, error == 0 ? R.raw.success_check
+                            : R.raw.error_check, () -> {
+                        try {
+                            getSupportFragmentManager().popBackStack();
+                        } catch (IllegalStateException e) {
+                        }
+                    });
+        });
     }
 }

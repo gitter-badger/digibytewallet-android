@@ -1113,10 +1113,10 @@ JNIEXPORT jbyteArray JNICALL Java_io_digibyte_wallet_BRWalletManager_sweepBCash(
 
 //parse sign and serialize an asset transaction
 JNIEXPORT jbyteArray JNICALL
-Java_io_digibyte_wallet_BRWalletManager_parseSignSerializeSend(JNIEnv *env,
-                                                               jobject thiz,
-                                                               jbyteArray assethex,
-                                                               jbyteArray phrase) {
+Java_io_digibyte_wallet_BRWalletManager_parseSignSerialize(JNIEnv *env,
+                                                           jobject thiz,
+                                                           jbyteArray assethex,
+                                                           jbyteArray phrase) {
 
 
     int txLength = (*env)->GetArrayLength(env, assethex);
@@ -1131,11 +1131,6 @@ Java_io_digibyte_wallet_BRWalletManager_parseSignSerializeSend(JNIEnv *env,
     BRBIP39DeriveKey(key.u8, charPhrase, NULL);
     size_t seedSize = sizeof(key);
     BRWalletSignTransaction(_wallet, tx, 0x01, key.u8, seedSize);
-
-    //Broadcast
-    BRPeerManagerPublishTx(_peerManager, tx, tx, callback);
-    (*env)->ReleaseByteArrayElements(env, phrase, bytePhrase, JNI_ABORT);
-    __android_log_print(ANDROID_LOG_DEBUG, "Message from C: ", "returning true");
 
     //Serialize tx to hex
     uint8_t buf[BRTransactionSerialize(tx, NULL, 0)];
