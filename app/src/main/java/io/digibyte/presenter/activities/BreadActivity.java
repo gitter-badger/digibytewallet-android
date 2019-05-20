@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -241,18 +242,23 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             notifyDataSetChangeForAll();
         }
         for (ListItemTransactionData transaction : transactionsToAdd) {
-            RetrofitManager.instance.getAssets(transaction.getTransactionItem().getTo()[0],
-                    addressInfo -> {
-                        if (addressInfo == null) {
-                            return;
-                        }
-                        for (AddressInfo.Asset asset : addressInfo.getAssets()) {
-                            AssetModel model = new AssetModel(asset);
-                            if (!assetAdapter.containsItem(model)) {
+            for (String destination : transaction.getTransactionItem().getFrom()) {
+                if (TextUtils.isEmpty(destination)) {
+                    continue;
+                }
+                //DQryxH1uiJXf9p1orKRhRgry6tUQtpACvd
+                Log.d(BreadActivity.class.getSimpleName(), destination);
+                RetrofitManager.instance.getAssets(destination,
+                        addressInfo -> {
+                            if (addressInfo == null) {
+                                return;
+                            }
+                            for (AddressInfo.Asset asset : addressInfo.getAssets()) {
+                                AssetModel model = new AssetModel(asset);
                                 assetAdapter.addItem(model);
                             }
-                        }
-                    });
+                        });
+            }
         }
     }
 
@@ -468,6 +474,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         switch (authType.type) {
             case SEND_ASSET:
                 if (!authType.sendAsset.isValidAmount()) {
+                    Log.d(BreadActivity.class.getSimpleName(), "invalid amount");
                     return;
                 }
                 Gson gson = new Gson();
@@ -503,6 +510,8 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             RetrofitManager.instance.broadcast(txHex, new RetrofitManager.BroadcastTransaction() {
                 @Override
                 public void response(String broadcastResponse) {
+                    //TODO need to come back here to ensure the dialog has proper/accurate contextual info
+                    showSendConfirmDialog(0, broadcastResponse);
                     Log.d(BRActivity.class.getSimpleName(), "Send Respone: " + broadcastResponse);
                 }
             });

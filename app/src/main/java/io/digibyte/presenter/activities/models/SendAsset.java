@@ -6,13 +6,15 @@ public class SendAsset {
     String fee;
     String[] from;
     To[] to;
+    public transient int divisibility;
 
     private static final int TO_DESTINATION = 0;
     private static final int TO_CHANGE = 1;
 
+    public static final int INVALID_AMOUNT = -1;
 
-    SendAsset(String fee, String fromAddress, String changeAddress, String destinationAddress,
-              int totalAssetQuantity, String assetId) {
+    SendAsset(String fee, String fromAddress, String destinationAddress,
+              int totalAssetQuantity, String assetId, int divisibility) {
         this.fee = fee;
 
         this.from = new String[1];
@@ -24,9 +26,11 @@ public class SendAsset {
         to[TO_DESTINATION].assetId = assetId;
 
         to[TO_CHANGE] = new To();
-        to[TO_CHANGE].address = changeAddress;
+        to[TO_CHANGE].address = fromAddress;
         to[TO_CHANGE].assetId = assetId;
         to[TO_CHANGE].amount = totalAssetQuantity;
+
+        this.divisibility = divisibility;
     }
 
     public SendAsset setQuantity(int amount) {
@@ -34,7 +38,7 @@ public class SendAsset {
         to[TO_CHANGE].amount -= amount;
         if (to[TO_CHANGE].amount < 0) {
             //Too much selected, invalid amount
-            to[TO_DESTINATION].amount = -1;
+            to[TO_DESTINATION].amount = INVALID_AMOUNT;
         } else if (to[TO_CHANGE].amount == 0) {
             //Total amount consumed, remove the change output
             To[] single = new To[1];
@@ -45,7 +49,7 @@ public class SendAsset {
     }
 
     public boolean isValidAmount() {
-        return to[TO_DESTINATION].amount > 0;
+        return to[TO_DESTINATION].amount != INVALID_AMOUNT;
     }
 
     @Override

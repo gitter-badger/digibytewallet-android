@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import io.digibyte.R;
+import io.digibyte.presenter.activities.models.SendAsset;
+import io.digibyte.presenter.customviews.BRKeyboard;
 import io.digibyte.presenter.interfaces.BRAuthCompletion;
 
 public class FragmentNumberPicker extends FragmentPin implements View.OnClickListener {
@@ -36,7 +38,13 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
         view.findViewById(R.id.dialogLayout).setVisibility(View.GONE);
         view.findViewById(R.id.quantity_view).setVisibility(View.VISIBLE);
         view.findViewById(R.id.complete).setOnClickListener(this);
+        ((BRKeyboard) view.findViewById(R.id.brkeyboard)).setShowDot(true);
         return view;
+    }
+
+    @Override
+    protected boolean onlyDigits() {
+        return false;
     }
 
     @Override
@@ -61,8 +69,11 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
         BRAuthCompletion.AuthType authType = super.getType();
         if (pin.length() > 0) {
             try {
-                authType.sendAsset.setQuantity(Integer.parseInt(pin.toString()));
+                double quantity = Double.parseDouble(pin.toString());
+                quantity = quantity * Math.pow(10, authType.sendAsset.divisibility);
+                authType.sendAsset.setQuantity(Double.valueOf(quantity).intValue());
             } catch (NumberFormatException e) {
+                authType.sendAsset.setQuantity(SendAsset.INVALID_AMOUNT);
                 e.printStackTrace();
             }
         }

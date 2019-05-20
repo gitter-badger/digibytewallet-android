@@ -44,9 +44,9 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
 
     private AddressInfo.Asset asset;
     private MetaModel metaModel;
-    private double assetAmount = 100.1;
-    private static Handler handler = new Handler(Looper.getMainLooper());
-    private static Executor executor = Executors.newSingleThreadExecutor();
+    private double assetAmount = 0;
+    private static transient Handler handler = new Handler(Looper.getMainLooper());
+    private static transient Executor executor = Executors.newSingleThreadExecutor();
 
     private static native String[] getNeededUTXO(int amount);
 
@@ -61,7 +61,11 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
 
     @Bindable
     public MetaModel.Urls getAssetImage() {
-        if (metaModel == null) {
+        if (metaModel == null ||
+                metaModel.metadataOfIssuence == null ||
+                metaModel.metadataOfIssuence.data == null ||
+                metaModel.metadataOfIssuence.data.urls == null ||
+                metaModel.metadataOfIssuence.data.urls.length == 0) {
             return null;
         }
         for (MetaModel.Urls urls : metaModel.metadataOfIssuence.data.urls) {
@@ -85,14 +89,10 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         if (metaModel == null) {
             return "";
         }
-        if (asset.divisibility == 0) {
-            return Double.toString(asset.amount);
-        } else {
-            return Double.toString((double) asset.amount / (Math.pow(10, asset.divisibility)));
-        }
+        return String.valueOf(getAssetDoubleQuantity());
     }
 
-    private double getAssetIntQuantity() {
+    private double getAssetDoubleQuantity() {
         if (asset.divisibility == 0) {
             return asset.amount;
         } else {
@@ -167,10 +167,10 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                             SendAsset sendAsset = new SendAsset(
                                     Integer.toString(500),
                                     asset.utxoAddress,
-                                    BRWalletManager.getReceiveAddress(),
                                     destinationAddress.toString(),
-                                    Double.valueOf(getAssetIntQuantity()).intValue(),
-                                    metaModel.assetId
+                                    asset.amount,
+                                    metaModel.assetId,
+                                    asset.divisibility
                             );
                             FragmentNumberPicker.show(
                                     (AppCompatActivity) v.getContext(),

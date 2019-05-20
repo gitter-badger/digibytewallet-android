@@ -808,21 +808,21 @@ JNIEXPORT void JNICALL
 Java_io_digibyte_wallet_BRWalletManager_addInputToPrivKeyTx(JNIEnv *env, jobject thiz,
                                                                 jbyteArray hash, int vout,
                                                                 jbyteArray script, jlong amount) {
-    __android_log_print(ANDROID_LOG_DEBUG, "Message from C: ", "addInputToPrivKeyTx");
-    _privKeyBalance += amount;
-
-    jsize hashLength = (*env)->GetArrayLength(env, hash);
-    jsize scriptLength = (*env)->GetArrayLength(env, script);
-
-    if (hashLength > 256 || !_privKeyTx) return;
-
-    jbyte *rawHash = (*env)->GetByteArrayElements(env, hash, 0);
-    jbyte *rawScript = (*env)->GetByteArrayElements(env, script, 0);
-    UInt256 reversedHash = UInt256Reverse((*(UInt256 *) rawHash));
-
-    BRTransactionAddInput(_privKeyTx, reversedHash, (uint32_t) vout, (uint64_t) amount,
-                          (const uint8_t *) rawScript,
-                          (size_t) scriptLength, NULL, 0, TXIN_SEQUENCE);
+//    __android_log_print(ANDROID_LOG_DEBUG, "Message from C: ", "addInputToPrivKeyTx");
+//    _privKeyBalance += amount;
+//
+//    jsize hashLength = (*env)->GetArrayLength(env, hash);
+//    jsize scriptLength = (*env)->GetArrayLength(env, script);
+//
+//    if (hashLength > 256 || !_privKeyTx) return;
+//
+//    jbyte *rawHash = (*env)->GetByteArrayElements(env, hash, 0);
+//    jbyte *rawScript = (*env)->GetByteArrayElements(env, script, 0);
+//    UInt256 reversedHash = UInt256Reverse((*(UInt256 *) rawHash));
+//
+//    BRTransactionAddInput(_privKeyTx, reversedHash, (uint32_t) vout, (uint64_t) amount,
+//                          (const uint8_t *) rawScript,
+//                          (size_t) scriptLength, NULL, 0, TXIN_SEQUENCE);
 }
 
 JNIEXPORT jobject JNICALL Java_io_digibyte_wallet_BRWalletManager_getPrivKeyObject(JNIEnv *env,

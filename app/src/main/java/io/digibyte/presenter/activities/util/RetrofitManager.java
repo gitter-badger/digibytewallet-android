@@ -54,7 +54,6 @@ public class RetrofitManager {
         Call<ResponseBody> sendAsset(@Body RequestBody body);
 
         @POST("broadcast/")
-        @Headers({"cache-control: no-cache", "Content-Type: application/x-www-form-urlencoded"})
         Call<ResponseBody> broadcastTx(@Body RequestBody body);
     }
 
@@ -154,9 +153,8 @@ public class RetrofitManager {
         Map<String, Object> jsonParams = new ArrayMap<>();
         jsonParams.put("txHex", txHex);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (new JSONObject(jsonParams)).toString());
-
-        AssetEndpoints explorerService = assetsApi.create(AssetEndpoints.class);
-        Call<ResponseBody> call = explorerService.broadcastTx(body);
+        AssetEndpoints assetService = assetsApi.create(AssetEndpoints.class);
+        Call<ResponseBody> call = assetService.broadcastTx(body);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

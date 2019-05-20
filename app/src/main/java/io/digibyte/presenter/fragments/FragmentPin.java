@@ -153,11 +153,15 @@ public class FragmentPin extends Fragment implements OnBackPressListener {
         }
         if (key.isEmpty()) {
             handleDeleteClick();
-        } else if (Character.isDigit(key.charAt(0))) {
+        } else if (!onlyDigits() || Character.isDigit(key.charAt(0))) {
             handleDigitClick(key.substring(0, 1));
         } else {
             Log.e(TAG, "handleClick: oops: " + key);
         }
+    }
+
+    protected boolean onlyDigits() {
+        return true;
     }
 
     protected void handleDigitClick(@NonNull final String dig) {
