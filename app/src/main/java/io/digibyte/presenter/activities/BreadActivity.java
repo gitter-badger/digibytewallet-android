@@ -242,22 +242,25 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             notifyDataSetChangeForAll();
         }
         for (ListItemTransactionData transaction : transactionsToAdd) {
-            for (String destination : transaction.getTransactionItem().getFrom()) {
-                if (TextUtils.isEmpty(destination)) {
-                    continue;
+            if (transaction.transactionItem.getSent() == 0) {
+                for (String destination : transaction.getTransactionItem().getFrom()) {
+                    if (TextUtils.isEmpty(destination)) {
+                        continue;
+                    }
+                    Log.d(BreadActivity.class.getSimpleName(), destination);
+                    RetrofitManager.instance.getAssets(destination,
+                            addressInfo -> {
+                                if (addressInfo == null) {
+                                    return;
+                                }
+                                for (AddressInfo.Asset asset : addressInfo.getAssets()) {
+                                    AssetModel model = new AssetModel(asset);
+                                    if (!assetAdapter.containsItem(model)) {
+                                        assetAdapter.addItem(model);
+                                    }
+                                }
+                            });
                 }
-                //DQryxH1uiJXf9p1orKRhRgry6tUQtpACvd
-                Log.d(BreadActivity.class.getSimpleName(), destination);
-                RetrofitManager.instance.getAssets(destination,
-                        addressInfo -> {
-                            if (addressInfo == null) {
-                                return;
-                            }
-                            for (AddressInfo.Asset asset : addressInfo.getAssets()) {
-                                AssetModel model = new AssetModel(asset);
-                                assetAdapter.addItem(model);
-                            }
-                        });
             }
         }
     }
