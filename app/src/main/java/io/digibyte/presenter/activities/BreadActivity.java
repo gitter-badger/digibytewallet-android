@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.appolica.flubber.Flubber;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.common.collect.Ordering;
 import com.google.common.io.BaseEncoding;
 import com.google.gson.Gson;
 
@@ -34,8 +35,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +52,7 @@ import io.digibyte.presenter.activities.adapters.TxAdapter;
 import io.digibyte.presenter.activities.callbacks.AssetCallback;
 import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.AssetModel;
+import io.digibyte.presenter.activities.models.SendAsset;
 import io.digibyte.presenter.activities.models.SendAssetResponse;
 import io.digibyte.presenter.activities.settings.SecurityCenterActivity;
 import io.digibyte.presenter.activities.settings.SettingsActivity;
@@ -241,27 +245,63 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             adapter.getReceivedAdapter().updateTransactions(newTransactions);
             notifyDataSetChangeForAll();
         }
-        for (ListItemTransactionData transaction : transactionsToAdd) {
-            if (transaction.transactionItem.getSent() == 0) {
-                for (String destination : transaction.getTransactionItem().getFrom()) {
-                    if (TextUtils.isEmpty(destination)) {
-                        continue;
-                    }
-                    Log.d(BreadActivity.class.getSimpleName(), destination);
-                    RetrofitManager.instance.getAssets(destination,
-                            addressInfo -> {
-                                if (addressInfo == null) {
-                                    return;
-                                }
-                                for (AddressInfo.Asset asset : addressInfo.getAssets()) {
-                                    AssetModel model = new AssetModel(asset);
-                                    if (!assetAdapter.containsItem(model)) {
-                                        assetAdapter.addItem(model);
-                                    }
-                                }
-                            });
-                }
+        if (isPossibleNewAssetSend(transactionsToAdd)) {
+            reprocessAllAssets();
+        } else if (transactionsToAdd.size() > 0) {
+            processNewTxAssets(transactionsToAdd);
+        }
+    }
+
+    private boolean isPossibleNewAssetSend(ArrayList<ListItemTransactionData> newTransactions) {
+        return newTransactions.size() == 1;
+    }
+
+    private void reprocessAllAssets() {
+        assetAdapter.clear();
+        Set<String> toSet = new HashSet<>();
+        Set<String> fromSet = new HashSet<>();
+        for (ListItemTransactionData transaction : adapter.getAllAdapter().getTransactions()) {
+            Collections.addAll(fromSet, transaction.getTransactionItem().getFrom());
+            Collections.addAll(toSet, transaction.getTransactionItem().getTo());
+        }
+        processAddressSet(fromSet);
+        processAddressSet(toSet);
+        Collections.sort(assetAdapter.getItems(), Ordering.usingToString());
+        assetAdapter.notifyItemRangeChanged(0, assetAdapter.getItemCount());
+    }
+
+    private void processNewTxAssets(ArrayList<ListItemTransactionData> newTransactions) {
+        Set<String> toSet = new HashSet<>();
+        Set<String> fromSet = new HashSet<>();
+        for (ListItemTransactionData transaction : newTransactions) {
+            Collections.addAll(fromSet, transaction.getTransactionItem().getFrom());
+            Collections.addAll(toSet, transaction.getTransactionItem().getTo());
+        }
+        processAddressSet(fromSet);
+        processAddressSet(toSet);
+    }
+
+    private void processAddressSet(Set<String> set) {
+        for (String destination : set) {
+            if (TextUtils.isEmpty(destination) || !BRWalletManager.addressContainedInWallet(destination)) {
+                continue;
             }
+            Log.d(BreadActivity.class.getSimpleName(), destination);
+            RetrofitManager.instance.getAssets(destination,
+                    addressInfo -> {
+                        if (addressInfo == null) {
+                            return;
+                        }
+                        for (AddressInfo.Asset asset : addressInfo.getAssets()) {
+                            AssetModel model = new AssetModel(asset);
+                            if (!assetAdapter.containsItem(model)) {
+                                assetAdapter.addItem(model);
+                            } else {
+                                model = (AssetModel) assetAdapter.getItem(model);
+                                model.addNonDupAsset(asset);
+                            }
+                        }
+                    });
         }
     }
 
@@ -362,6 +402,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         } catch (IllegalArgumentException e) {
             //Race condition inflating the hierarchy?
         }
+    }
+
+    @OnClick(R.id.assets_action)
+    void onAssetsButtonClick(View view) {
+        bindings.drawerLayout.openDrawer(GravityCompat.END);
     }
 
     @OnClick(R.id.main_action)
@@ -487,11 +532,12 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                         new RetrofitManager.SendAssetCallback() {
                             @Override
                             public void success(SendAssetResponse sendAssetResponse) {
-                                broadcast(sendAssetResponse);
+                                broadcast(sendAssetResponse, authType.sendAsset);
                             }
 
                             @Override
                             public void error(String message) {
+                                showSendConfirmDialog(1, getString(R.string.Alerts_sendFailure));
                                 Log.d(BRActivity.class.getSimpleName(), message);
                             }
                         });
@@ -500,22 +546,28 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
     }
 
-    private void broadcast(SendAssetResponse sendAssetResponse) {
+    private void broadcast(SendAssetResponse sendAssetResponse, SendAsset sendAsset) {
         try {
-            byte[] sendAddressHex = Hex.decodeHex(
-                    sendAssetResponse.getTxHex().toCharArray());
-            byte[] rawSeed = BRKeyStore.getPhrase(DigiByte.getContext(),
-                    BRConstants.ASSETS_REQUEST_CODE);
+            byte[] sendAddressHex = Hex.decodeHex(sendAssetResponse.getTxHex().toCharArray());
+            byte[] rawSeed = BRKeyStore.getPhrase(DigiByte.getContext(), BRConstants.ASSETS_REQUEST_CODE);
             byte[] seed = TypesConverter.getNullTerminatedPhrase(rawSeed);
             byte[] transaction = BRWalletManager.parseSignSerialize(sendAddressHex, seed);
             String txHex = BaseEncoding.base16().encode(transaction);
             Log.d(BRActivity.class.getSimpleName(), "Broadcast Payload: " + txHex);
             RetrofitManager.instance.broadcast(txHex, new RetrofitManager.BroadcastTransaction() {
                 @Override
-                public void response(String broadcastResponse) {
+                public void success(String txId) {
                     //TODO need to come back here to ensure the dialog has proper/accurate contextual info
-                    showSendConfirmDialog(0, broadcastResponse);
-                    Log.d(BRActivity.class.getSimpleName(), "Send Respone: " + broadcastResponse);
+                    if (sendAsset.isCompleteSpend()) {
+                        assetAdapter.removeItem(sendAsset.assetModel);
+                    }
+                    showSendConfirmDialog(0, "");
+                    Log.d(BRActivity.class.getSimpleName(), "Broadcast Response: " + txId);
+                }
+
+                @Override
+                public void onError() {
+                    showSendConfirmDialog(1, getString(R.string.Alerts_sendFailure));
                 }
             });
         } catch (Exception e) {

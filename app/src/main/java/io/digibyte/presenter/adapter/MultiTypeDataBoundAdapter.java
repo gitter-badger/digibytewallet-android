@@ -19,6 +19,8 @@ package io.digibyte.presenter.adapter;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 
+import com.google.common.collect.Ordering;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,6 +28,7 @@ import java.util.List;
 
 import io.digibyte.BR;
 import io.digibyte.BuildConfig;
+import io.digibyte.presenter.activities.models.AssetModel;
 
 public class MultiTypeDataBoundAdapter extends BaseDataBoundAdapter {
 
@@ -78,7 +81,7 @@ public class MultiTypeDataBoundAdapter extends BaseDataBoundAdapter {
         return mItems.size();
     }
 
-    protected final List<Object> getItems() {
+    public final List<Object> getItems() {
         return mItems;
     }
 
@@ -104,6 +107,10 @@ public class MultiTypeDataBoundAdapter extends BaseDataBoundAdapter {
         notifyItemInserted(mItems.size() - 1);
     }
 
+    public final Object getItem(Object item) {
+        return mItems.get(mItems.indexOf(item));
+    }
+
     public final boolean containsItem(Object item) {
         return mItems.contains(item);
     }
@@ -118,6 +125,14 @@ public class MultiTypeDataBoundAdapter extends BaseDataBoundAdapter {
             int start = mItems.size();
             Collections.addAll(mItems, items);
             notifyItemRangeChanged(start, items.length);
+        }
+    }
+
+    public final void addItems(List<Object> items) {
+        if (null != items) {
+            int start = mItems.size();
+            Collections.addAll(mItems, items);
+            notifyItemRangeChanged(start, items.size());
         }
     }
 

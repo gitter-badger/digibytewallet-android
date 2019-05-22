@@ -1148,7 +1148,7 @@ Java_io_digibyte_presenter_activities_models_AssetModel_getNeededUTXO(JNIEnv *en
 
     char **addresses;
     array_new(addresses, 1);
-    uint8_t length = BRGetUTXO(_wallet, addresses, (uint64_t) amount);
+    size_t length = BRGetUTXO(_wallet, addresses, (uint64_t) amount);
 
     //Serialize
     jobjectArray ret = (jobjectArray) (*env)->NewObjectArray(env, length,

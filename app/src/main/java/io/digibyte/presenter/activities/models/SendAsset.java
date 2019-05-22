@@ -6,19 +6,23 @@ public class SendAsset {
     String fee;
     String[] from;
     To[] to;
+    String[] financeAddresses;
     public transient int divisibility;
+    public transient AssetModel assetModel;
 
     private static final int TO_DESTINATION = 0;
     private static final int TO_CHANGE = 1;
 
     public static final int INVALID_AMOUNT = -1;
 
-    SendAsset(String fee, String fromAddress, String destinationAddress,
-              int totalAssetQuantity, String assetId, int divisibility) {
+    SendAsset(String fee, String[] fromAddresses, String[] financeaddresses, String destinationAddress,
+              int totalAssetQuantity, String assetId, int divisibility, AssetModel assetModel) {
         this.fee = fee;
 
         this.from = new String[1];
-        this.from[0] = fromAddress;
+        this.from = fromAddresses;
+
+        this.financeAddresses = financeaddresses;
 
         to = new To[2];
         to[TO_DESTINATION] = new To();
@@ -26,11 +30,12 @@ public class SendAsset {
         to[TO_DESTINATION].assetId = assetId;
 
         to[TO_CHANGE] = new To();
-        to[TO_CHANGE].address = fromAddress;
+        to[TO_CHANGE].address = fromAddresses[0];
         to[TO_CHANGE].assetId = assetId;
         to[TO_CHANGE].amount = totalAssetQuantity;
 
         this.divisibility = divisibility;
+        this.assetModel = assetModel;
     }
 
     public SendAsset setQuantity(int amount) {
@@ -50,6 +55,10 @@ public class SendAsset {
 
     public boolean isValidAmount() {
         return to[TO_DESTINATION].amount != INVALID_AMOUNT;
+    }
+
+    public boolean isCompleteSpend() {
+        return to.length == 1;
     }
 
     @Override

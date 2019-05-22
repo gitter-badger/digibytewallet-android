@@ -140,13 +140,15 @@ public class RetrofitManager {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                t.printStackTrace();
+                sendAssetCallback.error("");
             }
         });
     }
 
     public interface BroadcastTransaction {
-        void response(String broadcastResponse);
+        void success(String broadcastResponse);
+
+        void onError();
     }
 
     public void broadcast(String txHex, BroadcastTransaction broadcastTransaction) {
@@ -160,15 +162,22 @@ public class RetrofitManager {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.d(RetrofitManager.class.getSimpleName(), "Status Code: " + response.code());
                 Log.d(RetrofitManager.class.getSimpleName(), "Status Message: " + response.message());
-                try {
-                    broadcastTransaction.response(response.body().string());
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (response.code() == 200) {
+                    String txId = "";
+                    try {
+                        txId = response.body().string();
+                    } catch (IOException e) {
+
+                    }
+                    broadcastTransaction.success(txId);
+                } else {
+                    broadcastTransaction.onError();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                broadcastTransaction.onError();
                 t.printStackTrace();
             }
         });

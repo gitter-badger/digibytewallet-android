@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.PopupMenu;
@@ -24,8 +25,10 @@ import androidx.databinding.BindingAdapter;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Objects;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -38,20 +41,28 @@ import io.digibyte.presenter.adapter.DynamicBinding;
 import io.digibyte.presenter.adapter.LayoutBinding;
 import io.digibyte.presenter.fragments.FragmentNumberPicker;
 import io.digibyte.presenter.interfaces.BRAuthCompletion;
-import io.digibyte.wallet.BRWalletManager;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
 
-    private AddressInfo.Asset asset;
     private MetaModel metaModel;
-    private double assetAmount = 0;
+    private List<AddressInfo.Asset> assets = new LinkedList<>();
     private static transient Handler handler = new Handler(Looper.getMainLooper());
     private static transient Executor executor = Executors.newSingleThreadExecutor();
 
     private static native String[] getNeededUTXO(int amount);
 
     public AssetModel(AddressInfo.Asset asset) {
-        this.asset = asset;
+        addNonDupAsset(asset);
+    }
+
+    public void addNonDupAsset(AddressInfo.Asset newAsset) {
+        for (AddressInfo.Asset asset : assets) {
+            if (asset.address.equals(newAsset.address) && asset.txid.equals(newAsset.txid)) {
+                return;
+            }
+        }
+        assets.add(newAsset);
+        notifyPropertyChanged(BR.assetQuantity);
     }
 
     @Override
@@ -84,20 +95,43 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         return metaModel.metadataOfIssuence.data.assetName;
     }
 
-    @Bindable
-    public String getAssetQuantity() {
-        if (metaModel == null) {
-            return "";
-        }
-        return String.valueOf(getAssetDoubleQuantity());
+    @NonNull
+    @Override
+    public String toString() {
+        return getAssetName().toLowerCase();
     }
 
-    private double getAssetDoubleQuantity() {
-        if (asset.divisibility == 0) {
-            return asset.amount;
-        } else {
-            return (double) asset.amount / (Math.pow(10, asset.divisibility));
+    @Bindable
+    public String getAssetQuantity() {
+        double quantity = 0;
+        for (AddressInfo.Asset asset : assets) {
+            if (asset.getDivisibility() == 0) {
+                quantity += asset.getAmount();
+            } else {
+                quantity += (double) asset.getAmount() / (Math.pow(10, asset.getDivisibility()));
+            }
         }
+        return String.valueOf(quantity);
+    }
+
+    private int getAssetsQuantity() {
+        int quantity = 0;
+        for (AddressInfo.Asset asset : assets) {
+            quantity += asset.getAmount();
+        }
+        return quantity;
+    }
+
+    private int getAssetDivisibility() {
+        return assets.get(0).getDivisibility();
+    }
+
+    private String[] getAddresses() {
+        Set<String> addresses = new HashSet<>();
+        for (AddressInfo.Asset asset : assets) {
+            addresses.add(asset.address);
+        }
+        return addresses.toArray(new String[]{});
     }
 
     @Override
@@ -105,23 +139,22 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AssetModel that = (AssetModel) o;
-        return asset.issueTxid.equals(that.asset.issueTxid);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(asset, metaModel, assetAmount);
+        return assets.get(0).assetId.equals(that.assets.get(0).assetId);
     }
 
     @Override
     public void bind(DataBoundViewHolder holder) {
         AssetBinding binding = (AssetBinding) holder.binding;
+        binding.assetDrawable.setImageBitmap(null);
         binding.assetMenu.setOnClickListener(v -> {
             ContextThemeWrapper context = new ContextThemeWrapper(v.getContext(),
                     R.style.AssetPopup);
             showAssetMenu(context, v);
         });
-        RetrofitManager.instance.getAssetMeta(asset.assetId, asset.assetUtxoTxId, asset.index,
+        RetrofitManager.instance.getAssetMeta(
+                assets.get(0).assetId,
+                assets.get(0).txid,
+                String.valueOf(assets.get(0).getIndex()),
                 metaModel -> {
                     AssetModel.this.metaModel = metaModel;
                     notifyPropertyChanged(BR.assetName);
@@ -161,16 +194,15 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                         CharSequence destinationAddress = clipData.getItemAt(0).getText();
                         try {
                             Log.d(AssetModel.class.getSimpleName(), "Clipped Address: " + destinationAddress);
-                            Log.d(AssetModel.class.getSimpleName(),
-                                    "Asset UTXO Addr: " + asset.utxoAddress);
-
                             SendAsset sendAsset = new SendAsset(
-                                    Integer.toString(500),
-                                    asset.utxoAddress,
+                                    Integer.toString(5000),
+                                    getAddresses(),
+                                    trimNullEmpty(getNeededUTXO(5000)),
                                     destinationAddress.toString(),
-                                    asset.amount,
+                                    getAssetsQuantity(),
                                     metaModel.assetId,
-                                    asset.divisibility
+                                    getAssetDivisibility(),
+                                    this
                             );
                             FragmentNumberPicker.show(
                                     (AppCompatActivity) v.getContext(),
@@ -205,6 +237,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         if (imageData == null || TextUtils.isEmpty(imageData.url)) {
             return;
         }
+        imageView.setImageBitmap(null);
         executor.execute(() -> {
             if (imageData.url.contains(",")) {
                 byte[] image = null;

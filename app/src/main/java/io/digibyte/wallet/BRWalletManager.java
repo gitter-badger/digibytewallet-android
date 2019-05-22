@@ -779,7 +779,7 @@ public class BRWalletManager {
 
     public static native boolean validateAddress(String address);
 
-    public native boolean addressContainedInWallet(String address);
+    public static native boolean addressContainedInWallet(String address);
 
     public native boolean addressIsUsed(String address);
 
