@@ -177,13 +177,14 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/assets_action"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_alignParentTop="true"
                     android:layout_toStartOf="@id/main_action"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="10dp"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:src="@drawable/assets" />
+                    android:src="@drawable/ic_assets" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/main_action"
