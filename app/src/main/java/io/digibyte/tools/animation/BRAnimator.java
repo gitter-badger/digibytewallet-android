@@ -107,6 +107,10 @@ public class BRAnimator {
     }
 
     public static void openScanner(Activity app) {
+        openScanner(app, BRConstants.SCANNER_REQUEST);
+    }
+
+    public static void openScanner(Activity app, int requestCode) {
         try {
             // Check if the camera permission is granted
             if (ContextCompat.checkSelfPermission(app,
@@ -135,7 +139,7 @@ public class BRAnimator {
                 Intent intent = new Intent(app, CaptureActivity.class);
                 intent.setAction("com.google.zxing.client.android.SCAN");
                 intent.putExtra("SAVE_HISTORY", false);
-                app.startActivityForResult(intent, BRConstants.SCANNER_REQUEST);
+                app.startActivityForResult(intent, requestCode);
             }
         } catch (Exception e) {
             e.printStackTrace();

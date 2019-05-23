@@ -37,6 +37,7 @@ import io.digibyte.presenter.activities.BreadActivity;
 import io.digibyte.presenter.fragments.interfaces.OnBackPressListener;
 import io.digibyte.presenter.interfaces.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
+import io.digibyte.tools.crypto.AssetsHelper;
 import io.digibyte.tools.security.AuthManager;
 import io.digibyte.tools.security.BitcoinUrlHandler;
 import io.digibyte.tools.security.PostAuth;
@@ -116,7 +117,15 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         switch (requestCode) {
-            case BRConstants.SCANNER_REQUEST:
+            case BRConstants.ASSETS_SCANNER_REQUEST: {
+                String result = data.getStringExtra("SCAN_RESULT");
+                if (AssetsHelper.Companion.getInstance().pendingAssetTx != null) {
+                    AssetsHelper.Companion.getInstance().pendingAssetTx.setDestinationAddress(result);
+                }
+                AssetsHelper.Companion.getInstance().sendPendingAssetTx(this);
+                break;
+            }
+            case BRConstants.SCANNER_REQUEST: {
                 if (resultCode == Activity.RESULT_OK) {
                     new Handler().postDelayed(() -> {
                         String result = data.getStringExtra("SCAN_RESULT");
@@ -130,7 +139,8 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
                     }, 500);
                 }
                 break;
-            case QR_IMAGE_PROCESS:
+            }
+            case QR_IMAGE_PROCESS: {
                 try {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
                     byte[] rawBytes = ByteStreams.toByteArray(inputStream);
@@ -157,9 +167,10 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
                                 "onActivityResult: not bitcoin address NOR bitID");
                     }
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
                 break;
+            }
         }
     }
 

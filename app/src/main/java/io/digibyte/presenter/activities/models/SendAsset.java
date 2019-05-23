@@ -15,8 +15,8 @@ public class SendAsset {
 
     public static final int INVALID_AMOUNT = -1;
 
-    SendAsset(String fee, String[] fromAddresses, String[] financeaddresses, String destinationAddress,
-              int totalAssetQuantity, String assetId, int divisibility, AssetModel assetModel) {
+    public SendAsset(String fee, String[] fromAddresses, String[] financeaddresses, String destinationAddress,
+                     int totalAssetQuantity, String assetId, int divisibility, AssetModel assetModel) {
         this.fee = fee;
 
         this.from = new String[1];

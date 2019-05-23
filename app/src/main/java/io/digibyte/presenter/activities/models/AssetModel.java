@@ -1,5 +1,6 @@
 package io.digibyte.presenter.activities.models;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -41,6 +42,10 @@ import io.digibyte.presenter.adapter.DynamicBinding;
 import io.digibyte.presenter.adapter.LayoutBinding;
 import io.digibyte.presenter.fragments.FragmentNumberPicker;
 import io.digibyte.presenter.interfaces.BRAuthCompletion;
+import io.digibyte.tools.animation.BRAnimator;
+import io.digibyte.tools.crypto.AssetsHelper;
+import io.digibyte.tools.qrcode.QRUtils;
+import io.digibyte.tools.util.BRConstants;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
 
@@ -48,8 +53,6 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     private List<AddressInfo.Asset> assets = new LinkedList<>();
     private static transient Handler handler = new Handler(Looper.getMainLooper());
     private static transient Executor executor = Executors.newSingleThreadExecutor();
-
-    private static native String[] getNeededUTXO(int amount);
 
     public AssetModel(AddressInfo.Asset asset) {
         addNonDupAsset(asset);
@@ -183,8 +186,18 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.send_asset_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(item -> {
+            AssetsHelper.AssetTx assetTx = new AssetsHelper.AssetTx(
+                    "",
+                    getAddresses(),
+                    getAssetsQuantity(),
+                    metaModel.assetId,
+                    metaModel.divisibility,
+                    this
+            );
             switch (item.getItemId()) {
                 case R.id.qr:
+                    AssetsHelper.Companion.getInstance().pendingAssetTx = assetTx;
+                    BRAnimator.openScanner((Activity) v.getContext(), BRConstants.ASSETS_SCANNER_REQUEST);
                     break;
                 case R.id.paste:
                     ClipboardManager clipboard = (ClipboardManager) context.getSystemService(
@@ -192,25 +205,8 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     ClipData clipData = clipboard.getPrimaryClip();
                     if (clipData != null && clipData.getItemCount() > 0) {
                         CharSequence destinationAddress = clipData.getItemAt(0).getText();
-                        try {
-                            Log.d(AssetModel.class.getSimpleName(), "Clipped Address: " + destinationAddress);
-                            SendAsset sendAsset = new SendAsset(
-                                    Integer.toString(5000),
-                                    getAddresses(),
-                                    trimNullEmpty(getNeededUTXO(5000)),
-                                    destinationAddress.toString(),
-                                    getAssetsQuantity(),
-                                    metaModel.assetId,
-                                    getAssetDivisibility(),
-                                    this
-                            );
-                            FragmentNumberPicker.show(
-                                    (AppCompatActivity) v.getContext(),
-                                    new BRAuthCompletion.AuthType(sendAsset)
-                            );
-                        } catch (Throwable t) {
-                            t.printStackTrace();
-                        }
+                        assetTx.setDestinationAddress(destinationAddress);
+                        AssetsHelper.Companion.getInstance().processAssetTx(v.getContext(), assetTx);
                     } else {
                         Toast.makeText(context, R.string.NoClipData, Toast.LENGTH_SHORT).show();
                     }
@@ -219,17 +215,6 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
             return true;
         });
         popup.show();
-    }
-
-    private String[] trimNullEmpty(String[] values) {
-        LinkedList<String> newValues = new LinkedList<>();
-        for (String value : values) {
-            if (!TextUtils.isEmpty(value) && !value.toLowerCase().equals("null")) {
-                newValues.add(value);
-            }
-        }
-        String[] sNewValues = new String[newValues.size()];
-        return newValues.toArray(sNewValues);
     }
 
     @BindingAdapter("remoteImage")

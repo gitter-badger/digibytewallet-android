@@ -1142,9 +1142,9 @@ Java_io_digibyte_wallet_BRWalletManager_parseSignSerialize(JNIEnv *env,
 }
 
 JNIEXPORT jobjectArray JNICALL
-Java_io_digibyte_presenter_activities_models_AssetModel_getNeededUTXO(JNIEnv *env,
-                                                                      jobject thiz,
-                                                                      jint amount) {
+Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXO(JNIEnv *env,
+                                                         jobject thiz,
+                                                         jint amount) {
 
     char **addresses;
     array_new(addresses, 1);
