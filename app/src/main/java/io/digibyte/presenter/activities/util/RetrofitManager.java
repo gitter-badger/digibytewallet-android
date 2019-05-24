@@ -148,7 +148,7 @@ public class RetrofitManager {
     public interface BroadcastTransaction {
         void success(String broadcastResponse);
 
-        void onError();
+        void onError(String errorMessage);
     }
 
     public void broadcast(String txHex, BroadcastTransaction broadcastTransaction) {
@@ -171,13 +171,19 @@ public class RetrofitManager {
                     }
                     broadcastTransaction.success(txId);
                 } else {
-                    broadcastTransaction.onError();
+                    String errorMessage = "";
+                    try {
+                        errorMessage = response.body().string();
+                    } catch (IOException e) {
+
+                    }
+                    broadcastTransaction.onError(errorMessage);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                broadcastTransaction.onError();
+                broadcastTransaction.onError("");
                 t.printStackTrace();
             }
         });

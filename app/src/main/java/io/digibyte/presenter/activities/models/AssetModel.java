@@ -55,7 +55,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
 
     public void addNonDupAsset(AddressInfo.Asset newAsset) {
         for (AddressInfo.Asset asset : assets) {
-            if (asset.address.equals(newAsset.address) && asset.txid.equals(newAsset.txid)) {
+            if (asset.address.equals(newAsset.address) && asset.txid.equals(newAsset.txid) && asset.getIndex() == newAsset.getIndex()) {
                 return;
             }
         }

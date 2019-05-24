@@ -107,6 +107,10 @@ public class MultiTypeDataBoundAdapter extends BaseDataBoundAdapter {
         notifyItemInserted(mItems.size() - 1);
     }
 
+    public final void addItemSilent(Object item) {
+        mItems.add(item);
+    }
+
     public final Object getItem(Object item) {
         return mItems.get(mItems.indexOf(item));
     }
