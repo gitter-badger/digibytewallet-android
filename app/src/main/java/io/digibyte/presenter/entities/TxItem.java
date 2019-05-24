@@ -52,13 +52,14 @@ public class TxItem implements Parcelable {
     private boolean isValid;
     private int txSize;
     public TxMetaData metaData;
+    public boolean isAsset;
 
     private TxItem() {
     }
 
     public TxItem(long timeStamp, int blockHeight, byte[] hash, String txReversed, long sent,
-            long received, long fee, String to[], String from[],
-            long balanceAfterTx, int txSize, long[] outAmounts, boolean isValid) {
+                  long received, long fee, String to[], String from[],
+                  long balanceAfterTx, int txSize, long[] outAmounts, boolean isValid, boolean isAsset) {
         this.timeStamp = timeStamp;
         this.blockHeight = blockHeight;
         this.txReversed = txReversed;
@@ -73,6 +74,7 @@ public class TxItem implements Parcelable {
         this.isValid = isValid;
         this.txSize = txSize;
         this.metaData = KVStoreManager.getInstance().getTxMetaData(DigiByte.getContext(), txHash);
+        this.isAsset = isAsset;
 
     }
 
@@ -162,6 +164,7 @@ public class TxItem implements Parcelable {
         isValid = in.readByte() != 0x00;
         txSize = in.readInt();
         metaData = (TxMetaData) in.readValue(TxMetaData.class.getClassLoader());
+        isAsset = in.readInt() == 1;
     }
 
     @Override
@@ -181,6 +184,7 @@ public class TxItem implements Parcelable {
         dest.writeByte((byte) (isValid ? 0x01 : 0x00));
         dest.writeInt(txSize);
         dest.writeValue(metaData);
+        dest.writeInt(isAsset ? 1 : 0);
     }
 
     @SuppressWarnings("unused")

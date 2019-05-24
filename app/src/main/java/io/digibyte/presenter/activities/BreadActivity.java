@@ -405,7 +405,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     @OnClick(R.id.assets_action)
-    void onAssetsButtonClick(View view) {
+    public void onAssetsButtonClick(View view) {
         bindings.drawerLayout.openDrawer(GravityCompat.END);
     }
 

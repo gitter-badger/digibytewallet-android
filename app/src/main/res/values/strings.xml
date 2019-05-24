@@ -356,6 +356,7 @@
   <string name="current_amount">Current Value: %s</string>
   <string name="original_amount">Original Value: %s</string>
 
-    <string name="NoClipData">No Clip Data</string>
-    <string name="EnterAssetQuantity">Enter asset quantity...</string>
+  <string name="no_clip_data">No Clip Data</string>
+  <string name="enter_asset_quantity">Enter asset quantity...</string>
+  <string name="digi_asset">Digi Asset</string>
 </resources>

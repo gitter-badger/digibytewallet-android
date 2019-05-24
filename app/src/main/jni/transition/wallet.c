@@ -385,7 +385,7 @@ JNIEXPORT jobjectArray JNICALL Java_io_digibyte_wallet_BRWalletManager_getTransa
     jobjectArray txObjects = (*env)->NewObjectArray(env, (jsize) txCount, txClass, 0);
     jobjectArray globalTxs = (*env)->NewGlobalRef(env, txObjects);
     jmethodID txObjMid = (*env)->GetMethodID(env, txClass, "<init>",
-                                             "(JI[BLjava/lang/String;JJJ[Ljava/lang/String;[Ljava/lang/String;JI[JZ)V");
+                                             "(JI[BLjava/lang/String;JJJ[Ljava/lang/String;[Ljava/lang/String;JI[JZZ)V");
     jclass stringClass = (*env)->FindClass(env, "java/lang/String");
 
     for (int i = 0; i < txCount; i++) {
@@ -393,6 +393,7 @@ JNIEXPORT jobjectArray JNICALL Java_io_digibyte_wallet_BRWalletManager_getTransa
         BRTransaction *tempTx = transactions_sqlite[i];
         jboolean isValid = (jboolean) ((BRWalletTransactionIsValid(_wallet, tempTx) == 1) ? JNI_TRUE
                                                                                           : JNI_FALSE);
+        jboolean isAsset = (jboolean) ((BRAssetFound(tempTx) == 1) ? JNI_TRUE : JNI_FALSE);
         jlong JtimeStamp = tempTx->timestamp;
         jint JblockHeight = tempTx->blockHeight;
         jint JtxSize = (jint) BRTransactionSize(tempTx);
@@ -459,7 +460,7 @@ JNIEXPORT jobjectArray JNICALL Java_io_digibyte_wallet_BRWalletManager_getTransa
                                              JtxHash, txReversed, Jsent,
                                              Jreceived, Jfee, JtoAddresses, JfromAddresses,
                                              JbalanceAfterTx, JtxSize,
-                                             JoutAmounts, isValid);
+                                             JoutAmounts, isValid, isAsset);
 
         (*env)->SetObjectArrayElement(env, globalTxs, (jsize) (txCount - 1 - i), txObject);
         (*env)->DeleteLocalRef(env, txObject);

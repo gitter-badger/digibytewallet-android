@@ -10,14 +10,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.databinding.BaseObservable;
@@ -40,11 +38,8 @@ import io.digibyte.presenter.activities.util.RetrofitManager;
 import io.digibyte.presenter.adapter.DataBoundViewHolder;
 import io.digibyte.presenter.adapter.DynamicBinding;
 import io.digibyte.presenter.adapter.LayoutBinding;
-import io.digibyte.presenter.fragments.FragmentNumberPicker;
-import io.digibyte.presenter.interfaces.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.crypto.AssetsHelper;
-import io.digibyte.tools.qrcode.QRUtils;
 import io.digibyte.tools.util.BRConstants;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
@@ -208,7 +203,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                         assetTx.setDestinationAddress(destinationAddress);
                         AssetsHelper.Companion.getInstance().processAssetTx(v.getContext(), assetTx);
                     } else {
-                        Toast.makeText(context, R.string.NoClipData, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.no_clip_data, Toast.LENGTH_SHORT).show();
                     }
                     break;
             }

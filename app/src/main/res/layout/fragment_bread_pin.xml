@@ -146,7 +146,7 @@
                       android:textColorHint="@color/light_gray"
                       android:textColor="@color/white"
                       android:background="@drawable/pin_round_corner"
-                      android:hint="@string/EnterAssetQuantity"/>
+                android:hint="@string/enter_asset_quantity" />
 
             <Button
                 android:id="@+id/complete"

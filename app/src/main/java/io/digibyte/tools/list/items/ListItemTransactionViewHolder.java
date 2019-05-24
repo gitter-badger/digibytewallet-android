@@ -48,22 +48,28 @@ public class ListItemTransactionViewHolder extends ListItemViewHolder {
     public static void setAmount(TextView textView,
             ListItemTransactionData listItemTransactionData) {
         TxItem item = listItemTransactionData.transactionItem;
-        boolean isBTCPreferred = BRSharedPrefs.getPreferredBTC(textView.getContext());
-        boolean received = item.getSent() == 0;
-        String iso = isBTCPreferred ? "DGB" : BRSharedPrefs.getIso(textView.getContext());
-        long satoshisAmount = received ? item.getReceived() : (item.getSent() - item.getReceived());
-        textView.setTextColor(received ? Color.parseColor("#3fe77b") : Color.parseColor("#ff7416"));
-        String transactionText;
-        if (isBTCPreferred) {
-            transactionText = BRCurrency.getFormattedCurrencyString(textView.getContext(), iso,
-                    BRExchange.getAmountFromSatoshis(textView.getContext(), iso,
-                            new BigDecimal(satoshisAmount)));
+        if (item.isAsset) {
+            textView.setText(textView.getContext().getString(R.string.digi_asset));
+            boolean received = item.getSent() == 0;
+            textView.setTextColor(received ? Color.parseColor("#3fe77b") : Color.parseColor("#ff7416"));
         } else {
-            transactionText = BRCurrency.getFormattedCurrencyString(textView.getContext(), iso,
-                    BRExchange.getAmountFromSatoshis(textView.getContext(), iso,
-                            new BigDecimal(satoshisAmount)));
+            boolean isBTCPreferred = BRSharedPrefs.getPreferredBTC(textView.getContext());
+            boolean received = item.getSent() == 0;
+            String iso = isBTCPreferred ? "DGB" : BRSharedPrefs.getIso(textView.getContext());
+            long satoshisAmount = received ? item.getReceived() : (item.getSent() - item.getReceived());
+            textView.setTextColor(received ? Color.parseColor("#3fe77b") : Color.parseColor("#ff7416"));
+            String transactionText;
+            if (isBTCPreferred) {
+                transactionText = BRCurrency.getFormattedCurrencyString(textView.getContext(), iso,
+                        BRExchange.getAmountFromSatoshis(textView.getContext(), iso,
+                                new BigDecimal(satoshisAmount)));
+            } else {
+                transactionText = BRCurrency.getFormattedCurrencyString(textView.getContext(), iso,
+                        BRExchange.getAmountFromSatoshis(textView.getContext(), iso,
+                                new BigDecimal(satoshisAmount)));
+            }
+            textView.setText((received ? "+" : "-") + transactionText);
         }
-        textView.setText((received ? "+" : "-") + transactionText);
     }
 
     @BindingAdapter("timestamp")

@@ -18,6 +18,7 @@ import java.util.Set;
 
 import io.digibyte.DigiByte;
 import io.digibyte.databinding.ListItemTransactionBinding;
+import io.digibyte.presenter.activities.BreadActivity;
 import io.digibyte.presenter.entities.TxItem;
 import io.digibyte.presenter.fragments.models.TransactionDetailsViewModel;
 import io.digibyte.tools.animation.BRAnimator;
@@ -190,9 +191,13 @@ public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransac
             ListItemTransactionViewHolder listItemTransactionViewHolder =
                     (ListItemTransactionViewHolder) recyclerView.findContainingViewHolder(view);
             if (listItemTransactionViewHolder != null) {
-                int adapterPosition = listItemTransactionViewHolder.getAdapterPosition();
-                BRAnimator.showTransactionPager((AppCompatActivity) view.getContext(),
-                        listItemData, adapterPosition);
+                if (listItemTransactionViewHolder.binding.getData().transactionItem.isAsset) {
+                    ((BreadActivity) view.getContext()).onAssetsButtonClick(null);
+                } else {
+                    int adapterPosition = listItemTransactionViewHolder.getAdapterPosition();
+                    BRAnimator.showTransactionPager((AppCompatActivity) view.getContext(),
+                            listItemData, adapterPosition);
+                }
             }
         }
     };
