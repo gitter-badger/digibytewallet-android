@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import io.digibyte.R;
 import io.digibyte.presenter.entities.VerticalSpaceItemDecoration;
 import io.digibyte.tools.adapter.TransactionListAdapter;
+import io.digibyte.tools.list.items.ListItemTransactionData;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 
 public class TxAdapter extends PagerAdapter {
@@ -109,5 +110,11 @@ public class TxAdapter extends PagerAdapter {
             case 2:
                 return context.getString(R.string.received);
         }
+    }
+
+    public void notifyDataUpdated(ListItemTransactionData listItemTransactionData) {
+        allAdapter.notifyDataUpdated(listItemTransactionData);
+        sentAdapter.notifyDataUpdated(listItemTransactionData);
+        receivedAdapter.notifyDataUpdated(listItemTransactionData);
     }
 }

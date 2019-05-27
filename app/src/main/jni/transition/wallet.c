@@ -393,7 +393,7 @@ JNIEXPORT jobjectArray JNICALL Java_io_digibyte_wallet_BRWalletManager_getTransa
         BRTransaction *tempTx = transactions_sqlite[i];
         jboolean isValid = (jboolean) ((BRWalletTransactionIsValid(_wallet, tempTx) == 1) ? JNI_TRUE
                                                                                           : JNI_FALSE);
-        jboolean isAsset = (jboolean) ((BRAssetFound(tempTx) == 1) ? JNI_TRUE : JNI_FALSE);
+        jboolean isAsset = (jboolean) ((BRTXContainsAsset(tempTx) == 1) ? JNI_TRUE : JNI_FALSE);
         jlong JtimeStamp = tempTx->timestamp;
         jint JblockHeight = tempTx->blockHeight;
         jint JtxSize = (jint) BRTransactionSize(tempTx);

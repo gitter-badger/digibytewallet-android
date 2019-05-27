@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
@@ -113,7 +114,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     ActivityBreadBinding bindings;
     private Unbinder unbinder;
     private Handler handler = new Handler(Looper.getMainLooper());
-    private TxAdapter adapter;
+    public TxAdapter adapter;
     @BindView(R.id.assets_recycler)
     RecyclerView assetRecycler;
     private MultiTypeDataBoundAdapter assetAdapter;
@@ -248,9 +249,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             notifyDataSetChangeForAll();
         }
         if (isPossibleNewAssetSend(transactionsToAdd)) {
-            reprocessAllAssets();
+            assetAdapter.clear();
+            assetAdapter.notifyDataSetChanged();
+            processTxAssets(adapter.getAllAdapter().getTransactions());
         } else if (transactionsToAdd.size() > 0) {
-            processNewTxAssets(transactionsToAdd);
+            processTxAssets(transactionsToAdd);
         }
     }
 
@@ -258,37 +261,46 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         return newTransactions.size() == 1;
     }
 
-    private void reprocessAllAssets() {
-        assetAdapter.clear();
-        assetAdapter.notifyDataSetChanged();
-        Set<String> toSet = new HashSet<>();
-        Set<String> fromSet = new HashSet<>();
-        for (ListItemTransactionData transaction : adapter.getAllAdapter().getTransactions()) {
-            Collections.addAll(fromSet, transaction.getTransactionItem().getFrom());
-            Collections.addAll(toSet, transaction.getTransactionItem().getTo());
+    private void processTxAssets(ArrayList<ListItemTransactionData> transactions) {
+        Set<AddressMetaMap> addresses = new HashSet<>();
+        String[] froms;
+        String[] tos;
+        for (ListItemTransactionData transaction : transactions) {
+            froms = transaction.getTransactionItem().getFrom();
+            tos = transaction.getTransactionItem().getTo();
+            for (String from : froms) {
+                Collections.addAll(addresses, new AddressMetaMap(from, transaction));
+            }
+            for (String to : tos) {
+                Collections.addAll(addresses, new AddressMetaMap(to, transaction));
+            }
         }
-        processAddressSet(fromSet);
-        processAddressSet(toSet);
+        processAddressSet(addresses);
     }
 
-    private void processNewTxAssets(ArrayList<ListItemTransactionData> newTransactions) {
-        Set<String> toSet = new HashSet<>();
-        Set<String> fromSet = new HashSet<>();
-        for (ListItemTransactionData transaction : newTransactions) {
-            Collections.addAll(fromSet, transaction.getTransactionItem().getFrom());
-            Collections.addAll(toSet, transaction.getTransactionItem().getTo());
+    private class AddressMetaMap {
+        String address;
+        ListItemTransactionData listItemTransactionData;
+
+        AddressMetaMap(String address, ListItemTransactionData listItemTransactionData) {
+            this.address = address;
+            this.listItemTransactionData = listItemTransactionData;
         }
-        processAddressSet(fromSet);
-        processAddressSet(toSet);
+
+        @Override
+        public boolean equals(@Nullable Object obj) {
+            AddressMetaMap addressMetaMap = (AddressMetaMap) obj;
+            return address.equals(addressMetaMap != null ? addressMetaMap.address : null);
+        }
     }
 
-    private void processAddressSet(Set<String> set) {
-        for (String destination : set) {
-            if (TextUtils.isEmpty(destination) || !BRWalletManager.addressContainedInWallet(destination)) {
+    private void processAddressSet(Set<AddressMetaMap> set) {
+        for (AddressMetaMap destination : set) {
+            if (TextUtils.isEmpty(destination.address) || !BRWalletManager.addressContainedInWallet(destination.address)) {
                 continue;
             }
-            Log.d(BreadActivity.class.getSimpleName(), destination);
-            RetrofitManager.instance.getAssets(destination,
+            Log.d(BreadActivity.class.getSimpleName(), destination.address);
+            RetrofitManager.instance.getAssets(destination.address,
                     addressInfo -> {
                         if (addressInfo == null) {
                             return;

@@ -119,6 +119,14 @@ public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransac
         }
     }
 
+    public void notifyDataUpdated(ListItemTransactionData listItemTransactionData) {
+        for (ListItemTransactionViewHolder listItemTransactionViewHolder : boundViewHolders) {
+            if (listItemTransactionData.equals(listItemTransactionViewHolder.binding.getData())) {
+                listItemTransactionViewHolder.process(listItemTransactionData);
+            }
+        }
+    }
+
     /**
      * @return while the method implementation can return null, in reality it will not because
      * the adapter will always have a view holder for view that are currently on screen,
