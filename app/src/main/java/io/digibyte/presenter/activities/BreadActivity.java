@@ -322,10 +322,10 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private ArrayList<ListItemTransactionData> getNewTransactionsData(TxItem[] newTxItems) {
-        ArrayList<ListItemTransactionData> newTransactionsData = new ArrayList();
-        ArrayList<TxItem> newTransactions = new ArrayList(Arrays.asList(newTxItems));
+        ArrayList<ListItemTransactionData> newTransactionsData = new ArrayList<>();
+        ArrayList<TxItem> newTransactions = new ArrayList<>(Arrays.asList(newTxItems));
         Collections.sort(newTransactions,
-                (t1, t2) -> Long.valueOf(t1.getTimeStamp()).compareTo(t2.getTimeStamp()));
+                (t1, t2) -> Long.compare(t1.getTimeStamp(), t2.getTimeStamp()));
         for (TxItem tx : newTransactions) {
             newTransactionsData.add(new ListItemTransactionData(newTransactions.indexOf(tx),
                     newTransactions.size(), tx));

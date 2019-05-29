@@ -71,6 +71,8 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     public void addTransaction(ListItemTransactionData listItemTransactionData) {
         if (!listItemTransactionDatas.contains(listItemTransactionData)) {
             listItemTransactionDatas.add(listItemTransactionData);
+            //If we have the asset name here, it's because meta has already been retrieved
+            //If we don't, it'll be in the collection processed when meta is retrieved
             if (!TextUtils.isEmpty(getAssetName())) {
                 Database.instance.saveAssetName(getAssetName(), listItemTransactionData);
             }
