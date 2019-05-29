@@ -1,31 +1,21 @@
 package io.digibyte.tools.adapter;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import io.digibyte.DigiByte;
-import io.digibyte.databinding.ListItemTransactionBinding;
 import io.digibyte.presenter.activities.BreadActivity;
+import io.digibyte.presenter.activities.callbacks.TransactionClickCallback;
+import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter;
 import io.digibyte.presenter.entities.TxItem;
 import io.digibyte.presenter.fragments.models.TransactionDetailsViewModel;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.database.Database;
-import io.digibyte.tools.list.ListItemData;
 import io.digibyte.tools.list.items.ListItemTransactionData;
-import io.digibyte.tools.list.items.ListItemTransactionViewHolder;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.wallet.BRWalletManager;
 
@@ -55,17 +45,17 @@ import io.digibyte.wallet.BRWalletManager;
  * THE SOFTWARE.
  */
 
-public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransactionViewHolder> {
+public class TransactionListAdapter extends MultiTypeDataBoundAdapter implements TransactionClickCallback {
     public static final String TAG = TransactionListAdapter.class.getName();
 
     private ArrayList<ListItemTransactionData> listItemData = new ArrayList<>();
-    private Set<ListItemTransactionViewHolder> boundViewHolders = new HashSet<>();
 
-    private RecyclerView recyclerView;
+    private BreadActivity activity;
 
-    public TransactionListAdapter(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
-        setHasStableIds(true);
+    public TransactionListAdapter(BreadActivity activity) {
+        super(null, (Object) null);
+        setActionCallback(this);
+        this.activity = activity;
     }
 
     public void updateTransactions(ArrayList<ListItemTransactionData> transactions) {
@@ -73,65 +63,18 @@ public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransac
             if (listItemTransactionData == null) {
                 continue;
             }
-            //Check to see if the comment/memo changed
-            String currentComment = listItemTransactionData.transactionItem.metaData != null
-                    ? listItemTransactionData.transactionItem.metaData.comment : "";
-            //Check to see if the transaction time changed
-            String currentTime = listItemTransactionData.getTransactionDisplayTimeHolder();
-
-            ListItemTransactionData updatedTransaction = findTransaction(listItemTransactionData,
-                    transactions);
-
+            ListItemTransactionData updatedTransaction = findTransaction(listItemTransactionData, transactions);
             if (updatedTransaction == null) {
                 continue;
             }
-
             listItemTransactionData.update(updatedTransaction);
-            String newComment = listItemTransactionData.transactionItem.metaData != null
-                    ? listItemTransactionData.transactionItem.metaData.comment : "";
-            String newTime = listItemTransactionData.getTransactionDisplayTimeHolder();
-
-            boolean commentUpdated = !currentComment.equals(newComment);
-            boolean timeChange = !currentTime.equals(newTime);
-
             int confirms = BRSharedPrefs.getLastBlockHeight(DigiByte.getContext())
                     - listItemTransactionData.getTransactionItem().getBlockHeight() + 1;
-            if ((confirms <= 8 || commentUpdated || timeChange) && isPositionOnscreen(
-                    listItemData.indexOf(listItemTransactionData))) {
+            if (confirms <= 8) {
                 BRWalletManager.getInstance().refreshBalance(DigiByte.getContext());
-                ListItemTransactionViewHolder listItemTransactionViewHolder =
-                        (ListItemTransactionViewHolder) recyclerView
-                                .findViewHolderForAdapterPosition(
-                                        listItemData.indexOf(listItemTransactionData));
-                if (listItemTransactionViewHolder != null) {
-                    listItemTransactionViewHolder.process(listItemTransactionData);
-                }
             }
         }
     }
-
-    public void notifyDataChanged() {
-        for (ListItemTransactionViewHolder listItemTransactionViewHolder : boundViewHolders) {
-            if (listItemTransactionViewHolder != null) {
-                listItemTransactionViewHolder.
-                        process(listItemData.get(listItemTransactionViewHolder.getAdapterPosition()));
-            }
-        }
-    }
-
-    public void notifyDataUpdated(ListItemTransactionData listItemTransactionData) {
-        for (ListItemTransactionViewHolder listItemTransactionViewHolder : boundViewHolders) {
-            if (listItemTransactionData.equals(listItemTransactionViewHolder.binding.getData())) {
-                listItemTransactionViewHolder.process(listItemTransactionData);
-            }
-        }
-    }
-
-    /**
-     * @return while the method implementation can return null, in reality it will not because
-     * the adapter will always have a view holder for view that are currently on screen,
-     * and this method is only called after a check to ensure the view is onscreen
-     */
 
     @Nullable
     private ListItemTransactionData findTransaction(ListItemTransactionData listItemTransactionData,
@@ -144,18 +87,6 @@ public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransac
         return null;
     }
 
-    private boolean isPositionOnscreen(int position) {
-        LinearLayoutManager linearLayoutManager =
-                (LinearLayoutManager) recyclerView.getLayoutManager();
-        if (linearLayoutManager != null) {
-            int firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition();
-            int lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition();
-            return position >= firstVisiblePosition && position <= lastVisiblePosition;
-        } else {
-            return false;
-        }
-    }
-
     public void addTransactions(ArrayList<ListItemTransactionData> transactions) {
         Collections.sort(transactions,
                 (o1, o2) -> new Date(o1.transactionItem.getTimeStamp()).compareTo(
@@ -163,7 +94,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransac
         for (ListItemTransactionData transaction : transactions) {
             saveFiatValue(transaction.transactionItem);
             listItemData.add(0, transaction);
-            notifyItemInserted(0);
+            addItem(0, transaction);
         }
     }
 
@@ -171,57 +102,9 @@ public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransac
         return listItemData;
     }
 
-    @NonNull
-    @Override
-    public ListItemTransactionViewHolder onCreateViewHolder(@NonNull ViewGroup aParent,
-            int aResourceId) {
-        LayoutInflater layoutInflater = LayoutInflater.from(aParent.getContext());
-        ListItemTransactionBinding binding = ListItemTransactionBinding.inflate(layoutInflater);
-        return new ListItemTransactionViewHolder(binding);
-    }
-
-    @Override
-    public void onBindViewHolder(ListItemTransactionViewHolder holder, int aPosition) {
-        holder.process(this.getListItemDataForPosition(aPosition));
-        holder.getView().setOnClickListener(mOnClickListener);
-        boundViewHolders.add(holder);
-    }
-
-    @Override
-    public void onViewRecycled(@NonNull ListItemTransactionViewHolder holder) {
-        boundViewHolders.remove(holder);
-        super.onViewRecycled(holder);
-    }
-
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            ListItemTransactionViewHolder listItemTransactionViewHolder =
-                    (ListItemTransactionViewHolder) recyclerView.findContainingViewHolder(view);
-            if (listItemTransactionViewHolder != null) {
-                if (listItemTransactionViewHolder.binding.getData().transactionItem.isAsset) {
-                    ((BreadActivity) view.getContext()).onAssetsButtonClick(null);
-                } else {
-                    int adapterPosition = listItemTransactionViewHolder.getAdapterPosition();
-                    BRAnimator.showTransactionPager((AppCompatActivity) view.getContext(),
-                            listItemData, adapterPosition);
-                }
-            }
-        }
-    };
-
-    @Override
-    public int getItemViewType(int aPosition) {
-        return this.getListItemDataForPosition(aPosition).resourceId;
-    }
-
     @Override
     public int getItemCount() {
         return listItemData.size();
-    }
-
-    private ListItemData getListItemDataForPosition(int aPosition) {
-        return listItemData.get(aPosition);
     }
 
     @Override
@@ -234,6 +117,16 @@ public class TransactionListAdapter extends RecyclerView.Adapter<ListItemTransac
         //Save the transaction text in fiat mode, the first time the transaction is displayed in the app
         if (!Database.instance.containsTransaction(txItem.getTxHash())) {
             Database.instance.saveTransaction(txItem.getTxHash(), TransactionDetailsViewModel.getRawFiatAmount(txItem));
+        }
+    }
+
+    @Override
+    public void onTransactionClick(ListItemTransactionData listItemTransactionData) {
+        if (listItemTransactionData.transactionItem.isAsset) {
+            activity.onAssetsButtonClick(null);
+        } else {
+            int adapterPosition = listItemData.indexOf(listItemTransactionData);
+            BRAnimator.showTransactionPager(activity, listItemData, adapterPosition);
         }
     }
 }

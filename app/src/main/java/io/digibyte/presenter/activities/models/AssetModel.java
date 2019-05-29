@@ -34,33 +34,47 @@ import java.util.concurrent.Executors;
 import io.digibyte.BR;
 import io.digibyte.R;
 import io.digibyte.databinding.AssetBinding;
+import io.digibyte.presenter.activities.BreadActivity;
 import io.digibyte.presenter.activities.util.RetrofitManager;
 import io.digibyte.presenter.adapter.DataBoundViewHolder;
 import io.digibyte.presenter.adapter.DynamicBinding;
 import io.digibyte.presenter.adapter.LayoutBinding;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.crypto.AssetsHelper;
+import io.digibyte.tools.database.Database;
+import io.digibyte.tools.list.items.ListItemTransactionData;
 import io.digibyte.tools.util.BRConstants;
+import io.digibyte.wallet.BRWalletManager;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
 
     private MetaModel metaModel;
     private List<AddressInfo.Asset> assets = new LinkedList<>();
+    private List<ListItemTransactionData> listItemTransactionDatas = new LinkedList<>();
     private static transient Handler handler = new Handler(Looper.getMainLooper());
     private static transient Executor executor = Executors.newSingleThreadExecutor();
 
     public AssetModel(AddressInfo.Asset asset) {
-        addNonDupAsset(asset);
+        addAsset(asset);
     }
 
-    public void addNonDupAsset(AddressInfo.Asset newAsset) {
+    public void addAsset(AddressInfo.Asset newAsset) {
         for (AddressInfo.Asset asset : assets) {
-            if (asset.address.equals(newAsset.address) && asset.txid.equals(newAsset.txid) && asset.getIndex() == newAsset.getIndex()) {
+            if (asset.equals(newAsset)) {
                 return;
             }
         }
         assets.add(newAsset);
         notifyPropertyChanged(BR.assetQuantity);
+    }
+
+    public void addTransaction(ListItemTransactionData listItemTransactionData) {
+        if (!listItemTransactionDatas.contains(listItemTransactionData)) {
+            listItemTransactionDatas.add(listItemTransactionData);
+            if (!TextUtils.isEmpty(getAssetName())) {
+                Database.instance.saveAssetName(getAssetName(), listItemTransactionData);
+            }
+        }
     }
 
     @Override
@@ -120,10 +134,6 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         return quantity;
     }
 
-    private int getAssetDivisibility() {
-        return assets.get(0).getDivisibility();
-    }
-
     private String[] getAddresses() {
         Set<String> addresses = new HashSet<>();
         for (AddressInfo.Asset asset : assets) {
@@ -149,6 +159,9 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     R.style.AssetPopup);
             showAssetMenu(context, v);
         });
+        if (metaModel != null) {
+            return;
+        }
         RetrofitManager.instance.getAssetMeta(
                 assets.get(0).assetId,
                 assets.get(0).txid,
@@ -158,6 +171,9 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     notifyPropertyChanged(BR.assetName);
                     notifyPropertyChanged(BR.assetQuantity);
                     notifyPropertyChanged(BR.assetImage);
+                    Database.instance.saveAssetName(getAssetName(),
+                            listItemTransactionDatas.toArray(new ListItemTransactionData[0]));
+                    ((BreadActivity) holder.itemView.getContext()).sortAssets();
                 });
     }
 

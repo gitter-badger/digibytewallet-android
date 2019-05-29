@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
@@ -37,24 +37,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import butterknife.Unbinder;
+import io.digibyte.BR;
 import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityBreadBinding;
 import io.digibyte.presenter.activities.adapters.TxAdapter;
-import io.digibyte.presenter.activities.callbacks.AssetCallback;
 import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.AssetModel;
+import io.digibyte.presenter.activities.models.MetaModel;
 import io.digibyte.presenter.activities.models.SendAsset;
 import io.digibyte.presenter.activities.models.SendAssetResponse;
 import io.digibyte.presenter.activities.settings.SecurityCenterActivity;
@@ -66,6 +65,7 @@ import io.digibyte.presenter.activities.util.RetrofitManager;
 import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter;
 import io.digibyte.presenter.entities.TxItem;
 import io.digibyte.tools.animation.BRAnimator;
+import io.digibyte.tools.database.Database;
 import io.digibyte.tools.list.items.ListItemTransactionData;
 import io.digibyte.tools.manager.BRApiManager;
 import io.digibyte.tools.manager.BRSharedPrefs;
@@ -108,8 +108,7 @@ import io.digibyte.wallet.BRWalletManager;
 
 public class BreadActivity extends BRActivity implements BRWalletManager.OnBalanceChanged,
         BRPeerManager.OnTxStatusUpdate, BRSharedPrefs.OnIsoChangedListener,
-        TransactionDataSource.OnTxAddedListener, SyncManager.onStatusListener, onStatusListener,
-        AssetCallback {
+        TransactionDataSource.OnTxAddedListener, SyncManager.onStatusListener, onStatusListener {
 
     ActivityBreadBinding bindings;
     private Unbinder unbinder;
@@ -146,7 +145,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         animator.setDuration(1000);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.start();
-        assetAdapter = new MultiTypeDataBoundAdapter(this, new LinkedList<>());
+        assetAdapter = new MultiTypeDataBoundAdapter(null, (Object[]) null);
         assetRecycler.setLayoutManager(new LinearLayoutManager(this));
         assetRecycler.setAdapter(assetAdapter);
     }
@@ -241,12 +240,10 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             adapter.getAllRecycler().smoothScrollToPosition(0);
             adapter.getSentRecycler().smoothScrollToPosition(0);
             adapter.getReceivedRecycler().smoothScrollToPosition(0);
-            notifyDataSetChangeForAll();
         } else {
             adapter.getAllAdapter().updateTransactions(newTransactions);
             adapter.getSentAdapter().updateTransactions(newTransactions);
             adapter.getReceivedAdapter().updateTransactions(newTransactions);
-            notifyDataSetChangeForAll();
         }
         if (isPossibleNewAssetSend(transactionsToAdd)) {
             assetAdapter.clear();
@@ -262,73 +259,47 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private void processTxAssets(ArrayList<ListItemTransactionData> transactions) {
-        Set<AddressMetaMap> addresses = new HashSet<>();
-        String[] froms;
-        String[] tos;
         for (ListItemTransactionData transaction : transactions) {
-            froms = transaction.getTransactionItem().getFrom();
-            tos = transaction.getTransactionItem().getTo();
-            for (String from : froms) {
-                Collections.addAll(addresses, new AddressMetaMap(from, transaction));
-            }
-            for (String to : tos) {
-                Collections.addAll(addresses, new AddressMetaMap(to, transaction));
-            }
-        }
-        processAddressSet(addresses);
-    }
-
-    private class AddressMetaMap {
-        String address;
-        ListItemTransactionData listItemTransactionData;
-
-        AddressMetaMap(String address, ListItemTransactionData listItemTransactionData) {
-            this.address = address;
-            this.listItemTransactionData = listItemTransactionData;
-        }
-
-        @Override
-        public boolean equals(@Nullable Object obj) {
-            AddressMetaMap addressMetaMap = (AddressMetaMap) obj;
-            return address.equals(addressMetaMap != null ? addressMetaMap.address : null);
-        }
-    }
-
-    private void processAddressSet(Set<AddressMetaMap> set) {
-        for (AddressMetaMap destination : set) {
-            if (TextUtils.isEmpty(destination.address) || !BRWalletManager.addressContainedInWallet(destination.address)) {
+            if (!transaction.transactionItem.isAsset) {
                 continue;
             }
-            Log.d(BreadActivity.class.getSimpleName(), destination.address);
-            RetrofitManager.instance.getAssets(destination.address,
-                    addressInfo -> {
-                        if (addressInfo == null) {
-                            return;
-                        }
-                        List<Object> oldAssets = new LinkedList<>(assetAdapter.getItems());
-                        for (AddressInfo.Asset asset : addressInfo.getAssets()) {
-                            AssetModel model = new AssetModel(asset);
-                            if (!assetAdapter.containsItem(model)) {
-                                assetAdapter.addItemSilent(model);
-                            } else {
-                                model = (AssetModel) assetAdapter.getItem(model);
-                                model.addNonDupAsset(asset);
-                            }
-                        }
-                        Collections.sort(assetAdapter.getItems(), Ordering.usingToString());
-                        notifyAssetsChange(oldAssets);
-                    });
+            for (String to : transaction.getTransactionItem().getTo()) {
+                if (TextUtils.isEmpty(to)) {
+                    continue;
+                }
+                processAddressAssets(to, transaction);
+            }
         }
     }
 
-    @Override
-    public void onAssetClick(AssetModel assetModel) {
-
-    }
-
-    @Override
-    public void onMenuClick(AssetModel assetModel) {
-
+    private void processAddressAssets(@NonNull final String address, @NonNull final ListItemTransactionData listItemTransactionData) {
+        RetrofitManager.instance.getAssets(address, addressInfo -> {
+            if (addressInfo == null) {
+                return;
+            }
+            if (BRWalletManager.addressContainedInWallet(address)) {
+                for (AddressInfo.Asset asset : addressInfo.getAssets()) {
+                    AssetModel model = new AssetModel(asset);
+                    if (!assetAdapter.containsItem(model)) {
+                        model.addTransaction(listItemTransactionData);
+                        assetAdapter.addItem(model);
+                    } else {
+                        model = (AssetModel) assetAdapter.getItem(model);
+                        model.addTransaction(listItemTransactionData);
+                        model.addAsset(asset);
+                    }
+                }
+            } else {
+                for (AddressInfo.Asset asset : addressInfo.getAssets()) {
+                    RetrofitManager.instance.getAssetMeta(
+                            asset.assetId,
+                            asset.txid,
+                            String.valueOf(asset.getIndex()),
+                            metalModel -> Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
+                                    listItemTransactionData));
+                }
+            }
+        });
     }
 
     private enum Adapter {
@@ -454,9 +425,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private void notifyDataSetChangeForAll() {
-        adapter.getAllAdapter().notifyDataChanged();
-        adapter.getSentAdapter().notifyDataChanged();
-        adapter.getReceivedAdapter().notifyDataChanged();
+        adapter.getAllAdapter().notifyDataSetChanged();
+        adapter.getSentAdapter().notifyDataSetChanged();
+        adapter.getReceivedAdapter().notifyDataSetChanged();
     }
 
     @OnClick(R.id.security_center)
@@ -602,23 +573,28 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                         try {
                             getSupportFragmentManager().popBackStack();
                         } catch (IllegalStateException e) {
+                            e.printStackTrace();
                         }
                     });
         });
+    }
+
+    public void sortAssets() {
+        List<Object> oldAssets = new LinkedList<>(assetAdapter.getItems());
+        Collections.sort(assetAdapter.getItems(), Ordering.usingToString());
+        notifyAssetsChange(oldAssets);
     }
 
     private void notifyAssetsChange(List<Object> oldAssets) {
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
             public int getOldListSize() {
-                int oldSize = oldAssets.size();
-                return oldSize;
+                return oldAssets.size();
             }
 
             @Override
             public int getNewListSize() {
-                int newSize = assetAdapter.getItemCount();
-                return newSize;
+                return assetAdapter.getItemCount();
             }
 
             @Override

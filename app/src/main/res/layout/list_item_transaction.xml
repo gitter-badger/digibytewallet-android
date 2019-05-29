@@ -5,12 +5,17 @@
 
     <data>
         <variable name="data" type="io.digibyte.tools.list.items.ListItemTransactionData"/>
+
+        <variable
+            name="callback"
+            type="io.digibyte.presenter.activities.callbacks.TransactionClickCallback" />
     </data>
 
     <RelativeLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> callback.onTransactionClick(data)}"
         android:background="@drawable/transaction_background"
         android:paddingTop="24dp">
 
@@ -34,7 +39,7 @@
                 android:layout_height="36dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginTop="4dp"
-                app:arrowIcon="@{data}"/>
+                app:drawable="@{data.arrowIcon}" />
 
             <io.digibyte.presenter.customviews.BRText
                 android:id="@+id/amount"
@@ -42,9 +47,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:drawablePadding="4dp"
-                android:textColor="@color/white"
+                android:textColor="@{data.textColor}"
                 android:textSize="20sp"
-                app:amount="@{data}"/>
+                android:text="@{data.amount}" />
 
             <View android:layout_width="0dp" android:layout_height="wrap_content"
                   android:layout_weight="1"/>
@@ -57,7 +62,7 @@
                 android:layout_marginTop="6dp"
                 android:textColor="#6d6d7e"
                 android:textSize="16sp"
-                app:timestamp="@{data}"/>
+                android:text="@{data.timeStamp}" />
         </LinearLayout>
 
     </RelativeLayout>

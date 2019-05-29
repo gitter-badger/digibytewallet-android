@@ -41,5 +41,30 @@ class AddressInfo {
         lateinit var address: String
         lateinit var txid: String
         var index: Int = 0
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Asset
+
+            if (address != other.address) return false
+            if (txid != other.txid) return false
+            if (index != other.index) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = assetId.hashCode()
+            result = 31 * result + amount
+            result = 31 * result + issueTxid.hashCode()
+            result = 31 * result + divisibility
+            result = 31 * result + lockStatus.hashCode()
+            result = 31 * result + aggregationPolicy.hashCode()
+            result = 31 * result + address.hashCode()
+            result = 31 * result + txid.hashCode()
+            result = 31 * result + index
+            return result
+        }
     }
 }

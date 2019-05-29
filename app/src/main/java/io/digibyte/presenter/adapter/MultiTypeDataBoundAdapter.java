@@ -42,11 +42,8 @@ public class MultiTypeDataBoundAdapter extends BaseDataBoundAdapter {
         }
     }
 
-    public MultiTypeDataBoundAdapter(ActionCallback actionCallback, List<Object> items) {
-        mActionCallback = actionCallback;
-        if (null != items) {
-            mItems = items;
-        }
+    protected void setActionCallback(ActionCallback actionCallback) {
+        this.mActionCallback = actionCallback;
     }
 
     @Override
@@ -107,10 +104,6 @@ public class MultiTypeDataBoundAdapter extends BaseDataBoundAdapter {
         notifyItemInserted(mItems.size() - 1);
     }
 
-    public final void addItemSilent(Object item) {
-        mItems.add(item);
-    }
-
     public final Object getItem(Object item) {
         return mItems.get(mItems.indexOf(item));
     }
@@ -168,5 +161,4 @@ public class MultiTypeDataBoundAdapter extends BaseDataBoundAdapter {
     public interface ActionCallback {
 
     }
-
 }

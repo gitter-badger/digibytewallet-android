@@ -1,6 +1,5 @@
 package io.digibyte.presenter.activities.adapters;
 
-import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,14 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import io.digibyte.R;
+import io.digibyte.presenter.activities.BreadActivity;
 import io.digibyte.presenter.entities.VerticalSpaceItemDecoration;
 import io.digibyte.tools.adapter.TransactionListAdapter;
-import io.digibyte.tools.list.items.ListItemTransactionData;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 
 public class TxAdapter extends PagerAdapter {
 
-    private Context context;
+    private BreadActivity activity;
     private RecyclerView allRecycler;
     private TransactionListAdapter allAdapter;
     private RecyclerView sentRecycler;
@@ -49,33 +48,34 @@ public class TxAdapter extends PagerAdapter {
         return receivedAdapter;
     }
 
-    public TxAdapter(Context context) {
-        this.context = context;
+    public TxAdapter(BreadActivity activity) {
+        this.activity = activity;
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup collection, int position) {
-        RecyclerView layout = (RecyclerView) LayoutInflater.from(context).inflate(
+    public Object instantiateItem(@NonNull ViewGroup collection, int position) {
+        RecyclerView layout = (RecyclerView) LayoutInflater.from(activity).inflate(
                 R.layout.activity_bread_recycler, collection, false);
         SlideInDownAnimator slideInDownAnimator = new SlideInDownAnimator();
         slideInDownAnimator.setAddDuration(500);
         slideInDownAnimator.setChangeDuration(0);
         layout.addItemDecoration(new VerticalSpaceItemDecoration(4));
         layout.setItemAnimator(slideInDownAnimator);
-        layout.setLayoutManager(new LinearLayoutManager(context));
+        layout.setLayoutManager(new LinearLayoutManager(activity));
         switch (position) {
             case 0:
-                allAdapter = new TransactionListAdapter(layout);
+                allAdapter = new TransactionListAdapter(activity);
                 layout.setAdapter(allAdapter);
                 allRecycler = layout;
                 break;
             case 1:
-                sentAdapter = new TransactionListAdapter(layout);
+                sentAdapter = new TransactionListAdapter(activity);
                 layout.setAdapter(sentAdapter);
                 sentRecycler = layout;
                 break;
             case 2:
-                receivedAdapter = new TransactionListAdapter(layout);
+                receivedAdapter = new TransactionListAdapter(activity);
                 layout.setAdapter(receivedAdapter);
                 receivedRecycler = layout;
                 break;
@@ -85,7 +85,7 @@ public class TxAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup collection, int position, Object view) {
+    public void destroyItem(@NonNull ViewGroup collection, int position, Object view) {
         collection.removeView((View) view);
     }
 
@@ -104,17 +104,11 @@ public class TxAdapter extends PagerAdapter {
         switch (position) {
             default:
             case 0:
-                return context.getString(R.string.all);
+                return activity.getString(R.string.all);
             case 1:
-                return context.getString(R.string.sent);
+                return activity.getString(R.string.sent);
             case 2:
-                return context.getString(R.string.received);
+                return activity.getString(R.string.received);
         }
-    }
-
-    public void notifyDataUpdated(ListItemTransactionData listItemTransactionData) {
-        allAdapter.notifyDataUpdated(listItemTransactionData);
-        sentAdapter.notifyDataUpdated(listItemTransactionData);
-        receivedAdapter.notifyDataUpdated(listItemTransactionData);
     }
 }

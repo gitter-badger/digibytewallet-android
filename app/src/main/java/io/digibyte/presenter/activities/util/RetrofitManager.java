@@ -74,7 +74,6 @@ public class RetrofitManager {
             @Override
             public void onFailure(Call<AddressInfo> call, Throwable t) {
                 Log.d(RetrofitManager.class.getSimpleName(), "Error Retrieving Asset or no assets");
-                t.printStackTrace();
             }
         });
     }
@@ -97,7 +96,6 @@ public class RetrofitManager {
             @Override
             public void onFailure(Call<MetaModel> call, Throwable t) {
                 Log.d(RetrofitManager.class.getSimpleName(), "Error Retrieving Meta");
-                t.printStackTrace();
             }
         });
     }
@@ -174,7 +172,7 @@ public class RetrofitManager {
                     String errorMessage = "";
                     try {
                         errorMessage = response.body().string();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
 
                     }
                     broadcastTransaction.onError(errorMessage);

@@ -1,6 +1,10 @@
 package io.digibyte.tools.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.Room;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+
 import android.os.Handler;
 import android.os.Looper;
 
@@ -11,13 +15,16 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import io.digibyte.DigiByte;
+import io.digibyte.tools.list.items.ListItemTransactionData;
 
 public class Database {
     public static Database instance = new Database();
-    public TransactionDao db;
-    private Executor transactionExecutor = Executors.newSingleThreadExecutor();
+    public TransactionDao transactionsDao;
+    public AssetNameDao assetNamesDao;
+    private Executor executor = Executors.newSingleThreadExecutor();
     private Handler handler = new Handler(Looper.getMainLooper());
     public List<DigiTransaction> transactions = new LinkedList<>();
+    public List<AssetName> assetNames = new LinkedList<>();
 
     public interface TransacionStoreListener {
         void onTransactionsUpdate();
@@ -26,24 +33,73 @@ public class Database {
     public Database() {
         AppDatabase database = Room.databaseBuilder(DigiByte.getContext(),
                 AppDatabase.class, "transaction_database")
-                .fallbackToDestructiveMigration().build();
-        db = database.transactionDao();
-        update(null);
+                .addMigrations(new TransactionsMigration(6, 16)).build();
+        transactionsDao = database.transactionDao();
+        assetNamesDao = database.assetNameDao();
+        updateTransactions(null);
+        updateAssetNames(null);
+    }
+
+    private class TransactionsMigration extends Migration {
+
+        /**
+         * Creates a new migration between {@code startVersion} and {@code endVersion}.
+         *
+         * @param startVersion The start version of the database.
+         * @param endVersion   The end version of the database after this migration is applied.
+         */
+        public TransactionsMigration(int startVersion, int endVersion) {
+            super(startVersion, endVersion);
+        }
+
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("DROP TABLE IF EXISTS `asset_names`");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `asset_names` (`id` INTEGER NOT NULL, `hash` TEXT, `asset_name` TEXT, PRIMARY KEY(`id`))");
+        }
     }
 
     public void saveTransaction(byte[] txHash, String amount) {
-        transactionExecutor.execute(() -> {
+        executor.execute(() -> {
             DigiTransaction digiTransaction = new DigiTransaction();
             digiTransaction.setTxHash(txHash);
             digiTransaction.setTxAmount(amount);
-            db.insertAll(digiTransaction);
-            transactions = db.getAll();
+            transactionsDao.insertAll(digiTransaction);
+            transactions = transactionsDao.getAll();
         });
     }
 
-    public void update(TransacionStoreListener transacionStoreListener) {
-        transactionExecutor.execute(() -> {
-            transactions = db.getAll();
+    public void saveAssetName(String asset_name, ListItemTransactionData... transactions) {
+        executor.execute(() -> {
+            for (ListItemTransactionData listItemTransactionData : transactions) {
+                AssetName find = assetNamesDao.FindAssetNameFromHash(listItemTransactionData.transactionItem.getTxHashHexReversed());
+                if (find != null) {
+                    continue;
+                }
+                AssetName assetName = new AssetName();
+                assetName.setHash(listItemTransactionData.transactionItem.getTxHashHexReversed());
+                assetName.setAssetName(asset_name);
+                assetNamesDao.insertAll(assetName);
+                assetNames = assetNamesDao.getAll();
+                listItemTransactionData.updateAssetName();
+            }
+        });
+    }
+
+    private void updateTransactions(TransacionStoreListener transacionStoreListener) {
+        executor.execute(() -> {
+            transactions = transactionsDao.getAll();
+            handler.post(() -> {
+                if (transacionStoreListener != null) {
+                    transacionStoreListener.onTransactionsUpdate();
+                }
+            });
+        });
+    }
+
+    private void updateAssetNames(TransacionStoreListener transacionStoreListener) {
+        executor.execute(() -> {
+            assetNames = assetNamesDao.getAll();
             handler.post(() -> {
                 if (transacionStoreListener != null) {
                     transacionStoreListener.onTransactionsUpdate();
@@ -64,5 +120,13 @@ public class Database {
         }
         return null;
     }
-}
 
+    public AssetName findAssetNameFromHash(String hash) {
+        for (AssetName assetName : assetNames) {
+            if (assetName.getHash().equals(hash)) {
+                return assetName;
+            }
+        }
+        return null;
+    }
+}

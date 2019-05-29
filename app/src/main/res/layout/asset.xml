@@ -15,7 +15,6 @@
                   android:layout_marginBottom="12dp"
                   android:background="@drawable/asset_background"
                   android:gravity="center_vertical"
-                  android:onClick="@{() -> callback.onAssetClick(data)}"
                   android:orientation="horizontal"
                   android:padding="12dp">
 

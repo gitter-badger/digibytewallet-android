@@ -44,11 +44,11 @@ public class TxItem implements Parcelable {
     private long sent;
     private long received;
     private long fee;
-    private String to[];
-    private String from[];
+    private String[] to;
+    private String[] from;
     public String txReversed;
     private long balanceAfterTx;
-    private long outAmounts[];
+    private long[] outAmounts;
     private boolean isValid;
     private int txSize;
     public TxMetaData metaData;
@@ -58,7 +58,7 @@ public class TxItem implements Parcelable {
     }
 
     public TxItem(long timeStamp, int blockHeight, byte[] hash, String txReversed, long sent,
-                  long received, long fee, String to[], String from[],
+                  long received, long fee, String[] to, String[] from,
                   long balanceAfterTx, int txSize, long[] outAmounts, boolean isValid, boolean isAsset) {
         this.timeStamp = timeStamp;
         this.blockHeight = blockHeight;
@@ -142,10 +142,8 @@ public class TxItem implements Parcelable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         TxItem txItem = (TxItem) o;
-
-        return Arrays.equals(txHash, txItem.txHash);
+        return txReversed.equals(txItem.txReversed);
     }
 
     @Override

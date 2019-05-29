@@ -13,15 +13,15 @@ public class MetaModel {
     int totalSupply;
     int numOfHolders;
     String issueAddress;
-    IsuanceModel metadataOfIssuence;
+    public IsuanceModel metadataOfIssuence;
 
     public class IsuanceModel {
         String sha2Issue;
-        IsuanceData data;
+        public IsuanceData data;
     }
 
     public class IsuanceData {
-        String assetName;
+        public String assetName;
         String description;
         Urls[] urls;
     }
