@@ -3,6 +3,8 @@ package io.digibyte.presenter.activities.util;
 import android.util.ArrayMap;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -66,14 +68,12 @@ public class RetrofitManager {
         Call<AddressInfo> call = apiService.getAssets(address);
         call.enqueue(new Callback<AddressInfo>() {
             @Override
-            public void onResponse(Call<AddressInfo> call, Response<AddressInfo> response) {
-                Log.d(RetrofitManager.class.getSimpleName(), "Assets retrieved for address: ");
+            public void onResponse(@NonNull Call<AddressInfo> call, @NonNull Response<AddressInfo> response) {
                 assetsCallback.assetsRetrieved(response.body());
             }
 
             @Override
-            public void onFailure(Call<AddressInfo> call, Throwable t) {
-                Log.d(RetrofitManager.class.getSimpleName(), "Error Retrieving Asset or no assets");
+            public void onFailure(@NonNull Call<AddressInfo> call, @NonNull Throwable t) {
             }
         });
     }
@@ -88,14 +88,12 @@ public class RetrofitManager {
         Call<MetaModel> call = apiService.getMeta(assetid, utxotdid, index);
         call.enqueue(new Callback<MetaModel>() {
             @Override
-            public void onResponse(Call<MetaModel> call, Response<MetaModel> response) {
-                Log.d(RetrofitManager.class.getSimpleName(), "Meta retrieved for address");
+            public void onResponse(@NonNull Call<MetaModel> call, @NonNull Response<MetaModel> response) {
                 metaCallback.metaRetrieved(response.body());
             }
 
             @Override
-            public void onFailure(Call<MetaModel> call, Throwable t) {
-                Log.d(RetrofitManager.class.getSimpleName(), "Error Retrieving Meta");
+            public void onFailure(@NonNull Call<MetaModel> call, @NonNull Throwable t) {
             }
         });
     }
@@ -112,7 +110,7 @@ public class RetrofitManager {
         Call<ResponseBody> call = apiService.sendAsset(body);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.code() != 200) {
                         try {
@@ -137,7 +135,7 @@ public class RetrofitManager {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 sendAssetCallback.error("");
             }
         });
@@ -157,7 +155,7 @@ public class RetrofitManager {
         Call<ResponseBody> call = assetService.broadcastTx(body);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 Log.d(RetrofitManager.class.getSimpleName(), "Status Code: " + response.code());
                 Log.d(RetrofitManager.class.getSimpleName(), "Status Message: " + response.message());
                 if (response.code() == 200) {
@@ -180,7 +178,7 @@ public class RetrofitManager {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 broadcastTransaction.onError("");
                 t.printStackTrace();
             }

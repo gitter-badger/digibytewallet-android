@@ -33,7 +33,7 @@ public class Database {
     public Database() {
         AppDatabase database = Room.databaseBuilder(DigiByte.getContext(),
                 AppDatabase.class, "transaction_database")
-                .addMigrations(new TransactionsMigration(6, 16)).build();
+                .addMigrations(new TransactionsMigration(6, 18)).build();
         transactionsDao = database.transactionDao();
         assetNamesDao = database.assetNameDao();
         updateTransactions(null);
@@ -72,12 +72,11 @@ public class Database {
     public void saveAssetName(String asset_name, ListItemTransactionData... transactions) {
         executor.execute(() -> {
             for (ListItemTransactionData listItemTransactionData : transactions) {
-                AssetName find = assetNamesDao.FindAssetNameFromHash(listItemTransactionData.transactionItem.getTxHashHexReversed());
-                if (find != null) {
+                if (assetNamesDao.FindAssetNameFromHash(listItemTransactionData.transactionItem.txReversed) != null) {
                     continue;
                 }
                 AssetName assetName = new AssetName();
-                assetName.setHash(listItemTransactionData.transactionItem.getTxHashHexReversed());
+                assetName.setHash(listItemTransactionData.transactionItem.txReversed);
                 assetName.setAssetName(asset_name);
                 assetNamesDao.insertAll(assetName);
                 assetNames = assetNamesDao.getAll();

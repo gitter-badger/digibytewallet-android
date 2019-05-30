@@ -33,9 +33,9 @@ class AssetsHelper {
         try {
             Log.d(AssetModel::class.java.simpleName, "Clipped Address: $assetTx.destinationAddress")
             val sendAsset = SendAsset(
-                    Integer.toString(5000),
+                    Integer.toString(1200),
                     assetTx.addresses,
-                    trimNullEmpty(getNeededUTXO(5000)),
+                    trimNullEmpty(getNeededUTXO(1200)),
                     assetTx.destinationAddress.toString(),
                     assetTx.assetQuantity,
                     assetTx.assetId,

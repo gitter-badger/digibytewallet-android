@@ -111,7 +111,7 @@ public class FragmentSend extends Fragment implements OnBackPressListener {
                 }
                 BRExecutor.getInstance().forLightWeightBackgroundTasks().execute(
                         () -> {
-                            if (wm.addressContainedInWallet(finalAddress)) {
+                            if (BRWalletManager.addressContainedInWallet(finalAddress)) {
                                 app.runOnUiThread(() -> {
                                     BRDialog.showCustomDialog(getActivity(), "",
                                             getResources().getString(R.string.Send_containsAddress),
@@ -260,8 +260,8 @@ public class FragmentSend extends Fragment implements OnBackPressListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         binding = FragmentSendBinding.inflate(inflater);
         binding.setCallback(fragmentSendCallbacks);
         binding.signalLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
@@ -378,9 +378,7 @@ public class FragmentSend extends Fragment implements OnBackPressListener {
     }
 
     private void fadeOutRemove() {
-        ObjectAnimator colorFade = BRAnimator.animateBackgroundDim(binding.background, true, () -> {
-            remove();
-        });
+        ObjectAnimator colorFade = BRAnimator.animateBackgroundDim(binding.background, true, this::remove);
         colorFade.start();
     }
 

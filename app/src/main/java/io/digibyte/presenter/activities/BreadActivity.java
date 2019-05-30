@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -46,14 +48,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import butterknife.Unbinder;
-import io.digibyte.BR;
 import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityBreadBinding;
 import io.digibyte.presenter.activities.adapters.TxAdapter;
 import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.AssetModel;
-import io.digibyte.presenter.activities.models.MetaModel;
 import io.digibyte.presenter.activities.models.SendAsset;
 import io.digibyte.presenter.activities.models.SendAssetResponse;
 import io.digibyte.presenter.activities.settings.SecurityCenterActivity;
@@ -259,6 +259,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private void processTxAssets(ArrayList<ListItemTransactionData> transactions) {
+        HashSet<AddressTxSet> addressTxSets = new HashSet<>();
         for (ListItemTransactionData transaction : transactions) {
             if (!transaction.transactionItem.isAsset) {
                 continue;
@@ -267,8 +268,27 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 if (TextUtils.isEmpty(to)) {
                     continue;
                 }
-                processAddressAssets(to, transaction);
+                addressTxSets.add(new AddressTxSet(to, transaction));
             }
+        }
+        for (AddressTxSet addressTxSet : addressTxSets) {
+            processAddressAssets(addressTxSet.address, addressTxSet.listItemTransactionData);
+        }
+    }
+
+    private class AddressTxSet {
+        String address;
+        ListItemTransactionData listItemTransactionData;
+
+        AddressTxSet(String address, ListItemTransactionData listItemTransactionData) {
+            this.address = address;
+            this.listItemTransactionData = listItemTransactionData;
+        }
+
+        @Override
+        public boolean equals(@Nullable Object obj) {
+            AddressTxSet addressTxSet = (AddressTxSet) obj;
+            return address.equals(addressTxSet.address);
         }
     }
 
@@ -281,11 +301,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 for (AddressInfo.Asset asset : addressInfo.getAssets()) {
                     AssetModel model = new AssetModel(asset);
                     if (!assetAdapter.containsItem(model)) {
-                        model.addTransaction(listItemTransactionData);
                         assetAdapter.addItem(model);
                     } else {
                         model = (AssetModel) assetAdapter.getItem(model);
-                        model.addTransaction(listItemTransactionData);
                         model.addAsset(asset);
                     }
                 }
@@ -295,8 +313,10 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                             asset.assetId,
                             asset.txid,
                             String.valueOf(asset.getIndex()),
-                            metalModel -> Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
-                                    listItemTransactionData));
+                            metalModel -> {
+                                Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
+                                        listItemTransactionData);
+                            });
                 }
             }
         });

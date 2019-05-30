@@ -50,7 +50,6 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
 
     private MetaModel metaModel;
     private List<AddressInfo.Asset> assets = new LinkedList<>();
-    private List<ListItemTransactionData> listItemTransactionDatas = new LinkedList<>();
     private static transient Handler handler = new Handler(Looper.getMainLooper());
     private static transient Executor executor = Executors.newSingleThreadExecutor();
 
@@ -66,17 +65,6 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         }
         assets.add(newAsset);
         notifyPropertyChanged(BR.assetQuantity);
-    }
-
-    public void addTransaction(ListItemTransactionData listItemTransactionData) {
-        if (!listItemTransactionDatas.contains(listItemTransactionData)) {
-            listItemTransactionDatas.add(listItemTransactionData);
-            //If we have the asset name here, it's because meta has already been retrieved
-            //If we don't, it'll be in the collection processed when meta is retrieved
-            if (!TextUtils.isEmpty(getAssetName())) {
-                Database.instance.saveAssetName(getAssetName(), listItemTransactionData);
-            }
-        }
     }
 
     @Override
@@ -173,8 +161,6 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     notifyPropertyChanged(BR.assetName);
                     notifyPropertyChanged(BR.assetQuantity);
                     notifyPropertyChanged(BR.assetImage);
-                    Database.instance.saveAssetName(getAssetName(),
-                            listItemTransactionDatas.toArray(new ListItemTransactionData[0]));
                     ((BreadActivity) holder.itemView.getContext()).sortAssets();
                 });
     }

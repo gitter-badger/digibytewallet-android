@@ -122,7 +122,7 @@ public class ListItemTransactionData extends BaseObservable implements Parcelabl
     @Bindable
     public String getAmount() {
         if (transactionItem.isAsset) {
-            AssetName assetName = Database.instance.findAssetNameFromHash(transactionItem.getTxHashHexReversed());
+            AssetName assetName = Database.instance.findAssetNameFromHash(transactionItem.txReversed);
             if (assetName != null) {
                 return assetName.getAssetName();
             } else {
