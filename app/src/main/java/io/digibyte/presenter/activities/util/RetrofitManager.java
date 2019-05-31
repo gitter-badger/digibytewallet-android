@@ -11,14 +11,21 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import io.digibyte.DigiByte;
 import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.MetaModel;
 import io.digibyte.presenter.activities.models.SendAssetResponse;
+import okhttp3.Cache;
+import okhttp3.CacheControl;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -37,9 +44,25 @@ public class RetrofitManager {
     private Retrofit assetsApi;
 
     private RetrofitManager() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        int size = 1024 * 1024 * 10;
+        builder.cache(new Cache(new File(DigiByte.getContext().getCacheDir(), "assets"), size));
+        builder.addNetworkInterceptor(chain -> {
+            okhttp3.Response response = chain.proceed(chain.request());
+
+            CacheControl cacheControl = new CacheControl.Builder()
+                    .maxAge(365, TimeUnit.DAYS)
+                    .build();
+
+            return response.newBuilder()
+                    .removeHeader("Cache-Control")
+                    .header("Cache-Control", cacheControl.toString())
+                    .build();
+        });
         assetsApi = new Retrofit.Builder()
                 .baseUrl("https://api.digiassets.net:443/v3/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(builder.build())
                 .build();
     }
 

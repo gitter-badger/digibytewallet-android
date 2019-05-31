@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -65,7 +64,6 @@ import io.digibyte.presenter.activities.util.RetrofitManager;
 import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter;
 import io.digibyte.presenter.entities.TxItem;
 import io.digibyte.tools.animation.BRAnimator;
-import io.digibyte.tools.database.Database;
 import io.digibyte.tools.list.items.ListItemTransactionData;
 import io.digibyte.tools.manager.BRApiManager;
 import io.digibyte.tools.manager.BRSharedPrefs;
@@ -217,9 +215,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 ? DigiByte.getContext().getString(R.string.NodeSelector_statusLabel) + ": "
                 + DigiByte.getContext().getString(R.string.SyncingView_connecting)
                 : df.format(Double.valueOf(SyncManager.getInstance().getProgress() * 100d)) + "%"
-                        + " - " + DateFormat.getDateInstance(DateFormat.SHORT, current).format(time)
-                        + ", " + DateFormat.getTimeInstance(DateFormat.SHORT, current).format(
-                        time));
+                + " - " + DateFormat.getDateInstance(DateFormat.SHORT, current).format(time)
+                + ", " + DateFormat.getTimeInstance(DateFormat.SHORT, current).format(
+                time));
     }
 
     @Override
@@ -259,20 +257,16 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private void processTxAssets(ArrayList<ListItemTransactionData> transactions) {
-        HashSet<AddressTxSet> addressTxSets = new HashSet<>();
+        LinkedList<AddressTxSet> incomingAddresses = new LinkedList<>();
         for (ListItemTransactionData transaction : transactions) {
-            if (!transaction.transactionItem.isAsset) {
-                continue;
-            }
-            for (String to : transaction.getTransactionItem().getTo()) {
-                if (TextUtils.isEmpty(to)) {
-                    continue;
+            for (String address : transaction.transactionItem.getTo()) {
+                if (!TextUtils.isEmpty(address)) {
+                    incomingAddresses.add(new AddressTxSet(address, transaction));
                 }
-                addressTxSets.add(new AddressTxSet(to, transaction));
             }
         }
-        for (AddressTxSet addressTxSet : addressTxSets) {
-            processAddressAssets(addressTxSet.address, addressTxSet.listItemTransactionData);
+        for (AddressTxSet address : incomingAddresses) {
+            processIncomingAssets(address.address, address.listItemTransactionData);
         }
     }
 
@@ -292,32 +286,25 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         }
     }
 
-    private void processAddressAssets(@NonNull final String address, @NonNull final ListItemTransactionData listItemTransactionData) {
+    private void processIncomingAssets(@NonNull final String address, @NonNull final ListItemTransactionData listItemTransactionData) {
         RetrofitManager.instance.getAssets(address, addressInfo -> {
             if (addressInfo == null) {
                 return;
             }
-            if (BRWalletManager.addressContainedInWallet(address)) {
-                for (AddressInfo.Asset asset : addressInfo.getAssets()) {
-                    AssetModel model = new AssetModel(asset);
-                    if (!assetAdapter.containsItem(model)) {
-                        assetAdapter.addItem(model);
-                    } else {
-                        model = (AssetModel) assetAdapter.getItem(model);
-                        model.addAsset(asset);
+            for (final AddressInfo.Asset asset : addressInfo.getAssets()) {
+                RetrofitManager.instance.getAssetMeta(asset.assetId, asset.txid, String.valueOf(asset.getIndex()), metalModel -> {
+                    if (asset.txid.equals(listItemTransactionData.transactionItem.txReversed)) {
+                        listItemTransactionData.updateAssetName(metalModel.metadataOfIssuence.data.assetName, address);
+                        AssetModel assetModel = new AssetModel(asset, metalModel);
+                        if (!assetAdapter.containsItem(assetModel)) {
+                            assetAdapter.addItem(assetModel);
+                        } else {
+                            AssetModel existingAssetModel = (AssetModel) assetAdapter.getItem(assetModel);
+                            existingAssetModel.addAsset(asset);
+                        }
+                        sortAssets();
                     }
-                }
-            } else {
-                for (AddressInfo.Asset asset : addressInfo.getAssets()) {
-                    RetrofitManager.instance.getAssetMeta(
-                            asset.assetId,
-                            asset.txid,
-                            String.valueOf(asset.getIndex()),
-                            metalModel -> {
-                                Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
-                                        listItemTransactionData);
-                            });
-                }
+                });
             }
         });
     }
@@ -327,7 +314,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private ArrayList<ListItemTransactionData> convertNewTransactionsForAdapter(Adapter adapter,
-            ArrayList<ListItemTransactionData> transactions) {
+                                                                                ArrayList<ListItemTransactionData> transactions) {
         ArrayList<ListItemTransactionData> transactionList = new ArrayList<>();
         for (int index = 0; index < transactions.size(); index++) {
             ListItemTransactionData transactionData = transactions.get(index);

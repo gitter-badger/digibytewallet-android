@@ -34,17 +34,12 @@ import java.util.concurrent.Executors;
 import io.digibyte.BR;
 import io.digibyte.R;
 import io.digibyte.databinding.AssetBinding;
-import io.digibyte.presenter.activities.BreadActivity;
-import io.digibyte.presenter.activities.util.RetrofitManager;
 import io.digibyte.presenter.adapter.DataBoundViewHolder;
 import io.digibyte.presenter.adapter.DynamicBinding;
 import io.digibyte.presenter.adapter.LayoutBinding;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.crypto.AssetsHelper;
-import io.digibyte.tools.database.Database;
-import io.digibyte.tools.list.items.ListItemTransactionData;
 import io.digibyte.tools.util.BRConstants;
-import io.digibyte.wallet.BRWalletManager;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
 
@@ -53,7 +48,8 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     private static transient Handler handler = new Handler(Looper.getMainLooper());
     private static transient Executor executor = Executors.newSingleThreadExecutor();
 
-    public AssetModel(AddressInfo.Asset asset) {
+    public AssetModel(AddressInfo.Asset asset, MetaModel metaModel) {
+        this.metaModel = metaModel;
         addAsset(asset);
     }
 
@@ -64,6 +60,11 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
             }
         }
         assets.add(newAsset);
+        notifyPropertyChanged(BR.assetQuantity);
+    }
+
+    public void removeAsset(AddressInfo.Asset asset) {
+        assets.remove(asset);
         notifyPropertyChanged(BR.assetQuantity);
     }
 
@@ -116,7 +117,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         return String.valueOf(quantity);
     }
 
-    private int getAssetsQuantity() {
+    public int getAssetQuantityInt() {
         int quantity = 0;
         for (AddressInfo.Asset asset : assets) {
             quantity += asset.getAmount();
@@ -149,20 +150,6 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     R.style.AssetPopup);
             showAssetMenu(context, v);
         });
-        if (metaModel != null) {
-            return;
-        }
-        RetrofitManager.instance.getAssetMeta(
-                assets.get(0).assetId,
-                assets.get(0).txid,
-                String.valueOf(assets.get(0).getIndex()),
-                metaModel -> {
-                    AssetModel.this.metaModel = metaModel;
-                    notifyPropertyChanged(BR.assetName);
-                    notifyPropertyChanged(BR.assetQuantity);
-                    notifyPropertyChanged(BR.assetImage);
-                    ((BreadActivity) holder.itemView.getContext()).sortAssets();
-                });
     }
 
     private void showAssetMenu(Context context, View v) {
@@ -188,7 +175,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
             AssetsHelper.AssetTx assetTx = new AssetsHelper.AssetTx(
                     "",
                     getAddresses(),
-                    getAssetsQuantity(),
+                    getAssetQuantityInt(),
                     metaModel.assetId,
                     metaModel.divisibility,
                     this

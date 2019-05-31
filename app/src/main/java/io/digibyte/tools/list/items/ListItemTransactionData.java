@@ -3,6 +3,8 @@ package io.digibyte.tools.list.items;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.databinding.BaseObservable;
@@ -20,7 +22,6 @@ import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.presenter.adapter.LayoutBinding;
 import io.digibyte.presenter.entities.TxItem;
-import io.digibyte.tools.database.AssetName;
 import io.digibyte.tools.database.Database;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.util.BRCurrency;
@@ -31,8 +32,10 @@ public class ListItemTransactionData extends BaseObservable implements Parcelabl
     private int transactionIndex;
     private int transactionsCount;
     private String transactionDisplayTimeHolder;
+    private String assetName;
 
     public TxItem transactionItem;
+
 
     public ListItemTransactionData(int anIndex, int aTransactionsCount, TxItem aTransactionItem) {
         this.transactionIndex = anIndex;
@@ -45,7 +48,11 @@ public class ListItemTransactionData extends BaseObservable implements Parcelabl
         return transactionItem;
     }
 
-    public void updateAssetName() {
+    public void updateAssetName(String assetName, String address) {
+        if (!TextUtils.isEmpty(this.assetName) && !this.assetName.equals(assetName)) {
+            Log.d(ListItemTransactionData.class.getSimpleName(), "Asset Name Change, from: " + this.assetName + ", to: " + assetName + ", for address: " + address);
+        }
+        this.assetName = assetName;
         notifyPropertyChanged(BR.amount);
     }
 
@@ -122,9 +129,8 @@ public class ListItemTransactionData extends BaseObservable implements Parcelabl
     @Bindable
     public String getAmount() {
         if (transactionItem.isAsset) {
-            AssetName assetName = Database.instance.findAssetNameFromHash(transactionItem.txReversed);
             if (assetName != null) {
-                return assetName.getAssetName();
+                return assetName;
             } else {
                 return DigiByte.getContext().getString(R.string.digi_asset);
             }

@@ -833,7 +833,7 @@ public class BRWalletManager {
 
     public native String decryptBip38Key(String privKey, String pass);
 
-    public native String reverseTxHash(String txHash);
+    public static native String reverseTxHash(String txHash);
 
     public native String txHashToHex(byte[] txHash);
 

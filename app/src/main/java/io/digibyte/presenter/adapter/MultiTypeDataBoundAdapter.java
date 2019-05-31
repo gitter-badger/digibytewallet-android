@@ -105,7 +105,11 @@ public class MultiTypeDataBoundAdapter extends BaseDataBoundAdapter {
     }
 
     public final Object getItem(Object item) {
-        return mItems.get(mItems.indexOf(item));
+        int index = mItems.indexOf(item);
+        if (index == -1) {
+            return null;
+        }
+        return mItems.get(index);
     }
 
     public final boolean containsItem(Object item) {

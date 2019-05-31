@@ -24,7 +24,7 @@ import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.security.AuthManager;
 
 public class SettingsActivity extends BRActivity {
-    public List<BRSettingsItem> items = new LinkedList();
+    public List<BRSettingsItem> items = new LinkedList<>();
     private SettingsListAdapter adapter;
 
     private SettingsCallback callback = new SettingsCallback() {
