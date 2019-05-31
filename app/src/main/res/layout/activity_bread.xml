@@ -244,12 +244,19 @@
 
                 </FrameLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/assets_recycler"
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/asset_refresh"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:minWidth="300dp" />
+                    android:layout_weight="1">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/assets_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:minWidth="300dp" />
+
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
             </LinearLayout>
 
         </FrameLayout>

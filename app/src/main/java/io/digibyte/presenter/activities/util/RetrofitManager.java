@@ -83,6 +83,18 @@ public class RetrofitManager {
         }
     }
 
+    public void clearCache() {
+        try {
+            Iterator<String> urls = cache.urls();
+            while (urls.hasNext()) {
+                urls.next();
+                urls.remove();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private interface AssetEndpoints {
         @GET("addressinfo/{address}")
         Call<AddressInfo> getAssets(@Path("address") String address);
@@ -114,6 +126,7 @@ public class RetrofitManager {
 
             @Override
             public void onFailure(@NonNull Call<AddressInfo> call, @NonNull Throwable t) {
+                assetsCallback.assetsRetrieved(null);
             }
         });
     }
