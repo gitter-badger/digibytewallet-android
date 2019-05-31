@@ -554,21 +554,20 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 Gson gson = new Gson();
                 String payload = gson.toJson(authType.sendAsset);
                 Log.d(BRActivity.class.getSimpleName(), payload);
-                RetrofitManager.instance.sendAsset(payload,
-                        new RetrofitManager.SendAssetCallback() {
-                            @Override
-                            public void success(SendAssetResponse sendAssetResponse) {
-                                AuthManager.getInstance().authPrompt(BreadActivity.this, null,
-                                        BreadActivity.this.getString(R.string.VerifyPin_continueBody),
-                                        new BRAuthCompletion.AuthType(sendAssetResponse, authType.sendAsset));
-                            }
+                RetrofitManager.instance.sendAsset(payload, new RetrofitManager.SendAssetCallback() {
+                    @Override
+                    public void success(SendAssetResponse sendAssetResponse) {
+                        AuthManager.getInstance().authPrompt(BreadActivity.this, null,
+                                BreadActivity.this.getString(R.string.VerifyPin_continueBody),
+                                new BRAuthCompletion.AuthType(sendAssetResponse, authType.sendAsset));
+                    }
 
-                            @Override
-                            public void error(String message) {
-                                showSendConfirmDialog(1, TextUtils.isEmpty(message) ? getString(R.string.Alerts_sendFailure) : message);
-                                Log.d(BRActivity.class.getSimpleName(), message);
-                            }
-                        });
+                    @Override
+                    public void error(String message) {
+                        showSendConfirmDialog(1, TextUtils.isEmpty(message) ? getString(R.string.Alerts_sendFailure) : message);
+                        Log.d(BRActivity.class.getSimpleName(), message);
+                    }
+                });
                 break;
             case ASSET_BROADCAST:
                 broadcast(authType.sendAssetResponse, authType.sendAsset);
