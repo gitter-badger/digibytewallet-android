@@ -3,6 +3,7 @@ package io.digibyte.presenter.interfaces;
 import java.io.Serializable;
 
 import io.digibyte.presenter.activities.models.SendAsset;
+import io.digibyte.presenter.activities.models.SendAssetResponse;
 import io.digibyte.presenter.entities.PaymentItem;
 
 /**
@@ -33,7 +34,7 @@ public interface BRAuthCompletion {
     class AuthType implements Serializable {
 
         public enum Type {
-            DIGI_ID, LOGIN, POST_AUTH, SPENDING_LIMIT, SEND, SEND_ASSET
+            DIGI_ID, LOGIN, POST_AUTH, SPENDING_LIMIT, SEND, SEND_ASSET, ASSET_BROADCAST
         }
 
         public Type type;
@@ -42,6 +43,7 @@ public interface BRAuthCompletion {
         public String callbackUrl;
         public PaymentItem paymentItem;
         public SendAsset sendAsset;
+        public SendAssetResponse sendAssetResponse;
 
         public AuthType(Type type) {
             this.type = type;
@@ -75,6 +77,13 @@ public interface BRAuthCompletion {
             this.bitId = bitId;
             this.deepLink = deepLink;
             this.callbackUrl = callbackUrl;
+        }
+
+        public AuthType(SendAssetResponse sendAssetResponse, SendAsset sendAsset) {
+            this.type = Type.ASSET_BROADCAST;
+            this.sendAssetResponse = sendAssetResponse;
+            this.sendAsset = sendAsset;
+
         }
     }
     void onComplete(AuthType authType);

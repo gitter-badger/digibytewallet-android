@@ -359,4 +359,5 @@
   <string name="no_clip_data">No Clip Data</string>
   <string name="enter_asset_quantity">Enter asset quantity...</string>
   <string name="digi_asset">Digi Asset</string>
+  <string name="Alerts.assetsSendSuccessSubheader">Assets Sent!</string>
 </resources>

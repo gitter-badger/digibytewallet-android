@@ -65,6 +65,7 @@ import io.digibyte.presenter.activities.util.BRActivity;
 import io.digibyte.presenter.activities.util.RetrofitManager;
 import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter;
 import io.digibyte.presenter.entities.TxItem;
+import io.digibyte.presenter.interfaces.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.database.Database;
 import io.digibyte.tools.list.items.ListItemTransactionData;
@@ -73,6 +74,7 @@ import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.manager.SyncManager;
 import io.digibyte.tools.manager.TxManager;
 import io.digibyte.tools.manager.TxManager.onStatusListener;
+import io.digibyte.tools.security.AuthManager;
 import io.digibyte.tools.security.BRKeyStore;
 import io.digibyte.tools.sqlite.TransactionDataSource;
 import io.digibyte.tools.threads.BRExecutor;
@@ -251,6 +253,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             RetrofitManager.instance.clearCache(transactionsToAdd.get(0).transactionItem.getTo());
             assetAdapter.clear();
             assetAdapter.notifyDataSetChanged();
+            bindings.assetRefresh.setRefreshing(true);
             processTxAssets(adapter.getAllAdapter().getTransactions());
         } else if (transactionsToAdd.size() > 0) {
             processTxAssets(transactionsToAdd);
@@ -555,7 +558,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                         new RetrofitManager.SendAssetCallback() {
                             @Override
                             public void success(SendAssetResponse sendAssetResponse) {
-                                broadcast(sendAssetResponse, authType.sendAsset);
+                                AuthManager.getInstance().authPrompt(BreadActivity.this, null,
+                                        BreadActivity.this.getString(R.string.VerifyPin_continueBody),
+                                        new BRAuthCompletion.AuthType(sendAssetResponse, authType.sendAsset));
                             }
 
                             @Override
@@ -564,6 +569,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                                 Log.d(BRActivity.class.getSimpleName(), message);
                             }
                         });
+                break;
+            case ASSET_BROADCAST:
+                broadcast(authType.sendAssetResponse, authType.sendAsset);
                 break;
         }
 
@@ -603,7 +611,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             BRAnimator.showBreadSignal(BreadActivity.this,
                     error == 0 ? getString(R.string.Alerts_sendSuccess)
                             : getString(R.string.Alert_error),
-                    error == 0 ? getString(R.string.Alerts_sendSuccessSubheader)
+                    error == 0 ? getString(R.string.Alerts_assetsSendSuccessSubheader)
                             : message, error == 0 ? R.raw.success_check
                             : R.raw.error_check, () -> {
                         try {
