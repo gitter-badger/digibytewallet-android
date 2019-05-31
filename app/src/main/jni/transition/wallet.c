@@ -1147,18 +1147,35 @@ Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXO(JNIEnv *env,
                                                          jobject thiz,
                                                          jint amount) {
 
-    char **addresses;
-    array_new(addresses, 1);
-    size_t length = BRGetUTXO(_wallet, addresses, (uint64_t) amount);
+    BRUTXO *utxos = BRGetUTXO(_wallet);
+    uint64_t balance = 0;
+    uint8_t count = 0;
+    size_t j;
+    BRTransaction *t;
+    BRTxOutput *output;
+    uint64_t utxoAmount;
+    size_t addressCount = 0;
 
-    //Serialize
-    jobjectArray ret = (jobjectArray) (*env)->NewObjectArray(env, length,
+    jobjectArray ret = (jobjectArray) (*env)->NewObjectArray(env, 10,
                                                              (*env)->FindClass(env,
                                                                                "java/lang/String"),
                                                              (*env)->NewStringUTF(env, ""));
-    for (int i = 0; i < length; i++) {
-        jstring jAddress = (*env)->NewStringUTF(env, addresses[i]);
-        (*env)->SetObjectArrayElement(env, ret, i, jAddress);
+
+    for (j = 0; j < array_count(utxos); j++) {
+        t = BRGetTxForUTXO(_wallet, utxos[j]);
+        output = &t->outputs[utxos[j].n];
+        if (BROutIsAsset(*output)) continue;
+        utxoAmount = output->amount;
+        if (utxoAmount > 0) {
+            jstring jAddress = (*env)->NewStringUTF(env, output->address);
+            (*env)->SetObjectArrayElement(env, ret, addressCount, jAddress);
+            addressCount++;
+            balance += utxoAmount;
+            count++;
+        }
+        if (balance >= amount) {
+            break;
+        }
     }
     return ret;
 }

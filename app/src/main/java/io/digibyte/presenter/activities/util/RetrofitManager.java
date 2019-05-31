@@ -1,5 +1,6 @@
 package io.digibyte.presenter.activities.util;
 
+import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +25,6 @@ import io.digibyte.presenter.activities.models.MetaModel;
 import io.digibyte.presenter.activities.models.SendAssetResponse;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
-import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -42,11 +43,11 @@ import retrofit2.http.Path;
 public class RetrofitManager {
     public static RetrofitManager instance = new RetrofitManager();
     private Retrofit assetsApi;
+    private Cache cache = new Cache(new File(DigiByte.getContext().getCacheDir(), "assets"), 1024 * 1024 * 10);
 
     private RetrofitManager() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        int size = 1024 * 1024 * 10;
-        builder.cache(new Cache(new File(DigiByte.getContext().getCacheDir(), "assets"), size));
+        builder.cache(cache);
         builder.addNetworkInterceptor(chain -> {
             okhttp3.Response response = chain.proceed(chain.request());
 
@@ -66,13 +67,29 @@ public class RetrofitManager {
                 .build();
     }
 
+    public void clearCache(String[] addresses) {
+        try {
+            Iterator<String> urls = cache.urls();
+            while (urls.hasNext()) {
+                String url = urls.next();
+                for (String address : addresses) {
+                    if (!TextUtils.isEmpty(address) && url.contains(address)) {
+                        urls.remove();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private interface AssetEndpoints {
         @GET("addressinfo/{address}")
         Call<AddressInfo> getAssets(@Path("address") String address);
 
         @GET("assetmetadata/{assetid}/{utxotxid}:{index}")
         Call<MetaModel> getMeta(@Path("assetid") String assetid, @Path("utxotxid") String utxotxid,
-                @Path("index") String index);
+                                @Path("index") String index);
 
         @POST("sendasset/")
         @Headers({"cache-control: no-cache", "Content-Type: application/json"})
@@ -106,7 +123,7 @@ public class RetrofitManager {
     }
 
     public void getAssetMeta(String assetid, String utxotdid, String index,
-            MetaCallback metaCallback) {
+                             MetaCallback metaCallback) {
         AssetEndpoints apiService = assetsApi.create(AssetEndpoints.class);
         Call<MetaModel> call = apiService.getMeta(assetid, utxotdid, index);
         call.enqueue(new Callback<MetaModel>() {

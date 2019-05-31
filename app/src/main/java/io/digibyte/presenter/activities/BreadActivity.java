@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -64,6 +65,7 @@ import io.digibyte.presenter.activities.util.RetrofitManager;
 import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter;
 import io.digibyte.presenter.entities.TxItem;
 import io.digibyte.tools.animation.BRAnimator;
+import io.digibyte.tools.database.Database;
 import io.digibyte.tools.list.items.ListItemTransactionData;
 import io.digibyte.tools.manager.BRApiManager;
 import io.digibyte.tools.manager.BRSharedPrefs;
@@ -244,6 +246,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             adapter.getReceivedAdapter().updateTransactions(newTransactions);
         }
         if (isPossibleNewAssetSend(transactionsToAdd)) {
+            RetrofitManager.instance.clearCache(transactionsToAdd.get(0).transactionItem.getTo());
             assetAdapter.clear();
             assetAdapter.notifyDataSetChanged();
             processTxAssets(adapter.getAllAdapter().getTransactions());
@@ -257,15 +260,23 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private void processTxAssets(ArrayList<ListItemTransactionData> transactions) {
-        LinkedList<AddressTxSet> incomingAddresses = new LinkedList<>();
+        HashSet<AddressTxSet> addresses = new HashSet<>();
         for (ListItemTransactionData transaction : transactions) {
+            if (!transaction.transactionItem.isAsset) {
+                continue;
+            }
             for (String address : transaction.transactionItem.getTo()) {
                 if (!TextUtils.isEmpty(address)) {
-                    incomingAddresses.add(new AddressTxSet(address, transaction));
+                    addresses.add(new AddressTxSet(address, transaction));
+                }
+            }
+            for (String address : transaction.transactionItem.getFrom()) {
+                if (!TextUtils.isEmpty(address)) {
+                    addresses.add(new AddressTxSet(address, transaction));
                 }
             }
         }
-        for (AddressTxSet address : incomingAddresses) {
+        for (AddressTxSet address : addresses) {
             processIncomingAssets(address.address, address.listItemTransactionData);
         }
     }
@@ -294,15 +305,17 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             for (final AddressInfo.Asset asset : addressInfo.getAssets()) {
                 RetrofitManager.instance.getAssetMeta(asset.assetId, asset.txid, String.valueOf(asset.getIndex()), metalModel -> {
                     if (asset.txid.equals(listItemTransactionData.transactionItem.txReversed)) {
-                        listItemTransactionData.updateAssetName(metalModel.metadataOfIssuence.data.assetName, address);
-                        AssetModel assetModel = new AssetModel(asset, metalModel);
-                        if (!assetAdapter.containsItem(assetModel)) {
-                            assetAdapter.addItem(assetModel);
-                        } else {
-                            AssetModel existingAssetModel = (AssetModel) assetAdapter.getItem(assetModel);
-                            existingAssetModel.addAsset(asset);
+                        Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName, listItemTransactionData);
+                        if (BRWalletManager.addressContainedInWallet(address)) {
+                            AssetModel assetModel = new AssetModel(asset, metalModel);
+                            if (!assetAdapter.containsItem(assetModel)) {
+                                assetAdapter.addItem(assetModel);
+                            } else {
+                                AssetModel existingAssetModel = (AssetModel) assetAdapter.getItem(assetModel);
+                                existingAssetModel.addAsset(asset);
+                            }
+                            sortAssets();
                         }
-                        sortAssets();
                     }
                 });
             }

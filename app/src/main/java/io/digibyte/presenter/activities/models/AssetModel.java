@@ -34,6 +34,7 @@ import java.util.concurrent.Executors;
 import io.digibyte.BR;
 import io.digibyte.R;
 import io.digibyte.databinding.AssetBinding;
+import io.digibyte.presenter.activities.util.RetrofitManager;
 import io.digibyte.presenter.adapter.DataBoundViewHolder;
 import io.digibyte.presenter.adapter.DynamicBinding;
 import io.digibyte.presenter.adapter.LayoutBinding;
@@ -172,9 +173,11 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.send_asset_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(item -> {
+            final String[] fromAddresses = getAddresses();
+            RetrofitManager.instance.clearCache(fromAddresses);
             AssetsHelper.AssetTx assetTx = new AssetsHelper.AssetTx(
                     "",
-                    getAddresses(),
+                    fromAddresses,
                     getAssetQuantityInt(),
                     metaModel.assetId,
                     metaModel.divisibility,
