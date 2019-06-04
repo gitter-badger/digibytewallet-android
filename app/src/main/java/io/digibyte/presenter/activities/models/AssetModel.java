@@ -64,9 +64,8 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         notifyPropertyChanged(BR.assetQuantity);
     }
 
-    public void removeAsset(AddressInfo.Asset asset) {
-        assets.remove(asset);
-        notifyPropertyChanged(BR.assetQuantity);
+    public boolean isAggregable() {
+        return metaModel.isAggregable();
     }
 
     @Override

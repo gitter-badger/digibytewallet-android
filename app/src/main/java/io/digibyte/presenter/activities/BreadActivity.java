@@ -326,7 +326,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                         Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName, listItemTransactionData);
                         if (BRWalletManager.addressContainedInWallet(address)) {
                             AssetModel assetModel = new AssetModel(asset, metalModel);
-                            if (!assetAdapter.containsItem(assetModel)) {
+                            if (!assetAdapter.containsItem(assetModel) || !assetModel.isAggregable()) {
                                 assetAdapter.addItem(assetModel);
                             } else {
                                 AssetModel existingAssetModel = (AssetModel) assetAdapter.getItem(assetModel);

@@ -31,4 +31,8 @@ public class MetaModel {
         String mimeType;
         String url;
     }
+
+    public boolean isAggregable() {
+        return "aggregatable".equals(aggregationPolicy);
+    }
 }
