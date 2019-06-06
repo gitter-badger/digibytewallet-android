@@ -573,7 +573,6 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 broadcast(authType.sendAssetResponse, authType.sendAsset);
                 break;
         }
-
     }
 
     private void broadcast(SendAssetResponse sendAssetResponse, SendAsset sendAsset) {

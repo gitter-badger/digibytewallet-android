@@ -35,7 +35,7 @@ class AssetsHelper {
             val sendAsset = SendAsset(
                     Integer.toString(1200),
                     assetTx.addresses,
-                    trimNullEmpty(getNeededUTXO(1200)),
+                    fixUpFinanceAddresses(getNeededUTXO(1200)),
                     assetTx.destinationAddress.toString(),
                     assetTx.assetQuantity,
                     assetTx.assetId,
@@ -52,7 +52,7 @@ class AssetsHelper {
 
     }
 
-    private fun trimNullEmpty(values: Array<String>): Array<String> {
+    private fun fixUpFinanceAddresses(values: Array<String>): Array<String> {
         val newValues = LinkedList<String>()
         for (value in values) {
             if (!TextUtils.isEmpty(value) && value.toLowerCase() != "null") {
