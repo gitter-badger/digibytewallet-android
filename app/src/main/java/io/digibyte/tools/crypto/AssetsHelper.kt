@@ -20,7 +20,7 @@ class AssetsHelper {
         val instance: AssetsHelper = AssetsHelper()
     }
 
-    class AssetTx(var destinationAddress: CharSequence, val addresses: Array<String>, val assetQuantity: Int, val assetId: String, val divisibility: Int, val assetModel: AssetModel)
+    data class AssetTx(var destinationAddress: CharSequence, val addresses: Array<String>, val assetQuantity: Int, val assetId: String, val divisibility: Int, val assetModel: AssetModel)
 
     fun sendPendingAssetTx(context: Context) {
         pendingAssetTx?.let {
