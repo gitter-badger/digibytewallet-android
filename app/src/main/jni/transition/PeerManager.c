@@ -421,7 +421,7 @@ Java_io_digibyte_wallet_BRPeerManager_createPeerArrayWithCount(JNIEnv *env, jobj
 JNIEXPORT jdouble JNICALL
 Java_io_digibyte_wallet_BRPeerManager_syncProgress(JNIEnv *env, jobject thiz, int startHeight) {
 //    __android_log_print(ANDROID_LOG_ERROR, "Message from C: ", "syncProgress");
-    if (!_peerManager || !_wallet) return 0;
+    if (!_peerManager || !_wallet) return -1;
     return (jdouble) BRPeerManagerSyncProgress(_peerManager, (uint32_t) startHeight);
     // need to call free();
 }

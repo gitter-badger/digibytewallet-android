@@ -134,7 +134,7 @@ public class SyncManager {
                     listener.onSyncManagerUpdate();
                 }
             });
-            if (Double.valueOf(theProgress).compareTo(1.0d) != 0 && enabled) {
+            if (Double.compare(theProgress, 1.0d) != 0 && enabled) {
                 executorService.execute(syncRunnable);
             } else {
                 stopSyncingProgressThread();
