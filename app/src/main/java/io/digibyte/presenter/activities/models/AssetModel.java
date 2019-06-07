@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -22,6 +23,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 
+import com.google.common.base.Strings;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
@@ -32,6 +34,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import io.digibyte.BR;
+import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.databinding.AssetBinding;
 import io.digibyte.presenter.activities.util.RetrofitManager;
@@ -40,6 +43,7 @@ import io.digibyte.presenter.adapter.DynamicBinding;
 import io.digibyte.presenter.adapter.LayoutBinding;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.crypto.AssetsHelper;
+import io.digibyte.tools.manager.BRClipboardManager;
 import io.digibyte.tools.util.BRConstants;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
@@ -62,6 +66,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         }
         assets.add(newAsset);
         notifyPropertyChanged(BR.assetQuantity);
+        notifyPropertyChanged(BR.uTXOCount);
     }
 
     public boolean isAggregable() {
@@ -105,6 +110,26 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     }
 
     @Bindable
+    public String getAssetId() {
+        return String.format(DigiByte.getContext().getString(R.string.asset_id), metaModel.assetId);
+    }
+
+    @Bindable
+    public String getTotalSupply() {
+        return String.format(DigiByte.getContext().getString(R.string.total_supply), metaModel.totalSupply);
+    }
+
+    @Bindable
+    public String getNumberOfHolders() {
+        return String.format(DigiByte.getContext().getString(R.string.number_of_holders), metaModel.numOfHolders);
+    }
+
+    @Bindable
+    public String getUTXOCount() {
+        return String.format(DigiByte.getContext().getString(R.string.utxo_count), assets.size());
+    }
+
+    @Bindable
     public String getAssetQuantity() {
         double quantity = 0;
         for (AddressInfo.Asset asset : assets) {
@@ -117,7 +142,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         return String.valueOf(quantity);
     }
 
-    public int getAssetQuantityInt() {
+    private int getAssetQuantityInt() {
         int quantity = 0;
         for (AddressInfo.Asset asset : assets) {
             quantity += asset.getAmount();
@@ -149,6 +174,10 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
             ContextThemeWrapper context = new ContextThemeWrapper(v.getContext(),
                     R.style.AssetPopup);
             showAssetMenu(context, v);
+        });
+        binding.assetId.setOnClickListener(v -> {
+            BRClipboardManager.putClipboard(v.getContext(), metaModel.assetId);
+            Toast.makeText(v.getContext(), R.string.Receive_copied, Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -208,6 +237,10 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     @BindingAdapter("remoteImage")
     public static void remoteImage(ImageView imageView, MetaModel.Urls imageData) {
         if (imageData == null || TextUtils.isEmpty(imageData.url)) {
+            executor.execute(() -> {
+                Drawable defaultImage = imageView.getContext().getResources().getDrawable(R.drawable.ic_assets);
+                handler.post(() -> imageView.setImageDrawable(defaultImage));
+            });
             return;
         }
         imageView.setImageBitmap(null);
@@ -225,9 +258,15 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     if (bitmap != null) {
                         handler.post(() -> imageView.setImageBitmap(bitmap));
                     }
+                } else {
+                    Drawable defaultImage = imageView.getContext().getResources().getDrawable(R.drawable.ic_assets);
+                    handler.post(() -> imageView.setImageDrawable(defaultImage));
                 }
             } else if (imageData.url.contains("http")) {
                 handler.post(() -> Picasso.get().load(imageData.url).into(imageView));
+            } else {
+                Drawable defaultImage = imageView.getContext().getResources().getDrawable(R.drawable.ic_assets);
+                handler.post(() -> imageView.setImageDrawable(defaultImage));
             }
         });
     }

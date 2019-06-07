@@ -360,4 +360,8 @@
   <string name="enter_asset_quantity">Enter asset quantity...</string>
   <string name="digi_asset">Digi Asset</string>
   <string name="Alerts.assetsSendSuccessSubheader">Assets Sent!</string>
+  <string name="asset_id">Asset ID: %s</string>
+  <string name="total_supply">Total Supply: %d</string>
+  <string name="number_of_holders">Number of Holders: %d</string>
+  <string name="utxo_count">UTXO Count: %d</string>
 </resources>
