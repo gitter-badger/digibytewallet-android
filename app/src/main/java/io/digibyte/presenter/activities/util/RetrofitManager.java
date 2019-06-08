@@ -83,6 +83,21 @@ public class RetrofitManager {
         }
     }
 
+    public void clearMetaCache(String assetId) {
+        try {
+            Iterator<String> urls = cache.urls();
+            while (urls.hasNext()) {
+                String url = urls.next();
+                if (!TextUtils.isEmpty(assetId) && url.contains(assetId)) {
+                    urls.remove();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void clearCache() {
         try {
             Iterator<String> urls = cache.urls();

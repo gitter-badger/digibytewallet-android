@@ -23,7 +23,6 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 
-import com.google.common.base.Strings;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
@@ -189,6 +188,19 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
             switch (item.getItemId()) {
                 case R.id.send:
                     showSendMenu(context, v);
+                    break;
+                case R.id.update:
+                    RetrofitManager.instance.clearMetaCache(assets.get(0).assetId);
+                    RetrofitManager.instance.getAssetMeta(
+                            assets.get(0).assetId,
+                            assets.get(0).txid,
+                            String.valueOf(assets.get(0).getIndex()),
+                            metaModel -> {
+                                AssetModel.this.metaModel = metaModel;
+                                notifyPropertyChanged(BR.totalSupply);
+                                notifyPropertyChanged(BR.numberOfHolders);
+                                notifyPropertyChanged(BR.uTXOCount);
+                            });
                     break;
             }
             return true;
