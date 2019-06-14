@@ -129,6 +129,11 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     }
 
     @Bindable
+    public String getAssetAddress() {
+        return String.format(DigiByte.getContext().getString(R.string.address), assets.get(0).address);
+    }
+
+    @Bindable
     public String getAssetQuantity() {
         double quantity = 0;
         for (AddressInfo.Asset asset : assets) {

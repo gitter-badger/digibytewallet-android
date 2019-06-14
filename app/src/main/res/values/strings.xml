@@ -365,4 +365,5 @@
   <string name="number_of_holders">Number of Holders: %d</string>
   <string name="utxo_count">UTXO Count: %d</string>
   <string name="update_meta">Update Meta</string>
+  <string name="address">Address: %s</string>
 </resources>
