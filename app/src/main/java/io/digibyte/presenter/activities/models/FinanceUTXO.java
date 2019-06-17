@@ -24,7 +24,7 @@ public class FinanceUTXO {
         return new Vout(value, index, new ScriptPubKey(BytesUtil.bytesToHex(script).toLowerCase()));
     }
 
-    public static class Vout {
+    static class Vout {
         int value;
         int n;
         ScriptPubKey scriptPubKey;

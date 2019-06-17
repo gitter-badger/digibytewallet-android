@@ -34,8 +34,8 @@ class AssetsHelper {
             Log.d(AssetModel::class.java.simpleName, "Clipped Address: ${assetTx.destinationAddress}")
 
             val financeUTXO = getNeededUTXOTxid(1200)
-
             RetrofitManager.instance.clearCache(assetTx.changeAddress)
+
             val sendAsset = SendAsset(
                     Integer.toString(1200),
                     assetTx.changeAddress,
@@ -55,6 +55,5 @@ class AssetsHelper {
         } catch (t: Throwable) {
             t.printStackTrace()
         }
-
     }
 }

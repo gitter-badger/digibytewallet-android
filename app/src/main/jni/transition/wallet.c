@@ -1169,7 +1169,6 @@ Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXOTxid(JNIEnv *env,
             jbyteArray script = (*env)->NewByteArray(env, (jsize) output->scriptLen);
             (*env)->SetByteArrayRegion(env, script, 0, (jsize) output->scriptLen,
                                        (jbyte *) output->script);
-
             txObject = (*env)->NewObject(env, financeUTXO, mid, txid, (jint) utxos[j].n,
                                          (jint) utxoAmount, script);
             break;
