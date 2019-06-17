@@ -1161,9 +1161,8 @@ Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXOTxid(JNIEnv *env,
     for (j = 0; j < array_count(utxos); j++) {
         t = BRGetTxForUTXO(_wallet, utxos[j]);
         output = &t->outputs[utxos[j].n];
-        if (BROutIsAsset(*output)) continue;
         utxoAmount = output->amount;
-        if (utxoAmount >= amount) {
+        if (!BROutIsAsset(*output) && utxoAmount >= amount) {
             UInt256 reversedHash = UInt256Reverse(utxos[j].hash);
             jstring txid = (*env)->NewStringUTF(env, u256hex(reversedHash));
             jbyteArray script = (*env)->NewByteArray(env, (jsize) output->scriptLen);
@@ -1171,6 +1170,8 @@ Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXOTxid(JNIEnv *env,
                                        (jbyte *) output->script);
             txObject = (*env)->NewObject(env, financeUTXO, mid, txid, (jint) utxos[j].n,
                                          (jint) utxoAmount, script);
+            (*env)->DeleteLocalRef(env, txid);
+            (*env)->DeleteLocalRef(env, script);
             break;
         }
     }

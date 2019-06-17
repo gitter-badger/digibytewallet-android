@@ -94,7 +94,7 @@ public class PaperKeyActivity extends BRActivity {
                     "Paper Key error, please contact support at breadwallet.com: "
                             + wordArray.size()), true);
         } else {
-            if (wordArray.size() != 24) {
+            if (wordArray.size() != 12) {
                 BRReportsManager.reportBug(new IllegalArgumentException(
                         "Wrong number of paper keys: " + wordArray.size() + ", lang: "
                                 + Locale.getDefault().getLanguage()), true);

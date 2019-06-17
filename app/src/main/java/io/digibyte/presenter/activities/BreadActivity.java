@@ -557,6 +557,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 RetrofitManager.instance.sendAsset(payload, new RetrofitManager.SendAssetCallback() {
                     @Override
                     public void success(SendAssetResponse sendAssetResponse) {
+                        Log.d(BreadActivity.class.getSimpleName(), sendAssetResponse.toString());
                         AuthManager.getInstance().authPrompt(BreadActivity.this, null,
                                 BreadActivity.this.getString(R.string.VerifyPin_continueBody),
                                 new BRAuthCompletion.AuthType(sendAssetResponse, authType.sendAsset));
