@@ -245,8 +245,8 @@ Java_io_digibyte_wallet_BRWalletManager_parseSignSerialize(JNIEnv *env,
                                                            jbyteArray assetHex,
                                                            jbyteArray phrasr);
 
-JNIEXPORT jobjectArray JNICALL
-Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXO(JNIEnv *env,
+JNIEXPORT jobject JNICALL
+Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXOTxid(JNIEnv *env,
                                                          jobject thiz,
                                                          jint amount);
 

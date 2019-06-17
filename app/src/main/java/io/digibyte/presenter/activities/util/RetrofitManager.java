@@ -67,7 +67,7 @@ public class RetrofitManager {
                 .build();
     }
 
-    public void clearCache(String[] addresses) {
+    public void clearCache(String... addresses) {
         try {
             Iterator<String> urls = cache.urls();
             while (urls.hasNext()) {

@@ -162,6 +162,14 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         return addresses.toArray(new String[]{});
     }
 
+    private String[] getUTXOTxIds() {
+        Set<String> txids = new HashSet<>();
+        for (AddressInfo.Asset asset : assets) {
+            txids.add(asset.txid + ":" + asset.getIndex());
+        }
+        return txids.toArray(new String[]{});
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -181,6 +189,10 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         });
         binding.assetId.setOnClickListener(v -> {
             BRClipboardManager.putClipboard(v.getContext(), metaModel.assetId);
+            Toast.makeText(v.getContext(), R.string.Receive_copied, Toast.LENGTH_SHORT).show();
+        });
+        binding.assetAddress.setOnClickListener(v -> {
+            BRClipboardManager.putClipboard(v.getContext(), assets.get(0).address);
             Toast.makeText(v.getContext(), R.string.Receive_copied, Toast.LENGTH_SHORT).show();
         });
     }
@@ -218,11 +230,12 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.send_asset_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(item -> {
-            final String[] fromAddresses = getAddresses();
+            String[] fromAddresses = getAddresses();
             RetrofitManager.instance.clearCache(fromAddresses);
             AssetsHelper.AssetTx assetTx = new AssetsHelper.AssetTx(
+                    fromAddresses[0],
                     "",
-                    fromAddresses,
+                    getUTXOTxIds(),
                     getAssetQuantityInt(),
                     metaModel.assetId,
                     metaModel.divisibility,
@@ -268,7 +281,6 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     image = Base64.decode(imageData.url.substring(imageData.url.indexOf(",")),
                             Base64.DEFAULT);
                 } catch (IllegalArgumentException e) {
-
                 }
                 if (image != null) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);

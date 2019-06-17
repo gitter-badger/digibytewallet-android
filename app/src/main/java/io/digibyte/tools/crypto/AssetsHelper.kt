@@ -1,18 +1,18 @@
 package io.digibyte.tools.crypto
 
 import android.content.Context
-import android.text.TextUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.digibyte.presenter.activities.models.AssetModel
+import io.digibyte.presenter.activities.models.FinanceUTXO
 import io.digibyte.presenter.activities.models.SendAsset
+import io.digibyte.presenter.activities.util.RetrofitManager
 import io.digibyte.presenter.fragments.FragmentNumberPicker
 import io.digibyte.presenter.interfaces.BRAuthCompletion
-import java.util.*
 
 class AssetsHelper {
 
-    private external fun getNeededUTXO(amount: Int): Array<String>
+    private external fun getNeededUTXOTxid(amount: Int): FinanceUTXO
     @kotlin.jvm.JvmField
     var pendingAssetTx: AssetTx? = null
 
@@ -20,7 +20,7 @@ class AssetsHelper {
         val instance: AssetsHelper = AssetsHelper()
     }
 
-    data class AssetTx(var destinationAddress: CharSequence, val addresses: Array<String>, val assetQuantity: Int, val assetId: String, val divisibility: Int, val assetModel: AssetModel)
+    data class AssetTx(var changeAddress: String, var destinationAddress: CharSequence, val utxoTxids: Array<String>, val assetQuantity: Int, val assetId: String, val divisibility: Int, val assetModel: AssetModel)
 
     fun sendPendingAssetTx(context: Context) {
         pendingAssetTx?.let {
@@ -31,11 +31,17 @@ class AssetsHelper {
 
     fun processAssetTx(context: Context, assetTx: AssetTx) {
         try {
-            Log.d(AssetModel::class.java.simpleName, "Clipped Address: $assetTx.destinationAddress")
+            Log.d(AssetModel::class.java.simpleName, "Clipped Address: ${assetTx.destinationAddress}")
+
+            val financeUTXO = getNeededUTXOTxid(1200)
+
+            RetrofitManager.instance.clearCache(assetTx.changeAddress)
             val sendAsset = SendAsset(
                     Integer.toString(1200),
-                    assetTx.addresses,
-                    fixUpFinanceAddresses(getNeededUTXO(1200)),
+                    assetTx.changeAddress,
+                    assetTx.utxoTxids,
+                    financeUTXO.vout,
+                    financeUTXO.txid,
                     assetTx.destinationAddress.toString(),
                     assetTx.assetQuantity,
                     assetTx.assetId,
@@ -50,15 +56,5 @@ class AssetsHelper {
             t.printStackTrace()
         }
 
-    }
-
-    private fun fixUpFinanceAddresses(values: Array<String>): Array<String> {
-        val newValues = LinkedList<String>()
-        for (value in values) {
-            if (!TextUtils.isEmpty(value) && value.toLowerCase() != "null") {
-                newValues.add(value)
-            }
-        }
-        return newValues.toTypedArray()
     }
 }
