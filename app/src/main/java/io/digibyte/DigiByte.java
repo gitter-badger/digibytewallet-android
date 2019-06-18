@@ -32,8 +32,7 @@ import io.fabric.sdk.android.Fabric;
 /**
  * BreadWallet
  * <p/>
- * Created by Mihail Gutan <mihail@breadwallet.com> on 7/22/15.
- * Copyright (c) 2016 breadwallet LLC
+ * Created by Noah Seidman
  * <p/>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

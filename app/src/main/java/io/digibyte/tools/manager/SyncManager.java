@@ -125,7 +125,7 @@ public class SyncManager {
     private Runnable syncRunnable = new Runnable() {
         @Override
         public void run() {
-            SystemClock.sleep(250);
+            SystemClock.sleep(1000);
             theProgress = BRPeerManager.syncProgress(
                     BRSharedPrefs.getStartHeight(DigiByte.getContext()));
             theLastBlockTimestamp = BRPeerManager.getInstance().getLastBlockTimestamp();
