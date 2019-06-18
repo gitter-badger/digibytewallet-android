@@ -15,6 +15,8 @@ import android.os.Looper;
 import androidx.annotation.Nullable;
 import android.util.Log;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.RotateAnimation;
 
 import com.platform.tools.BRBitId;
 
@@ -53,7 +55,7 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
         binding = DataBindingUtil.setContentView(this, R.layout.activity_pin);
         binding.setData(new PinActivityModel());
         binding.setCallback(callback);
-        binding.brkeyboard.addOnInsertListener(key -> handleClick(key));
+        binding.brkeyboard.addOnInsertListener(this::handleClick);
         binding.brkeyboard.setShowDot(false);
         binding.brkeyboard.setDeleteImage(R.drawable.ic_delete_white);
         if (!processDeepLink(getIntent()) &&
@@ -65,6 +67,17 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
             pendingNfcIntent = PendingIntent.getActivity(this, 0, new Intent(this,
                     getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         }
+        binding.touchImage.post(() -> {
+            final RotateAnimation rotateAnim = new RotateAnimation(0.0f, 1080.0f,
+                    RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                    RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+            rotateAnim.setDuration(1000);
+            rotateAnim.setStartOffset(500);
+            rotateAnim.setInterpolator(new AccelerateDecelerateInterpolator());
+            rotateAnim.setFillAfter(true);
+            binding.touchImage.setAnimation(rotateAnim);
+            rotateAnim.start();
+        });
     }
 
     @Override
