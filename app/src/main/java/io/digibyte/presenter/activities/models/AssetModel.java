@@ -134,6 +134,16 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     }
 
     @Bindable
+    public String getAssetDescription() {
+        return metaModel.metadataOfIssuence.data.description;
+    }
+
+    @Bindable
+    public String getAssetInfo() {
+        return getTotalSupply() + ", " + getNumberOfHolders() + ", " + getUTXOCount();
+    }
+
+    @Bindable
     public String getAssetQuantity() {
         double quantity = 0;
         for (AddressInfo.Asset asset : assets) {
@@ -181,6 +191,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     @Override
     public void bind(DataBoundViewHolder holder) {
         AssetBinding binding = (AssetBinding) holder.binding;
+        binding.assetInfo.setSelected(true);
         binding.assetDrawable.setImageBitmap(null);
         binding.assetMenu.setOnClickListener(v -> {
             ContextThemeWrapper context = new ContextThemeWrapper(v.getContext(),

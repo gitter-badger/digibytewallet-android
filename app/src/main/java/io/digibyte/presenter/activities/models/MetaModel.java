@@ -18,6 +18,7 @@ public class MetaModel {
     public class IsuanceModel {
         String sha2Issue;
         public IsuanceData data;
+        public String description;
     }
 
     public class IsuanceData {
