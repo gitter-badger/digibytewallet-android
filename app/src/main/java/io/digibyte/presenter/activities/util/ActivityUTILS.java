@@ -118,7 +118,6 @@ public class ActivityUTILS {
                             context, "DGB", new BigDecimal(value)));
                 });
                 btcAnimator.setDuration(1500);
-                btcAnimator.setInterpolator(new DecelerateInterpolator());
                 btcAnimator.start();
 
                 ValueAnimator fiatAnimator = ValueAnimator.ofFloat(fiatIntervals);

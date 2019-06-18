@@ -1,5 +1,7 @@
 package io.digibyte.presenter.activities.util;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -44,6 +46,7 @@ public class RetrofitManager {
     public static RetrofitManager instance = new RetrofitManager();
     private Retrofit assetsApi;
     private Cache cache = new Cache(new File(DigiByte.getContext().getCacheDir(), "assets"), 1024 * 1024 * 10);
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     private RetrofitManager() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -136,12 +139,12 @@ public class RetrofitManager {
         call.enqueue(new Callback<AddressInfo>() {
             @Override
             public void onResponse(@NonNull Call<AddressInfo> call, @NonNull Response<AddressInfo> response) {
-                assetsCallback.assetsRetrieved(response.body());
+                handler.post(() -> assetsCallback.assetsRetrieved(response.body()));
             }
 
             @Override
             public void onFailure(@NonNull Call<AddressInfo> call, @NonNull Throwable t) {
-                assetsCallback.assetsRetrieved(null);
+                handler.post(() -> assetsCallback.assetsRetrieved(null));
             }
         });
     }
@@ -157,7 +160,7 @@ public class RetrofitManager {
         call.enqueue(new Callback<MetaModel>() {
             @Override
             public void onResponse(@NonNull Call<MetaModel> call, @NonNull Response<MetaModel> response) {
-                metaCallback.metaRetrieved(response.body());
+                handler.post(() -> metaCallback.metaRetrieved(response.body()));
             }
 
             @Override
@@ -179,32 +182,34 @@ public class RetrofitManager {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                try {
-                    if (response.code() != 200) {
-                        try {
-                            JSONObject error = new JSONObject(response.errorBody().string());
-                            String message = error.getString("message");
-                            Log.d(RetrofitManager.class.getSimpleName(),
-                                    "Send Asset Error: " + message);
-                            sendAssetCallback.error(message);
-                        } catch (JSONException e) {
-                            sendAssetCallback.error("");
+                handler.post(() -> {
+                    try {
+                        if (response.code() != 200) {
+                            try {
+                                JSONObject error = new JSONObject(response.errorBody().string());
+                                String message = error.getString("message");
+                                Log.d(RetrofitManager.class.getSimpleName(),
+                                        "Send Asset Error: " + message);
+                                sendAssetCallback.error(message);
+                            } catch (JSONException e) {
+                                sendAssetCallback.error("");
+                            }
+                        } else {
+                            Gson gson = new Gson();
+                            Type listType = new TypeToken<SendAssetResponse>() {
+                            }.getType();
+                            SendAssetResponse sendAssetResponse = gson.fromJson(response.body().string(), listType);
+                            sendAssetCallback.success(sendAssetResponse);
                         }
-                    } else {
-                        Gson gson = new Gson();
-                        Type listType = new TypeToken<SendAssetResponse>() {
-                        }.getType();
-                        SendAssetResponse sendAssetResponse = gson.fromJson(response.body().string(), listType);
-                        sendAssetCallback.success(sendAssetResponse);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                });
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                sendAssetCallback.error("");
+                handler.post(() -> sendAssetCallback.error(""));
             }
         });
     }
@@ -224,33 +229,36 @@ public class RetrofitManager {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                Log.d(RetrofitManager.class.getSimpleName(), "Status Code: " + response.code());
-                Log.d(RetrofitManager.class.getSimpleName(), "Status Message: " + response.message());
-                if (response.code() == 200) {
-                    String txId = "";
-                    try {
-                        txId = response.body().string();
-                    } catch (IOException e) {
+                handler.post(() -> {
+                    Log.d(RetrofitManager.class.getSimpleName(), "Status Code: " + response.code());
+                    Log.d(RetrofitManager.class.getSimpleName(), "Status Message: " + response.message());
+                    if (response.code() == 200) {
+                        String txId = "";
+                        try {
+                            txId = response.body().string();
+                        } catch (IOException e) {
 
-                    }
-                    broadcastTransaction.success(txId);
-                } else {
-                    String errorMessage = "";
-                    try {
-                        errorMessage = response.body().string();
-                    } catch (Exception e) {
+                        }
+                        broadcastTransaction.success(txId);
+                    } else {
+                        String errorMessage = "";
+                        try {
+                            errorMessage = response.body().string();
+                        } catch (Exception e) {
 
+                        }
+                        broadcastTransaction.onError(errorMessage);
                     }
-                    broadcastTransaction.onError(errorMessage);
-                }
+                });
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                broadcastTransaction.onError("");
-                t.printStackTrace();
+                handler.post(() -> {
+                    broadcastTransaction.onError("");
+                    t.printStackTrace();
+                });
             }
         });
-
     }
 }

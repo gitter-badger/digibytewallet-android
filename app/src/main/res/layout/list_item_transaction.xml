@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:drawablePadding="4dp"
-                android:maxWidth="215dp"
+                android:maxWidth="207dp"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textColor="@{data.textColor}"

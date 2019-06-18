@@ -43,6 +43,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,7 +88,6 @@ import io.digibyte.wallet.BRPeerManager;
 import io.digibyte.wallet.BRWalletManager;
 
 /**
- * BreadWallet
  * <p/>
  * Created by Noah Seidman <noah@noahseidman.com> on 4/14/18.
  * Copyright (c) 2018 DigiByte Holdings
@@ -120,6 +122,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     @BindView(R.id.assets_recycler)
     RecyclerView assetRecycler;
     private MultiTypeDataBoundAdapter assetAdapter;
+    private Executor txDataExecutor = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,36 +231,44 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
     @Override
     public void onTxManagerUpdate(TxItem[] newTxItems) {
-        BRWalletManager.getInstance().refreshBalance(DigiByte.getContext());
-        if (newTxItems == null || newTxItems.length == 0) {
-            return;
-        }
-        ArrayList<ListItemTransactionData> newTransactions = getNewTransactionsData(newTxItems);
-        ArrayList<ListItemTransactionData> transactionsToAdd = removeAllExistingEntries(
-                newTransactions);
-        if (transactionsToAdd.size() > 0) {
-            adapter.getAllAdapter().addTransactions(transactionsToAdd);
-            adapter.getSentAdapter().addTransactions(
-                    convertNewTransactionsForAdapter(Adapter.SENT, transactionsToAdd));
-            adapter.getReceivedAdapter().addTransactions(
-                    convertNewTransactionsForAdapter(Adapter.RECEIVED, transactionsToAdd));
-            adapter.getAllRecycler().smoothScrollToPosition(0);
-            adapter.getSentRecycler().smoothScrollToPosition(0);
-            adapter.getReceivedRecycler().smoothScrollToPosition(0);
-        } else {
-            adapter.getAllAdapter().updateTransactions(newTransactions);
-            adapter.getSentAdapter().updateTransactions(newTransactions);
-            adapter.getReceivedAdapter().updateTransactions(newTransactions);
-        }
-        if (isPossibleNewAssetSend(transactionsToAdd)) {
-            RetrofitManager.instance.clearCache(transactionsToAdd.get(0).transactionItem.getTo());
-            assetAdapter.clear();
-            assetAdapter.notifyDataSetChanged();
-            bindings.assetRefresh.setRefreshing(true);
-            processTxAssets(adapter.getAllAdapter().getTransactions());
-        } else if (transactionsToAdd.size() > 0) {
-            processTxAssets(transactionsToAdd);
-        }
+        txDataExecutor.execute(() -> {
+            BRWalletManager.getInstance().refreshBalance(DigiByte.getContext());
+            if (newTxItems == null || newTxItems.length == 0) {
+                return;
+            }
+            ArrayList<ListItemTransactionData> newTransactions = getNewTransactionsData(newTxItems);
+            ArrayList<ListItemTransactionData> transactionsToAdd = removeAllExistingEntries(
+                    newTransactions);
+            if (transactionsToAdd.size() > 0) {
+                handler.post(() -> {
+                    adapter.getAllAdapter().addTransactions(transactionsToAdd);
+                    adapter.getSentAdapter().addTransactions(
+                            convertNewTransactionsForAdapter(Adapter.SENT, transactionsToAdd));
+                    adapter.getReceivedAdapter().addTransactions(
+                            convertNewTransactionsForAdapter(Adapter.RECEIVED, transactionsToAdd));
+                    adapter.getAllRecycler().smoothScrollToPosition(0);
+                    adapter.getSentRecycler().smoothScrollToPosition(0);
+                    adapter.getReceivedRecycler().smoothScrollToPosition(0);
+                });
+            } else {
+                handler.post(() -> {
+                    adapter.getAllAdapter().updateTransactions(newTransactions);
+                    adapter.getSentAdapter().updateTransactions(newTransactions);
+                    adapter.getReceivedAdapter().updateTransactions(newTransactions);
+                });
+            }
+            if (isPossibleNewAssetSend(transactionsToAdd)) {
+                handler.post(() -> {
+                    assetAdapter.clear();
+                    assetAdapter.notifyDataSetChanged();
+                    bindings.assetRefresh.setRefreshing(true);
+                });
+                RetrofitManager.instance.clearCache(transactionsToAdd.get(0).transactionItem.getTo());
+                processTxAssets(new CopyOnWriteArrayList<>(adapter.getAllAdapter().getTransactions()));
+            } else if (transactionsToAdd.size() > 0) {
+                processTxAssets(new CopyOnWriteArrayList<>(transactionsToAdd));
+            }
+        });
     }
 
     @Override
@@ -265,14 +276,14 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         RetrofitManager.instance.clearCache();
         assetAdapter.clear();
         assetAdapter.notifyDataSetChanged();
-        processTxAssets(adapter.getAllAdapter().getTransactions());
+        processTxAssets(new CopyOnWriteArrayList<>(adapter.getAllAdapter().getTransactions()));
     }
 
     private boolean isPossibleNewAssetSend(ArrayList<ListItemTransactionData> newTransactions) {
         return newTransactions.size() == 1;
     }
 
-    private void processTxAssets(ArrayList<ListItemTransactionData> transactions) {
+    private void processTxAssets(List<ListItemTransactionData> transactions) {
         HashSet<AddressTxSet> addresses = new HashSet<>();
         for (ListItemTransactionData transaction : transactions) {
             if (!transaction.transactionItem.isAsset) {
@@ -292,7 +303,8 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         LinkedList<AddressTxSet> addressesList = new LinkedList<>(addresses);
         for (int i = 0; i < addressesList.size(); i++) {
             AddressTxSet addressTxSet = addressesList.get(i);
-            processIncomingAssets(addressTxSet.address, addressTxSet.listItemTransactionData, i == addressesList.size() - 1);
+            processIncomingAssets(addressTxSet.address, addressTxSet.listItemTransactionData,
+                    i == addressesList.size() - 1);
         }
     }
 
@@ -312,7 +324,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         }
     }
 
-    private void processIncomingAssets(@NonNull final String address, @NonNull final ListItemTransactionData listItemTransactionData, boolean lastAddress) {
+    private void processIncomingAssets(@NonNull final String address,
+                                       @NonNull final ListItemTransactionData listItemTransactionData,
+                                       boolean lastAddress) {
         RetrofitManager.instance.getAssets(address, addressInfo -> {
             if (lastAddress) {
                 bindings.assetRefresh.post(() -> bindings.assetRefresh.setRefreshing(false));
@@ -321,9 +335,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 return;
             }
             for (final AddressInfo.Asset asset : addressInfo.getAssets()) {
-                RetrofitManager.instance.getAssetMeta(asset.assetId, asset.txid, String.valueOf(asset.getIndex()), metalModel -> {
+                RetrofitManager.instance.getAssetMeta(asset.assetId,
+                        asset.txid, String.valueOf(asset.getIndex()), metalModel -> {
                     if (asset.txid.equals(listItemTransactionData.transactionItem.txReversed)) {
-                        Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName, listItemTransactionData);
+                        Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
+                                listItemTransactionData);
                         if (BRWalletManager.addressContainedInWallet(address)) {
                             AssetModel assetModel = new AssetModel(asset, metalModel);
                             if (!assetAdapter.containsItem(assetModel) || !assetModel.isAggregable()) {
@@ -380,8 +396,8 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private void updateAmounts() {
-        ActivityUTILS.updateDigibyteDollarValues(this, bindings.primaryPrice,
-                bindings.secondaryPrice);
+        handler.post(() -> ActivityUTILS.updateDigibyteDollarValues(BreadActivity.this, bindings.primaryPrice,
+                bindings.secondaryPrice));
     }
 
     @Override
@@ -537,6 +553,8 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     public void onBackPressed() {
         if (bindings.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             handler.post(() -> bindings.drawerLayout.closeDrawer(GravityCompat.START));
+        } else if (bindings.drawerLayout.isDrawerOpen(GravityCompat.END)) {
+            handler.post(() -> bindings.drawerLayout.closeDrawer(GravityCompat.END));
         } else {
             super.onBackPressed();
         }
