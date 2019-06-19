@@ -97,33 +97,36 @@ class RecurringPaymentsActivity : BRActivity(), ActivityRecurringPaymentCallback
         var amount = 0.0f;
         try {
             amount = recurringPaymentModel.amount.toFloat()
-        } catch (e: Exception) {
-
-        }
-        if (BRWalletManager.validateAddress(recurringPaymentModel.recipientAddress)) {
-            if (amount > 0.0f) {
-                if (schedule != Schedule.NOT_SET) {
-                    val recurringPaymentModel = RecurringPayment(
-                            recurringPaymentModel.recipientAddress,
-                            recurringPaymentModel.amount,
-                            schedule.name,
-                            recurringPaymentModel.label
-                    )
-                    recurringPaymentModel.updateNextScheduledRunTime()
-                    adapter.addItem(recurringPaymentModel)
-                    executor.execute {
-                        recurringPaymentModel.id = recurringPaymentModel.save()
-                        JobsHelper.scheduleRecurringPayment(recurringPaymentModel)
-                        JobsHelper.sendRecurringPaymentSampleNotification(this, recurringPaymentModel)
+            if (BRWalletManager.validateAddress(recurringPaymentModel.recipientAddress)) {
+                if (amount > 0.0f) {
+                    if (schedule != Schedule.NOT_SET) {
+                        val recurringPaymentModel = RecurringPayment(
+                                recurringPaymentModel.recipientAddress,
+                                recurringPaymentModel.amount,
+                                schedule.name,
+                                recurringPaymentModel.label
+                        )
+                        recurringPaymentModel.updateNextScheduledRunTime()
+                        adapter.addItem(recurringPaymentModel)
+                        binding.address.text.clear()
+                        binding.amount.text.clear()
+                        binding.label.text.clear()
+                        executor.execute {
+                            recurringPaymentModel.id = recurringPaymentModel.save()
+                            JobsHelper.scheduleRecurringPayment(recurringPaymentModel)
+                            JobsHelper.sendRecurringPaymentSampleNotification(this, recurringPaymentModel)
+                        }
+                    } else {
+                        Toast.makeText(this, R.string.schedule_not_set, Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(this, R.string.schedule_not_set, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.invalid_amount, Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, R.string.invalid_amount, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.Send_invalidAddressTitle, Toast.LENGTH_SHORT).show()
             }
-        } else {
-            Toast.makeText(this, R.string.Send_invalidAddressTitle, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, R.string.invalid_amount, Toast.LENGTH_SHORT).show()
         }
     }
 
