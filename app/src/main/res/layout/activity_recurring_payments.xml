@@ -46,6 +46,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:hint="@string/recipients_address"
@@ -100,6 +101,15 @@
 
 
         </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/recurring_payment_label"
+            android:paddingStart="8dp"
+            android:text="@={data.label}"
+            android:textColorHint="@color/white"
+            android:textSize="16sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"

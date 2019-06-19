@@ -354,7 +354,6 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     }
                 });
             }
-
         });
     }
 

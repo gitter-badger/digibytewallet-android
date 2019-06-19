@@ -1,11 +1,13 @@
 package io.digibyte.presenter.activities
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -62,6 +64,7 @@ class RecurringPaymentsActivity : BRActivity(), ActivityRecurringPaymentCallback
     }
 
     override fun onSetTimeClick() {
+        closeKeyboard()
         val context = ContextThemeWrapper(this,
                 R.style.AssetPopup)
         val popup = PopupMenu(context, binding.dateSet)
@@ -90,6 +93,7 @@ class RecurringPaymentsActivity : BRActivity(), ActivityRecurringPaymentCallback
     }
 
     override fun onAddClick() {
+        closeKeyboard()
         var amount = 0.0f;
         try {
             amount = recurringPaymentModel.amount.toFloat()
@@ -99,11 +103,18 @@ class RecurringPaymentsActivity : BRActivity(), ActivityRecurringPaymentCallback
         if (BRWalletManager.validateAddress(recurringPaymentModel.recipientAddress)) {
             if (amount > 0.0f) {
                 if (schedule != Schedule.NOT_SET) {
-                    val recurringPaymentModel = RecurringPayment(recurringPaymentModel.recipientAddress, recurringPaymentModel.amount, schedule.name)
+                    val recurringPaymentModel = RecurringPayment(
+                            recurringPaymentModel.recipientAddress,
+                            recurringPaymentModel.amount,
+                            schedule.name,
+                            recurringPaymentModel.label
+                    )
+                    recurringPaymentModel.updateNextScheduledRunTime()
                     adapter.addItem(recurringPaymentModel)
                     executor.execute {
                         recurringPaymentModel.id = recurringPaymentModel.save()
                         JobsHelper.scheduleRecurringPayment(recurringPaymentModel)
+                        JobsHelper.sendRecurringPaymentSampleNotification(this, recurringPaymentModel)
                     }
                 } else {
                     Toast.makeText(this, R.string.schedule_not_set, Toast.LENGTH_SHORT).show()
@@ -134,5 +145,10 @@ class RecurringPaymentsActivity : BRActivity(), ActivityRecurringPaymentCallback
             }
         })
         builder.show()
+    }
+
+    private fun closeKeyboard() {
+        val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.address.getWindowToken(), 0);
     }
 }

@@ -12,6 +12,7 @@ import androidx.multidex.MultiDex;
 import com.crashlytics.android.Crashlytics;
 import com.evernote.android.job.JobManager;
 import com.facebook.soloader.SoLoader;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.zxing.client.android.PreferencesActivity;
 import com.orm.SugarApp;
 
@@ -83,6 +84,7 @@ public class DigiByte extends SugarApp implements
         super.onCreate();
         SoLoader.init(this, false);
         Fabric.with(this, new Crashlytics());
+        FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(!BuildConfig.DEBUG);
         JobManager.create(this).addJobCreator(new JobsHelper.DigiByteJobCreator());
         application = this;
         activeActivity = null;
@@ -97,6 +99,13 @@ public class DigiByte extends SugarApp implements
             editor.putBoolean(PreferencesActivity.KEY_VIBRATE, false);
             editor.apply();
         }
+
+        //Useful for dropping and re-creating the recurring payments db
+        /*SugarContext.terminate();
+        SchemaGenerator schemaGenerator = new SchemaGenerator(getApplicationContext());
+        schemaGenerator.deleteTables(new SugarDb(getApplicationContext()).getDB());
+        SugarContext.init(getApplicationContext());
+        schemaGenerator.createDatabase(new SugarDb(getApplicationContext()).getDB());*/
     }
 
     //////////////////////////////////////////////////////////////////////////////////
