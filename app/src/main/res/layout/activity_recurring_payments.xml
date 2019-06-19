@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="data"
+            type="io.digibyte.presenter.activities.models.RecurringPaymentModel" />
+
+        <variable
+            name="callback"
+            type="io.digibyte.presenter.activities.callbacks.ActivityRecurringPaymentCallback" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:filterTouchesWhenObscured="true"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar"
+            style="@style/MyToolBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="@string/recurring_payments" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/recipients_address"
+                    android:paddingStart="8dp"
+                    android:singleLine="true"
+                    android:text="@={data.recipientAddress}"
+                    android:textColorHint="@color/white"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/Confirmation.amountLabel"
+                    android:inputType="phone"
+                    android:paddingStart="8dp"
+                    android:text="@={data.amount}"
+                    android:textColorHint="@color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/date_set"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/set_recurring_payment_time"
+                    android:onClick="@{() -> callback.onSetTimeClick()}"
+                    android:src="@drawable/recurring_time" />
+
+                <ImageView
+                    android:id="@+id/date_set_complete"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="6dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/check"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/add_recurring_payment_time"
+                android:onClick="@{() -> callback.onAddClick()}"
+                android:src="@drawable/calendar_add"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingTop="12dp" />
+    </LinearLayout>
+
+</layout>

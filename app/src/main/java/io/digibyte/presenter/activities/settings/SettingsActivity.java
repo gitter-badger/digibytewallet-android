@@ -17,6 +17,7 @@ import java.util.List;
 
 import io.digibyte.R;
 import io.digibyte.databinding.ActivitySettingsBinding;
+import io.digibyte.presenter.activities.RecurringPaymentsActivity;
 import io.digibyte.presenter.activities.SettingsCallback;
 import io.digibyte.presenter.activities.util.BRActivity;
 import io.digibyte.presenter.entities.BRSettingsItem;
@@ -184,6 +185,11 @@ public class SettingsActivity extends BRActivity {
 
         items.add(new BRSettingsItem(getString(R.string.Settings_manage), "", null,
                 BRSettingsItem.Type.SECTION));
+
+        items.add(new BRSettingsItem(getString(R.string.recurring_payments),
+                "", v -> {
+            RecurringPaymentsActivity.Companion.show(SettingsActivity.this);
+        }, BRSettingsItem.Type.ITEM));
 
         if (AuthManager.isFingerPrintAvailableAndSetup(this)) {
             items.add(new BRSettingsItem(getString(R.string.Settings_touchIdLimit_android), "",

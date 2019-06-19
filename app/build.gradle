@@ -216,4 +216,5 @@ dependencies {
     implementation group: 'commons-codec', name: 'commons-codec', version: '1.5'
     implementation 'com.google.firebase:firebase-core:17.0.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    implementation 'com.github.satyan:sugar:1.5'
 }

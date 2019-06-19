@@ -366,4 +366,18 @@
   <string name="utxo_count">UTXO Count: %d</string>
   <string name="update_meta">Update Meta</string>
   <string name="address">Address: %s</string>
+    <string name="recurring_payments">Recurring Payments</string>
+    <string name="recipients_address">Recipients Address:</string>
+    <string name="add">Add</string>
+    <string name="set_recurring_payment_time">Set recurring payment time</string>
+    <string name="add_recurring_payment_time">Add recurring payment</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="invalid_amount">Invalid Amount</string>
+    <string name="schedule_not_set">Schedule Not Set</string>
+    <string name="cancel_confirm_title">Cancel Confirm</string>
+    <string name="cancel_confirm_message">Are you sure you\'d like to cancel this recurring payment?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

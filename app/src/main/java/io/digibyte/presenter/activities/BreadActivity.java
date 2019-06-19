@@ -74,6 +74,7 @@ import io.digibyte.tools.database.Database;
 import io.digibyte.tools.list.items.ListItemTransactionData;
 import io.digibyte.tools.manager.BRApiManager;
 import io.digibyte.tools.manager.BRSharedPrefs;
+import io.digibyte.tools.manager.JobsHelper;
 import io.digibyte.tools.manager.SyncManager;
 import io.digibyte.tools.manager.TxManager;
 import io.digibyte.tools.manager.TxManager.onStatusListener;
@@ -526,7 +527,8 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         TxManager.getInstance().addListener(this);
         SyncManager.getInstance().addListener(this);
         BRWalletManager.getInstance().refreshBalance(this);
-        DigiByte.SyncBlockchainJob.scheduleJob();
+        JobsHelper.SyncBlockchainJob.scheduleJob();
+        JobsHelper.updateRecurringPaymentJobs();
         TxManager.getInstance().updateTxList();
         BRApiManager.getInstance().asyncUpdateCurrencyData(this);
         SyncManager.getInstance().startSyncingProgressThread();

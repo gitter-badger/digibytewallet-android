@@ -2,30 +2,26 @@ package io.digibyte;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.multidex.MultiDexApplication;
+
+import androidx.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
-import com.evernote.android.job.Job;
-import com.evernote.android.job.JobCreator;
 import com.evernote.android.job.JobManager;
-import com.evernote.android.job.JobRequest;
 import com.facebook.soloader.SoLoader;
 import com.google.zxing.client.android.PreferencesActivity;
-
-import java.util.concurrent.TimeUnit;
+import com.orm.SugarApp;
 
 import io.digibyte.presenter.activities.DisabledActivity;
 import io.digibyte.presenter.activities.LoginActivity;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.manager.BRSharedPrefs;
+import io.digibyte.tools.manager.JobsHelper;
 import io.digibyte.tools.security.BRKeyStore;
 import io.digibyte.tools.util.BRConstants;
-import io.digibyte.wallet.BRWalletManager;
 import io.fabric.sdk.android.Fabric;
 
 
@@ -53,11 +49,10 @@ import io.fabric.sdk.android.Fabric;
  * THE SOFTWARE.
  */
 
-public class DigiByte extends MultiDexApplication implements
+public class DigiByte extends SugarApp implements
         Application.ActivityLifecycleCallbacks {
     public static final String HOST = "digibyte.io";
     //public static final String FEE_URL = "https://go.digibyte.co/bws/api/v2/feelevels";
-    private static final long SYNC_PERIOD = TimeUnit.HOURS.toMillis(24);
 
     private static DigiByte application;
 
@@ -88,10 +83,10 @@ public class DigiByte extends MultiDexApplication implements
         super.onCreate();
         SoLoader.init(this, false);
         Fabric.with(this, new Crashlytics());
+        JobManager.create(this).addJobCreator(new JobsHelper.DigiByteJobCreator());
         application = this;
         activeActivity = null;
         registerActivityLifecycleCallbacks(this);
-        JobManager.create(this).addJobCreator(new SyncBlockchainJobCreator());
         BRSharedPrefs.putFeePerKb(this, 40000);
 
         //This is for legacy users that have the boolean set to true, Vibrate permission has been
@@ -100,10 +95,9 @@ public class DigiByte extends MultiDexApplication implements
         if (prefs.getBoolean(PreferencesActivity.KEY_VIBRATE, false)) {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(PreferencesActivity.KEY_VIBRATE, false);
-            editor.commit();
+            editor.apply();
         }
     }
-
 
     //////////////////////////////////////////////////////////////////////////////////
     //////////// Implementation of ActivityLifecycleCallbacks interface //////////////
@@ -154,38 +148,9 @@ public class DigiByte extends MultiDexApplication implements
     public void onActivitySaveInstanceState(Activity anActivity, Bundle aBundle) {
     }
 
-    public class SyncBlockchainJobCreator implements JobCreator {
-
-        @Override
-        @Nullable
-        public Job create(@NonNull String tag) {
-            switch (tag) {
-                case SyncBlockchainJob.TAG:
-                    return new SyncBlockchainJob();
-                default:
-                    return null;
-            }
-        }
-    }
-
-    public static class SyncBlockchainJob extends Job {
-
-        public static final String TAG = "sync_blockchain_job";
-
-        @Override
-        @NonNull
-        protected Result onRunJob(Params params) {
-            BRWalletManager.getInstance().init();
-            return Result.SUCCESS;
-        }
-
-        public static void scheduleJob() {
-            JobManager.instance().cancelAll();
-            new JobRequest.Builder(SyncBlockchainJob.TAG)
-                    .setPeriodic(SYNC_PERIOD).setRequiredNetworkType(
-                    JobRequest.NetworkType.UNMETERED).setRequiresCharging(true)
-                    .build()
-                    .schedule();
-        }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }
