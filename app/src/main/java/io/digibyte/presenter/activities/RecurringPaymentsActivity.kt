@@ -111,6 +111,8 @@ class RecurringPaymentsActivity : BRActivity(), ActivityRecurringPaymentCallback
                         binding.address.text.clear()
                         binding.amount.text.clear()
                         binding.label.text.clear()
+                        binding.dateSetComplete.visibility = View.GONE
+                        schedule = Schedule.NOT_SET
                         executor.execute {
                             recurringPaymentModel.id = recurringPaymentModel.save()
                             JobsHelper.scheduleRecurringPayment(recurringPaymentModel)
