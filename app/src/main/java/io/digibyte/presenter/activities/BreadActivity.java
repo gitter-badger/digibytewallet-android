@@ -120,8 +120,8 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     private Unbinder unbinder;
     private Handler handler = new Handler(Looper.getMainLooper());
     public TxAdapter adapter;
-    @BindView(R.id.assets_recycler)
-    RecyclerView assetRecycler;
+    //@BindView(R.id.assets_recycler)
+    //RecyclerView assetRecycler;
     private MultiTypeDataBoundAdapter assetAdapter;
     private Executor txDataExecutor = Executors.newSingleThreadExecutor();
 
@@ -129,7 +129,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bindings = DataBindingUtil.setContentView(this, R.layout.activity_bread);
-        bindings.assetRefresh.setOnRefreshListener(this);
+        //bindings.assetRefresh.setOnRefreshListener(this);
         bindings.digiSymbolBackground.
                 setBackground(AppCompatResources.getDrawable(DigiByte.getContext(),
                         R.drawable.nav_drawer_header));
@@ -154,8 +154,8 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         animator.setInterpolator(new DecelerateInterpolator());
         animator.start();
         assetAdapter = new MultiTypeDataBoundAdapter(null, (Object[]) null);
-        assetRecycler.setLayoutManager(new LinearLayoutManager(this));
-        assetRecycler.setAdapter(assetAdapter);
+        //assetRecycler.setLayoutManager(new LinearLayoutManager(this));
+        //assetRecycler.setAdapter(assetAdapter);
     }
 
     private Runnable showSyncButtonRunnable = new Runnable() {
@@ -258,17 +258,17 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     adapter.getReceivedAdapter().updateTransactions(newTransactions);
                 });
             }
-            if (isPossibleNewAssetSend(transactionsToAdd)) {
-                handler.post(() -> {
-                    assetAdapter.clear();
-                    assetAdapter.notifyDataSetChanged();
-                    bindings.assetRefresh.setRefreshing(true);
-                });
-                RetrofitManager.instance.clearCache(transactionsToAdd.get(0).transactionItem.getTo());
-                processTxAssets(new CopyOnWriteArrayList<>(adapter.getAllAdapter().getTransactions()));
-            } else if (transactionsToAdd.size() > 0) {
-                processTxAssets(new CopyOnWriteArrayList<>(transactionsToAdd));
-            }
+//            if (isPossibleNewAssetSend(transactionsToAdd)) {
+//                handler.post(() -> {
+//                    assetAdapter.clear();
+//                    assetAdapter.notifyDataSetChanged();
+//                    bindings.assetRefresh.setRefreshing(true);
+//                });
+//                RetrofitManager.instance.clearCache(transactionsToAdd.get(0).transactionItem.getTo());
+//                processTxAssets(new CopyOnWriteArrayList<>(adapter.getAllAdapter().getTransactions()));
+//            } else if (transactionsToAdd.size() > 0) {
+//                processTxAssets(new CopyOnWriteArrayList<>(transactionsToAdd));
+//            }
         });
     }
 
@@ -330,7 +330,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                                        boolean lastAddress) {
         RetrofitManager.instance.getAssets(address, addressInfo -> {
             if (lastAddress) {
-                bindings.assetRefresh.post(() -> bindings.assetRefresh.setRefreshing(false));
+                //bindings.assetRefresh.post(() -> bindings.assetRefresh.setRefreshing(false));
             }
             if (addressInfo == null) {
                 return;
