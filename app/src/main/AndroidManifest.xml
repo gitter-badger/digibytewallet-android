@@ -140,11 +140,17 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="digibyte"/>
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.nfc.action.TAG_DISCOVERED"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
         </activity>
+        <activity android:name=".presenter.activities.NFCActivity" />
+
+        <activity-alias
+            android:name=".presenter.activities.NFCActivity"
+            android:targetActivity=".presenter.activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
         <activity
             android:name=".presenter.activities.settings.SettingsActivity"
             android:exported="false"

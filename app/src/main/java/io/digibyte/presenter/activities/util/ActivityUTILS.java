@@ -3,8 +3,10 @@ package io.digibyte.presenter.activities.util;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -216,5 +218,23 @@ public class ActivityUTILS {
             //noinspection deprecation
             return c.getResources().getConfiguration().locale;
         }
+    }
+
+    public static void disableNFC(Context context) {
+        PackageManager pm = context.getPackageManager();
+        ComponentName componentName = new ComponentName("io.digibyte",
+                "io.digibyte.presenter.activities.NFCActivity");
+        pm.setComponentEnabledSetting(componentName,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+    }
+
+    public static void enableNFC(Context context) {
+        PackageManager pm = context.getPackageManager();
+        ComponentName componentName = new ComponentName("io.digibyte",
+                "io.digibyte.presenter.activities.NFCActivity");
+        pm.setComponentEnabledSetting(componentName,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
     }
 }

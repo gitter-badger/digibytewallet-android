@@ -24,6 +24,7 @@ import io.digibyte.R;
 import io.digibyte.databinding.ActivityPinBinding;
 import io.digibyte.presenter.activities.callbacks.LoginActivityCallback;
 import io.digibyte.presenter.activities.models.PinActivityModel;
+import io.digibyte.presenter.activities.util.ActivityUTILS;
 import io.digibyte.presenter.activities.util.BRActivity;
 import io.digibyte.presenter.fragments.FragmentFingerprint;
 import io.digibyte.tools.animation.BRAnimator;
@@ -94,6 +95,7 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
         updateDots();
 
         inputAllowed = true;
+        ActivityUTILS.enableNFC(this);
         BRWalletManager.getInstance().init();
         BRWalletManager.getInstance().addBalanceChangedListener(this);
         if (nfcAdapter != null) {
@@ -104,13 +106,17 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
     @Override
     protected void onPause() {
         super.onPause();
+        ActivityUTILS.disableNFC(this);
         BRWalletManager.getInstance().removeListener(this);
         if (nfcAdapter != null) {
             nfcAdapter.disableForegroundDispatch(this);
         }
     }
 
-    private final boolean processDeepLink(@Nullable final Intent intent) {
+    private boolean processDeepLink(@Nullable final Intent intent) {
+        if (intent == null) {
+            return false;
+        }
         Uri data = intent.getData();
         if (data != null && BRBitId.isBitId(data.toString())) {
             BRBitId.digiIDAuthPrompt(this, data.toString(), true);
@@ -122,7 +128,7 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
         return false;
     }
 
-    private final void processNFC(@Nullable final Intent intent) {
+    private void processNFC(@Nullable final Intent intent) {
         if (intent == null) {
             return;
         }
@@ -153,7 +159,7 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
         }
     }
 
-    private final void handleClick(String key) {
+    private void handleClick(String key) {
         if (!inputAllowed) {
             Log.e(TAG, "handleClick: input not allowed");
             return;
@@ -184,25 +190,25 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
 
-    private final void handleDigitClick(Integer dig) {
+    private void handleDigitClick(Integer dig) {
         if (pin.length() < 6) {
             pin.append(dig);
         }
         updateDots();
     }
 
-    private final void handleDeleteClick() {
+    private void handleDeleteClick() {
         if (pin.length() > 0) {
             pin.deleteCharAt(pin.length() - 1);
         }
         updateDots();
     }
 
-    private final void unlockWallet() {
+    private void unlockWallet() {
         BRAnimator.startBreadActivity(this, false);
     }
 
-    private final void showFailedToUnlock() {
+    private void showFailedToUnlock() {
         SpringAnimator.failShakeAnimation(LoginActivity.this, binding.pinLayout);
         pin = new StringBuilder("");
         new Handler().postDelayed(() -> {
@@ -211,7 +217,7 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
         }, 1000);
     }
 
-    private final void updateDots() {
+    private void updateDots() {
         AuthManager.getInstance().updateDots(pin.toString(), binding.dot1,
                 binding.dot2, binding.dot3, binding.dot4,
                 binding.dot5, binding.dot6, () -> {
