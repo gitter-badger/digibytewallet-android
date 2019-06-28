@@ -209,7 +209,7 @@ public class FragmentSend extends Fragment implements OnBackPressListener {
             if (allFilled) {
                 BRSender.getInstance().sendTransaction((AppCompatActivity) getActivity(),
                         new PaymentItem(new String[]{address}, null, satoshiAmount.longValue(),
-                                null, false, comment),
+                                null, false, comment, binding.dandelionToggle.isChecked()),
                         () -> sendFragmentModel.showSendWaiting(false));
             } else {
                 sendFragmentModel.showSendWaiting(false);

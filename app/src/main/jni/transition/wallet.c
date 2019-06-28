@@ -688,14 +688,16 @@ Java_io_digibyte_wallet_BRWalletManager_getFirstAddress(JNIEnv *env, jobject thi
 
 JNIEXPORT jbyteArray JNICALL
 Java_io_digibyte_wallet_BRWalletManager_publishSerializedTransaction(JNIEnv *env, jobject thiz,
-                                                                         jbyteArray serializedTransaction,
-                                                                         jbyteArray phrase) {
+                                                                     jbyteArray serializedTransaction,
+                                                                     jint dandelion,
+                                                                     jbyteArray phrase) {
     __android_log_print(ANDROID_LOG_DEBUG, "Message from C: ", "publishSerializedTransaction");
     if (!_peerManager) return NULL;
 
     int txLength = (*env)->GetArrayLength(env, serializedTransaction);
     jbyte *byteTx = (*env)->GetByteArrayElements(env, serializedTransaction, 0);
     BRTransaction *tmpTx = BRTransactionParse((uint8_t *) byteTx, (size_t) txLength);
+    tmpTx->is_dandelion = (uint8_t) dandelion;
 
     if (!tmpTx) return NULL;
 

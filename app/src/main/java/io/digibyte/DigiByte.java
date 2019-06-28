@@ -14,7 +14,10 @@ import com.evernote.android.job.JobManager;
 import com.facebook.soloader.SoLoader;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.zxing.client.android.PreferencesActivity;
+import com.orm.SchemaGenerator;
 import com.orm.SugarApp;
+import com.orm.SugarContext;
+import com.orm.SugarDb;
 
 import io.digibyte.presenter.activities.DisabledActivity;
 import io.digibyte.presenter.activities.LoginActivity;
@@ -101,11 +104,11 @@ public class DigiByte extends SugarApp implements
         }
 
         //Useful for dropping and re-creating the recurring payments db
-        /*SugarContext.terminate();
-        SchemaGenerator schemaGenerator = new SchemaGenerator(getApplicationContext());
-        schemaGenerator.deleteTables(new SugarDb(getApplicationContext()).getDB());
-        SugarContext.init(getApplicationContext());
-        schemaGenerator.createDatabase(new SugarDb(getApplicationContext()).getDB());*/
+        SugarContext.terminate();
+        SchemaGenerator schemaGenerator = new SchemaGenerator(this);
+        //schemaGenerator.deleteTables(new SugarDb(this).getDB());
+        SugarContext.init(this);
+        schemaGenerator.createDatabase(new SugarDb(this).getDB());
     }
 
     //////////////////////////////////////////////////////////////////////////////////

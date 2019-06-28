@@ -36,13 +36,15 @@ public class PaymentItem  implements Serializable {
     public String cn;
     public boolean isAmountRequested;
     public String comment;
+    public boolean useDandelion;
 
-    public PaymentItem(String[] addresses, byte[] tx,long theAmount, String theCn, boolean isAmountRequested, String comment) {
+    public PaymentItem(String[] addresses, byte[] tx, long theAmount, String theCn, boolean isAmountRequested, String comment, boolean useDandelion) {
         this.isAmountRequested = isAmountRequested;
         this.serializedTx = tx;
         this.addresses = addresses;
         this.amount = theAmount;
         this.cn = theCn;
         this.comment = comment;
+        this.useDandelion = useDandelion;
     }
 }

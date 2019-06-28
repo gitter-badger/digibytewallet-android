@@ -26,6 +26,7 @@ public class SendFragmentModel extends BaseObservable implements Parcelable {
     private String enteredAddress = "";
     private String memo = "";
     private boolean showSendWaiting = false;
+    private boolean dandelionChecked = true;
 
     public SendFragmentModel(){}
 
@@ -134,6 +135,22 @@ public class SendFragmentModel extends BaseObservable implements Parcelable {
     @Bindable
     public boolean getMaxSendVisibility() {
         return BRSharedPrefs.getGenericSettingsSwitch(DigiByte.getContext(), "max_send_enabled");
+    }
+
+    @Bindable
+    public boolean getDandelionChecked() {
+        return dandelionChecked;
+    }
+
+    public void setDandelionChecked(boolean dandelionChecked) {
+        this.dandelionChecked = dandelionChecked;
+        notifyPropertyChanged(BR.dandelionText);
+    }
+
+    @Bindable
+    public String getDandelionText() {
+        return dandelionChecked ? DigiByte.getContext().getString(R.string.dandelion_on) :
+                DigiByte.getContext().getString(R.string.dandelion_off);
     }
 
     public void showSendWaiting(boolean show) {

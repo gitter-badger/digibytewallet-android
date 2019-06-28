@@ -130,9 +130,10 @@ Java_io_digibyte_wallet_BRWalletManager_getFirstAddress(JNIEnv *env, jobject thi
 
 JNIEXPORT jbyteArray JNICALL
 Java_io_digibyte_wallet_BRWalletManager_publishSerializedTransaction(JNIEnv *env,
-                                                                         jobject thiz,
-                                                                         jbyteArray serializedTransaction,
-                                                                         jbyteArray phrase);
+                                                                     jobject thiz,
+                                                                     jbyteArray serializedTransaction,
+                                                                     jint dandelion,
+                                                                     jbyteArray phrase);
 
 JNIEXPORT jlong JNICALL Java_io_digibyte_wallet_BRWalletManager_getTotalSent(JNIEnv *env,
                                                                                  jobject obj);

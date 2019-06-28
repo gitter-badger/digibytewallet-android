@@ -810,8 +810,8 @@ public class BRWalletManager {
 
     public native static String getFirstAddress(byte[] mpk);
 
-    public native static byte[] publishSerializedTransaction(byte[] serializedTransaction,
-            byte[] phrase);
+    public native static byte[] publishSerializedTransaction(byte[] serializedTransaction, int dandelion,
+                                                             byte[] phrase);
 
     public native long getTotalSent();
 

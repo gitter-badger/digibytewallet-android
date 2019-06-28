@@ -159,7 +159,7 @@ public class PostAuth {
             final BRWalletManager walletManager = BRWalletManager.getInstance();
             byte[] rawSeed = BRKeyStore.getPhrase(app, BRConstants.PAY_REQUEST_CODE);
             byte[] seed = TypesConverter.getNullTerminatedPhrase(rawSeed);
-            byte[] txHash = walletManager.publishSerializedTransaction(paymentItem.serializedTx, seed);
+            byte[] txHash = BRWalletManager.publishSerializedTransaction(paymentItem.serializedTx, paymentItem.useDandelion ? 1 : 0, seed);
             Log.e(TAG, "onPublishTxAuth: txhash:" + Arrays.toString(txHash));
             TxMetaData txMetaData = new TxMetaData();
             txMetaData.comment = paymentItem.comment;

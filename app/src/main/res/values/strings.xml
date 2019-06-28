@@ -383,4 +383,6 @@
   <string name="yes">Yes</string>
   <string name="no">No</string>
   <string name="recurring_payment_label">Label:</string>
+    <string name="dandelion_on">Dandelion: On</string>
+    <string name="dandelion_off">Dandelion: Off</string>
 </resources>
