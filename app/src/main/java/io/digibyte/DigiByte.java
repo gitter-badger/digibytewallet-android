@@ -104,7 +104,7 @@ public class DigiByte extends SugarApp implements
         }
 
         //Useful for dropping and re-creating the recurring payments db
-        SugarContext.terminate();
+        //SugarContext.terminate();
         SchemaGenerator schemaGenerator = new SchemaGenerator(this);
         //schemaGenerator.deleteTables(new SugarDb(this).getDB());
         SugarContext.init(this);
