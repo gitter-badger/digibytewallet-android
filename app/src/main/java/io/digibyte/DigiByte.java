@@ -22,6 +22,7 @@ import com.orm.SugarDb;
 import io.digibyte.presenter.activities.DisabledActivity;
 import io.digibyte.presenter.activities.LoginActivity;
 import io.digibyte.tools.animation.BRAnimator;
+import io.digibyte.tools.database.Database;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.manager.JobsHelper;
 import io.digibyte.tools.security.BRKeyStore;
@@ -93,6 +94,7 @@ public class DigiByte extends SugarApp implements
         activeActivity = null;
         registerActivityLifecycleCallbacks(this);
         BRSharedPrefs.putFeePerKb(this, 40000);
+        Database.instance.init();
 
         //This is for legacy users that have the boolean set to true, Vibrate permission has been
         // removed

@@ -30,7 +30,7 @@ public class Database {
         void onTransactionsUpdate();
     }
 
-    public Database() {
+    public void init() {
         AppDatabase database = Room.databaseBuilder(DigiByte.getContext(),
                 AppDatabase.class, "transaction_database")
                 .addMigrations(new TransactionsMigration(6, 23)).fallbackToDestructiveMigration().build();
