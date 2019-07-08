@@ -13,6 +13,8 @@ import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.math.BigDecimal;
 
 import io.digibyte.DigiByte;
@@ -82,19 +84,25 @@ public class FingerprintActivity extends BRActivity {
     }
 
     private String getLimitText() {
-        String iso = BRSharedPrefs.getIso(this);
-        //amount in satoshis
-        BigDecimal digibyte = new BigDecimal(BRKeyStore.getSpendLimit(this));
-        if (digibyte.equals(BigDecimal.ZERO)) {
+        try {
+            String iso = BRSharedPrefs.getIso(this);
+            //amount in satoshis
+            BigDecimal digibyte = new BigDecimal(BRKeyStore.getSpendLimit(this));
+            if (digibyte.equals(BigDecimal.ZERO)) {
+                return String.format(getString(R.string.TouchIdSettings_spendingLimit),
+                        BRCurrency.getFormattedCurrencyString(this, "DGB", digibyte),
+                        DigiByte.getContext().getString(R.string.no_limit));
+            }
+            BigDecimal curAmount = BRExchange.getAmountFromSatoshis(this, iso, digibyte.multiply(new BigDecimal(100000000)));
+            //formatted string for the label
             return String.format(getString(R.string.TouchIdSettings_spendingLimit),
                     BRCurrency.getFormattedCurrencyString(this, "DGB", digibyte),
-                    DigiByte.getContext().getString(R.string.no_limit));
+                    BRCurrency.getFormattedCurrencyString(this, iso, curAmount));
+        } catch (Exception e) {
+            //Lazy support for invalid limit settings
+            Crashlytics.logException(e);
+            return "";
         }
-        BigDecimal curAmount = BRExchange.getAmountFromSatoshis(this, iso, digibyte.multiply(new BigDecimal(100000000)));
-        //formatted string for the label
-        return String.format(getString(R.string.TouchIdSettings_spendingLimit),
-                BRCurrency.getFormattedCurrencyString(this, "DGB", digibyte),
-                BRCurrency.getFormattedCurrencyString(this, iso, curAmount));
     }
 
     @Override
