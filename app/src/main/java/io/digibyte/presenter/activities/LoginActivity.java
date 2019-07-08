@@ -139,6 +139,9 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
                 return;
             }
             NdefMessage ndefMessage = ndef.getCachedNdefMessage();
+            if (ndefMessage == null) {
+                return;
+            }
             NdefRecord[] records = ndefMessage.getRecords();
             for (NdefRecord ndefRecord : records) {
                 try {
