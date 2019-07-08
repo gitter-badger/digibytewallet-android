@@ -1,6 +1,7 @@
 package io.digibyte.presenter.fragments;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -102,6 +103,20 @@ public class FragmentReceive extends Fragment implements OnBackPressListener {
         }
 
         @Override
+        public void shareExternalClick() {
+            if (onShareExternal()) {
+                return;
+            }
+            String url = String.format(
+                    getString(R.string.coin_request),
+                    address,
+                    Float.valueOf(receiveFragmentModel.getAmount())
+            );
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
+        }
+
+        @Override
         public void addressClick() {
             copyText();
         }
@@ -163,6 +178,10 @@ public class FragmentReceive extends Fragment implements OnBackPressListener {
     }
 
     protected boolean onShareCopy() {
+        return false;
+    }
+
+    protected boolean onShareExternal() {
         return false;
     }
 
