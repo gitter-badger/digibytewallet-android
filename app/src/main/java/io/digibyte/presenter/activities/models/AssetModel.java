@@ -43,6 +43,7 @@ import io.digibyte.presenter.adapter.LayoutBinding;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.crypto.AssetsHelper;
 import io.digibyte.tools.manager.BRClipboardManager;
+import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.util.BRConstants;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
@@ -215,7 +216,11 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         popup.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.send:
-                    showSendMenu(context, v);
+                    if (BRSharedPrefs.getCatchedBalance(context) == 0) {
+                        Toast.makeText(context, R.string.not_enough_digi, Toast.LENGTH_SHORT).show();
+                    } else {
+                        showSendMenu(context, v);
+                    }
                     break;
                 case R.id.update:
                     RetrofitManager.instance.clearMetaCache(assets.get(0).assetId);
