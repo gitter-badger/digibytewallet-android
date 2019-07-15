@@ -344,7 +344,7 @@ JNIEXPORT jstring JNICALL Java_io_digibyte_wallet_BRWalletManager_getReceiveAddr
     __android_log_print(ANDROID_LOG_DEBUG, "Message from C: ", "getReceiveAddress");
     if (!_wallet) return NULL;
 
-    BRAddress receiveAddress = BRWalletReceiveAddress(_wallet);
+    BRAddress receiveAddress = BRWalletReceiveAddress(_wallet, 0);
     __android_log_print(ANDROID_LOG_DEBUG, "Message from C: ", "receiveAddress: %s",
                         receiveAddress.s);
     return (*env)->NewStringUTF(env, receiveAddress.s);
@@ -394,7 +394,7 @@ JNIEXPORT jobjectArray JNICALL Java_io_digibyte_wallet_BRWalletManager_getTransa
         BRTransaction *tempTx = transactions_sqlite[i];
         jboolean isValid = (jboolean) ((BRWalletTransactionIsValid(_wallet, tempTx)) ? JNI_TRUE
                                                                                      : JNI_FALSE);
-        jboolean isAsset = (jboolean) ((BRTXContainsAsset(tempTx)) ? JNI_TRUE : JNI_FALSE);
+        jboolean isAsset = (jboolean) (BRTXContainsAsset(tempTx) ? JNI_TRUE : JNI_FALSE);
         jlong JtimeStamp = tempTx->timestamp;
         jint JblockHeight = tempTx->blockHeight;
         jint JtxSize = (jint) BRTransactionSize(tempTx);
@@ -455,7 +455,7 @@ JNIEXPORT jobjectArray JNICALL Java_io_digibyte_wallet_BRWalletManager_getTransa
             }
         }
 
-        jlong JbalanceAfterTx = (jlong) BRWalletBalanceAfterTx(_wallet, tempTx);
+        jlong JbalanceAfterTx = 0;
 
         jobject txObject = (*env)->NewObject(env, txClass, txObjMid, JtimeStamp, JblockHeight,
                                              JtxHash, txReversed, Jsent,
@@ -836,7 +836,7 @@ JNIEXPORT jobject JNICALL Java_io_digibyte_wallet_BRWalletManager_getPrivKeyObje
 
     jclass importPrivKeyClass = (*env)->FindClass(env,
                                                   "io/digibyte/presenter/entities/ImportPrivKeyEntity");
-    BRAddress address = BRWalletReceiveAddress(_wallet);
+    BRAddress address = BRWalletReceiveAddress(_wallet, 0);
     uint8_t script[BRAddressScriptPubKey(NULL, 0, address.s)];
     size_t scriptLen = BRAddressScriptPubKey(script, sizeof(script), address.s);
 
@@ -1150,31 +1150,30 @@ Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXOTxid(JNIEnv *env,
                                                          jobject thiz,
                                                          jint amount) {
 
-    BRUTXO *utxos = BRGetUTXO(_wallet);
-    size_t j;
-    BRTransaction *t;
-    BRTxOutput *output;
-    uint64_t utxoAmount;
+    BRTransaction *transactions = BRGetTransactions(_wallet);
+    size_t i, j;
+    BRTransaction t;
+    BRTxOutput output;
 
     jclass financeUTXO = (*env)->FindClass(env,
                                            "io/digibyte/presenter/activities/models/FinanceUTXO");
     jmethodID mid = (*env)->GetMethodID(env, financeUTXO, "<init>", "(Ljava/lang/String;II[B)V");
     jobject txObject;
-    for (j = 0; j < array_count(utxos); j++) {
-        t = BRGetTxForUTXO(_wallet, utxos[j]);
-        output = &t->outputs[utxos[j].n];
-        utxoAmount = output->amount;
-        if (!BROutIsAsset(*output) && utxoAmount >= amount) {
-            UInt256 reversedHash = UInt256Reverse(utxos[j].hash);
-            jstring txid = (*env)->NewStringUTF(env, u256hex(reversedHash));
-            jbyteArray script = (*env)->NewByteArray(env, (jsize) output->scriptLen);
-            (*env)->SetByteArrayRegion(env, script, 0, (jsize) output->scriptLen,
-                                       (jbyte *) output->script);
-            txObject = (*env)->NewObject(env, financeUTXO, mid, txid, (jint) utxos[j].n,
-                                         (jint) utxoAmount, script);
-            (*env)->DeleteLocalRef(env, txid);
-            (*env)->DeleteLocalRef(env, script);
-            break;
+    for (j = 0; j < array_count(transactions); j++) {
+        t = transactions[j];
+        for (i = 0; i < t.outCount; i++) {
+            output = t.outputs[i];
+            if (!BROutputSpendable(_wallet, output)) continue;
+            if (output.amount >= amount) {
+                UInt256 reversedHash = UInt256Reverse(t.txHash);
+                jstring txid = (*env)->NewStringUTF(env, u256hex(reversedHash));
+                jbyteArray script = (*env)->NewByteArray(env, (jsize) output.scriptLen);
+                (*env)->SetByteArrayRegion(env, script, 0, (jsize) output.scriptLen,
+                                           (jbyte *) output.script);
+                txObject = (*env)->NewObject(env, financeUTXO, mid, txid, (jint) i,
+                                             (jint) output.amount, script);
+                break;
+            }
         }
     }
     return txObject;

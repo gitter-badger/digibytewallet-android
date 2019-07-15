@@ -133,6 +133,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         bindings.digiSymbolBackground.
                 setBackground(AppCompatResources.getDrawable(DigiByte.getContext(),
                         R.drawable.nav_drawer_header));
+        bindings.balanceVisibility.setImageResource(BRSharedPrefs.getBalanceVisibility(this) ? R.drawable.show_balance : R.drawable.hide_balance);
         bindings.setPagerAdapter(adapter = new TxAdapter(this));
         bindings.txPager.setOffscreenPageLimit(2);
         bindings.txPager.setPageTransformer(true, new CubeOutTransformer());
@@ -435,6 +436,14 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                         }
                     });
         });
+    }
+
+    @OnClick(R.id.balance_visibility)
+    void onBalanceVisibilityToggle(View view) {
+        BRSharedPrefs.setBalanceVisibility(this, !BRSharedPrefs.getBalanceVisibility(this));
+        bindings.balanceVisibility.setImageResource(BRSharedPrefs.getBalanceVisibility(this) ? R.drawable.show_balance : R.drawable.hide_balance);
+        updateAmounts();
+        notifyDataSetChangeForAll();
     }
 
     @OnClick(R.id.nav_drawer)

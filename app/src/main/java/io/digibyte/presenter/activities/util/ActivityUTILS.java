@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.Locale;
 
 import io.digibyte.R;
@@ -84,6 +85,11 @@ public class ActivityUTILS {
 
     public static void updateDigibyteDollarValues(Context context, TextView primary,
             TextView secondary) {
+        if (!BRSharedPrefs.getBalanceVisibility(context)) {
+            primary.setText(String.format(context.getString(R.string.amount_hidden), BRExchange.getBitcoinSymbol(context)));
+            secondary.setText(String.format(context.getString(R.string.amount_hidden), Currency.getInstance(Locale.getDefault()).getSymbol()));
+            return;
+        }
         BRExecutor.getInstance().forLightWeightBackgroundTasks().execute(() -> {
             final String iso = BRSharedPrefs.getIso(context);
 

@@ -387,4 +387,6 @@
   <string name="dandelion_off">Dandelion: Off</string>
   <string name="coin_request">https://coinrequest.io/create?coin=digibyte&amp;address=%s&amp;amount=%f</string>
   <string name="not_enough_digi">Not enough DigiByte available to send assets</string>
+    <string name="show_hide_balance">Show hide balance</string>
+    <string name="amount_hidden">%s ******</string>
 </resources>

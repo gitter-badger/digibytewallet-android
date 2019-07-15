@@ -528,4 +528,18 @@ public class BRSharedPrefs {
                 Context.MODE_PRIVATE);
         return prefs.getBoolean("digi_id_focus", false);
     }
+
+    public static void setBalanceVisibility(Context context, boolean visibile) {
+        SharedPreferences prefs = context.getSharedPreferences(BRConstants.PREFS_NAME,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("balance_visibility", visibile);
+        editor.apply();
+    }
+
+    public static boolean getBalanceVisibility(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(BRConstants.PREFS_NAME,
+                Context.MODE_PRIVATE);
+        return prefs.getBoolean("balance_visibility", true);
+    }
 }

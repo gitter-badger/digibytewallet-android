@@ -3,8 +3,6 @@ package io.digibyte.tools.list.items;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.databinding.BaseObservable;
@@ -13,6 +11,7 @@ import androidx.databinding.BindingAdapter;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -124,7 +123,14 @@ public class ListItemTransactionData extends BaseObservable implements Parcelabl
 
     @Bindable
     public String getAmount() {
-        if (transactionItem.isAsset) {
+        if (!transactionItem.isAsset && !BRSharedPrefs.getBalanceVisibility(DigiByte.getContext())) {
+            boolean isBTCPreferred = BRSharedPrefs.getPreferredBTC(DigiByte.getContext());
+            if (isBTCPreferred) {
+                return String.format(DigiByte.getContext().getString(R.string.amount_hidden), BRExchange.getBitcoinSymbol(DigiByte.getContext()));
+            } else {
+                return String.format(DigiByte.getContext().getString(R.string.amount_hidden), Currency.getInstance(Locale.getDefault()).getSymbol());
+            }
+        } else if (transactionItem.isAsset) {
             AssetName assetName = Database.instance.findAssetNameFromHash(transactionItem.txReversed);
             if (assetName != null) {
                 return assetName.getAssetName();
