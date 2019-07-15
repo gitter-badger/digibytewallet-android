@@ -1150,31 +1150,37 @@ Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXOTxid(JNIEnv *env,
                                                          jobject thiz,
                                                          jint amount) {
 
-    BRTransaction *transactions = BRGetTransactions(_wallet);
-    size_t i, j;
-    BRTransaction t;
-    BRTxOutput output;
+    BRUTXO *utxos = BRGetUTXO(_wallet);
+    size_t j;
+    BRTransaction *t;
+    BRTxOutput *output;
+    uint64_t utxoAmount;
 
     jclass financeUTXO = (*env)->FindClass(env,
                                            "io/digibyte/presenter/activities/models/FinanceUTXO");
     jmethodID mid = (*env)->GetMethodID(env, financeUTXO, "<init>", "(Ljava/lang/String;II[B)V");
     jobject txObject;
-    for (j = 0; j < array_count(transactions); j++) {
-        t = transactions[j];
-        for (i = 0; i < t.outCount; i++) {
-            output = t.outputs[i];
-            if (!BROutputSpendable(_wallet, output)) continue;
-            if (output.amount >= amount) {
-                UInt256 reversedHash = UInt256Reverse(t.txHash);
-                jstring txid = (*env)->NewStringUTF(env, u256hex(reversedHash));
-                jbyteArray script = (*env)->NewByteArray(env, (jsize) output.scriptLen);
-                (*env)->SetByteArrayRegion(env, script, 0, (jsize) output.scriptLen,
-                                           (jbyte *) output.script);
-                txObject = (*env)->NewObject(env, financeUTXO, mid, txid, (jint) i,
-                                             (jint) output.amount, script);
-                break;
-            }
+    for (j = 0; j < array_count(utxos); j++) {
+        t = BRGetTxForUTXO(_wallet, utxos[j]);
+        output = &t->outputs[utxos[j].n];
+        utxoAmount = output->amount;
+        if (BROutputSpendable(_wallet, *output)) {
+            UInt256 reversedHash = UInt256Reverse(utxos[j].hash);
+            jstring txid = (*env)->NewStringUTF(env, u256hex(reversedHash));
+            jbyteArray script = (*env)->NewByteArray(env, (jsize) output->scriptLen);
+            (*env)->SetByteArrayRegion(env, script, 0, (jsize) output->scriptLen,
+                                       (jbyte *) output->script);
+            txObject = (*env)->NewObject(env, financeUTXO, mid, txid, (jint) utxos[j].n,
+                                         (jint) utxoAmount, script);
+            (*env)->DeleteLocalRef(env, txid);
+            (*env)->DeleteLocalRef(env, script);
+            break;
         }
+    }
+    if (txObject == NULL) {
+        jstring txid = (*env)->NewStringUTF(env, "");
+        jbyteArray script = (*env)->NewByteArray(env, (jsize) 0);
+        txObject = (*env)->NewObject(env, financeUTXO, mid, txid, (jint) 0, (jint) 0, script);
     }
     return txObject;
 }

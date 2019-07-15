@@ -2,7 +2,9 @@ package io.digibyte.tools.crypto
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import io.digibyte.R
 import io.digibyte.presenter.activities.models.AssetModel
 import io.digibyte.presenter.activities.models.FinanceUTXO
 import io.digibyte.presenter.activities.models.SendAsset
@@ -34,6 +36,10 @@ class AssetsHelper {
             Log.d(AssetModel::class.java.simpleName, "Clipped Address: ${assetTx.destinationAddress}")
 
             val financeUTXO = getNeededUTXOTxid(1200)
+            if (financeUTXO.txid.isNullOrEmpty()) {
+                Toast.makeText(context, R.string.not_enough_digi, Toast.LENGTH_SHORT).show()
+                return
+            }
             RetrofitManager.instance.clearCache(assetTx.changeAddress)
 
             val sendAsset = SendAsset(
