@@ -25,6 +25,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.appolica.flubber.Flubber;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.common.collect.Ordering;
 import com.google.common.io.BaseEncoding;
@@ -592,9 +593,10 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     }
 
                     @Override
-                    public void error(String message) {
+                    public void error(String message, Throwable throwable) {
+                        throwable.printStackTrace();
+                        Crashlytics.logException(throwable);
                         showSendConfirmDialog(1, TextUtils.isEmpty(message) ? getString(R.string.Alerts_sendFailure) : message);
-                        Log.d(BRActivity.class.getSimpleName(), message);
                     }
                 });
                 break;
@@ -625,6 +627,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                 @Override
                 public void onError(String errorMessage) {
+                    Crashlytics.logException(new Exception(errorMessage));
                     showSendConfirmDialog(1, TextUtils.isEmpty(errorMessage) ? getString(R.string.Alerts_sendFailure) : errorMessage);
                 }
             });

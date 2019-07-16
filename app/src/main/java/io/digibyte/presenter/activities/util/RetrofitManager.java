@@ -172,7 +172,7 @@ public class RetrofitManager {
     public interface SendAssetCallback {
         void success(SendAssetResponse sendAssetResponse);
 
-        void error(String message);
+        void error(String message, Throwable throwable);
     }
 
     public void sendAsset(String sendAsset, SendAssetCallback sendAssetCallback) {
@@ -190,9 +190,9 @@ public class RetrofitManager {
                                 String message = error.getString("message");
                                 Log.d(RetrofitManager.class.getSimpleName(),
                                         "Send Asset Error: " + message);
-                                sendAssetCallback.error(message);
-                            } catch (JSONException e) {
-                                sendAssetCallback.error("");
+                                sendAssetCallback.error(message, new Exception("non 200 response for: " + call.request().body().toString()));
+                            } catch (Exception e) {
+                                sendAssetCallback.error("", e);
                             }
                         } else {
                             Gson gson = new Gson();
@@ -209,7 +209,7 @@ public class RetrofitManager {
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                handler.post(() -> sendAssetCallback.error(""));
+                handler.post(() -> sendAssetCallback.error("", t));
             }
         });
     }
@@ -243,7 +243,7 @@ public class RetrofitManager {
                     } else {
                         String errorMessage = "";
                         try {
-                            errorMessage = response.body().string();
+                            errorMessage = response.errorBody().string();
                         } catch (Exception e) {
 
                         }

@@ -66,7 +66,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         }
         assets.add(newAsset);
         notifyPropertyChanged(BR.assetQuantity);
-        notifyPropertyChanged(BR.uTXOCount);
+        notifyPropertyChanged(BR.assetInfo);
     }
 
     public boolean isAggregable() {
