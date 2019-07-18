@@ -344,7 +344,7 @@ JNIEXPORT jstring JNICALL Java_io_digibyte_wallet_BRWalletManager_getReceiveAddr
     __android_log_print(ANDROID_LOG_DEBUG, "Message from C: ", "getReceiveAddress");
     if (!_wallet) return NULL;
 
-    BRAddress receiveAddress = BRWalletReceiveAddress(_wallet, 0);
+    BRAddress receiveAddress = BRWalletReceiveAddress(_wallet);
     __android_log_print(ANDROID_LOG_DEBUG, "Message from C: ", "receiveAddress: %s",
                         receiveAddress.s);
     return (*env)->NewStringUTF(env, receiveAddress.s);
@@ -836,7 +836,7 @@ JNIEXPORT jobject JNICALL Java_io_digibyte_wallet_BRWalletManager_getPrivKeyObje
 
     jclass importPrivKeyClass = (*env)->FindClass(env,
                                                   "io/digibyte/presenter/entities/ImportPrivKeyEntity");
-    BRAddress address = BRWalletReceiveAddress(_wallet, 0);
+    BRAddress address = BRWalletReceiveAddress(_wallet);
     uint8_t script[BRAddressScriptPubKey(NULL, 0, address.s)];
     size_t scriptLen = BRAddressScriptPubKey(script, sizeof(script), address.s);
 
