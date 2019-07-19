@@ -7,6 +7,7 @@ buildscript {
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }
+
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: "kotlin-android"
@@ -34,24 +35,12 @@ android {
         multiDexEnabled true
     }
 
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
-
-    packagingOptions {
-        pickFirst 'protobuf.meta'
-    }
-
     externalNativeBuild {
         cmake {
-            // When you specify a version of CMake, as shown below,
-            // the Android plugin searches for its binary within your
-            // PATH environmental variable.
-            path "CMakeLists.txt"  //path can only be set outside (in android block)
+            path "CMakeLists.txt"
         }
     }
 
-    // Specifies two flavor dimensions.
     flavorDimensions "mode"
 
     productFlavors {
@@ -109,7 +98,6 @@ android {
     }
 
     buildTypes {
-        gitUpdateModules()
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             minifyEnabled = true
@@ -140,15 +128,6 @@ android {
     }
 }
 
-task copyResDirectoryToClasses(type: Copy) {
-    from "${projectDir}/src/test/res"
-    into "${buildDir}/intermediates/classes/test/debug/res"
-}
-
-gradle.projectsEvaluated {
-    assembleDebug.dependsOn(copyResDirectoryToClasses)
-}
-
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->
         def requested = details.requested
@@ -160,14 +139,8 @@ configurations.all {
     }
 }
 
-def gitUpdateModules() {
-    //['sh', '-c', 'git submodule foreach git pull origin master'].execute().text.trim()
-    getLogger().debug("gitUpdateModules done!")
-}
-
 configurations {
     cleanedAnnotations
-
     compile.exclude group: 'org.jetbrains' , module:'annotations'
 }
 
@@ -214,7 +187,7 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:1.1.1"
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation group: 'commons-codec', name: 'commons-codec', version: '1.10'
-    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-core:17.0.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation 'com.github.satyan:sugar:1.5'
 }
