@@ -223,7 +223,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     }
                     break;
                 case R.id.update:
-                    RetrofitManager.instance.clearMetaCache(assets.get(0).assetId);
+                    RetrofitManager.instance.clearMetaCache(getAssetId());
                     RetrofitManager.instance.getAssetMeta(
                             assets.get(0).assetId,
                             assets.get(0).txid,

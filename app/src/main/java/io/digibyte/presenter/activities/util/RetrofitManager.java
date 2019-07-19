@@ -91,7 +91,7 @@ public class RetrofitManager {
             Iterator<String> urls = cache.urls();
             while (urls.hasNext()) {
                 String url = urls.next();
-                if (!TextUtils.isEmpty(assetId) && url.contains(assetId)) {
+                if (url.contains(assetId)) {
                     urls.remove();
                 }
             }

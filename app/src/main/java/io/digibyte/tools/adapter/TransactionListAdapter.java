@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import io.digibyte.DigiByte;
+import io.digibyte.R;
 import io.digibyte.presenter.activities.BreadActivity;
 import io.digibyte.presenter.activities.callbacks.TransactionClickCallback;
 import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter;
@@ -21,11 +22,6 @@ import io.digibyte.wallet.BRWalletManager;
 
 
 /**
- * BreadWallet
- * <p>
- * Created by Mihail Gutan <mihail@breadwallet.com> on 7/27/15.
- * Copyright (c) 2016 breadwallet LLC
- * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -116,13 +112,18 @@ public class TransactionListAdapter extends MultiTypeDataBoundAdapter implements
     private void saveFiatValue(TxItem txItem) {
         //Save the transaction text in fiat mode, the first time the transaction is displayed in the app
         if (!Database.instance.containsTransaction(txItem.getTxHash())) {
-            Database.instance.saveTransaction(txItem.getTxHash(), TransactionDetailsViewModel.getRawFiatAmount(txItem));
+            Database.instance.saveTransaction(txItem.getTxHash(),
+                    TransactionDetailsViewModel.getRawFiatAmount(txItem));
         }
     }
 
     @Override
     public void onTransactionClick(ListItemTransactionData listItemTransactionData) {
         if (listItemTransactionData.transactionItem.isAsset) {
+            if (listItemTransactionData.getAmount().
+                    equals(DigiByte.getContext().getString(R.string.digi_asset))) {
+                activity.onRefresh();
+            }
             activity.onAssetsButtonClick(null);
         } else {
             int adapterPosition = listItemData.indexOf(listItemTransactionData);

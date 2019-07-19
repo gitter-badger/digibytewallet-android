@@ -67,6 +67,7 @@ import io.digibyte.presenter.activities.settings.SyncBlockchainActivity;
 import io.digibyte.presenter.activities.util.ActivityUTILS;
 import io.digibyte.presenter.activities.util.BRActivity;
 import io.digibyte.presenter.activities.util.RetrofitManager;
+import io.digibyte.presenter.activities.util.TransactionUtils;
 import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter;
 import io.digibyte.presenter.entities.TxItem;
 import io.digibyte.presenter.interfaces.BRAuthCompletion;
@@ -92,7 +93,6 @@ import io.digibyte.wallet.BRWalletManager;
 /**
  * <p/>
  * Created by Noah Seidman <noah@noahseidman.com> on 4/14/18.
- * Copyright (c) 2018 DigiByte Holdings
  * <p/>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -134,7 +134,8 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         bindings.digiSymbolBackground.
                 setBackground(AppCompatResources.getDrawable(DigiByte.getContext(),
                         R.drawable.nav_drawer_header));
-        bindings.balanceVisibility.setImageResource(BRSharedPrefs.getBalanceVisibility(this) ? R.drawable.show_balance : R.drawable.hide_balance);
+        bindings.balanceVisibility.setImageResource(
+                BRSharedPrefs.getBalanceVisibility(this) ? R.drawable.show_balance : R.drawable.hide_balance);
         bindings.setPagerAdapter(adapter = new TxAdapter(this));
         bindings.txPager.setOffscreenPageLimit(2);
         bindings.txPager.setPageTransformer(true, new CubeOutTransformer());
@@ -239,16 +240,25 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             if (newTxItems == null || newTxItems.length == 0) {
                 return;
             }
-            ArrayList<ListItemTransactionData> newTransactions = getNewTransactionsData(newTxItems);
+            ArrayList<ListItemTransactionData> newTransactions =
+                    TransactionUtils.getNewTransactionsData(newTxItems);
             ArrayList<ListItemTransactionData> transactionsToAdd = removeAllExistingEntries(
                     newTransactions);
             if (transactionsToAdd.size() > 0) {
                 handler.post(() -> {
                     adapter.getAllAdapter().addTransactions(transactionsToAdd);
                     adapter.getSentAdapter().addTransactions(
-                            convertNewTransactionsForAdapter(Adapter.SENT, transactionsToAdd));
+                            TransactionUtils.
+                                    convertNewTransactionsForAdapter(
+                                            TransactionUtils.Adapter.SENT,
+                                            transactionsToAdd
+                                    ));
                     adapter.getReceivedAdapter().addTransactions(
-                            convertNewTransactionsForAdapter(Adapter.RECEIVED, transactionsToAdd));
+                            TransactionUtils.
+                                    convertNewTransactionsForAdapter(
+                                            TransactionUtils.Adapter.RECEIVED,
+                                            transactionsToAdd
+                                    ));
                     adapter.getAllRecycler().smoothScrollToPosition(0);
                     adapter.getSentRecycler().smoothScrollToPosition(0);
                     adapter.getReceivedRecycler().smoothScrollToPosition(0);
@@ -267,9 +277,12 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     bindings.assetRefresh.setRefreshing(true);
                 });
                 RetrofitManager.instance.clearCache(transactionsToAdd.get(0).transactionItem.getTo());
-                processTxAssets(new CopyOnWriteArrayList<>(adapter.getAllAdapter().getTransactions()));
+                processTxAssets(new CopyOnWriteArrayList<>(
+                                adapter.getAllAdapter().getTransactions()),
+                        true
+                );
             } else if (transactionsToAdd.size() > 0) {
-                processTxAssets(new CopyOnWriteArrayList<>(transactionsToAdd));
+                processTxAssets(new CopyOnWriteArrayList<>(transactionsToAdd), false);
             }
         });
     }
@@ -279,14 +292,17 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         RetrofitManager.instance.clearCache();
         assetAdapter.clear();
         assetAdapter.notifyDataSetChanged();
-        processTxAssets(new CopyOnWriteArrayList<>(adapter.getAllAdapter().getTransactions()));
+        processTxAssets(new CopyOnWriteArrayList<>(
+                        adapter.getAllAdapter().getTransactions()),
+                true
+        );
     }
 
     private boolean isPossibleNewAssetSend(ArrayList<ListItemTransactionData> newTransactions) {
         return newTransactions.size() == 1;
     }
 
-    private void processTxAssets(List<ListItemTransactionData> transactions) {
+    private void processTxAssets(List<ListItemTransactionData> transactions, boolean forceAssetMeta) {
         HashSet<AddressTxSet> addresses = new HashSet<>();
         for (ListItemTransactionData transaction : transactions) {
             if (!transaction.transactionItem.isAsset) {
@@ -307,7 +323,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         for (int i = 0; i < addressesList.size(); i++) {
             AddressTxSet addressTxSet = addressesList.get(i);
             processIncomingAssets(addressTxSet.address, addressTxSet.listItemTransactionData,
-                    i == addressesList.size() - 1);
+                    i == addressesList.size() - 1, forceAssetMeta);
         }
     }
 
@@ -329,7 +345,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
     private void processIncomingAssets(@NonNull final String address,
                                        @NonNull final ListItemTransactionData listItemTransactionData,
-                                       boolean lastAddress) {
+                                       boolean lastAddress, boolean forceAssetMeta) {
         RetrofitManager.instance.getAssets(address, addressInfo -> {
             if (lastAddress) {
                 bindings.assetRefresh.post(() -> bindings.assetRefresh.setRefreshing(false));
@@ -338,6 +354,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 return;
             }
             for (final AddressInfo.Asset asset : addressInfo.getAssets()) {
+                if (forceAssetMeta) {
+                    RetrofitManager.instance.clearMetaCache(asset.assetId);
+                }
                 RetrofitManager.instance.getAssetMeta(asset.assetId,
                         asset.txid, String.valueOf(asset.getIndex()), metalModel -> {
                     if (asset.txid.equals(listItemTransactionData.transactionItem.txReversed)) {
@@ -348,7 +367,8 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                             if (!assetAdapter.containsItem(assetModel) || !assetModel.isAggregable()) {
                                 assetAdapter.addItem(assetModel);
                             } else {
-                                AssetModel existingAssetModel = (AssetModel) assetAdapter.getItem(assetModel);
+                                AssetModel existingAssetModel =
+                                        (AssetModel) assetAdapter.getItem(assetModel);
                                 existingAssetModel.addAsset(asset);
                             }
                             sortAssets();
@@ -359,37 +379,6 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         });
     }
 
-    private enum Adapter {
-        SENT, RECEIVED
-    }
-
-    private ArrayList<ListItemTransactionData> convertNewTransactionsForAdapter(Adapter adapter,
-                                                                                ArrayList<ListItemTransactionData> transactions) {
-        ArrayList<ListItemTransactionData> transactionList = new ArrayList<>();
-        for (int index = 0; index < transactions.size(); index++) {
-            ListItemTransactionData transactionData = transactions.get(index);
-            TxItem item = transactions.get(index).transactionItem;
-            if (adapter == Adapter.RECEIVED && item.getSent() == 0) {
-                transactionList.add(transactionData);
-            } else if (adapter == Adapter.SENT && item.getSent() > 0) {
-                transactionList.add(transactionData);
-            }
-        }
-        return transactionList;
-    }
-
-    private ArrayList<ListItemTransactionData> getNewTransactionsData(TxItem[] newTxItems) {
-        ArrayList<ListItemTransactionData> newTransactionsData = new ArrayList<>();
-        ArrayList<TxItem> newTransactions = new ArrayList<>(Arrays.asList(newTxItems));
-        Collections.sort(newTransactions,
-                (t1, t2) -> Long.compare(t1.getTimeStamp(), t2.getTimeStamp()));
-        for (TxItem tx : newTransactions) {
-            newTransactionsData.add(new ListItemTransactionData(newTransactions.indexOf(tx),
-                    newTransactions.size(), tx));
-        }
-        return newTransactionsData;
-    }
-
     private ArrayList<ListItemTransactionData> removeAllExistingEntries(
             ArrayList<ListItemTransactionData> newTransactions) {
         return new ArrayList<ListItemTransactionData>(newTransactions) {{
@@ -398,8 +387,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private void updateAmounts() {
-        handler.post(() -> ActivityUTILS.updateDigibyteDollarValues(BreadActivity.this, bindings.primaryPrice,
-                bindings.secondaryPrice));
+        handler.post(() -> ActivityUTILS.updateDigibyteDollarValues(
+                BreadActivity.this,
+                bindings.primaryPrice,
+                bindings.secondaryPrice
+        ));
     }
 
     @Override
@@ -441,8 +433,12 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
     @OnClick(R.id.balance_visibility)
     void onBalanceVisibilityToggle(View view) {
-        BRSharedPrefs.setBalanceVisibility(this, !BRSharedPrefs.getBalanceVisibility(this));
-        bindings.balanceVisibility.setImageResource(BRSharedPrefs.getBalanceVisibility(this) ? R.drawable.show_balance : R.drawable.hide_balance);
+        BRSharedPrefs.setBalanceVisibility(
+                this,
+                !BRSharedPrefs.getBalanceVisibility(this)
+        );
+        bindings.balanceVisibility.setImageResource(
+                BRSharedPrefs.getBalanceVisibility(this) ? R.drawable.show_balance : R.drawable.hide_balance);
         updateAmounts();
         notifyDataSetChangeForAll();
     }
