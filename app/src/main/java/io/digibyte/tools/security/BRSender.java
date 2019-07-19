@@ -14,7 +14,7 @@ import java.util.Locale;
 
 import io.digibyte.R;
 import io.digibyte.presenter.entities.PaymentItem;
-import io.digibyte.presenter.interfaces.BRAuthCompletion;
+import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.tools.animation.BRDialog;
 import io.digibyte.tools.manager.BRReportsManager;
 import io.digibyte.tools.manager.BRSharedPrefs;

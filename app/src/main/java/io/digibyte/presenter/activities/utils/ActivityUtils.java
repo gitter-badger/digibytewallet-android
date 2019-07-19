@@ -1,4 +1,4 @@
-package io.digibyte.presenter.activities.util;
+package io.digibyte.presenter.activities.utils;
 
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
@@ -57,9 +57,9 @@ import io.digibyte.tools.util.BRExchange;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-public class ActivityUTILS {
+public class ActivityUtils {
 
-    private static final String TAG = ActivityUTILS.class.getName();
+    private static final String TAG = ActivityUtils.class.getName();
     private static Handler handler = new Handler(Looper.getMainLooper());
 
     //return true if the app does need to show the disabled wallet screen

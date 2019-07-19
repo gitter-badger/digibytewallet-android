@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.Locale;
 
 import io.digibyte.R;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.animation.SpringAnimator;
 import io.digibyte.tools.security.AuthManager;

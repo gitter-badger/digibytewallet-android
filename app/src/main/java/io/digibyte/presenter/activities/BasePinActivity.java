@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityPinTemplateBinding;
 import io.digibyte.presenter.activities.models.PinActivityModel;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.tools.security.AuthManager;
 
 public abstract class BasePinActivity extends BRActivity {

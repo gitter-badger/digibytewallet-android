@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.Locale;
 
 import io.digibyte.R;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 
 public class AboutActivity extends BRActivity {
     private TextView policyText;

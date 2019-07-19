@@ -18,7 +18,7 @@ import java.util.Currency;
 
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityDisplayCurrencyBinding;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.presenter.entities.CurrencyEntity;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.manager.FontManager;

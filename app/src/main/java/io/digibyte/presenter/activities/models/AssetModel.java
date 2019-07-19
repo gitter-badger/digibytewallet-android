@@ -36,7 +36,7 @@ import io.digibyte.BR;
 import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.databinding.AssetBinding;
-import io.digibyte.presenter.activities.util.RetrofitManager;
+import io.digibyte.presenter.activities.utils.RetrofitManager;
 import io.digibyte.presenter.adapter.DataBoundViewHolder;
 import io.digibyte.presenter.adapter.DynamicBinding;
 import io.digibyte.presenter.adapter.LayoutBinding;

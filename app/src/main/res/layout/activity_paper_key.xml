@@ -18,7 +18,7 @@
         android:gravity="center_horizontal"
         android:textDirection="locale"
         android:orientation="vertical"
-        tools:context="io.digibyte.presenter.activities.intro.WriteDownActivity">
+        tools:context="io.digibyte.presenter.activities.introactivities.WriteDownActivity">
 
         <include layout="@layout/toolbar"/>
 

@@ -9,7 +9,7 @@ import io.digibyte.R;
 import io.digibyte.databinding.ActivityRestoreBinding;
 import io.digibyte.presenter.activities.InputWordsActivity;
 import io.digibyte.presenter.activities.callbacks.ActivityWipeCallback;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 
 
 public class WipeActivity extends BRActivity {

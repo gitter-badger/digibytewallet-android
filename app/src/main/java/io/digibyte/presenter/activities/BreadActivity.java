@@ -37,7 +37,6 @@ import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -64,13 +63,13 @@ import io.digibyte.presenter.activities.models.SendAssetResponse;
 import io.digibyte.presenter.activities.settings.SecurityCenterActivity;
 import io.digibyte.presenter.activities.settings.SettingsActivity;
 import io.digibyte.presenter.activities.settings.SyncBlockchainActivity;
-import io.digibyte.presenter.activities.util.ActivityUTILS;
-import io.digibyte.presenter.activities.util.BRActivity;
-import io.digibyte.presenter.activities.util.RetrofitManager;
-import io.digibyte.presenter.activities.util.TransactionUtils;
+import io.digibyte.presenter.activities.utils.ActivityUtils;
+import io.digibyte.presenter.activities.base.BRActivity;
+import io.digibyte.presenter.activities.utils.RetrofitManager;
+import io.digibyte.presenter.activities.utils.TransactionUtils;
 import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter;
 import io.digibyte.presenter.entities.TxItem;
-import io.digibyte.presenter.interfaces.BRAuthCompletion;
+import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.database.Database;
 import io.digibyte.tools.list.items.ListItemTransactionData;
@@ -387,7 +386,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private void updateAmounts() {
-        handler.post(() -> ActivityUTILS.updateDigibyteDollarValues(
+        handler.post(() -> ActivityUtils.updateDigibyteDollarValues(
                 BreadActivity.this,
                 bindings.primaryPrice,
                 bindings.secondaryPrice

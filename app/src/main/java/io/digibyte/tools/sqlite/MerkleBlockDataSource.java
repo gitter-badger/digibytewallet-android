@@ -32,7 +32,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 
-import io.digibyte.presenter.activities.util.ActivityUTILS;
+import io.digibyte.presenter.activities.utils.ActivityUtils;
 import io.digibyte.presenter.entities.BRMerkleBlockEntity;
 import io.digibyte.presenter.entities.BlockEntity;
 import io.digibyte.tools.manager.BRReportsManager;
@@ -147,7 +147,7 @@ public class MerkleBlockDataSource implements BRDataSourceInterface {
     public  SQLiteDatabase openDatabase() {
 //        if (mOpenCounter.incrementAndGet() == 1) {
         // Opening new database
-        if(ActivityUTILS.isMainThread()) throw new NetworkOnMainThreadException();
+        if (ActivityUtils.isMainThread()) throw new NetworkOnMainThreadException();
         if (database == null || !database.isOpen())
             database = dbHelper.getWritableDatabase();
         dbHelper.setWriteAheadLoggingEnabled(BRConstants.WAL);

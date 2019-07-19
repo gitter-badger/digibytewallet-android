@@ -1,4 +1,4 @@
-package io.digibyte.presenter.activities.intro;
+package io.digibyte.presenter.activities.introactivities;
 
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityWriteDownBinding;
 import io.digibyte.presenter.activities.callbacks.ActivityWriteDownCallback;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.security.AuthManager;

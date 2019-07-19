@@ -13,7 +13,7 @@ import android.view.View;
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityQrCodeBinding;
 import io.digibyte.presenter.activities.callbacks.ActivityQRCodeCallback;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.qrcode.QRUtils;
 

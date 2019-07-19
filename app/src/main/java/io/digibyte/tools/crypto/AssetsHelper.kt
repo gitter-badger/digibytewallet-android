@@ -8,9 +8,9 @@ import io.digibyte.R
 import io.digibyte.presenter.activities.models.AssetModel
 import io.digibyte.presenter.activities.models.FinanceUTXO
 import io.digibyte.presenter.activities.models.SendAsset
-import io.digibyte.presenter.activities.util.RetrofitManager
+import io.digibyte.presenter.activities.utils.RetrofitManager
 import io.digibyte.presenter.fragments.FragmentNumberPicker
-import io.digibyte.presenter.interfaces.BRAuthCompletion
+import io.digibyte.presenter.activities.callbacks.BRAuthCompletion
 
 class AssetsHelper {
 

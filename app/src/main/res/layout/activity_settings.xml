@@ -2,7 +2,10 @@
 <layout>
 
     <data>
-        <variable name="callback" type="io.digibyte.presenter.activities.SettingsCallback"/>
+
+        <variable
+            name="callback"
+            type="io.digibyte.presenter.activities.callbacks.SettingsCallback" />
         <variable name="adapter"
                   type="io.digibyte.presenter.activities.settings.SettingsActivity.SettingsListAdapter"/>
     </data>

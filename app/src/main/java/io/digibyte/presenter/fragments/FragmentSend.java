@@ -25,7 +25,7 @@ import java.math.BigDecimal;
 
 import io.digibyte.R;
 import io.digibyte.databinding.FragmentSendBinding;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.presenter.customviews.BRDialogView;
 import io.digibyte.presenter.entities.PaymentItem;
 import io.digibyte.presenter.entities.RequestObject;

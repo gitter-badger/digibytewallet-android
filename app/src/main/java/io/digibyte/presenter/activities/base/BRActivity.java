@@ -1,4 +1,4 @@
-package io.digibyte.presenter.activities.util;
+package io.digibyte.presenter.activities.base;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -34,8 +34,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import io.digibyte.R;
 import io.digibyte.presenter.activities.BreadActivity;
+import io.digibyte.presenter.activities.utils.ActivityUtils;
 import io.digibyte.presenter.fragments.interfaces.OnBackPressListener;
-import io.digibyte.presenter.interfaces.BRAuthCompletion;
+import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.crypto.AssetsHelper;
 import io.digibyte.tools.security.AuthManager;
@@ -81,8 +82,8 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
         Bungee.slideRight(this);
         getSupportFragmentManager().addOnBackStackChangedListener(this);
         RootBeer rootBeer = new RootBeer(this);
-        if (rootBeer.isRootedWithoutBusyBoxCheck() && !ActivityUTILS.isvm()) {
-            ActivityUTILS.showJailbrokenDialog(this);
+        if (rootBeer.isRootedWithoutBusyBoxCheck() && !ActivityUtils.isvm()) {
+            ActivityUtils.showJailbrokenDialog(this);
         }
     }
 
@@ -106,7 +107,7 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
 
     @Override
     protected void onResume() {
-        if (!ActivityUTILS.isAppSafe(this)) {
+        if (!ActivityUtils.isAppSafe(this)) {
             if (AuthManager.getInstance().isWalletDisabled(this)) {
                 AuthManager.getInstance().setWalletDisabled(this);
             }

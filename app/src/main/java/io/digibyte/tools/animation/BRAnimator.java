@@ -35,7 +35,7 @@ import io.digibyte.presenter.fragments.FragmentRequestAmount;
 import io.digibyte.presenter.fragments.FragmentSend;
 import io.digibyte.presenter.fragments.FragmentSignal;
 import io.digibyte.presenter.fragments.FragmentTransactionDetails;
-import io.digibyte.presenter.interfaces.BROnSignalCompletion;
+import io.digibyte.presenter.activities.callbacks.BROnSignalCompletion;
 import io.digibyte.tools.list.items.ListItemTransactionData;
 import io.digibyte.tools.threads.BRExecutor;
 import io.digibyte.tools.util.BRConstants;

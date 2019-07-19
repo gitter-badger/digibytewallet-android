@@ -1,4 +1,4 @@
-package io.digibyte.presenter.activities.util;
+package io.digibyte.presenter.activities.utils;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;

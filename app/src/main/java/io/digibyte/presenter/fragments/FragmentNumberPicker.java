@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import io.digibyte.R;
 import io.digibyte.presenter.activities.models.SendAsset;
 import io.digibyte.presenter.customviews.BRKeyboard;
-import io.digibyte.presenter.interfaces.BRAuthCompletion;
+import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 
 public class FragmentNumberPicker extends FragmentPin implements View.OnClickListener {
 

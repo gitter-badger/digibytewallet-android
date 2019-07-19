@@ -1,9 +1,9 @@
-package io.digibyte.presenter.interfaces;
+package io.digibyte.presenter.activities.callbacks;
 
 /**
  * BreadWallet
  * <p/>
- * Created by Mihail Gutan on <mihail@breadwallet.com> 3/31/17.
+ * Created by Mihail Gutan on <mihail@breadwallet.com> 3/24/17.
  * Copyright (c) 2017 breadwallet LLC
  * <p/>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,6 +24,6 @@ package io.digibyte.presenter.interfaces;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-public interface BROnSignalCompletion {
-    void onComplete();
+public interface BreadPayment {
+
 }

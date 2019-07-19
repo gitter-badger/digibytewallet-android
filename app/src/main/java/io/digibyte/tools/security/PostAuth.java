@@ -15,7 +15,7 @@ import java.util.Arrays;
 import io.digibyte.presenter.activities.PaperKeyActivity;
 import io.digibyte.presenter.activities.PaperKeyProveActivity;
 import io.digibyte.presenter.activities.UpdatePinActivity;
-import io.digibyte.presenter.activities.intro.WriteDownActivity;
+import io.digibyte.presenter.activities.introactivities.WriteDownActivity;
 import io.digibyte.presenter.entities.PaymentItem;
 import io.digibyte.presenter.entities.PaymentRequestWrapper;
 import io.digibyte.tools.manager.BRReportsManager;

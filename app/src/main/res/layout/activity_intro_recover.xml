@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="io.digibyte.presenter.activities.intro.RecoverActivity">
+        tools:context="io.digibyte.presenter.activities.introactivities.RecoverActivity">
 
         <include layout="@layout/toolbar"/>
 

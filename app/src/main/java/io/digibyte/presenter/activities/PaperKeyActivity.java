@@ -20,7 +20,7 @@ import java.util.Locale;
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityPaperKeyBinding;
 import io.digibyte.presenter.activities.callbacks.ActivityPaperKeyCallback;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.presenter.fragments.FragmentPhraseWord;
 import io.digibyte.tools.animation.BRDialog;
 import io.digibyte.tools.manager.BRReportsManager;

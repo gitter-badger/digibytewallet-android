@@ -24,8 +24,8 @@ import io.digibyte.R;
 import io.digibyte.databinding.ActivityPinBinding;
 import io.digibyte.presenter.activities.callbacks.LoginActivityCallback;
 import io.digibyte.presenter.activities.models.PinActivityModel;
-import io.digibyte.presenter.activities.util.ActivityUTILS;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.utils.ActivityUtils;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.presenter.fragments.FragmentFingerprint;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.animation.SpringAnimator;
@@ -95,7 +95,7 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
         updateDots();
 
         inputAllowed = true;
-        ActivityUTILS.enableNFC(this);
+        ActivityUtils.enableNFC(this);
         BRWalletManager.getInstance().init();
         BRWalletManager.getInstance().addBalanceChangedListener(this);
         if (nfcAdapter != null) {
@@ -106,7 +106,7 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
     @Override
     protected void onPause() {
         super.onPause();
-        ActivityUTILS.disableNFC(this);
+        ActivityUtils.disableNFC(this);
         BRWalletManager.getInstance().removeListener(this);
         if (nfcAdapter != null) {
             nfcAdapter.disableForegroundDispatch(this);

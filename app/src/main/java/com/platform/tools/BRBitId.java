@@ -26,7 +26,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import io.digibyte.R;
-import io.digibyte.presenter.interfaces.BRAuthCompletion;
+import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.tools.security.AuthManager;
 import io.digibyte.tools.security.BRKeyStore;
 import io.digibyte.tools.threads.BRExecutor;

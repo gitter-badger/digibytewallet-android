@@ -6,7 +6,7 @@ import android.os.Bundle;
 import io.digibyte.R;
 import io.digibyte.databinding.ActivitySyncBlockchainBinding;
 import io.digibyte.presenter.activities.callbacks.ActivitySyncCallback;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.animation.BRDialog;
 import io.digibyte.wallet.BRWalletManager;

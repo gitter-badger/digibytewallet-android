@@ -22,7 +22,7 @@ import java.util.List;
 
 import io.digibyte.R;
 import io.digibyte.databinding.ActivitySpendLimitBinding;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.tools.manager.FontManager;
 import io.digibyte.tools.security.BRKeyStore;
 import io.digibyte.tools.util.BRCurrency;

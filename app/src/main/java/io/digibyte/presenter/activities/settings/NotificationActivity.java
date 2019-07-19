@@ -5,8 +5,7 @@ import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import io.digibyte.R;
-import io.digibyte.presenter.activities.util.ActivityUTILS;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.tools.manager.BRSharedPrefs;
 
 public class NotificationActivity extends BRActivity {

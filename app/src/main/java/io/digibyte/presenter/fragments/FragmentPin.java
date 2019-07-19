@@ -32,7 +32,7 @@ import io.digibyte.databinding.FragmentBreadPinBinding;
 import io.digibyte.presenter.fragments.interfaces.OnBackPressListener;
 import io.digibyte.presenter.fragments.interfaces.PinFragmentCallback;
 import io.digibyte.presenter.fragments.models.PinFragmentViewModel;
-import io.digibyte.presenter.interfaces.BRAuthCompletion;
+import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.animation.SpringAnimator;
 import io.digibyte.tools.security.AuthManager;

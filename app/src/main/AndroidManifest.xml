@@ -83,7 +83,7 @@
             android:value="108511e9bca59555cc48f2d13514c03dd5ca0035"/>
 
         <activity
-            android:name=".presenter.activities.intro.LauncherActivity"
+            android:name=".presenter.activities.introactivities.LauncherActivity"
             android:label="@string/digi_wallet_name"
             android:noHistory="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
@@ -95,7 +95,7 @@
         </activity>
 
         <activity
-            android:name=".presenter.activities.intro.IntroActivity"
+            android:name=".presenter.activities.introactivities.IntroActivity"
             android:label="@string/digi_wallet_name"
             android:exported="false"
             android:screenOrientation="portrait"/>
@@ -109,7 +109,7 @@
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
-            android:name=".presenter.activities.intro.RecoverActivity"
+            android:name=".presenter.activities.introactivities.RecoverActivity"
             android:exported="false"
             android:screenOrientation="portrait">
         </activity>
@@ -191,7 +191,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".presenter.activities.intro.WriteDownActivity"
+            android:name=".presenter.activities.introactivities.WriteDownActivity"
             android:exported="false"
             android:screenOrientation="portrait">
         </activity>

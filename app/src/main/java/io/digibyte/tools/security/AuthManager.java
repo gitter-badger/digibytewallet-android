@@ -17,10 +17,10 @@ import com.appolica.flubber.Flubber;
 import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.presenter.activities.DisabledActivity;
-import io.digibyte.presenter.activities.util.ActivityUTILS;
+import io.digibyte.presenter.activities.utils.ActivityUtils;
 import io.digibyte.presenter.fragments.FragmentFingerprint;
 import io.digibyte.presenter.fragments.FragmentPin;
-import io.digibyte.presenter.interfaces.BRAuthCompletion;
+import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.tools.animation.BRDialog;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.util.Utils;
@@ -112,7 +112,7 @@ public class AuthManager {
 
     public void setWalletDisabled(Activity app) {
         if (!(app instanceof DisabledActivity)) {
-            ActivityUTILS.showWalletDisabled(app);
+            ActivityUtils.showWalletDisabled(app);
         }
     }
 

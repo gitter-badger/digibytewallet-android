@@ -1,4 +1,4 @@
-package io.digibyte.presenter.interfaces;
+package io.digibyte.presenter.activities.callbacks;
 
 import java.io.Serializable;
 

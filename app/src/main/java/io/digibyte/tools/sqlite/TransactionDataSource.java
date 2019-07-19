@@ -32,7 +32,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 
-import io.digibyte.presenter.activities.util.ActivityUTILS;
+import io.digibyte.presenter.activities.utils.ActivityUtils;
 import io.digibyte.presenter.entities.BRTransactionEntity;
 import io.digibyte.tools.manager.BRReportsManager;
 import io.digibyte.tools.util.BRConstants;
@@ -190,7 +190,7 @@ public class TransactionDataSource implements BRDataSourceInterface {
 
     @Override
     public  SQLiteDatabase openDatabase() {
-        if(ActivityUTILS.isMainThread()) throw new NetworkOnMainThreadException();
+        if (ActivityUtils.isMainThread()) throw new NetworkOnMainThreadException();
 //        if (mOpenCounter.incrementAndGet() == 1) {
         // Opening new database
         if (database == null || !database.isOpen())

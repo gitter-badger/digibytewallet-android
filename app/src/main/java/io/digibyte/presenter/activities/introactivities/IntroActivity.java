@@ -1,5 +1,5 @@
 
-package io.digibyte.presenter.activities.intro;
+package io.digibyte.presenter.activities.introactivities;
 
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
@@ -12,7 +12,7 @@ import io.digibyte.R;
 import io.digibyte.databinding.ActivityIntroBinding;
 import io.digibyte.presenter.activities.UpdatePinActivity;
 import io.digibyte.presenter.activities.callbacks.IntroActivityCallback;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.security.BRKeyStore;
 import io.digibyte.tools.security.SmartValidator;

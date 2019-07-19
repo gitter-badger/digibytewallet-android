@@ -20,7 +20,7 @@ import io.digibyte.databinding.ActivityRecurringPaymentsBinding
 import io.digibyte.presenter.activities.callbacks.ActivityRecurringPaymentCallback
 import io.digibyte.presenter.activities.models.RecurringPayment
 import io.digibyte.presenter.activities.models.RecurringPaymentModel
-import io.digibyte.presenter.activities.util.BRActivity
+import io.digibyte.presenter.activities.base.BRActivity
 import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter
 import io.digibyte.tools.manager.JobsHelper
 import io.digibyte.wallet.BRWalletManager

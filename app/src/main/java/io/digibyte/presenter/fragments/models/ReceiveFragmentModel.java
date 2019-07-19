@@ -8,7 +8,7 @@ import android.text.TextUtils;
 
 import io.digibyte.BR;
 import io.digibyte.R;
-import io.digibyte.presenter.activities.util.ActivityUTILS;
+import io.digibyte.presenter.activities.utils.ActivityUtils;
 
 public class ReceiveFragmentModel extends BaseObservable {
 
@@ -100,7 +100,7 @@ public class ReceiveFragmentModel extends BaseObservable {
             return "";
         }
         return amount.replace(".",
-                Character.toString(ActivityUTILS.getDecimalSeparator())).replace("'", "");
+                Character.toString(ActivityUtils.getDecimalSeparator())).replace("'", "");
     }
 
     @Bindable

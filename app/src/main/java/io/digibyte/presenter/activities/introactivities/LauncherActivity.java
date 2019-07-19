@@ -1,4 +1,4 @@
-package io.digibyte.presenter.activities.intro;
+package io.digibyte.presenter.activities.introactivities;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;

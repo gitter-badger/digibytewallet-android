@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import io.digibyte.R;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.util.BRConstants;
 

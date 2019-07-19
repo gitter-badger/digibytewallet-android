@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.digibyte.R;
-import io.digibyte.presenter.activities.util.ActivityUTILS;
+import io.digibyte.presenter.activities.utils.ActivityUtils;
 import io.digibyte.tools.util.Utils;
 
 
@@ -94,7 +94,7 @@ public class BRKeyboard extends BRRelativeLayout implements View.OnClickListener
         num8 = root.findViewById(R.id.num8);
         num9 = root.findViewById(R.id.num9);
         numDot = root.findViewById(R.id.numDot);
-        numDot.setText(Character.toString(ActivityUTILS.getDecimalSeparator()));
+        numDot.setText(Character.toString(ActivityUtils.getDecimalSeparator()));
         numDelete = root.findViewById(R.id.numDelete);
 
         num0.setOnClickListener(this);

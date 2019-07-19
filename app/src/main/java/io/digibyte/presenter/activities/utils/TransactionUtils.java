@@ -1,10 +1,9 @@
-package io.digibyte.presenter.activities.util;
+package io.digibyte.presenter.activities.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import io.digibyte.presenter.activities.BreadActivity;
 import io.digibyte.presenter.entities.TxItem;
 import io.digibyte.tools.list.items.ListItemTransactionData;
 

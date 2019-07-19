@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import io.digibyte.databinding.FragmentNotificationBinding;
 import io.digibyte.presenter.fragments.interfaces.OnBackPressListener;
 import io.digibyte.presenter.fragments.models.FragmentSignalViewModel;
-import io.digibyte.presenter.interfaces.BROnSignalCompletion;
+import io.digibyte.presenter.activities.callbacks.BROnSignalCompletion;
 import io.digibyte.tools.animation.BRAnimator;
 
 

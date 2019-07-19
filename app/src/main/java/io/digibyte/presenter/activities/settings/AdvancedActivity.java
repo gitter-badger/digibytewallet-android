@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import io.digibyte.R;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.presenter.entities.BRSettingsItem;
 
 import java.util.LinkedList;

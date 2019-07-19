@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import io.digibyte.BR;
 import io.digibyte.DigiByte;
 import io.digibyte.R;
-import io.digibyte.presenter.activities.util.ActivityUTILS;
+import io.digibyte.presenter.activities.utils.ActivityUtils;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.util.BRCurrency;
 import io.digibyte.tools.util.BRExchange;
@@ -119,7 +119,7 @@ public class SendFragmentModel extends BaseObservable implements Parcelable {
     @Bindable
     public String getDisplayAmount() {
         return amountBuilder.toString().replace(".",
-                Character.toString(ActivityUTILS.getDecimalSeparator())).replace("'", "");
+                Character.toString(ActivityUtils.getDecimalSeparator())).replace("'", "");
     }
 
     @Bindable

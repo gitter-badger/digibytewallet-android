@@ -3,7 +3,7 @@ package io.digibyte.presenter.activities.settings;
 import android.os.Bundle;
 
 import io.digibyte.R;
-import io.digibyte.presenter.activities.util.BRActivity;
+import io.digibyte.presenter.activities.base.BRActivity;
 
 public class TestActivity extends BRActivity {
     private static final String TAG = TestActivity.class.getName();

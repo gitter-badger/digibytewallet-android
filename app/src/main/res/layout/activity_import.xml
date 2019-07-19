@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/extra_light_blue_background"
-    tools:context="io.digibyte.presenter.activities.intro.RecoverActivity">
+    tools:context="io.digibyte.presenter.activities.introactivities.RecoverActivity">
 
     <io.digibyte.presenter.customviews.BRButton
         android:id="@+id/scan_button"

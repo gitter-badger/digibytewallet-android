@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:filterTouchesWhenObscured="true"
         android:textDirection="locale"
-        tools:context="io.digibyte.presenter.activities.intro.WriteDownActivity">
+        tools:context="io.digibyte.presenter.activities.introactivities.WriteDownActivity">
 
         <include layout="@layout/toolbar"/>
 

@@ -38,7 +38,7 @@ import io.digibyte.databinding.FingerprintDialogContainerBinding;
 import io.digibyte.presenter.fragments.interfaces.FingerprintFragmentCallback;
 import io.digibyte.presenter.fragments.interfaces.OnBackPressListener;
 import io.digibyte.presenter.fragments.models.FingerprintFragmentViewModel;
-import io.digibyte.presenter.interfaces.BRAuthCompletion;
+import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.security.AuthManager;
 import io.digibyte.tools.security.FingerprintUiHelper;

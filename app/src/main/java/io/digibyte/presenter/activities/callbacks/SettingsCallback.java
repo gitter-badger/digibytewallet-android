@@ -1,4 +1,4 @@
-package io.digibyte.presenter.activities;
+package io.digibyte.presenter.activities.callbacks;
 
 public interface SettingsCallback {
 
