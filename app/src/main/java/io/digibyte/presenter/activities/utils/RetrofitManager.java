@@ -150,6 +150,8 @@ public class RetrofitManager {
 
     public interface MetaCallback {
         void metaRetrieved(MetaModel metalModel);
+
+        void failure();
     }
 
     public void getAssetMeta(String assetid, String utxotdid, String index,
@@ -164,6 +166,7 @@ public class RetrofitManager {
 
             @Override
             public void onFailure(@NonNull Call<MetaModel> call, @NonNull Throwable t) {
+                handler.post(metaCallback::failure);
             }
         });
     }

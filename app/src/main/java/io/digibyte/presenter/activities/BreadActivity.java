@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,6 +59,7 @@ import io.digibyte.databinding.ActivityBreadBinding;
 import io.digibyte.presenter.activities.adapters.TxAdapter;
 import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.AssetModel;
+import io.digibyte.presenter.activities.models.MetaModel;
 import io.digibyte.presenter.activities.models.SendAsset;
 import io.digibyte.presenter.activities.models.SendAssetResponse;
 import io.digibyte.presenter.activities.settings.SecurityCenterActivity;
@@ -356,24 +358,35 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 if (forceAssetMeta) {
                     RetrofitManager.instance.clearMetaCache(asset.assetId);
                 }
-                RetrofitManager.instance.getAssetMeta(asset.assetId,
-                        asset.txid, String.valueOf(asset.getIndex()), metalModel -> {
-                    if (asset.txid.equals(listItemTransactionData.transactionItem.txReversed)) {
-                        Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
-                                listItemTransactionData);
-                        if (BRWalletManager.addressContainedInWallet(address)) {
-                            AssetModel assetModel = new AssetModel(asset, metalModel);
-                            if (!assetAdapter.containsItem(assetModel) || !assetModel.isAggregable()) {
-                                assetAdapter.addItem(assetModel);
-                            } else {
-                                AssetModel existingAssetModel =
-                                        (AssetModel) assetAdapter.getItem(assetModel);
-                                existingAssetModel.addAsset(asset);
+                RetrofitManager.instance.getAssetMeta(
+                        asset.assetId,
+                        asset.txid,
+                        String.valueOf(asset.getIndex()),
+                        new RetrofitManager.MetaCallback() {
+                            @Override
+                            public void metaRetrieved(MetaModel metalModel) {
+                                if (asset.txid.equals(listItemTransactionData.transactionItem.txReversed)) {
+                                    Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
+                                            listItemTransactionData);
+                                    if (BRWalletManager.addressContainedInWallet(address)) {
+                                        AssetModel assetModel = new AssetModel(asset, metalModel);
+                                        if (!assetAdapter.containsItem(assetModel) || !assetModel.isAggregable()) {
+                                            assetAdapter.addItem(assetModel);
+                                        } else {
+                                            AssetModel existingAssetModel =
+                                                    (AssetModel) assetAdapter.getItem(assetModel);
+                                            existingAssetModel.addAsset(asset);
+                                        }
+                                        sortAssets();
+                                    }
+                                }
                             }
-                            sortAssets();
-                        }
-                    }
-                });
+
+                            @Override
+                            public void failure() {
+                                Toast.makeText(BreadActivity.this, R.string.failure_asset_meta, Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
     }
