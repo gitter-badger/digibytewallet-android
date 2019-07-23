@@ -30,8 +30,8 @@ android {
         applicationId = 'io.digibyte'
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 2407
-        versionName "2.0.9b2407"
+        versionCode 2500
+        versionName "3.0.0.0"
         multiDexEnabled true
     }
 
