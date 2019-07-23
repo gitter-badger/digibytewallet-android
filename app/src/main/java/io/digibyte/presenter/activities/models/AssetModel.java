@@ -228,11 +228,19 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                             assets.get(0).assetId,
                             assets.get(0).txid,
                             String.valueOf(assets.get(0).getIndex()),
-                            metaModel -> {
-                                AssetModel.this.metaModel = metaModel;
-                                notifyPropertyChanged(BR.totalSupply);
-                                notifyPropertyChanged(BR.numberOfHolders);
-                                notifyPropertyChanged(BR.uTXOCount);
+                            new RetrofitManager.MetaCallback() {
+                                @Override
+                                public void metaRetrieved(MetaModel metalModel) {
+                                    AssetModel.this.metaModel = metaModel;
+                                    notifyPropertyChanged(BR.totalSupply);
+                                    notifyPropertyChanged(BR.numberOfHolders);
+                                    notifyPropertyChanged(BR.uTXOCount);
+                                }
+
+                                @Override
+                                public void failure() {
+                                    Toast.makeText(DigiByte.getContext(), R.string.failure_asset_meta, Toast.LENGTH_SHORT).show();
+                                }
                             });
                     break;
             }
