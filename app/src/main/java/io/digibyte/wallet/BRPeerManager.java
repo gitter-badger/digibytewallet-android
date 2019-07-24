@@ -228,7 +228,7 @@ public class BRPeerManager {
 
     //0 = disconnected, 1 = connecting, 2 = connected, -1 = _peerManager is null, -2 = something
     // went wrong.
-    public native int connectionStatus();
+    public static native int connectionStatus();
 
     public native void peerManagerFreeEverything();
 

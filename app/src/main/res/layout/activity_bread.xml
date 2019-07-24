@@ -134,6 +134,18 @@
 
                     </LinearLayout>
 
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:layout_marginTop="12dp"
+                        android:id="@+id/node_connection_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:hardwareAccelerated="true"
+                        app:lottie_autoPlay="false"
+                        app:lottie_enableMergePathsForKitKatAndAbove="true"
+                        app:lottie_fileName="node_connection.json"
+                        app:lottie_loop="true" />
+
                     <io.digibyte.presenter.customviews.BRTabLayout
                         android:id="@+id/tab_layout"
                         style="@style/MyCustomTabLayout"

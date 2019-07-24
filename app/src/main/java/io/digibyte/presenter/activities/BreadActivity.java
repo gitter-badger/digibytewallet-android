@@ -132,6 +132,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bindings = DataBindingUtil.setContentView(this, R.layout.activity_bread);
+        bindings.nodeConnectionStatus.setFrame(150);
         bindings.assetRefresh.setOnRefreshListener(this);
         bindings.digiSymbolBackground.
                 setBackground(AppCompatResources.getDrawable(DigiByte.getContext(),
@@ -168,6 +169,30 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             }
         });
     }
+
+    private Runnable nodeConnectionCheck = new Runnable() {
+        @Override
+        public void run() {
+            int connectionStatus = BRPeerManager.connectionStatus();
+            switch (connectionStatus) {
+                case 0:
+                case 1:
+                case -2:
+                    if (bindings.nodeConnectionStatus.isAnimating()) {
+                        bindings.nodeConnectionStatus.pauseAnimation();
+                        bindings.nodeConnectionStatus.setFrame(150);
+                    }
+                    break;
+                case 2:
+                    if (!bindings.nodeConnectionStatus.isAnimating()) {
+                        bindings.nodeConnectionStatus.setMaxFrame(90);
+                        bindings.nodeConnectionStatus.playAnimation();
+                    }
+                    break;
+            }
+            handler.postDelayed(nodeConnectionCheck, 1000);
+        }
+    };
 
     private Runnable showSyncButtonRunnable = new Runnable() {
         @Override
@@ -558,6 +583,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         TxManager.getInstance().updateTxList();
         BRApiManager.getInstance().asyncUpdateCurrencyData(this);
         SyncManager.getInstance().startSyncingProgressThread();
+        handler.postDelayed(nodeConnectionCheck, 1000);
     }
 
     @Override
@@ -569,6 +595,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         TxManager.getInstance().removeListener(this);
         SyncManager.getInstance().removeListener(this);
         SyncManager.getInstance().stopSyncingProgressThread();
+        handler.removeCallbacks(nodeConnectionCheck);
     }
 
     @Override
