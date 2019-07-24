@@ -174,19 +174,19 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         public void run() {
             int connectionStatus = BRPeerManager.connectionStatus();
             switch (connectionStatus) {
-                case 0:
                 case 1:
-                case -2:
-                    if (bindings.nodeConnectionStatus.isAnimating()) {
-                        bindings.nodeConnectionStatus.pauseAnimation();
-                        bindings.nodeConnectionStatus.setFrame(150);
-                    }
-                    break;
-                case 2:
                     if (!bindings.nodeConnectionStatus.isAnimating()) {
                         bindings.nodeConnectionStatus.setMaxFrame(90);
                         bindings.nodeConnectionStatus.playAnimation();
                     }
+                    break;
+                case 2:
+                    bindings.nodeConnectionStatus.cancelAnimation();
+                    bindings.nodeConnectionStatus.setFrame(50);
+                    break;
+                default:
+                    bindings.nodeConnectionStatus.cancelAnimation();
+                    bindings.nodeConnectionStatus.setFrame(150);
                     break;
             }
             handler.postDelayed(nodeConnectionCheck, 1000);
