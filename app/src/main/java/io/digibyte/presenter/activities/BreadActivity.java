@@ -19,6 +19,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -160,6 +161,12 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         assetAdapter = new MultiTypeDataBoundAdapter(null, (Object[]) null);
         assetRecycler.setLayoutManager(new LinearLayoutManager(this));
         assetRecycler.setAdapter(assetAdapter);
+        bindings.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                bindings.assetRefresh.post(() -> bindings.assetRefresh.setRefreshing(false));
+            }
+        });
     }
 
     private Runnable showSyncButtonRunnable = new Runnable() {
@@ -208,14 +215,16 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
     @Override
     public void onSyncFailed() {
-        CoordinatorLayout.LayoutParams coordinatorLayoutParams =
+        //Do not clear visual sync state when sync fails
+        //Gives the wrong impression that sync is complete
+        /*CoordinatorLayout.LayoutParams coordinatorLayoutParams =
                 (CoordinatorLayout.LayoutParams) bindings.contentContainer.getLayoutParams();
         coordinatorLayoutParams.setBehavior(new AppBarLayout.ScrollingViewBehavior());
         handler.removeCallbacks(showSyncButtonRunnable);
         bindings.syncButton.setVisibility(View.GONE);
         bindings.syncContainer.setVisibility(View.GONE);
         bindings.toolbarLayout.setVisibility(View.VISIBLE);
-        bindings.animationView.cancelAnimation();
+        bindings.animationView.cancelAnimation();*/
     }
 
     private void updateSyncText() {
