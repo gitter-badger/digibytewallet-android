@@ -132,7 +132,6 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bindings = DataBindingUtil.setContentView(this, R.layout.activity_bread);
-        bindings.nodeConnectionStatus.setFrame(150);
         bindings.assetRefresh.setOnRefreshListener(this);
         bindings.digiSymbolBackground.
                 setBackground(AppCompatResources.getDrawable(DigiByte.getContext(),
@@ -584,6 +583,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         BRApiManager.getInstance().asyncUpdateCurrencyData(this);
         SyncManager.getInstance().startSyncingProgressThread();
         handler.postDelayed(nodeConnectionCheck, 1000);
+        bindings.nodeConnectionStatus.setFrame(150);
     }
 
     @Override
