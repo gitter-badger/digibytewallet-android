@@ -16,6 +16,7 @@ import android.view.View;
 import com.crashlytics.android.Crashlytics;
 
 import java.math.BigDecimal;
+import java.util.UnknownFormatConversionException;
 
 import io.digibyte.DigiByte;
 import io.digibyte.R;
@@ -87,7 +88,12 @@ public class FingerprintActivity extends BRActivity {
         try {
             String iso = BRSharedPrefs.getIso(this);
             //amount in satoshis
-            BigDecimal digibyte = new BigDecimal(BRKeyStore.getSpendLimit(this));
+            BigDecimal digibyte;
+            try {
+                digibyte = new BigDecimal(BRKeyStore.getSpendLimit(this));
+            } catch (UnknownFormatConversionException e) {
+                digibyte = BigDecimal.ZERO;
+            }
             if (digibyte.equals(BigDecimal.ZERO)) {
                 return String.format(getString(R.string.TouchIdSettings_spendingLimit),
                         BRCurrency.getFormattedCurrencyString(this, "DGB", digibyte),

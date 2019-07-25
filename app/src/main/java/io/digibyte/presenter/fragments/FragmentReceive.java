@@ -107,13 +107,17 @@ public class FragmentReceive extends Fragment implements OnBackPressListener {
             if (onShareExternal()) {
                 return;
             }
-            String url = String.format(
-                    getString(R.string.coin_request),
-                    address,
-                    Float.valueOf(receiveFragmentModel.getAmount().replaceAll(",", "."))
-            );
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(browserIntent);
+            try {
+                String url = String.format(
+                        getString(R.string.coin_request),
+                        address,
+                        Float.valueOf(receiveFragmentModel.getAmount().replaceAll(",", "."))
+                );
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
