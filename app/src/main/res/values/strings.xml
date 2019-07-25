@@ -391,4 +391,7 @@
   <string name="amount_hidden">%s ******</string>
   <string name="failure_asset_meta">Failed to retrieve asset info</string>
   <string name="no_assets_yet">No Assets Yet</string>
+  <string name="node_connecting">Node Connecting</string>
+  <string name="node_connected">Node Connected</string>
+  <string name="node_disconnected">Node Disconnected</string>
 </resources>

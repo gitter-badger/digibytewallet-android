@@ -531,6 +531,22 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 SyncBlockchainActivity.class));
     }
 
+    @OnClick(R.id.node_connection_status)
+    void onNodeConnectionStatusClick(View view) {
+        int connectionStatus = BRPeerManager.connectionStatus();
+        switch (connectionStatus) {
+            case 1:
+                Toast.makeText(this, R.string.node_connecting, Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                Toast.makeText(this, R.string.node_connected, Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Toast.makeText(this, R.string.node_disconnected, Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
     private void notifyDataSetChangeForAll() {
         adapter.getAllAdapter().notifyDataSetChanged();
         adapter.getSentAdapter().notifyDataSetChanged();

@@ -110,7 +110,7 @@ public class FragmentReceive extends Fragment implements OnBackPressListener {
             String url = String.format(
                     getString(R.string.coin_request),
                     address,
-                    Float.valueOf(receiveFragmentModel.getAmount())
+                    Float.valueOf(receiveFragmentModel.getAmount().replaceAll(",", "."))
             );
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(browserIntent);
