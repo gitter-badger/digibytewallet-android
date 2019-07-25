@@ -410,6 +410,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                                                     (AssetModel) assetAdapter.getItem(assetModel);
                                             existingAssetModel.addAsset(asset);
                                         }
+                                        bindings.noAssetsSwitcher.setDisplayedChild(1);
                                         sortAssets();
                                     }
                                 }

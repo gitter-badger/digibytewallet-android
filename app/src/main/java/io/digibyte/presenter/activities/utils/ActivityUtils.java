@@ -61,6 +61,10 @@ public class ActivityUtils {
 
     private static final String TAG = ActivityUtils.class.getName();
     private static Handler handler = new Handler(Looper.getMainLooper());
+    private static DecimalFormat currencyFormat = (DecimalFormat) DecimalFormat.getCurrencyInstance(Locale.getDefault());
+    ;
+    private static DecimalFormatSymbols decimalFormatSymbols = currencyFormat.getDecimalFormatSymbols();
+
 
     //return true if the app does need to show the disabled wallet screen
     public static boolean isAppSafe(Activity app) {
@@ -72,7 +76,6 @@ public class ActivityUtils {
         app.startActivity(intent);
         app.overridePendingTransition(R.anim.fade_up, R.anim.fade_down);
         Log.e(TAG, "showWalletDisabled: " + app.getClass().getName());
-
     }
 
     public static boolean isMainThread() {
@@ -87,7 +90,8 @@ public class ActivityUtils {
             TextView secondary) {
         if (!BRSharedPrefs.getBalanceVisibility(context)) {
             primary.setText(String.format(context.getString(R.string.amount_hidden), BRExchange.getBitcoinSymbol(context)));
-            secondary.setText(String.format(context.getString(R.string.amount_hidden), Currency.getInstance(Locale.getDefault()).getSymbol()));
+            decimalFormatSymbols.setCurrencySymbol(Currency.getInstance(BRSharedPrefs.getIso(context)).getSymbol());
+            secondary.setText(String.format(context.getString(R.string.amount_hidden), decimalFormatSymbols.getCurrencySymbol()));
             return;
         }
         BRExecutor.getInstance().forLightWeightBackgroundTasks().execute(() -> {

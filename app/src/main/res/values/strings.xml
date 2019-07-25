@@ -390,4 +390,5 @@
   <string name="show_hide_balance">Show hide balance</string>
   <string name="amount_hidden">%s ******</string>
   <string name="failure_asset_meta">Failed to retrieve asset info</string>
+  <string name="no_assets_yet">No Assets Yet</string>
 </resources>
