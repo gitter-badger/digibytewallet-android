@@ -229,4 +229,9 @@ public class FragmentRequestAmount extends FragmentReceive implements OnBackPres
             fadeOutRemove(false);
         }
     }
+
+    @Override
+    public boolean hideShareExternal() {
+        return false;
+    }
 }

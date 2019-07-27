@@ -385,7 +385,7 @@
   <string name="recurring_payment_label">Label:</string>
   <string name="dandelion_on">Dandelion: On</string>
   <string name="dandelion_off">Dandelion: Off</string>
-  <string name="coin_request">https://coinrequest.io/create?coin=digibyte&amp;address=%s&amp;amount=%f</string>
+  <string name="coin_request">https://coinrequest.io/create?coin=digibyte&amp;address=%s&amp;amount=%s</string>
   <string name="not_enough_digi">Not enough DigiByte available to send assets</string>
   <string name="show_hide_balance">Show hide balance</string>
   <string name="amount_hidden">%s ******</string>
@@ -394,4 +394,5 @@
   <string name="node_connecting">Node Connecting</string>
   <string name="node_connected">Node Connected</string>
   <string name="node_disconnected">Node Disconnected</string>
+  <string name="enter_an_amount">Enter an Amount</string>
 </resources>

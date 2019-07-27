@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,15 +109,18 @@ public class FragmentReceive extends Fragment implements OnBackPressListener {
             if (onShareExternal()) {
                 return;
             }
+            if (TextUtils.isEmpty(receiveFragmentModel.getAmount())) {
+                Toast.makeText(getContext(), R.string.enter_an_amount, Toast.LENGTH_SHORT).show();
+                return;
+            }
             try {
                 String url = String.format(
                         getString(R.string.coin_request),
-                        address,
-                        Float.valueOf(receiveFragmentModel.getAmount().replaceAll(",", "."))
+                        address, receiveFragmentModel.getAmount().replaceAll(",", ".")
                 );
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(browserIntent);
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -189,6 +194,10 @@ public class FragmentReceive extends Fragment implements OnBackPressListener {
         return false;
     }
 
+    protected boolean hideShareExternal() {
+        return true;
+    }
+
     public static void show(AppCompatActivity activity, boolean isReceive) {
         FragmentReceive fragmentReceive = new FragmentReceive();
         Bundle bundle = new Bundle();
@@ -213,6 +222,9 @@ public class FragmentReceive extends Fragment implements OnBackPressListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentReceiveBinding = FragmentReceiveBinding.inflate(inflater);
+        if (hideShareExternal()) {
+            fragmentReceiveBinding.shareExternal.setVisibility(View.GONE);
+        }
         fragmentReceiveBinding.setCallback(callbacks);
         fragmentReceiveBinding.setData(receiveFragmentModel);
         fragmentReceiveBinding.addressText.setSelected(true);
