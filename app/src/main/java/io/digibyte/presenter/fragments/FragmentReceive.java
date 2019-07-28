@@ -109,20 +109,6 @@ public class FragmentReceive extends Fragment implements OnBackPressListener {
             if (onShareExternal()) {
                 return;
             }
-            if (TextUtils.isEmpty(receiveFragmentModel.getAmount())) {
-                Toast.makeText(getContext(), R.string.enter_an_amount, Toast.LENGTH_SHORT).show();
-                return;
-            }
-            try {
-                String url = String.format(
-                        getString(R.string.coin_request),
-                        address, receiveFragmentModel.getAmount().replaceAll(",", ".")
-                );
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browserIntent);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
 
         @Override

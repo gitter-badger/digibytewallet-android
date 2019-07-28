@@ -1,9 +1,12 @@
 package io.digibyte.presenter.fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,14 +93,7 @@ public class FragmentRequestAmount extends FragmentReceive implements OnBackPres
             QRUtils.generateQR(getActivity(), qrUrl,
                     fragmentReceiveBinding.qrImage);
         } else {
-            BigDecimal bigAmount = new BigDecimal(
-                    (Utils.isNullOrEmpty(amountBuilder.toString())
-                            || amountBuilder.toString().equalsIgnoreCase(".")) ? "0"
-                            : amountBuilder.toString());
-            long amount = BRExchange.getSatoshisFromAmount(getActivity(), selectedIso,
-                    bigAmount).longValue();
-            String am = new BigDecimal(amount).divide(new BigDecimal(100000000)).toPlainString();
-            qrUrl = "digibyte:" + address + "?amount=" + am;
+            qrUrl = "digibyte:" + address + "?amount=" + getFiatAmount();
             QRUtils.generateQR(getActivity(), qrUrl,
                     fragmentReceiveBinding.qrImage);
         }
@@ -127,15 +123,12 @@ public class FragmentRequestAmount extends FragmentReceive implements OnBackPres
 
     @Override
     protected boolean onShareEmail() {
+        if (amountBuilder.length() == 0) {
+            Toast.makeText(getContext(), R.string.enter_an_amount, Toast.LENGTH_SHORT).show();
+            return true;
+        }
         showKeyboard(false);
-        BigDecimal bigAmount = new BigDecimal(
-                (Utils.isNullOrEmpty(amountBuilder.toString())
-                        || amountBuilder.toString().equalsIgnoreCase(".")) ? "0"
-                        : amountBuilder.toString());
-        long amount = BRExchange.getSatoshisFromAmount(getActivity(), selectedIso,
-                bigAmount).longValue();
-        String bitcoinUri = Utils.createBitcoinUrl(address, amount, null, null,
-                null);
+        String bitcoinUri = Utils.createBitcoinUrl(address, Long.valueOf(getAmountForIso()), null, null, null);
         Uri qrImageUri = QRUtils.getQRImageUri(getContext(), bitcoinUri);
         QRUtils.share("mailto:", getActivity(), qrImageUri, null, null);
         return true;
@@ -143,16 +136,45 @@ public class FragmentRequestAmount extends FragmentReceive implements OnBackPres
 
     @Override
     protected boolean onShareSMS() {
+        if (amountBuilder.length() == 0) {
+            Toast.makeText(getContext(), R.string.enter_an_amount, Toast.LENGTH_SHORT).show();
+            return true;
+        }
         showKeyboard(false);
-        QRUtils.share("sms:", getActivity(), null, address, amountBuilder.toString());
+        QRUtils.share("sms:", getActivity(), null, address, getAmountForIso());
         return true;
     }
 
     @Override
     protected boolean onShareCopy() {
-        BRClipboardManager.putClipboard(getContext(),
-                String.format(getString(R.string.digi_share), address, amountBuilder.toString()));
+        if (amountBuilder.length() == 0) {
+            Toast.makeText(getContext(), R.string.enter_an_amount, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        showKeyboard(false);
+        BRClipboardManager.putClipboard(getContext(), String.format(getString(R.string.digi_share), address, getAmountForIso()));
         Toast.makeText(getContext(), R.string.Receive_copied, Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    @Override
+    protected boolean onShareExternal() {
+        if (amountBuilder.length() == 0) {
+            Toast.makeText(getContext(), R.string.enter_an_amount, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        showKeyboard(false);
+        try {
+            String url = String.format(
+                    getString(R.string.coin_request),
+                    address, getAmountForIso().replaceAll(",", ".")
+            );
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
+        } catch (Exception e) {
+            //Lazy, I know
+            e.printStackTrace();
+        }
         return true;
     }
 
@@ -178,8 +200,7 @@ public class FragmentRequestAmount extends FragmentReceive implements OnBackPres
                 <= BRExchange.getMaxAmount(getActivity(), iso).doubleValue()) {
             //do not insert 0 if the balance is 0 now
             if (currAmount.equalsIgnoreCase("0")) amountBuilder = new StringBuilder("");
-            if ((currAmount.contains(".") && (currAmount.length() - currAmount.indexOf(".")
-                    > BRCurrency.getMaxDecimalPlaces(iso)))) {
+            if ((currAmount.contains(".") && (currAmount.length() - currAmount.indexOf(".") > BRCurrency.getMaxDecimalPlaces(iso)))) {
                 return;
             }
             amountBuilder.append(dig);
@@ -233,5 +254,19 @@ public class FragmentRequestAmount extends FragmentReceive implements OnBackPres
     @Override
     public boolean hideShareExternal() {
         return false;
+    }
+
+    private String getAmountForIso() {
+        return selectedIso.equalsIgnoreCase("dgb") ? amountBuilder.toString() : getFiatAmount();
+    }
+
+    private String safeGetAmount() {
+        return (Utils.isNullOrEmpty(amountBuilder.toString()) || amountBuilder.toString().equalsIgnoreCase(".")) ? "0" : amountBuilder.toString();
+    }
+
+    private String getFiatAmount() {
+        BigDecimal bigAmount = new BigDecimal(safeGetAmount());
+        long amount = BRExchange.getSatoshisFromAmount(getActivity(), selectedIso, bigAmount).longValue();
+        return new BigDecimal(amount).divide(new BigDecimal(100000000), BigDecimal.ROUND_DOWN).toPlainString();
     }
 }
