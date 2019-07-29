@@ -15,6 +15,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.security.SecureRandom;
 import java.util.Locale;
 import java.util.Random;
 
@@ -34,8 +35,10 @@ import io.digibyte.tools.util.Utils;
 
 public class PaperKeyProveActivity extends BRActivity implements TextView.OnEditorActionListener {
     private static final String CLEAN_PHRASE = "PaperKeyProveActivity:CleanPhrase";
-    private SparseArray<String> sparseArrayWords = new SparseArray<>();
     private ActivityPaperKeyProveBinding binding;
+    private String[] wordArray;
+    private int firstIndex;
+    private int secondIndex;
 
     private ActivityPaperKeyProveCallback callback = new ActivityPaperKeyProveCallback() {
         @Override
@@ -89,7 +92,7 @@ public class PaperKeyProveActivity extends BRActivity implements TextView.OnEdit
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
         String cleanPhrase = getCleanPhrase();
-        String wordArray[] = cleanPhrase.split(" ");
+        wordArray = cleanPhrase.split(" ");
         if (wordArray.length == 12 && cleanPhrase.charAt(cleanPhrase.length() - 1) == '\0') {
             BRDialog.showCustomDialog(this, getString(R.string.JailbreakWarnings_title),
                     getString(R.string.Alert_keystore_generic_android),
@@ -103,11 +106,11 @@ public class PaperKeyProveActivity extends BRActivity implements TextView.OnEdit
         new Handler().postDelayed(() -> {
             binding.wordContainerFirst.setHint(
                     String.format(Locale.getDefault(), getString(R.string.ConfirmPaperPhrase_word),
-                            (sparseArrayWords.keyAt(0) + 1)));
+                            (firstIndex)));
             binding.wordContainerFirst.bringToFront();
             binding.wordContainerSecond.setHint(
                     String.format(Locale.getDefault(), getString(R.string.ConfirmPaperPhrase_word),
-                            (sparseArrayWords.keyAt(1) + 1)));
+                            (secondIndex)));
             binding.wordContainerSecond.bringToFront();
         }, 10);
     }
@@ -116,13 +119,14 @@ public class PaperKeyProveActivity extends BRActivity implements TextView.OnEdit
         return getIntent().getStringExtra(CLEAN_PHRASE);
     }
     private void randomWordsSetUp(String[] words) {
-        final Random random = new Random();
-        int n = random.nextInt(10) + 1;
-        sparseArrayWords.append(n, words[n]);
-        while (sparseArrayWords.get(n) != null) {
-            n = random.nextInt(10) + 1;
+        final Random random = new SecureRandom();
+        //Get first and second indexes
+        firstIndex = random.nextInt(10) + 1;
+        secondIndex = random.nextInt(10) + 1;
+        //If the second index is the same as the first, find another
+        while (secondIndex == firstIndex) {
+            secondIndex = random.nextInt(10) + 1;
         }
-        sparseArrayWords.append(n, words[n]);
     }
 
     @Override
@@ -167,11 +171,11 @@ public class PaperKeyProveActivity extends BRActivity implements TextView.OnEdit
         if (first) {
             String edit = Bip39Reader.cleanWord(binding.wordEdittextFirst.getText().toString());
             return SmartValidator.isWordValid(PaperKeyProveActivity.this, edit)
-                    && edit.equalsIgnoreCase(sparseArrayWords.get(sparseArrayWords.keyAt(0)));
+                    && edit.equalsIgnoreCase(wordArray[firstIndex - 1]);
         } else {
             String edit = Bip39Reader.cleanWord(binding.wordEdittextSecond.getText().toString());
             return SmartValidator.isWordValid(PaperKeyProveActivity.this, edit)
-                    && edit.equalsIgnoreCase(sparseArrayWords.get(sparseArrayWords.keyAt(1)));
+                    && edit.equalsIgnoreCase(wordArray[secondIndex - 1]);
         }
     }
 }

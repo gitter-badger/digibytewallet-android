@@ -86,7 +86,7 @@
             android:name=".presenter.activities.introactivities.LauncherActivity"
             android:label="@string/digi_wallet_name"
             android:noHistory="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            android:theme="@style/Theme.AppCompat.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

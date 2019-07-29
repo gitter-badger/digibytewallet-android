@@ -170,8 +170,12 @@ public class ActivityUtils {
                 context.getString(R.string.JailbreakWarnings_messageWithoutBalance),
                 context.getString(R.string.JailbreakWarnings_close), null,
                 null, null, brDialogView -> {
-                    if (context != null) {
+                    try {
+                        //TaskRecord com.android.server.am.ActivityRecord.task' on a null object reference
+                        //io.digibyte.presenter.activities.utils.ActivityUtils.lambda$showJailbrokenDialog$4
                         context.finishAffinity();
+                    } catch (NullPointerException e) {
+                        context.finish();
                     }
                 }, 0);
     }
