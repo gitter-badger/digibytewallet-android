@@ -26,6 +26,7 @@ import androidx.databinding.BindingAdapter;
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -147,15 +148,18 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
 
     @Bindable
     public String getAssetQuantity() {
-        double quantity = 0;
+        BigDecimal quantity = BigDecimal.ZERO;
         for (AddressInfo.Asset asset : assets) {
             if (asset.getDivisibility() == 0) {
-                quantity += asset.getAmount();
+                quantity = quantity.add(new BigDecimal(asset.getAmount()));
             } else {
-                quantity += (double) asset.getAmount() / (Math.pow(10, asset.getDivisibility()));
+                quantity = quantity.add(new BigDecimal((double) asset.getAmount() / (Math.pow(10, asset.getDivisibility()))));
             }
         }
-        return String.valueOf(quantity);
+        if (quantity.scale() > 0) {
+            quantity = quantity.setScale(10, BigDecimal.ROUND_DOWN);
+        }
+        return quantity.toPlainString();
     }
 
     private int getAssetQuantityInt() {
