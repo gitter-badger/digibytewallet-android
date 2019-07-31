@@ -161,7 +161,11 @@ public class RetrofitManager {
         call.enqueue(new Callback<MetaModel>() {
             @Override
             public void onResponse(@NonNull Call<MetaModel> call, @NonNull Response<MetaModel> response) {
-                handler.post(() -> metaCallback.metaRetrieved(response.body()));
+                if (response.body() != null) {
+                    handler.post(() -> metaCallback.metaRetrieved(response.body()));
+                } else {
+                    handler.post(metaCallback::failure);
+                }
             }
 
             @Override

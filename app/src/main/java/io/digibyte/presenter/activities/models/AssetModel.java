@@ -23,6 +23,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
@@ -316,7 +317,11 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     handler.post(() -> imageView.setImageDrawable(defaultImage));
                 }
             } else if (imageData.url.contains("http")) {
-                handler.post(() -> Picasso.get().load(imageData.url).into(imageView));
+                if (imageData.url.endsWith(".gif")) {
+                    handler.post(() -> Glide.with(DigiByte.getContext()).load(imageData.url).into(imageView));
+                } else {
+                    handler.post(() -> Picasso.get().load(imageData.url).into(imageView));
+                }
             } else {
                 Drawable defaultImage = imageView.getContext().getResources().getDrawable(R.drawable.ic_assets);
                 handler.post(() -> imageView.setImageDrawable(defaultImage));
