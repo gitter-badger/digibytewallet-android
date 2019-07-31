@@ -141,7 +141,7 @@ https://github.com/Racecraft/digibytewallet-android</string>
   <!-- Confirm paper phrase view label. -->
   <string name="ConfirmPaperPhrase.label">للتأكد من تدوين كل شيء بشكل صحيح ، يرجى إدخال الكلمات التالية من مفتاحك الشخصي.</string>
   <!-- Word label eg. Word #1, Word #2 -->
-  <string name="ConfirmPaperPhrase.word">الكلمة # %1$@</string>
+    <string name="ConfirmPaperPhrase.word">الكلمة # %s</string>
   <string name="current_amount">القيمة الحالية: %s</string>
   <string name="date">تاريخ</string>
   <!-- Bitcoin denomination picker label -->
