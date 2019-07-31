@@ -159,6 +159,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         if (quantity.scale() > 0) {
             quantity = quantity.setScale(10, BigDecimal.ROUND_DOWN);
         }
+        quantity = quantity.stripTrailingZeros();
         return quantity.toPlainString();
     }
 
