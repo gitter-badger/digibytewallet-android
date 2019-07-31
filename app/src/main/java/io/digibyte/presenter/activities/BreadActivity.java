@@ -172,24 +172,28 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     private Runnable nodeConnectionCheck = new Runnable() {
         @Override
         public void run() {
-            int connectionStatus = BRPeerManager.connectionStatus();
-            switch (connectionStatus) {
-                case 1:
-                    if (!bindings.nodeConnectionStatus.isAnimating()) {
-                        bindings.nodeConnectionStatus.setMaxFrame(90);
-                        bindings.nodeConnectionStatus.playAnimation();
+            txDataExecutor.execute(() -> {
+                int connectionStatus = BRPeerManager.connectionStatus();
+                handler.post(() -> {
+                    switch (connectionStatus) {
+                        case 1:
+                            if (!bindings.nodeConnectionStatus.isAnimating()) {
+                                bindings.nodeConnectionStatus.setMaxFrame(90);
+                                bindings.nodeConnectionStatus.playAnimation();
+                            }
+                            break;
+                        case 2:
+                            bindings.nodeConnectionStatus.cancelAnimation();
+                            bindings.nodeConnectionStatus.setFrame(50);
+                            break;
+                        default:
+                            bindings.nodeConnectionStatus.cancelAnimation();
+                            bindings.nodeConnectionStatus.setFrame(150);
+                            break;
                     }
-                    break;
-                case 2:
-                    bindings.nodeConnectionStatus.cancelAnimation();
-                    bindings.nodeConnectionStatus.setFrame(50);
-                    break;
-                default:
-                    bindings.nodeConnectionStatus.cancelAnimation();
-                    bindings.nodeConnectionStatus.setFrame(150);
-                    break;
-            }
-            handler.postDelayed(nodeConnectionCheck, 1000);
+                    handler.postDelayed(nodeConnectionCheck, 1000);
+                });
+            });
         }
     };
 

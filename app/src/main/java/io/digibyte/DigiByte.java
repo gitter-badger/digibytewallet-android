@@ -19,6 +19,8 @@ import com.orm.SugarApp;
 import com.orm.SugarContext;
 import com.orm.SugarDb;
 
+import java.util.concurrent.Executors;
+
 import io.digibyte.presenter.activities.DisabledActivity;
 import io.digibyte.presenter.activities.LoginActivity;
 import io.digibyte.tools.animation.BRAnimator;
@@ -105,12 +107,14 @@ public class DigiByte extends SugarApp implements
             editor.apply();
         }
 
-        //Useful for dropping and re-creating the recurring payments db
-        //SugarContext.terminate();
-        SchemaGenerator schemaGenerator = new SchemaGenerator(this);
-        //schemaGenerator.deleteTables(new SugarDb(this).getDB());
-        SugarContext.init(this);
-        schemaGenerator.createDatabase(new SugarDb(this).getDB());
+        Executors.newSingleThreadExecutor().execute(() -> {
+            //Useful for dropping and re-creating the recurring payments db
+            //SugarContext.terminate();
+            SchemaGenerator schemaGenerator = new SchemaGenerator(DigiByte.this);
+            //schemaGenerator.deleteTables(new SugarDb(this).getDB());
+            SugarContext.init(DigiByte.this);
+            schemaGenerator.createDatabase(new SugarDb(DigiByte.this).getDB());
+        });
     }
 
     //////////////////////////////////////////////////////////////////////////////////
