@@ -88,15 +88,12 @@ public class FragmentRequestAmount extends FragmentReceive implements OnBackPres
 
     @Override
     protected void updateQRImage() {
-        if (selectedIso.equalsIgnoreCase("dgb")) {
-            qrUrl = "digibyte:" + address + "?amount=" + amountBuilder.toString();
-            QRUtils.generateQR(getActivity(), qrUrl,
-                    fragmentReceiveBinding.qrImage);
-        } else {
-            qrUrl = "digibyte:" + address + "?amount=" + getFiatAmount();
-            QRUtils.generateQR(getActivity(), qrUrl,
-                    fragmentReceiveBinding.qrImage);
-        }
+        qrUrl = getBitcoinUrl();
+        QRUtils.generateQR(getActivity(), qrUrl, fragmentReceiveBinding.qrImage);
+    }
+
+    private String getBitcoinUrl() {
+        return "digibyte:" + address + "?amount=" + getAmountForIso();
     }
 
     @Override
@@ -128,8 +125,7 @@ public class FragmentRequestAmount extends FragmentReceive implements OnBackPres
             return true;
         }
         showKeyboard(false);
-        String bitcoinUri = Utils.createBitcoinUrl(address, Long.valueOf(getAmountForIso()), null, null, null);
-        Uri qrImageUri = QRUtils.getQRImageUri(getContext(), bitcoinUri);
+        Uri qrImageUri = QRUtils.getQRImageUri(getContext(), getBitcoinUrl());
         QRUtils.share("mailto:", getActivity(), qrImageUri, null, null);
         return true;
     }
