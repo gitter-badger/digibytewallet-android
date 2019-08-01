@@ -90,8 +90,13 @@ public class ActivityUtils {
             TextView secondary) {
         if (!BRSharedPrefs.getBalanceVisibility(context)) {
             primary.setText(String.format(context.getString(R.string.amount_hidden), BRExchange.getBitcoinSymbol(context)));
-            decimalFormatSymbols.setCurrencySymbol(Currency.getInstance(BRSharedPrefs.getIso(context)).getSymbol());
-            secondary.setText(String.format(context.getString(R.string.amount_hidden), decimalFormatSymbols.getCurrencySymbol()));
+            try {
+                decimalFormatSymbols.setCurrencySymbol(Currency.getInstance(BRSharedPrefs.getIso(context)).getSymbol());
+                secondary.setText(String.format(context.getString(R.string.amount_hidden), decimalFormatSymbols.getCurrencySymbol()));
+            } catch (IllegalArgumentException e) {
+                //If a user selects a display currency of non fiat
+                secondary.setText(String.format(context.getString(R.string.amount_hidden), ""));
+            }
             return;
         }
         BRExecutor.getInstance().forLightWeightBackgroundTasks().execute(() -> {
