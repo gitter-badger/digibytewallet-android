@@ -27,7 +27,7 @@ class AddressInfo {
         lateinit var address: String
         var index: Int = 0
         var used: Boolean = false
-        var value: Int = 0
+        var value: Long = 0
         lateinit var txid: String
         lateinit var assets: Array<Asset>
     }
