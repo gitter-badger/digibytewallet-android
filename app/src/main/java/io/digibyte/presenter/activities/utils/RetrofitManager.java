@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -143,6 +144,7 @@ public class RetrofitManager {
 
             @Override
             public void onFailure(@NonNull Call<AddressInfo> call, @NonNull Throwable t) {
+                Crashlytics.logException(t);
                 handler.post(() -> assetsCallback.assetsRetrieved(null));
             }
         });
@@ -170,6 +172,7 @@ public class RetrofitManager {
 
             @Override
             public void onFailure(@NonNull Call<MetaModel> call, @NonNull Throwable t) {
+                Crashlytics.logException(t);
                 handler.post(metaCallback::failure);
             }
         });
@@ -198,6 +201,7 @@ public class RetrofitManager {
                                         "Send Asset Error: " + message);
                                 sendAssetCallback.error(message, new Exception("non 200 response for: " + call.request().body().toString()));
                             } catch (Exception e) {
+                                Crashlytics.logException(e);
                                 sendAssetCallback.error("", e);
                             }
                         } else {
@@ -215,6 +219,7 @@ public class RetrofitManager {
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Crashlytics.logException(t);
                 handler.post(() -> sendAssetCallback.error("", t));
             }
         });
