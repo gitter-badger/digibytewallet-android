@@ -31,6 +31,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.common.collect.Ordering;
 import com.google.common.io.BaseEncoding;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 
 import org.apache.commons.codec.binary.Hex;
@@ -127,10 +128,12 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     RecyclerView assetRecycler;
     private MultiTypeDataBoundAdapter assetAdapter;
     private Executor txDataExecutor = Executors.newSingleThreadExecutor();
+    private FirebaseAnalytics firebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         bindings = DataBindingUtil.setContentView(this, R.layout.activity_bread);
         bindings.assetRefresh.setOnRefreshListener(this);
         bindings.digiSymbolBackground.
@@ -424,6 +427,12 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                             @Override
                             public void failure() {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "meta failure");
+                                bundle.putString("asset_id", asset.assetId);
+                                bundle.putString("txid", asset.txid);
+                                bundle.putString("index", String.valueOf(asset.getIndex()));
+                                firebaseAnalytics.logEvent("meta_failure", bundle);
                                 Toast.makeText(BreadActivity.this, R.string.failure_asset_meta, Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -648,7 +657,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     return;
                 }
                 Gson gson = new Gson();
-                String payload = gson.toJson(authType.sendAsset);
+                final String payload = gson.toJson(authType.sendAsset);
                 Log.d(BRActivity.class.getSimpleName(), payload);
                 RetrofitManager.instance.sendAsset(payload, new RetrofitManager.SendAssetCallback() {
                     @Override
@@ -661,6 +670,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                     @Override
                     public void error(String message, Throwable throwable) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "send asset api");
+                        bundle.putString("payload", payload);
+                        firebaseAnalytics.logEvent("send_asset_api", bundle);
+
                         throwable.printStackTrace();
                         Crashlytics.logException(throwable);
                         showSendConfirmDialog(1, TextUtils.isEmpty(message) ? getString(R.string.Alerts_sendFailure) : message);
@@ -679,7 +693,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             byte[] rawSeed = BRKeyStore.getPhrase(DigiByte.getContext(), BRConstants.ASSETS_REQUEST_CODE);
             byte[] seed = TypesConverter.getNullTerminatedPhrase(rawSeed);
             byte[] transaction = BRWalletManager.parseSignSerialize(sendAddressHex, seed);
-            String txHex = BaseEncoding.base16().encode(transaction);
+            final String txHex = BaseEncoding.base16().encode(transaction);
             Log.d(BRActivity.class.getSimpleName(), "Broadcast Payload: " + txHex);
             RetrofitManager.instance.broadcast(txHex, new RetrofitManager.BroadcastTransaction() {
                 @Override
@@ -694,6 +708,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                 @Override
                 public void onError(String errorMessage) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "asset tx hex");
+                    bundle.putString("tx_hex", txHex);
+                    firebaseAnalytics.logEvent("broadcast_asset_failed", bundle);
+
                     Crashlytics.logException(new Exception(errorMessage));
                     showSendConfirmDialog(1, TextUtils.isEmpty(errorMessage) ? getString(R.string.Alerts_sendFailure) : errorMessage);
                 }
