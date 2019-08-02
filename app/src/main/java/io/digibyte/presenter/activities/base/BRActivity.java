@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -120,7 +121,15 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
         switch (requestCode) {
             case BRConstants.ASSETS_SCANNER_REQUEST: {
                 String result = data.getStringExtra("SCAN_RESULT");
+                if (TextUtils.isEmpty(result)) {
+                    return;
+                }
                 if (AssetsHelper.Companion.getInstance().pendingAssetTx != null) {
+                    if (result.contains("digibyte:")) {
+                        result = result.substring(result.indexOf("digibyte:"));
+                    } else if (result.contains("digibyte://")) {
+                        result = result.substring(result.indexOf("digibyte://"));
+                    }
                     AssetsHelper.Companion.getInstance().pendingAssetTx.setDestinationAddress(result);
                 }
                 AssetsHelper.Companion.getInstance().sendPendingAssetTx(this);
