@@ -412,14 +412,13 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                                     Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
                                             listItemTransactionData);
                                     AssetModel assetModel = new AssetModel(asset, metalModel);
-                                    if (!assetAdapter.containsItem(assetModel) || !assetModel.isAggregable()) {
+                                    if (!assetAdapter.containsItem(assetModel)) {
                                         assetAdapter.addItem(assetModel);
+                                    }
+                                    if (assetModel.isAggregable()) {
+                                        addAssetToModel(assetModel, asset);
                                     } else {
-                                        AssetModel existingAssetModel =
-                                                (AssetModel) assetAdapter.getItem(assetModel);
-                                        if (existingAssetModel != null) {
-                                            existingAssetModel.addAsset(asset);
-                                        }
+                                        assetAdapter.addItem(assetModel);
                                     }
                                     bindings.noAssetsSwitcher.setDisplayedChild(1);
                                     sortAssets();
@@ -439,6 +438,14 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                         });
             }
         });
+    }
+
+    private void addAssetToModel(final AssetModel assetModel, final AddressInfo.Asset asset) {
+        AssetModel existingAssetModel =
+                (AssetModel) assetAdapter.getItem(assetModel);
+        if (existingAssetModel != null) {
+            existingAssetModel.addAsset(asset);
+        }
     }
 
     private ArrayList<ListItemTransactionData> removeAllExistingEntries(
