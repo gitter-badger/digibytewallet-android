@@ -1158,7 +1158,7 @@ Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXOTxid(JNIEnv *env,
 
     jclass financeUTXO = (*env)->FindClass(env,
                                            "io/digibyte/presenter/activities/models/FinanceUTXO");
-    jmethodID mid = (*env)->GetMethodID(env, financeUTXO, "<init>", "(Ljava/lang/String;II[B)V");
+    jmethodID mid = (*env)->GetMethodID(env, financeUTXO, "<init>", "(Ljava/lang/String;JJ[B)V");
     jobject txObject;
     for (j = 0; j < array_count(utxos); j++) {
         t = BRGetTxForUTXO(_wallet, utxos[j]);
@@ -1170,8 +1170,8 @@ Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXOTxid(JNIEnv *env,
             jbyteArray script = (*env)->NewByteArray(env, (jsize) output->scriptLen);
             (*env)->SetByteArrayRegion(env, script, 0, (jsize) output->scriptLen,
                                        (jbyte *) output->script);
-            txObject = (*env)->NewObject(env, financeUTXO, mid, txid, (jint) utxos[j].n,
-                                         (jint) utxoAmount, script);
+            txObject = (*env)->NewObject(env, financeUTXO, mid, txid, (jlong) utxos[j].n,
+                                         (jlong) utxoAmount, script);
             (*env)->DeleteLocalRef(env, txid);
             (*env)->DeleteLocalRef(env, script);
             break;

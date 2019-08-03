@@ -5,11 +5,11 @@ import io.digibyte.tools.util.BytesUtil;
 public class FinanceUTXO {
 
     private String txid;
-    private int index;
-    private int value;
+    private long index;
+    private long value;
     private byte[] script;
 
-    public FinanceUTXO(String txid, int index, int value, byte[] script) {
+    public FinanceUTXO(String txid, long index, long value, byte[] script) {
         this.txid = txid;
         this.index = index;
         this.value = value;
@@ -25,11 +25,11 @@ public class FinanceUTXO {
     }
 
     static class Vout {
-        int value;
-        int n;
+        long value;
+        long n;
         ScriptPubKey scriptPubKey;
 
-        Vout(int value, int n, ScriptPubKey scriptPubKey) {
+        Vout(long value, long n, ScriptPubKey scriptPubKey) {
             this.value = value;
             this.n = n;
             this.scriptPubKey = scriptPubKey;
