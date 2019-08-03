@@ -387,13 +387,13 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     private void processIncomingAssets(@NonNull final String address,
                                        @NonNull final ListItemTransactionData listItemTransactionData,
                                        boolean lastAddress, boolean forceAssetMeta) {
+        if (lastAddress) {
+            bindings.assetRefresh.post(() -> bindings.assetRefresh.setRefreshing(false));
+        }
         if (!BRWalletManager.addressContainedInWallet(address)) {
             return;
         }
         RetrofitManager.instance.getAssets(address, addressInfo -> {
-            if (lastAddress) {
-                bindings.assetRefresh.post(() -> bindings.assetRefresh.setRefreshing(false));
-            }
             if (addressInfo == null) {
                 return;
             }
