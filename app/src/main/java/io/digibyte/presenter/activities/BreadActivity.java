@@ -387,13 +387,10 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     private void processIncomingAssets(@NonNull final String address,
                                        @NonNull final ListItemTransactionData listItemTransactionData,
                                        boolean lastAddress, boolean forceAssetMeta) {
-        if (lastAddress) {
-            bindings.assetRefresh.post(() -> bindings.assetRefresh.setRefreshing(false));
-        }
-        if (!BRWalletManager.addressContainedInWallet(address)) {
-            return;
-        }
         RetrofitManager.instance.getAssets(address, addressInfo -> {
+            if (lastAddress) {
+                bindings.assetRefresh.post(() -> bindings.assetRefresh.setRefreshing(false));
+            }
             if (addressInfo == null) {
                 return;
             }
@@ -411,17 +408,19 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                                 if (asset.txid.equals(listItemTransactionData.transactionItem.txReversed)) {
                                     Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
                                             listItemTransactionData);
-                                    AssetModel assetModel = new AssetModel(asset, metalModel);
-                                    if (!assetAdapter.containsItem(assetModel)) {
-                                        assetAdapter.addItem(assetModel);
+                                    if (BRWalletManager.addressContainedInWallet(address)) {
+                                        AssetModel assetModel = new AssetModel(asset, metalModel);
+                                        if (!assetAdapter.containsItem(assetModel)) {
+                                            assetAdapter.addItem(assetModel);
+                                        }
+                                        if (assetModel.isAggregable()) {
+                                            addAssetToModel(assetModel, asset);
+                                        } else {
+                                            assetAdapter.addItem(assetModel);
+                                        }
+                                        bindings.noAssetsSwitcher.setDisplayedChild(1);
+                                        sortAssets();
                                     }
-                                    if (assetModel.isAggregable()) {
-                                        addAssetToModel(assetModel, asset);
-                                    } else {
-                                        assetAdapter.addItem(assetModel);
-                                    }
-                                    bindings.noAssetsSwitcher.setDisplayedChild(1);
-                                    sortAssets();
                                 }
                             }
 
