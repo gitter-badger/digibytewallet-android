@@ -354,6 +354,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     addresses.add(new AddressTxSet(address, transaction));
                 }
             }
+            for (String address : transaction.transactionItem.getFrom()) {
+                if (!TextUtils.isEmpty(address)) {
+                    addresses.add(new AddressTxSet(address, transaction));
+                }
+            }
         }
         LinkedList<AddressTxSet> addressesList = new LinkedList<>(addresses);
         for (int i = 0; i < addressesList.size(); i++) {

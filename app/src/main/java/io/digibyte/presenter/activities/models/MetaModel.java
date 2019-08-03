@@ -34,6 +34,6 @@ public class MetaModel {
     }
 
     public boolean isAggregable() {
-        return "aggregatable".equals(aggregationPolicy);
+        return "aggregatable".equals(aggregationPolicy) || "hybrid".equals(aggregationPolicy);
     }
 }
