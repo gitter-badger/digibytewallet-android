@@ -1,6 +1,8 @@
 package io.digibyte.presenter.activities.models;
 
-public class SendAsset {
+import java.io.Serializable;
+
+public class SendAsset implements Serializable {
     String fee;
     String[] sendutxo;
     FinanceUTXO.Vout financeOutput;
@@ -58,7 +60,7 @@ public class SendAsset {
         return to.length == 1;
     }
 
-    public class To {
+    public class To implements Serializable {
         String address;
         int amount;
         String assetId;

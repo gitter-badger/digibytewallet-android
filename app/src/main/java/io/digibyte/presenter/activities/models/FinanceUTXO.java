@@ -1,5 +1,7 @@
 package io.digibyte.presenter.activities.models;
 
+import java.io.Serializable;
+
 import io.digibyte.tools.util.BytesUtil;
 
 public class FinanceUTXO {
@@ -24,7 +26,7 @@ public class FinanceUTXO {
         return new Vout(value, index, new ScriptPubKey(BytesUtil.bytesToHex(script).toLowerCase()));
     }
 
-    static class Vout {
+    static class Vout implements Serializable {
         long value;
         long n;
         ScriptPubKey scriptPubKey;
@@ -37,7 +39,7 @@ public class FinanceUTXO {
         }
     }
 
-    public static class ScriptPubKey {
+    public static class ScriptPubKey implements Serializable {
         String hex;
 
         ScriptPubKey(String hex) {
