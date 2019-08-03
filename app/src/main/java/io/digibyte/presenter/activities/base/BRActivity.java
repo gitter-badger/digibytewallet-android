@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +46,7 @@ import io.digibyte.tools.security.BitcoinUrlHandler;
 import io.digibyte.tools.security.PostAuth;
 import io.digibyte.tools.threads.BRExecutor;
 import io.digibyte.tools.util.BRConstants;
+import io.digibyte.wallet.BRWalletManager;
 import spencerstudios.com.bungeelib.Bungee;
 
 /**
@@ -127,9 +129,13 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
                 if (AssetsHelper.Companion.getInstance().pendingAssetTx != null) {
                     result = result.replace("digibyte://", "");
                     result = result.replace("digibyte:", "");
-                    AssetsHelper.Companion.getInstance().pendingAssetTx.setDestinationAddress(result);
+                    if (BRWalletManager.validateAddress(result)) {
+                        AssetsHelper.Companion.getInstance().pendingAssetTx.setDestinationAddress(result);
+                        AssetsHelper.Companion.getInstance().sendPendingAssetTx(this);
+                    } else {
+                        Toast.makeText(this, R.string.Send_invalidAddressTitle, Toast.LENGTH_SHORT).show();
+                    }
                 }
-                AssetsHelper.Companion.getInstance().sendPendingAssetTx(this);
                 break;
             }
             case BRConstants.SCANNER_REQUEST: {

@@ -47,6 +47,7 @@ import io.digibyte.tools.crypto.AssetsHelper;
 import io.digibyte.tools.manager.BRClipboardManager;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.util.BRConstants;
+import io.digibyte.wallet.BRWalletManager;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
 
@@ -281,9 +282,13 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                             Context.CLIPBOARD_SERVICE);
                     ClipData clipData = clipboard.getPrimaryClip();
                     if (clipData != null && clipData.getItemCount() > 0) {
-                        CharSequence destinationAddress = clipData.getItemAt(0).getText();
-                        assetTx.setDestinationAddress(destinationAddress);
-                        AssetsHelper.Companion.getInstance().processAssetTx(v.getContext(), assetTx);
+                        CharSequence destinationAddress = clipData.getItemAt(0).getText().toString().trim();
+                        if (BRWalletManager.validateAddress(destinationAddress.toString())) {
+                            assetTx.setDestinationAddress(destinationAddress);
+                            AssetsHelper.Companion.getInstance().processAssetTx(v.getContext(), assetTx);
+                        } else {
+                            Toast.makeText(context, R.string.Send_invalidAddressTitle, Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Toast.makeText(context, R.string.no_clip_data, Toast.LENGTH_SHORT).show();
                     }
