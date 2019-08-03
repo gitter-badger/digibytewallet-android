@@ -192,7 +192,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AssetModel that = (AssetModel) o;
-        return assets.get(0).assetId.equals(that.assets.get(0).assetId);
+        return metaModel.assetId.equals(that.metaModel.assetId);
     }
 
     @Override

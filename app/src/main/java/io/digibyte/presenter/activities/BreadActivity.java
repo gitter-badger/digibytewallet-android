@@ -354,11 +354,6 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     addresses.add(new AddressTxSet(address, transaction));
                 }
             }
-            for (String address : transaction.transactionItem.getFrom()) {
-                if (!TextUtils.isEmpty(address)) {
-                    addresses.add(new AddressTxSet(address, transaction));
-                }
-            }
         }
         LinkedList<AddressTxSet> addressesList = new LinkedList<>(addresses);
         for (int i = 0; i < addressesList.size(); i++) {
@@ -387,6 +382,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     private void processIncomingAssets(@NonNull final String address,
                                        @NonNull final ListItemTransactionData listItemTransactionData,
                                        boolean lastAddress, boolean forceAssetMeta) {
+        if (!BRWalletManager.addressContainedInWallet(address)) {
+            return;
+        }
         RetrofitManager.instance.getAssets(address, addressInfo -> {
             if (lastAddress) {
                 bindings.assetRefresh.post(() -> bindings.assetRefresh.setRefreshing(false));
@@ -408,20 +406,18 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                                 if (asset.txid.equals(listItemTransactionData.transactionItem.txReversed)) {
                                     Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
                                             listItemTransactionData);
-                                    if (BRWalletManager.addressContainedInWallet(address)) {
-                                        AssetModel assetModel = new AssetModel(asset, metalModel);
-                                        if (!assetAdapter.containsItem(assetModel) || !assetModel.isAggregable()) {
-                                            assetAdapter.addItem(assetModel);
-                                        } else {
-                                            AssetModel existingAssetModel =
-                                                    (AssetModel) assetAdapter.getItem(assetModel);
-                                            if (existingAssetModel != null) {
-                                                existingAssetModel.addAsset(asset);
-                                            }
+                                    AssetModel assetModel = new AssetModel(asset, metalModel);
+                                    if (!assetAdapter.containsItem(assetModel) || !assetModel.isAggregable()) {
+                                        assetAdapter.addItem(assetModel);
+                                    } else {
+                                        AssetModel existingAssetModel =
+                                                (AssetModel) assetAdapter.getItem(assetModel);
+                                        if (existingAssetModel != null) {
+                                            existingAssetModel.addAsset(asset);
                                         }
-                                        bindings.noAssetsSwitcher.setDisplayedChild(1);
-                                        sortAssets();
                                     }
+                                    bindings.noAssetsSwitcher.setDisplayedChild(1);
+                                    sortAssets();
                                 }
                             }
 
