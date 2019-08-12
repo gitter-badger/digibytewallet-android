@@ -10,7 +10,7 @@ public class MetaModel {
     boolean lockStatus;
     int numOfIssuance;
     int numOfTransfers;
-    int totalSupply;
+    float totalSupply;
     int numOfHolders;
     String issueAddress;
     public IsuanceModel metadataOfIssuence;

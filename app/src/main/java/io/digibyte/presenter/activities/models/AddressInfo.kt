@@ -34,7 +34,7 @@ class AddressInfo {
 
     inner class Asset {
         lateinit var assetId: String
-        var amount: Int = 0
+        var amount: Float = 0f
         lateinit var issueTxid: String
         var divisibility: Int = 0
         var lockStatus: Boolean = false
@@ -57,7 +57,7 @@ class AddressInfo {
 
         override fun hashCode(): Int {
             var result = assetId.hashCode()
-            result = 31 * result + amount
+            result = 31 * result + amount.hashCode()
             result = 31 * result + issueTxid.hashCode()
             result = 31 * result + divisibility
             result = 31 * result + lockStatus.hashCode()
@@ -67,5 +67,7 @@ class AddressInfo {
             result = 31 * result + index
             return result
         }
+
+
     }
 }

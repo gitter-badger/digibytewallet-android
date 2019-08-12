@@ -128,7 +128,12 @@ public class ListItemTransactionData extends BaseObservable implements Parcelabl
             if (isBTCPreferred) {
                 return String.format(DigiByte.getContext().getString(R.string.amount_hidden), BRExchange.getBitcoinSymbol(DigiByte.getContext()));
             } else {
-                return String.format(DigiByte.getContext().getString(R.string.amount_hidden), Currency.getInstance(Locale.getDefault()).getSymbol());
+                try {
+                    return String.format(DigiByte.getContext().getString(R.string.amount_hidden), Currency.getInstance(Locale.getDefault()).getSymbol());
+                } catch (IllegalArgumentException e) {
+                    //No default symbol for locale
+                    return String.format(DigiByte.getContext().getString(R.string.amount_hidden), "*");
+                }
             }
         } else if (transactionItem.isAsset) {
             AssetName assetName = Database.instance.findAssetNameFromHash(transactionItem.txReversed);

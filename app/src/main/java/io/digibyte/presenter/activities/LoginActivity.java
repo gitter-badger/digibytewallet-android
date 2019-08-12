@@ -42,9 +42,12 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
     private Handler handler = new Handler(Looper.getMainLooper());
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingNfcIntent;
+    private boolean paused;
 
     private LoginActivityCallback callback = () -> {
-        BRAnimator.openScanner(this);
+        if (!paused) {
+            BRAnimator.openScanner(this);
+        }
     };
 
     @Override
@@ -92,8 +95,8 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
     @Override
     protected void onResume() {
         super.onResume();
+        paused = false;
         updateDots();
-
         inputAllowed = true;
         ActivityUtils.enableNFC(this);
         BRWalletManager.getInstance().init();
@@ -106,6 +109,7 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
     @Override
     protected void onPause() {
         super.onPause();
+        paused = true;
         ActivityUtils.disableNFC(this);
         BRWalletManager.getInstance().removeListener(this);
         if (nfcAdapter != null) {

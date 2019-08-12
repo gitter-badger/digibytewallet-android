@@ -122,6 +122,9 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         switch (requestCode) {
             case BRConstants.ASSETS_SCANNER_REQUEST: {
+                if (data == null) {
+                    return;
+                }
                 String result = data.getStringExtra("SCAN_RESULT");
                 if (TextUtils.isEmpty(result)) {
                     return;

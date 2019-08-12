@@ -330,7 +330,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                 if (imageData.url.endsWith(".gif")) {
                     handler.post(() -> Glide.with(DigiByte.getContext()).load(imageData.url).into(imageView));
                 } else {
-                    handler.post(() -> Picasso.get().load(imageData.url).into(imageView));
+                    handler.post(() -> Picasso.get().load(imageData.url).resize(512, 384).onlyScaleDown().into(imageView));
                 }
             } else {
                 Drawable defaultImage = imageView.getContext().getResources().getDrawable(R.drawable.ic_assets);
