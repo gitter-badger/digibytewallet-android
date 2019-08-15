@@ -312,18 +312,13 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 });
             }
             if (isPossibleNewAssetSend(transactionsToAdd)) {
-                handler.post(() -> {
-                    assetAdapter.clear();
-                    assetAdapter.notifyDataSetChanged();
-                    bindings.assetRefresh.setRefreshing(true);
-                });
                 RetrofitManager.instance.clearCache(transactionsToAdd.get(0).transactionItem.getTo());
                 processTxAssets(new CopyOnWriteArrayList<>(
                                 adapter.getAllAdapter().getTransactions()),
-                        true
+                        true, true
                 );
             } else if (transactionsToAdd.size() > 0) {
-                processTxAssets(new CopyOnWriteArrayList<>(transactionsToAdd), false);
+                processTxAssets(new CopyOnWriteArrayList<>(transactionsToAdd), false, false);
             }
         });
     }
@@ -335,15 +330,15 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         assetAdapter.notifyDataSetChanged();
         processTxAssets(new CopyOnWriteArrayList<>(
                         adapter.getAllAdapter().getTransactions()),
-                true
+                true, false
         );
     }
 
     private boolean isPossibleNewAssetSend(ArrayList<ListItemTransactionData> newTransactions) {
-        return newTransactions.size() == 1;
+        return newTransactions.size() == 1 && newTransactions.get(0).transactionItem.getSent() != 0;
     }
 
-    private void processTxAssets(List<ListItemTransactionData> transactions, boolean forceAssetMeta) {
+    private void processTxAssets(List<ListItemTransactionData> transactions, boolean forceAssetMeta, boolean clearAssetUtxo) {
         HashSet<AddressTxSet> addresses = new HashSet<>();
         for (ListItemTransactionData transaction : transactions) {
             if (!transaction.transactionItem.isAsset) {
@@ -364,7 +359,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         for (int i = 0; i < addressesList.size(); i++) {
             AddressTxSet addressTxSet = addressesList.get(i);
             processIncomingAssets(addressTxSet.address, addressTxSet.listItemTransactionData,
-                    i == addressesList.size() - 1, forceAssetMeta);
+                    i == addressesList.size() - 1, forceAssetMeta, clearAssetUtxo);
         }
     }
 
@@ -386,10 +381,10 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
     private void processIncomingAssets(@NonNull final String address,
                                        @NonNull final ListItemTransactionData listItemTransactionData,
-                                       boolean lastAddress, boolean forceAssetMeta) {
+                                       boolean lastAddress, boolean forceAssetMeta, boolean clearAssetUtxo) {
         RetrofitManager.instance.getAssets(address, addressInfo -> {
             if (lastAddress) {
-                bindings.assetRefresh.post(() -> bindings.assetRefresh.setRefreshing(false));
+                handler.post(() -> bindings.assetRefresh.setRefreshing(false));
             }
             if (addressInfo == null) {
                 return;
@@ -411,15 +406,16 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                                     if (BRWalletManager.addressContainedInWallet(address)) {
                                         AssetModel assetModel = new AssetModel(asset, metalModel);
                                         if (!assetAdapter.containsItem(assetModel)) {
-                                            assetAdapter.addItem(assetModel);
+                                            handler.post(() -> assetAdapter.addItem(assetModel));
                                         }
                                         if (assetModel.isAggregable()) {
-                                            addAssetToModel(assetModel, asset);
+                                            handler.post(() -> addAssetToModel(assetModel, asset, clearAssetUtxo));
                                         } else {
-                                            assetAdapter.addItem(assetModel);
+                                            handler.post(() -> assetAdapter.addItem(assetModel));
                                         }
-                                        bindings.noAssetsSwitcher.setDisplayedChild(1);
-                                        sortAssets();
+                                        if (bindings.noAssetsSwitcher.getDisplayedChild() == 0) {
+                                            handler.post(() -> bindings.noAssetsSwitcher.setDisplayedChild(1));
+                                        }
                                     }
                                 }
                             }
@@ -439,11 +435,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         });
     }
 
-    private void addAssetToModel(final AssetModel assetModel, final AddressInfo.Asset asset) {
+    private void addAssetToModel(final AssetModel assetModel, final AddressInfo.Asset asset, boolean clear) {
         AssetModel existingAssetModel =
                 (AssetModel) assetAdapter.getItem(assetModel);
         if (existingAssetModel != null) {
-            existingAssetModel.addAsset(asset);
+            existingAssetModel.addAsset(asset, clear);
         }
     }
 
@@ -744,38 +740,5 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                         }
                     });
         });
-    }
-
-    public void sortAssets() {
-        List<Object> oldAssets = new LinkedList<>(assetAdapter.getItems());
-        Collections.sort(assetAdapter.getItems(), Ordering.usingToString());
-        notifyAssetsChange(oldAssets);
-    }
-
-    private void notifyAssetsChange(List<Object> oldAssets) {
-        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-            @Override
-            public int getOldListSize() {
-                return oldAssets.size();
-            }
-
-            @Override
-            public int getNewListSize() {
-                return assetAdapter.getItemCount();
-            }
-
-            @Override
-            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                return oldAssets.get(oldItemPosition).equals(assetAdapter.getItem(newItemPosition));
-            }
-
-            @Override
-            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                AssetModel oldModel = (AssetModel) oldAssets.get(oldItemPosition);
-                AssetModel newModel = (AssetModel) assetAdapter.getItem(oldItemPosition);
-                return oldModel.getAssetQuantity().equals(newModel.getAssetQuantity());
-            }
-        }, true);
-        result.dispatchUpdatesTo(assetAdapter);
     }
 }

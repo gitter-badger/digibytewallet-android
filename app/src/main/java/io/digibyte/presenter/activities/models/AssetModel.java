@@ -58,14 +58,17 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
 
     public AssetModel(AddressInfo.Asset asset, MetaModel metaModel) {
         this.metaModel = metaModel;
-        addAsset(asset);
+        addAsset(asset, false);
     }
 
-    public void addAsset(AddressInfo.Asset newAsset) {
+    public void addAsset(AddressInfo.Asset newAsset, boolean clear) {
         for (AddressInfo.Asset asset : assets) {
             if (asset.equals(newAsset)) {
                 return;
             }
+        }
+        if (clear) {
+            assets.clear();
         }
         assets.add(newAsset);
         notifyPropertyChanged(BR.assetQuantity);
@@ -283,11 +286,15 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     ClipData clipData = clipboard.getPrimaryClip();
                     if (clipData != null && clipData.getItemCount() > 0) {
                         CharSequence destinationAddress = clipData.getItemAt(0).getText().toString().trim();
-                        if (BRWalletManager.validateAddress(destinationAddress.toString())) {
-                            assetTx.setDestinationAddress(destinationAddress);
-                            AssetsHelper.Companion.getInstance().processAssetTx(v.getContext(), assetTx);
+                        if (BRWalletManager.addressContainedInWallet(destinationAddress.toString())) {
+                            Toast.makeText(context, R.string.cannot_send_to_self, Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(context, R.string.Send_invalidAddressTitle, Toast.LENGTH_SHORT).show();
+                            if (BRWalletManager.validateAddress(destinationAddress.toString())) {
+                                assetTx.setDestinationAddress(destinationAddress);
+                                AssetsHelper.Companion.getInstance().processAssetTx(v.getContext(), assetTx);
+                            } else {
+                                Toast.makeText(context, R.string.Send_invalidAddressTitle, Toast.LENGTH_SHORT).show();
+                            }
                         }
                     } else {
                         Toast.makeText(context, R.string.no_clip_data, Toast.LENGTH_SHORT).show();

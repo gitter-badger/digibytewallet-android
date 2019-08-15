@@ -164,7 +164,7 @@ public class RetrofitManager {
             @Override
             public void onResponse(@NonNull Call<MetaModel> call, @NonNull Response<MetaModel> response) {
                 if (response.body() != null) {
-                    handler.post(() -> metaCallback.metaRetrieved(response.body()));
+                    metaCallback.metaRetrieved(response.body());
                 } else {
                     handler.post(metaCallback::failure);
                 }

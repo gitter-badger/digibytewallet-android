@@ -395,4 +395,5 @@
   <string name="node_connected">Node Connected</string>
   <string name="node_disconnected">Node Disconnected</string>
   <string name="enter_an_amount">Enter an Amount</string>
+  <string name="cannot_send_to_self">Cannot send to self</string>
 </resources>
