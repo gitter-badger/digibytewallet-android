@@ -53,7 +53,6 @@ public class FragmentFingerprint extends Fragment implements FingerprintUiHelper
         OnBackPressListener {
     public static final String TAG = FragmentFingerprint.class.getName();
     private static final String AUTH_TYPE = "FragmentFingerprint:AuthType";
-    private FingerprintManager.CryptoObject mCryptoObject;
     private FingerprintUiHelper.FingerprintUiHelperBuilder mFingerprintUiHelperBuilder;
     private FingerprintUiHelper mFingerprintUiHelper;
     private FingerprintFragmentViewModel viewModel;
@@ -137,7 +136,7 @@ public class FragmentFingerprint extends Fragment implements FingerprintUiHelper
     @Override
     public void onResume() {
         super.onResume();
-        mFingerprintUiHelper.startListening(mCryptoObject);
+        mFingerprintUiHelper.startListening();
     }
 
     @Override

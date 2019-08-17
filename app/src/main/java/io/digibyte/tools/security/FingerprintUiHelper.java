@@ -22,6 +22,9 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.CancellationSignal;
 import androidx.annotation.RequiresApi;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +45,8 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
     private final Callback mCallback;
     private CancellationSignal mCancellationSignal;
     private Context mContext;
+    private FingerprintManager.CryptoObject cryptoObject;
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     boolean mSelfCancelled;
 
@@ -83,18 +88,26 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
     }
 
     @SuppressWarnings("MissingPermission")
-    public void startListening(FingerprintManager.CryptoObject cryptoObject) {
+    public void startListening() {
         if (!isFingerprintAuthAvailable()) {
             return;
         }
-        mCancellationSignal = new CancellationSignal();
-        mSelfCancelled = false;
-        mFingerprintManager
-                .authenticate(cryptoObject, mCancellationSignal, 0 /* flags */, this, null);
-        mIcon.setImageResource(R.drawable.ic_fp_40px);
+        handler.postDelayed(startListening, 1000);
     }
 
+    private Runnable startListening = new Runnable() {
+        @Override
+        public void run() {
+            mCancellationSignal = new CancellationSignal();
+            mSelfCancelled = false;
+            mFingerprintManager
+                    .authenticate(cryptoObject, mCancellationSignal, 0 /* flags */, FingerprintUiHelper.this, null);
+            mIcon.setImageResource(R.drawable.ic_fp_40px);
+        }
+    };
+
     public void stopListening() {
+        handler.removeCallbacks(startListening);
         if (mCancellationSignal != null) {
             mSelfCancelled = true;
             mCancellationSignal.cancel();
