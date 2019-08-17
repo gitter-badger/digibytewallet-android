@@ -407,8 +407,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                                         AssetModel assetModel = new AssetModel(asset, metalModel);
                                         if (!assetAdapter.containsItem(assetModel)) {
                                             handler.post(() -> assetAdapter.addItem(assetModel));
-                                        }
-                                        if (assetModel.isAggregable()) {
+                                        } else if (assetModel.isAggregable()) {
                                             handler.post(() -> addAssetToModel(assetModel, asset, clearAssetUtxo));
                                         } else {
                                             handler.post(() -> assetAdapter.addItem(assetModel));

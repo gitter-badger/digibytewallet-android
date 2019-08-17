@@ -64,6 +64,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     public void addAsset(AddressInfo.Asset newAsset, boolean clear) {
         for (AddressInfo.Asset asset : assets) {
             if (asset.equals(newAsset)) {
+                //Already contains asset
                 return;
             }
         }
