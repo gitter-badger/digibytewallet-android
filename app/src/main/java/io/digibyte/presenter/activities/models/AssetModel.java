@@ -62,12 +62,6 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     }
 
     public void addAsset(AddressInfo.Asset newAsset, boolean clear) {
-        for (AddressInfo.Asset asset : assets) {
-            if (asset.equals(newAsset)) {
-                //Already contains asset
-                return;
-            }
-        }
         if (clear) {
             assets.clear();
         }
@@ -195,7 +189,6 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
         AssetModel that = (AssetModel) o;
         return metaModel.assetId.equals(that.metaModel.assetId);
     }

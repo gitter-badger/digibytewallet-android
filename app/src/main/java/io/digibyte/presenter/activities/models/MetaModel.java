@@ -15,6 +15,19 @@ public class MetaModel {
     String issueAddress;
     public IsuanceModel metadataOfIssuence;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MetaModel metaModel = (MetaModel) o;
+        return assetId.equals(metaModel.assetId);
+    }
+
+    @Override
+    public int hashCode() {
+        return assetId.hashCode();
+    }
+
     public class IsuanceModel {
         String sha2Issue;
         public IsuanceData data;

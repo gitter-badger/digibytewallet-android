@@ -20,7 +20,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -29,7 +28,6 @@ import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.appolica.flubber.Flubber;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.common.collect.Ordering;
 import com.google.common.io.BaseEncoding;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
@@ -40,7 +38,6 @@ import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -59,6 +56,8 @@ import io.digibyte.DigiByte;
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityBreadBinding;
 import io.digibyte.presenter.activities.adapters.TxAdapter;
+import io.digibyte.presenter.activities.base.BRActivity;
+import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.AssetModel;
 import io.digibyte.presenter.activities.models.MetaModel;
@@ -68,15 +67,11 @@ import io.digibyte.presenter.activities.settings.SecurityCenterActivity;
 import io.digibyte.presenter.activities.settings.SettingsActivity;
 import io.digibyte.presenter.activities.settings.SyncBlockchainActivity;
 import io.digibyte.presenter.activities.utils.ActivityUtils;
-import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.presenter.activities.utils.RetrofitManager;
 import io.digibyte.presenter.activities.utils.TransactionUtils;
 import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter;
-import io.digibyte.presenter.customviews.BRDialogView;
 import io.digibyte.presenter.entities.TxItem;
-import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
-import io.digibyte.tools.animation.BRDialog;
 import io.digibyte.tools.database.Database;
 import io.digibyte.tools.list.items.ListItemTransactionData;
 import io.digibyte.tools.manager.BRApiManager;
@@ -327,6 +322,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
     @Override
     public void onRefresh() {
+        bindings.assetRefresh.setEnabled(false);
         RetrofitManager.instance.clearCache();
         assetAdapter.clear();
         assetAdapter.notifyDataSetChanged();
@@ -347,12 +343,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 continue;
             }
             for (String address : transaction.transactionItem.getTo()) {
-                if (!TextUtils.isEmpty(address)) {
-                    addresses.add(new AddressTxSet(address, transaction));
-                }
-            }
-            for (String address : transaction.transactionItem.getFrom()) {
-                if (!TextUtils.isEmpty(address)) {
+                if (!TextUtils.isEmpty(address) && BRWalletManager.addressContainedInWallet(address)) {
                     addresses.add(new AddressTxSet(address, transaction));
                 }
             }
@@ -379,6 +370,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             AddressTxSet addressTxSet = (AddressTxSet) obj;
             return address.equals(addressTxSet.address);
         }
+
+        @Override
+        public int hashCode() {
+            return address.hashCode();
+        }
     }
 
     private void processIncomingAssets(@NonNull final String address,
@@ -386,9 +382,13 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                                        boolean lastAddress, boolean forceAssetMeta, boolean clearAssetUtxo) {
         RetrofitManager.instance.getAssets(address, addressInfo -> {
             if (lastAddress) {
-                handler.post(() -> bindings.assetRefresh.setRefreshing(false));
+                handler.post(() -> {
+                    bindings.assetRefresh.setRefreshing(false);
+                    bindings.assetRefresh.setEnabled(true);
+                });
             }
             if (addressInfo == null) {
+                //No asset utxos
                 return;
             }
             for (final AddressInfo.Asset asset : addressInfo.getAssets()) {
@@ -402,22 +402,18 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                         new RetrofitManager.MetaCallback() {
                             @Override
                             public void metaRetrieved(MetaModel metalModel) {
-                                if (asset.txid.equals(listItemTransactionData.transactionItem.txReversed)) {
-                                    Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
-                                            listItemTransactionData);
-                                    if (BRWalletManager.addressContainedInWallet(address)) {
-                                        AssetModel assetModel = new AssetModel(asset, metalModel);
-                                        if (!assetAdapter.containsItem(assetModel)) {
-                                            handler.post(() -> assetAdapter.addItem(assetModel));
-                                        } else if (assetModel.isAggregable()) {
-                                            handler.post(() -> addAssetToModel(assetModel, asset, clearAssetUtxo));
-                                        } else {
-                                            handler.post(() -> assetAdapter.addItem(assetModel));
-                                        }
-                                        if (bindings.noAssetsSwitcher.getDisplayedChild() == 0) {
-                                            handler.post(() -> bindings.noAssetsSwitcher.setDisplayedChild(1));
-                                        }
-                                    }
+                                Database.instance.saveAssetName(metalModel.metadataOfIssuence.data.assetName,
+                                        listItemTransactionData);
+                                AssetModel assetModel = new AssetModel(asset, metalModel);
+                                if (!assetAdapter.containsItem(assetModel)) {
+                                    assetAdapter.addItem(assetModel);
+                                } else if (assetModel.isAggregable()) {
+                                    addAssetToModel(assetModel, asset, clearAssetUtxo);
+                                } else {
+                                    assetAdapter.addItem(assetModel);
+                                }
+                                if (bindings.noAssetsSwitcher.getDisplayedChild() == 0) {
+                                    bindings.noAssetsSwitcher.setDisplayedChild(1);
                                 }
                             }
 
