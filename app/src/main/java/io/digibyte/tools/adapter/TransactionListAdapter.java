@@ -120,10 +120,6 @@ public class TransactionListAdapter extends MultiTypeDataBoundAdapter implements
     @Override
     public void onTransactionClick(ListItemTransactionData listItemTransactionData) {
         if (listItemTransactionData.transactionItem.isAsset) {
-            if (listItemTransactionData.getAmount().
-                    equals(DigiByte.getContext().getString(R.string.digi_asset))) {
-                activity.onRefresh();
-            }
             activity.onAssetsButtonClick(null);
         } else {
             int adapterPosition = listItemData.indexOf(listItemTransactionData);
