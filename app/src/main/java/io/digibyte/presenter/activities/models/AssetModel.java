@@ -241,7 +241,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                             String.valueOf(assets.get(0).getIndex()),
                             new RetrofitManager.MetaCallback() {
                                 @Override
-                                public void metaRetrieved(MetaModel metalModel) {
+                                public void metaRetrieved(MetaModel metaModel) {
                                     AssetModel.this.metaModel = metaModel;
                                     notifyPropertyChanged(BR.totalSupply);
                                     notifyPropertyChanged(BR.numberOfHolders);
@@ -249,7 +249,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                                 }
 
                                 @Override
-                                public void failure() {
+                                public void failure(int statusCode, String message) {
                                     Toast.makeText(DigiByte.getContext(), R.string.failure_asset_meta, Toast.LENGTH_SHORT).show();
                                 }
                             });

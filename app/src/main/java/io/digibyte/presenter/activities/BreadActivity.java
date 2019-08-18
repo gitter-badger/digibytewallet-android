@@ -72,9 +72,11 @@ import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.presenter.activities.utils.RetrofitManager;
 import io.digibyte.presenter.activities.utils.TransactionUtils;
 import io.digibyte.presenter.adapter.MultiTypeDataBoundAdapter;
+import io.digibyte.presenter.customviews.BRDialogView;
 import io.digibyte.presenter.entities.TxItem;
 import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
+import io.digibyte.tools.animation.BRDialog;
 import io.digibyte.tools.database.Database;
 import io.digibyte.tools.list.items.ListItemTransactionData;
 import io.digibyte.tools.manager.BRApiManager;
@@ -420,12 +422,14 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                             }
 
                             @Override
-                            public void failure() {
+                            public void failure(int statusCode, String message) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "meta failure");
                                 bundle.putString("asset_id", asset.assetId);
                                 bundle.putString("txid", asset.txid);
                                 bundle.putString("index", String.valueOf(asset.getIndex()));
+                                bundle.putInt("status_code", statusCode);
+                                bundle.putString("message", message);
                                 firebaseAnalytics.logEvent("meta_failure", bundle);
                                 Toast.makeText(BreadActivity.this, R.string.failure_asset_meta, Toast.LENGTH_SHORT).show();
                             }
@@ -658,6 +662,10 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     Log.d(BreadActivity.class.getSimpleName(), "invalid amount");
                     return;
                 }
+                String message = String.format(getString(R.string.asset_confirm_message),
+                        authType.sendAsset.getDestinationAddress(),
+                        authType.sendAsset.assetModel.getAssetName(),
+                        authType.sendAsset.getDestinationAmount());
                 Gson gson = new Gson();
                 final String payload = gson.toJson(authType.sendAsset);
                 Log.d(BRActivity.class.getSimpleName(), payload);
@@ -665,8 +673,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     @Override
                     public void success(SendAssetResponse sendAssetResponse) {
                         Log.d(BreadActivity.class.getSimpleName(), sendAssetResponse.toString());
-                        AuthManager.getInstance().authPrompt(BreadActivity.this, null,
-                                BreadActivity.this.getString(R.string.VerifyPin_continueBody),
+                        AuthManager.getInstance().authPrompt(BreadActivity.this,
+                                null,
+                                message,
                                 new BRAuthCompletion.AuthType(sendAssetResponse, authType.sendAsset));
                     }
 
@@ -676,7 +685,6 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "send asset api");
                         bundle.putString("payload", payload);
                         firebaseAnalytics.logEvent("send_asset_api", bundle);
-
                         throwable.printStackTrace();
                         Crashlytics.logException(throwable);
                         showSendConfirmDialog(1, TextUtils.isEmpty(message) ? getString(R.string.Alerts_sendFailure) : message);

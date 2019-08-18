@@ -3,10 +3,10 @@ package io.digibyte.presenter.activities.models;
 import java.io.Serializable;
 
 public class SendAsset implements Serializable {
-    String fee;
-    String[] sendutxo;
-    FinanceUTXO.Vout financeOutput;
-    String financeOutputTxid;
+    private String fee;
+    private String[] sendutxo;
+    private FinanceUTXO.Vout financeOutput;
+    private String financeOutputTxid;
     private To[] to;
     public transient int divisibility;
     public transient AssetModel assetModel;
@@ -36,6 +36,18 @@ public class SendAsset implements Serializable {
 
         this.divisibility = divisibility;
         this.assetModel = assetModel;
+    }
+
+    public String getDestinationAddress() {
+        return to[TO_DESTINATION].address;
+    }
+
+    public String getDestinationAssetId() {
+        return to[TO_DESTINATION].assetId;
+    }
+
+    public int getDestinationAmount() {
+        return to[TO_DESTINATION].amount;
     }
 
     public void setQuantity(int amount) {

@@ -153,7 +153,7 @@ public class RetrofitManager {
     public interface MetaCallback {
         void metaRetrieved(MetaModel metalModel);
 
-        void failure();
+        void failure(int statusCode, String meesage);
     }
 
     public void getAssetMeta(String assetid, String utxotdid, String index,
@@ -166,14 +166,19 @@ public class RetrofitManager {
                 if (response.body() != null) {
                     metaCallback.metaRetrieved(response.body());
                 } else {
-                    handler.post(metaCallback::failure);
+                    handler.post(() -> metaCallback.failure(response.code(), response.message()));
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MetaModel> call, @NonNull Throwable t) {
                 Crashlytics.logException(t);
-                handler.post(metaCallback::failure);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        metaCallback.failure(0, "");
+                    }
+                });
             }
         });
     }

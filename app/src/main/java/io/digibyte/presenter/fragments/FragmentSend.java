@@ -188,12 +188,7 @@ public class FragmentSend extends Fragment implements OnBackPressListener {
                 BRDialog.showCustomDialog(app, app.getString(R.string.Alert_error),
                         app.getString(R.string.Send_noAddress),
                         app.getString(R.string.AccessibilityLabels_close), null,
-                        new BRDialogView.BROnClickListener() {
-                            @Override
-                            public void onClick(BRDialogView brDialogView) {
-                                brDialogView.dismissWithAnimation();
-                            }
-                        }, null, null, 0);
+                        brDialogView -> brDialogView.dismissWithAnimation(), null, null, 0);
             }
             if (satoshiAmount.doubleValue() < 1) {
                 allFilled = false;

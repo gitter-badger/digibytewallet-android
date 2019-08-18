@@ -396,4 +396,5 @@
   <string name="node_disconnected">Node Disconnected</string>
   <string name="enter_an_amount">Enter an Amount</string>
   <string name="cannot_send_to_self">Cannot send to self</string>
+  <string name="asset_confirm_message">Destination Address: %s\nAsset: %s\nAmount: %d</string>
 </resources>
