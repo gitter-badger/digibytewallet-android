@@ -1,6 +1,8 @@
 package io.digibyte.presenter.activities.models;
 
-public class SendAssetResponse {
+import java.io.Serializable;
+
+public class SendAssetResponse implements Serializable {
     String txHex;
 
     public String getTxHex() {
