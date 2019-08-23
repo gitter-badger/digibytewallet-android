@@ -107,7 +107,17 @@ public class FragmentReceive extends Fragment implements OnBackPressListener {
         @Override
         public void shareExternalClick() {
             if (onShareExternal()) {
-                return;
+                try {
+                    String url = String.format(
+                            getString(R.string.coin_request_amount),
+                            address
+                    );
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(browserIntent);
+                } catch (Exception e) {
+                    //Lazy, I know
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -177,11 +187,11 @@ public class FragmentReceive extends Fragment implements OnBackPressListener {
     }
 
     protected boolean onShareExternal() {
-        return false;
+        return true;
     }
 
     protected boolean hideShareExternal() {
-        return true;
+        return false;
     }
 
     public static void show(AppCompatActivity activity, boolean isReceive) {

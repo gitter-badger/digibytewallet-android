@@ -171,7 +171,7 @@ public class FragmentRequestAmount extends FragmentReceive implements OnBackPres
             //Lazy, I know
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     private void handleClick(String key) {
