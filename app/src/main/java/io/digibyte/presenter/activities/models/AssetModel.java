@@ -117,7 +117,12 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
 
     @Bindable
     public String getTotalSupply() {
-        return String.format(DigiByte.getContext().getString(R.string.total_supply), metaModel.totalSupply);
+        BigDecimal quantity = new BigDecimal(Float.valueOf(metaModel.totalSupply).doubleValue());
+        if (quantity.scale() > 0) {
+            quantity = quantity.setScale(10, BigDecimal.ROUND_DOWN);
+        }
+        quantity = quantity.stripTrailingZeros();
+        return String.format(DigiByte.getContext().getString(R.string.total_supply), quantity.toPlainString());
     }
 
     @Bindable
