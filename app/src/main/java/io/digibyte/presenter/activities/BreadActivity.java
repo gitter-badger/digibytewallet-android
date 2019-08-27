@@ -130,6 +130,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RetrofitManager.instance.clearCache();
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         bindings = DataBindingUtil.setContentView(this, R.layout.activity_bread);
         bindings.assetRefresh.setOnRefreshListener(this);
@@ -419,14 +420,13 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                             @Override
                             public void failure(int statusCode, String message) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "meta failure");
-                                bundle.putString("asset_id", asset.assetId);
-                                bundle.putString("txid", asset.txid);
-                                bundle.putString("index", String.valueOf(asset.getIndex()));
-                                bundle.putInt("status_code", statusCode);
-                                bundle.putString("message", message);
-                                firebaseAnalytics.logEvent("meta_failure", bundle);
+                                StringBuilder builder = new StringBuilder();
+                                builder.append("asset_id: ").append(asset.assetId);
+                                builder.append(", txid: ").append(asset.txid);
+                                builder.append(", index: ").append(asset.getIndex())
+                                builder.append(", status_code: ").append(statusCode);
+                                builder.append(", message:").append(message);
+                                Crashlytics.logException(new Exception(builder.toString()));
                                 Toast.makeText(BreadActivity.this, R.string.failure_asset_meta, Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -677,12 +677,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                     @Override
                     public void error(String message, Throwable throwable) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "send asset api");
-                        bundle.putString("payload", payload);
-                        firebaseAnalytics.logEvent("send_asset_api", bundle);
-                        throwable.printStackTrace();
-                        Crashlytics.logException(throwable);
+                        Crashlytics.logException(new Exception("payload: " + payload));
                         showSendConfirmDialog(1, TextUtils.isEmpty(message) ? getString(R.string.Alerts_sendFailure) : message);
                     }
                 });
@@ -714,12 +709,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                 @Override
                 public void onError(String errorMessage) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "asset tx hex");
-                    bundle.putString("tx_hex", txHex);
-                    firebaseAnalytics.logEvent("broadcast_asset_failed", bundle);
-
-                    Crashlytics.logException(new Exception(errorMessage));
+                    Crashlytics.logException(new Exception("tx_hex: " + txHex));
                     showSendConfirmDialog(1, TextUtils.isEmpty(errorMessage) ? getString(R.string.Alerts_sendFailure) : errorMessage);
                 }
             });
