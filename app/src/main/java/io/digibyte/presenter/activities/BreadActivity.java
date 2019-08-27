@@ -423,7 +423,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                                 StringBuilder builder = new StringBuilder();
                                 builder.append("asset_id: ").append(asset.assetId);
                                 builder.append(", txid: ").append(asset.txid);
-                                builder.append(", index: ").append(asset.getIndex())
+                                builder.append(", index: ").append(asset.getIndex());
                                 builder.append(", status_code: ").append(statusCode);
                                 builder.append(", message:").append(message);
                                 Crashlytics.logException(new Exception(builder.toString()));
