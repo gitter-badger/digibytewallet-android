@@ -75,6 +75,7 @@ import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.database.Database;
 import io.digibyte.tools.list.items.ListItemTransactionData;
 import io.digibyte.tools.manager.BRApiManager;
+import io.digibyte.tools.manager.BRClipboardManager;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.manager.JobsHelper;
 import io.digibyte.tools.manager.SyncManager;
@@ -677,6 +678,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                     @Override
                     public void error(String message, Throwable throwable) {
+                        BRClipboardManager.putClipboard(BreadActivity.this, payload);
                         Crashlytics.logException(new Exception("payload: " + payload));
                         showSendConfirmDialog(1, TextUtils.isEmpty(message) ? getString(R.string.Alerts_sendFailure) : message);
                     }
@@ -709,6 +711,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                 @Override
                 public void onError(String errorMessage) {
+                    BRClipboardManager.putClipboard(BreadActivity.this, txHex);
                     Crashlytics.logException(new Exception("tx_hex: " + txHex));
                     showSendConfirmDialog(1, TextUtils.isEmpty(errorMessage) ? getString(R.string.Alerts_sendFailure) : errorMessage);
                 }
