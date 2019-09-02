@@ -285,15 +285,11 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     ClipData clipData = clipboard.getPrimaryClip();
                     if (clipData != null && clipData.getItemCount() > 0) {
                         CharSequence destinationAddress = clipData.getItemAt(0).getText().toString().trim();
-                        if (BRWalletManager.addressContainedInWallet(destinationAddress.toString())) {
-                            Toast.makeText(context, R.string.cannot_send_to_self, Toast.LENGTH_SHORT).show();
+                        if (BRWalletManager.validateAddress(destinationAddress.toString())) {
+                            assetTx.setDestinationAddress(destinationAddress);
+                            AssetsHelper.Companion.getInstance().processAssetTx(v.getContext(), assetTx);
                         } else {
-                            if (BRWalletManager.validateAddress(destinationAddress.toString())) {
-                                assetTx.setDestinationAddress(destinationAddress);
-                                AssetsHelper.Companion.getInstance().processAssetTx(v.getContext(), assetTx);
-                            } else {
-                                Toast.makeText(context, R.string.Send_invalidAddressTitle, Toast.LENGTH_SHORT).show();
-                            }
+                            Toast.makeText(context, R.string.Send_invalidAddressTitle, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(context, R.string.no_clip_data, Toast.LENGTH_SHORT).show();

@@ -711,7 +711,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                 @Override
                 public void onError(String errorMessage) {
-                    BRClipboardManager.putClipboard(BreadActivity.this, txHex);
+                    Gson gson = new Gson();
+                    final String payload = gson.toJson(sendAsset);
+                    BRClipboardManager.putClipboard(BreadActivity.this, payload + ":" + txHex);
                     Crashlytics.logException(new Exception("tx_hex: " + txHex));
                     showSendConfirmDialog(1, TextUtils.isEmpty(errorMessage) ? getString(R.string.Alerts_sendFailure) : errorMessage);
                 }
