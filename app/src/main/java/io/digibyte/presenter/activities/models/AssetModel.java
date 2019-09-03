@@ -48,6 +48,8 @@ import io.digibyte.tools.manager.BRClipboardManager;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.util.BRConstants;
 import io.digibyte.wallet.BRWalletManager;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class AssetModel extends BaseObservable implements LayoutBinding, DynamicBinding {
 
@@ -56,7 +58,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     private static transient Handler handler = new Handler(Looper.getMainLooper());
     private static transient Executor executor = Executors.newSingleThreadExecutor();
 
-    public AssetModel(AddressInfo.Asset asset, MetaModel metaModel) {
+    public AssetModel(MetaModel metaModel, AddressInfo.Asset asset) {
         this.metaModel = metaModel;
         addAsset(asset, false);
     }
@@ -236,20 +238,16 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     RetrofitManager.instance.getAssetMeta(
                             assets.get(0).assetId,
                             assets.get(0).txid,
-                            String.valueOf(assets.get(0).getIndex()),
-                            new RetrofitManager.MetaCallback() {
-                                @Override
-                                public void metaRetrieved(MetaModel metaModel) {
-                                    AssetModel.this.metaModel = metaModel;
-                                    notifyPropertyChanged(BR.totalSupply);
-                                    notifyPropertyChanged(BR.numberOfHolders);
-                                    notifyPropertyChanged(BR.uTXOCount);
-                                }
-
-                                @Override
-                                public void failure(int statusCode, String message) {
-                                    Toast.makeText(DigiByte.getContext(), R.string.failure_asset_meta, Toast.LENGTH_SHORT).show();
-                                }
+                            String.valueOf(assets.get(0).getIndex()))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(metaModel -> {
+                                AssetModel.this.metaModel = metaModel;
+                                notifyPropertyChanged(BR.totalSupply);
+                                notifyPropertyChanged(BR.numberOfHolders);
+                                notifyPropertyChanged(BR.uTXOCount);
+                            }, throwable -> {
+                                Toast.makeText(DigiByte.getContext(), R.string.failure_asset_meta, Toast.LENGTH_SHORT).show();
                             });
                     break;
             }

@@ -15,10 +15,10 @@ import com.facebook.soloader.SoLoader;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.zxing.client.android.PreferencesActivity;
 import com.orm.SchemaGenerator;
-import com.orm.SugarApp;
 import com.orm.SugarContext;
 import com.orm.SugarDb;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 
 import io.digibyte.presenter.activities.DisabledActivity;
@@ -30,6 +30,9 @@ import io.digibyte.tools.manager.JobsHelper;
 import io.digibyte.tools.security.BRKeyStore;
 import io.digibyte.tools.util.BRConstants;
 import io.fabric.sdk.android.Fabric;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -56,7 +59,7 @@ import io.fabric.sdk.android.Fabric;
  * THE SOFTWARE.
  */
 
-public class DigiByte extends SugarApp implements
+public class DigiByte extends Application implements
         Application.ActivityLifecycleCallbacks {
     public static final String HOST = "digibyte.io";
     //public static final String FEE_URL = "https://go.digibyte.co/bws/api/v2/feelevels";
@@ -88,33 +91,25 @@ public class DigiByte extends SugarApp implements
     @Override
     public void onCreate() {
         super.onCreate();
-        SoLoader.init(this, false);
-        Fabric.with(this, new Crashlytics());
-        FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(!BuildConfig.DEBUG);
-        JobManager.create(this).addJobCreator(new JobsHelper.DigiByteJobCreator());
-        application = this;
-        activeActivity = null;
-        registerActivityLifecycleCallbacks(this);
-        BRSharedPrefs.putFeePerKb(this, 40000);
-        Database.instance.init();
+        Completable.fromRunnable(() -> {
+            SugarContext.init(DigiByte.this);
+            SoLoader.init(this, false);
+            Fabric.with(this, new Crashlytics());
+            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(!BuildConfig.DEBUG);
+            JobManager.create(this).addJobCreator(new JobsHelper.DigiByteJobCreator());
+            BRSharedPrefs.putFeePerKb(this, 40000);
+            Database.instance.init();
 
-        //This is for legacy users that have the boolean set to true, Vibrate permission has been
-        // removed
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (prefs.getBoolean(PreferencesActivity.KEY_VIBRATE, false)) {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean(PreferencesActivity.KEY_VIBRATE, false);
-            editor.apply();
-        }
-
-        Executors.newSingleThreadExecutor().execute(() -> {
             //Useful for dropping and re-creating the recurring payments db
             //SugarContext.terminate();
             SchemaGenerator schemaGenerator = new SchemaGenerator(DigiByte.this);
             //schemaGenerator.deleteTables(new SugarDb(this).getDB());
             SugarContext.init(DigiByte.this);
             schemaGenerator.createDatabase(new SugarDb(DigiByte.this).getDB());
-        });
+        }).subscribeOn(Schedulers.io()).subscribe();
+        application = this;
+        activeActivity = null;
+        registerActivityLifecycleCallbacks(this);
     }
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -170,5 +165,11 @@ public class DigiByte extends SugarApp implements
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        SugarContext.terminate();
     }
 }

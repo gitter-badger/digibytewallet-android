@@ -129,10 +129,12 @@ public class JobsHelper {
     }
 
     public static void updateRecurringPaymentJobs() {
-        List<RecurringPayment> recurringPaymentList = RecurringPayment.listAll(RecurringPayment.class);
-        for (RecurringPayment recurringPayment : recurringPaymentList) {
-            scheduleRecurringPayment(recurringPayment);
-        }
+        executor.execute(() -> {
+            List<RecurringPayment> recurringPaymentList = RecurringPayment.listAll(RecurringPayment.class);
+            for (RecurringPayment recurringPayment : recurringPaymentList) {
+                scheduleRecurringPayment(recurringPayment);
+            }
+        });
     }
 
     public static void scheduleRecurringPayment(RecurringPayment recurringPayment) {

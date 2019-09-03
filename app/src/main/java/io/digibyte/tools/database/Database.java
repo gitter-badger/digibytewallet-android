@@ -72,15 +72,12 @@ public class Database {
     public void saveAssetName(String asset_name, ListItemTransactionData... transactions) {
         executor.execute(() -> {
             for (ListItemTransactionData listItemTransactionData : transactions) {
-                if (assetNamesDao.FindAssetNameFromHash(listItemTransactionData.transactionItem.txReversed) != null) {
-                    continue;
-                }
                 AssetName assetName = new AssetName();
                 assetName.setHash(listItemTransactionData.transactionItem.txReversed);
                 assetName.setAssetName(asset_name);
                 assetNamesDao.insertAll(assetName);
                 assetNames = assetNamesDao.getAll();
-                listItemTransactionData.updateAssetName();
+                handler.post(listItemTransactionData::updateAssetName);
             }
         });
     }
@@ -127,5 +124,9 @@ public class Database {
             }
         }
         return null;
+    }
+
+    public void deleteNames() {
+        assetNamesDao.nukeTable();
     }
 }

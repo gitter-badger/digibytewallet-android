@@ -31,7 +31,7 @@ android {
         applicationId = 'io.digibyte'
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 2539
+        versionCode 2540
         versionName "3.0.1.5"
         multiDexEnabled true
     }
@@ -189,11 +189,17 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:1.1.1"
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation group: 'commons-codec', name: 'commons-codec', version: '1.10'
-    implementation 'com.google.firebase:firebase-core:17.0.1'
+    implementation 'com.google.firebase:firebase-core:17.1.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation 'com.github.satyan:sugar:1.5'
     implementation "com.google.android.gms:play-services-gcm:17.0.0"
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-    implementation 'com.google.firebase:firebase-analytics:17.0.1'
+    implementation 'com.google.firebase:firebase-analytics:17.1.0'
+
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
+    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.1'
+
 }

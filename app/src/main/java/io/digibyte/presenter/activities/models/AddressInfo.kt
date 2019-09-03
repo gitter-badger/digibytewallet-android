@@ -11,7 +11,7 @@ class AddressInfo {
             val assets = LinkedList<Asset>()
             for (utxo in utxos) {
                 if (utxo.used) {
-                    continue;
+                    continue
                 }
                 for (asset in utxo.assets) {
                     asset.address = utxo.address
@@ -22,6 +22,22 @@ class AddressInfo {
             }
             return assets
         }
+
+    fun getAssets(txid: String): LinkedList<Asset> {
+        val assets = LinkedList<Asset>()
+        for (utxo in utxos) {
+            if (utxo.used or !utxo.txid.equals(txid)) {
+                continue
+            }
+            for (asset in utxo.assets) {
+                asset.address = utxo.address
+                asset.txid = utxo.txid
+                asset.index = utxo.index
+                assets.add(asset)
+            }
+        }
+        return assets
+    }
 
     inner class UTXO {
         lateinit var address: String

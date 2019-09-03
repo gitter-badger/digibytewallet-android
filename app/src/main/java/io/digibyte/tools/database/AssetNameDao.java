@@ -18,4 +18,7 @@ public interface AssetNameDao {
 
     @Insert
     void insertAll(AssetName... assetNames);
+
+    @Query("DELETE FROM asset_names")
+    public void nukeTable();
 }

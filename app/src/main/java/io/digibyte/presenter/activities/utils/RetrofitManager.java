@@ -25,6 +25,7 @@ import io.digibyte.DigiByte;
 import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.MetaModel;
 import io.digibyte.presenter.activities.models.SendAssetResponse;
+import io.reactivex.Observable;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.MediaType;
@@ -35,6 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -66,6 +68,7 @@ public class RetrofitManager {
         assetsApi = new Retrofit.Builder()
                 .baseUrl("https://api.digiassets.net:443/v3/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(builder.build())
                 .build();
     }
@@ -115,11 +118,11 @@ public class RetrofitManager {
 
     private interface AssetEndpoints {
         @GET("addressinfo/{address}")
-        Call<AddressInfo> getAssets(@Path("address") String address);
+        Observable<AddressInfo> getAssets(@Path("address") String address);
 
         @GET("assetmetadata/{assetid}/{utxotxid}:{index}")
-        Call<MetaModel> getMeta(@Path("assetid") String assetid, @Path("utxotxid") String utxotxid,
-                                @Path("index") String index);
+        Observable<MetaModel> getMeta(@Path("assetid") String assetid, @Path("utxotxid") String utxotxid,
+                                      @Path("index") String index);
 
         @POST("sendasset/")
         @Headers({"cache-control: no-cache", "Content-Type: application/json"})
@@ -129,58 +132,14 @@ public class RetrofitManager {
         Call<ResponseBody> broadcastTx(@Body RequestBody body);
     }
 
-    public interface AssetsCallback {
-        void assetsRetrieved(AddressInfo addressAssets);
-    }
-
-    public void getAssets(String address, AssetsCallback assetsCallback) {
+    public Observable<AddressInfo> getAssets(String address) {
         AssetEndpoints apiService = assetsApi.create(AssetEndpoints.class);
-        Call<AddressInfo> call = apiService.getAssets(address);
-        call.enqueue(new Callback<AddressInfo>() {
-            @Override
-            public void onResponse(@NonNull Call<AddressInfo> call, @NonNull Response<AddressInfo> response) {
-                handler.post(() -> assetsCallback.assetsRetrieved(response.body()));
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<AddressInfo> call, @NonNull Throwable t) {
-                Crashlytics.logException(t);
-                handler.post(() -> assetsCallback.assetsRetrieved(null));
-            }
-        });
+        return apiService.getAssets(address);
     }
 
-    public interface MetaCallback {
-        void metaRetrieved(MetaModel metalModel);
-
-        void failure(int statusCode, String meesage);
-    }
-
-    public void getAssetMeta(String assetid, String utxotdid, String index,
-                             MetaCallback metaCallback) {
+    public Observable<MetaModel> getAssetMeta(String assetid, String utxotdid, String index) {
         AssetEndpoints apiService = assetsApi.create(AssetEndpoints.class);
-        Call<MetaModel> call = apiService.getMeta(assetid, utxotdid, index);
-        call.enqueue(new Callback<MetaModel>() {
-            @Override
-            public void onResponse(@NonNull Call<MetaModel> call, @NonNull Response<MetaModel> response) {
-                if (response.body() != null) {
-                    metaCallback.metaRetrieved(response.body());
-                } else {
-                    handler.post(() -> metaCallback.failure(response.code(), response.message()));
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<MetaModel> call, @NonNull Throwable t) {
-                Crashlytics.logException(t);
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        metaCallback.failure(0, "");
-                    }
-                });
-            }
-        });
+        return apiService.getMeta(assetid, utxotdid, index);
     }
 
     public interface SendAssetCallback {
