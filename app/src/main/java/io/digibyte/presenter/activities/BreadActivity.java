@@ -366,16 +366,16 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         for (AddressTxSet set : allAddresses) {
             nameObservables.add(processAssetNames(set.address, set.listItemTransactionData));
         }
-        Observable<MetaModel> addresses = Observable.merge(assetObservables);
-        Observable<MetaModel> names = Observable.merge(nameObservables);
+        Observable<MetaModel> addresses = Observable.merge(assetObservables).onErrorResumeNext(Observable.just(MetaModel.empty()));
+        Observable<MetaModel> names = Observable.merge(nameObservables).onErrorResumeNext(Observable.just(MetaModel.empty()));
         Observable<Boolean> completion = Observable.fromCallable(() -> {
             bindings.assetRefresh.setRefreshing(false);
-            if (assetAdapter.getItemCount() > 0) {
+            if (assetAdapter.getItemCount() > 0 && bindings.noAssetsSwitcher.getDisplayedChild() != 1) {
                 bindings.noAssetsSwitcher.setDisplayedChild(1);
             }
             return true;
         }).subscribeOn(AndroidSchedulers.mainThread()).delay(3, TimeUnit.SECONDS);
-        disposables.add(Observable.merge(addresses, names, completion).delaySubscription(1, TimeUnit.SECONDS).subscribe());
+        disposables.add(Observable.concat(addresses, names, completion).delaySubscription(1, TimeUnit.SECONDS).subscribe());
     }
 
     private Observable<MetaModel> processAssets(@NonNull final String address, boolean forceAssetMeta, boolean clearAssetUtxo) {
