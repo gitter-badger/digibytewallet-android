@@ -5,6 +5,16 @@ import java.util.*
 class AddressInfo {
     lateinit var address: String
     lateinit var utxos: Array<UTXO>
+    var empty: Boolean = false
+
+    companion object {
+        fun empty(): AddressInfo {
+            val addressInfo = AddressInfo()
+            addressInfo.utxos = arrayOf()
+            return addressInfo
+        }
+    }
+
 
     val assets: List<Asset>
         get() {

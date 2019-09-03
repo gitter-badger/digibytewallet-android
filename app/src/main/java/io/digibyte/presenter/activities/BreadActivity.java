@@ -379,14 +379,15 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private Observable<MetaModel> processAssets(@NonNull final String address, boolean forceAssetMeta, boolean clearAssetUtxo) {
-        return RetrofitManager.instance.getAssets(address).flatMap(addressInfo -> {
+        return RetrofitManager.instance.getAssets(address).onErrorResumeNext(Observable.just(AddressInfo.Companion.empty())).flatMap(addressInfo -> {
             List<Observable<MetaModel>> metaObservables = new LinkedList<>();
             for (final AddressInfo.Asset asset : addressInfo.getAssets()) {
                 if (forceAssetMeta) {
                     RetrofitManager.instance.clearMetaCache(asset.assetId);
                 }
                 Observable<MetaModel> metaObservable = RetrofitManager.instance.getAssetMeta(asset.assetId, asset.txid, String.valueOf(asset.getIndex()))
-                        .onErrorResumeNext(Observable.empty()).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).doOnNext(metaModel -> {
+                        .onErrorResumeNext(Observable.just(MetaModel.empty())).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).doOnNext(metaModel -> {
+                            if (metaModel.empty) return;
                             AssetModel assetModel = new AssetModel(metaModel, asset);
                             if (!assetAdapter.containsItem(assetModel)) {
                                 assetAdapter.addItem(assetModel);
@@ -395,43 +396,27 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                             } else {
                                 assetAdapter.addItem(assetModel);
                             }
-                        }).doOnError(throwable -> {
-                            StringBuilder builder = new StringBuilder();
-                            builder.append("asset_id: ").append(asset.assetId);
-                            builder.append(", txid: ").append(asset.txid);
-                            builder.append(", index: ").append(asset.getIndex());
-                            builder.append(", throwable: ").append(throwable.getMessage());
-                            Crashlytics.logException(new Exception(builder.toString()));
-                            throwable.printStackTrace();
-                            Toast.makeText(BreadActivity.this, R.string.failure_asset_meta, Toast.LENGTH_SHORT).show();
                         });
                 metaObservables.add(metaObservable);
             }
             return Observable.merge(metaObservables);
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).onErrorResumeNext(Observable.empty());
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     private Observable<MetaModel> processAssetNames(@NonNull final String address,
                                                     @NonNull final ListItemTransactionData listItemTransactionData) {
-        return RetrofitManager.instance.getAssets(address).flatMap(addressInfo -> {
+        return RetrofitManager.instance.getAssets(address).onErrorResumeNext(Observable.just(AddressInfo.Companion.empty())).flatMap(addressInfo -> {
             List<Observable<MetaModel>> metaObservables = new LinkedList<>();
             for (final AddressInfo.Asset asset : addressInfo.getAssets(listItemTransactionData.transactionItem.txReversed)) {
                 Observable<MetaModel> metaObservable = RetrofitManager.instance.getAssetMeta(asset.assetId, asset.txid, String.valueOf(asset.getIndex()))
-                        .onErrorResumeNext(Observable.empty()).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).doOnNext(metaModel -> {
+                        .onErrorResumeNext(Observable.just(MetaModel.empty())).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).doOnNext(metaModel -> {
+                            if (metaModel.empty) return;
                             Database.instance.saveAssetName(metaModel.metadataOfIssuence.data.assetName, listItemTransactionData);
-                        }).doOnError(throwable -> {
-                            StringBuilder builder = new StringBuilder();
-                            builder.append("asset_id: ").append(asset.assetId);
-                            builder.append(", txid: ").append(asset.txid);
-                            builder.append(", index: ").append(asset.getIndex());
-                            builder.append(", throwable: ").append(throwable.getMessage());
-                            Crashlytics.logException(new Exception(builder.toString()));
-                            Toast.makeText(BreadActivity.this, R.string.failure_asset_meta, Toast.LENGTH_SHORT).show();
                         });
                 metaObservables.add(metaObservable);
             }
             return Observable.merge(metaObservables);
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).onErrorResumeNext(Observable.empty());
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     private void addAssetToModel(final AssetModel assetModel, final AddressInfo.Asset asset, boolean clear) {

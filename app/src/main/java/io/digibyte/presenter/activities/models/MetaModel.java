@@ -14,6 +14,13 @@ public class MetaModel {
     int numOfHolders;
     String issueAddress;
     public IsuanceModel metadataOfIssuence;
+    public boolean empty;
+
+    public static MetaModel empty() {
+        MetaModel metaModel = new MetaModel();
+        metaModel.empty = true;
+        return metaModel;
+    }
 
     @Override
     public boolean equals(Object o) {
