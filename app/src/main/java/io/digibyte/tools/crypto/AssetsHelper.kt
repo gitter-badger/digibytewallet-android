@@ -1,16 +1,20 @@
 package io.digibyte.tools.crypto
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import io.digibyte.R
+import io.digibyte.presenter.activities.callbacks.BRAuthCompletion
 import io.digibyte.presenter.activities.models.AssetModel
 import io.digibyte.presenter.activities.models.FinanceUTXO
 import io.digibyte.presenter.activities.models.SendAsset
 import io.digibyte.presenter.activities.utils.RetrofitManager
 import io.digibyte.presenter.fragments.FragmentNumberPicker
-import io.digibyte.presenter.activities.callbacks.BRAuthCompletion
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class AssetsHelper {
 
@@ -31,33 +35,36 @@ class AssetsHelper {
         }
     }
 
+    @SuppressLint("CheckResult")
     fun processAssetTx(context: Context, assetTx: AssetTx) {
         try {
             Log.d(AssetModel::class.java.simpleName, "Clipped Address: ${assetTx.destinationAddress}")
 
-            val financeUTXO = getNeededUTXOTxid(1200)
-            if (financeUTXO.txid.isNullOrEmpty()) {
-                Toast.makeText(context, R.string.not_enough_digi, Toast.LENGTH_SHORT).show()
-                return
+            Observable.fromCallable {
+                val financeUTXO = getNeededUTXOTxid(1200)
+                if (financeUTXO.txid.isNullOrEmpty()) {
+                    Toast.makeText(context, R.string.not_enough_digi, Toast.LENGTH_SHORT).show()
+                    throw IllegalStateException()
+                }
+                RetrofitManager.instance.clearCache(assetTx.changeAddress)
+                SendAsset(
+                        Integer.toString(1200),
+                        assetTx.changeAddress,
+                        assetTx.utxoTxids,
+                        financeUTXO.vout,
+                        financeUTXO.txid,
+                        assetTx.destinationAddress.toString(),
+                        assetTx.assetQuantity,
+                        assetTx.assetId,
+                        assetTx.divisibility,
+                        assetTx.assetModel
+                )
+            }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe { sendAsset ->
+                FragmentNumberPicker.show(
+                        context as AppCompatActivity,
+                        BRAuthCompletion.AuthType(sendAsset)
+                )
             }
-            RetrofitManager.instance.clearCache(assetTx.changeAddress)
-
-            val sendAsset = SendAsset(
-                    Integer.toString(1200),
-                    assetTx.changeAddress,
-                    assetTx.utxoTxids,
-                    financeUTXO.vout,
-                    financeUTXO.txid,
-                    assetTx.destinationAddress.toString(),
-                    assetTx.assetQuantity,
-                    assetTx.assetId,
-                    assetTx.divisibility,
-                    assetTx.assetModel
-            )
-            FragmentNumberPicker.show(
-                    context as AppCompatActivity,
-                    BRAuthCompletion.AuthType(sendAsset)
-            )
         } catch (t: Throwable) {
             t.printStackTrace()
         }

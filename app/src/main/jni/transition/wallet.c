@@ -1160,11 +1160,14 @@ Java_io_digibyte_tools_crypto_AssetsHelper_getNeededUTXOTxid(JNIEnv *env,
                                            "io/digibyte/presenter/activities/models/FinanceUTXO");
     jmethodID mid = (*env)->GetMethodID(env, financeUTXO, "<init>", "(Ljava/lang/String;JJ[B)V");
     jobject txObject;
+
+    BRWalletUpdateBalance(_wallet);
+
     for (j = 0; j < array_count(utxos); j++) {
         t = BRGetTxForUTXO(_wallet, utxos[j]);
         output = &t->outputs[utxos[j].n];
-        utxoAmount = output->amount;
         if (BROutputSpendable(_wallet, *output)) {
+            utxoAmount = output->amount;
             UInt256 reversedHash = UInt256Reverse(utxos[j].hash);
             jstring txid = (*env)->NewStringUTF(env, u256hex(reversedHash));
             jbyteArray script = (*env)->NewByteArray(env, (jsize) output->scriptLen);
