@@ -82,10 +82,7 @@
   <string name="JailbreakWarnings.close">Close</string>
   <!-- Ignore jailbreak warning button -->
   <!-- Jailbreak warning message -->
-  <string name="JailbreakWarnings.messageWithoutBalance">DEVICE SECURITY COMPROMISED\n Any
-    \'jailbreak\' app can access DigiWallet\'s keychain data and steal your DigiByte. Please only
-    use DigiWallet on a non-jailbroken device.
-  </string>
+    <string name="JailbreakWarnings.messageWithoutBalance">Your device has been detected as a rooted device. This means the normal Android security features can be overridden by anybody who picks up your phone, or a malicious 3rd-party application. Continued use of any secure wallet on a rooted device is not advised. Please proceed with caution.</string>
   <!-- Jailbreak warning title -->
   <string name="JailbreakWarnings.title">WARNING</string>
   <!-- Menu button title -->
@@ -125,21 +122,14 @@
   <!-- Instruction how to enable device encryption -->
   <string name="Prompts.NoScreenLock.body.android">A device screen lock is needed to safeguard your wallet. Go to \"Settings\" &gt; \"Security\" &gt; \"Screen lock\" and enable to continue.</string>
   <!-- Warning about paper key. -->
-  <string name="Prompts.PaperKey.body">Your Personal Recovery Key must be saved in case you ever lose or change your phone. Tap here to continue.</string>
   <!-- An action is required (You must do this action). -->
-  <string name="Prompts.PaperKey.title">Action Required</string>
   <!-- Transaction rejected prompt body -->
-  <string name="Prompts.RecommendRescan.body">Your wallet may be out of sync. This can often be fixed by rescanning the blockchain.</string>
   <!-- Enable Fingerprint prompt body -->
-  <string name="Prompts.TouchId.body.android">Tap here to enable fingerprint authentication</string>
   <!-- Enable Fingerprint prompt title -->
-  <string name="Prompts.TouchId.title.android">Enable Fingerprint Authentication</string>
   <!-- Button on fingerprint prompt so the user can enter their PIN instead -->
   <string name="Prompts.TouchId.usePin.android">PIN</string>
   <!-- Upgrade PIN prompt body. -->
-  <string name="Prompts.UpgradePin.body">DigiWallet has upgraded to using a 6-digit PIN. Tap here to upgrade.</string>
   <!-- Upgrade PIN prompt title. -->
-  <string name="Prompts.UpgradePin.title">Upgrade PIN</string>
   <!-- Notifications will be added later but users can set their preferences now, which is why we specify "in the future". -->
   <string name="PushNotifications.body">Turn on notifications to receive special messages from DigiWallet in the future.</string>
   <!-- Push notifications toggle switch label -->
@@ -161,7 +151,6 @@
   <!-- Reset PIN with paper key: header -->
   <string name="RecoverWallet.header_reset_pin">Reset PIN</string>
   <!-- Enter paper key instruction -->
-  <string name="RecoverWallet.instruction">Enter Personal Recovery Key</string>
   <!-- Recover wallet intro -->
   <string name="RecoverWallet.intro">Recover your DigiWallet with your Personal Recovery Key.</string>
   <!-- Invalid paper key message -->
@@ -187,7 +176,6 @@
   <!-- Sync blockchain view footer -->
   <string name="ReScan.footer">You will not be able to send DigiByte while syncing with the blockchain.</string>
   <!-- Sync Blockchain view header -->
-  <string name="ReScan.header">Sync Blockchain</string>
   <!-- Subheader label -->
   <string name="ReScan.subheader1">Estimated time</string>
   <!-- Subheader label -->
@@ -271,7 +259,6 @@
   <!-- Syncing view connectiong state header text -->
   <string name="SyncingView.connecting">Connecting</string>
   <!-- Syncing view header text -->
-  <string name="SyncingView.header">Syncing</string>
   <!-- Fingerprint enabling description body -->
   <string name="TouchIdSettings.customizeText.android">You can customize your Fingerprint Authentication Spending Limit from the Fingerprint Authorization Spending Limit screen</string>
   <!-- Instruction for the fingerprint setup -->
@@ -370,7 +357,6 @@
   <string name="recurring_payments_title">Recurring Payments: %s</string>
   <string name="recurring_payments_sample">Recurring Payments Sample: %s</string>
   <string name="recipients_address">Recipients Address:</string>
-  <string name="add">Add</string>
   <string name="set_recurring_payment_time">Set recurring payment time</string>
   <string name="add_recurring_payment_time">Add recurring payment</string>
   <string name="daily">Daily</string>
@@ -396,6 +382,6 @@
   <string name="node_connected">Node Connected</string>
   <string name="node_disconnected">Node Disconnected</string>
   <string name="enter_an_amount">Enter an Amount</string>
-  <string name="cannot_send_to_self">Cannot send to self</string>
   <string name="asset_confirm_message">Destination Address: %s\nAsset: %s\nAmount: %d</string>
+    <string name="rooted_device">Rooted Device Warning</string>
 </resources>

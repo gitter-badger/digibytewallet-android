@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <!-- App name -->
-  <string name="About.appName.android">DigiWallet
-</string>
-  <!-- About screen blog label -->
+    <!-- About screen blog label -->
   <string name="About.blog">https://digibyte.io/</string>
   <!-- About screen footer -->
   <string name="About.footer">Phát triển bởi đội ngũ DigiWallet. Phiên bản %1$s</string>
@@ -12,23 +10,19 @@
   <!-- About screen reddit label -->
   <string name="About.reddit">https://www.reddit.com/r/Digibyte/</string>
   <!-- Terms of Use button label -->
-  <string name="About.terms">Đây là dự án mã nguồn mở, bạn có thể xem mã ở đây: https://github.com/Racecraft/digibytewallet-android</string>
-  <!--
-  Terms of Use button label
-  About screen title
-  -->
+    <!--
+    Terms of Use button label
+    About screen title
+    -->
   <string name="About.title">DigiWallet cho Android là ví  DigiByte trên điện thoại di động</string>
   <!-- About screen twitter label -->
   <string name="About.twitter">https://twitter.com/digibytecoin</string>
   <!-- Close modal button accessibility label -->
   <string name="AccessibilityLabels.close">Đóng</string>
   <!-- Support center accessibiliy label -->
-  <string name="AccessibilityLabels.faq">Trung tâm hỗ trợ</string>
-  <!-- Loading Wallet Message -->
-  <string name="Account.loadingMessage">Đang tải ví</string>
-  <!-- Default wallet name -->
-  <string name="AccountHeader.defaultWalletName">DigiWallet của tôi</string>
-  <!-- Third party keyboard warning -->
+    <!-- Loading Wallet Message -->
+    <!-- Default wallet name -->
+    <!-- Third party keyboard warning -->
   <string name="Alert.customKeyboard.android">Dường như bạn bạn đang sử dụng bàn phím của bên thứ ba, điều này có thể ghi lại những gì bạn gõ và đánh cắp Khóa Khôi Phục ví. Vui lòng chuyển về bàn phím mặc định của Android để được bảo vệ.</string>
   <!-- Error alert title -->
   <string name="Alert.error">Lỗi</string>
@@ -39,14 +33,10 @@
   <!-- Keystore error title -->
   <string name="Alert.keystore.title.android">Kho lưu trữ mật khẩu bị lỗi</string>
   <!-- No internet alert message -->
-  <string name="Alert.noInternet">Không có kết nối mạng. Kiểm tra lại đường truyền của bạn lần nữa</string>
-  <!-- Warning alert title -->
-  <string name="Alert.warning">Cảnh báo</string>
-  <!-- 'the addresses were copied'' Alert title -->
-  <string name="Alerts.copiedAddressesHeader">Đã sao chép địa chỉ</string>
-  <!-- Addresses Copied Alert sub header -->
-  <string name="Alerts.copiedAddressesSubheader">Tất cả địa chỉ ví được sao chép thành công</string>
-  <!-- Alert Header Label (the paper key was set) -->
+    <!-- Warning alert title -->
+    <!-- 'the addresses were copied'' Alert title -->
+    <!-- Addresses Copied Alert sub header -->
+    <!-- Alert Header Label (the paper key was set) -->
   <string name="Alerts.paperKeySet">Thiết lập Khóa Khôi Phục ví</string>
   <!-- Alert Subheader label (playfully positive) -->
   <string name="Alerts.paperKeySetSubheader">Tuyệt!</string>
@@ -62,81 +52,48 @@
   <string name="Alerts.touchIdSucceeded.android">Dấu vân tay đã được nhận diện</string>
   <string name="all">Tất cả các</string>
   <!-- JSON Serialization error message -->
-  <string name="ApiClient.jsonError">Lỗi ký tự JSON</string>
-  <!-- Wallet not ready error message -->
-  <string name="ApiClient.notReady">Ví chưa sẵn sàng</string>
-  <!-- API Token error message -->
-  <string name="ApiClient.tokenError">Không thể truy vấn đến địa chỉ API</string>
-  <!-- Send BCH view body. -->
-  <string name="BCH.body">Nhập địa chỉ ví nhận DGB bên dưới. Tất cả DGB trong ví của bạn ại thời điểm chia tách (fork) (%1$s) sẽ được gửi.</string>
-  <!-- Confirm sending <$5.00> to <address>? -->
-  <string name="BCH.confirmationMessage">Xác nhận đang gửi %1$s đến %2$s</string>
-  <!-- Confirmation alert title -->
-  <string name="BCH.confirmationTitle">Xác nhận</string>
-  <!-- Generic bch erorr message -->
-  <string name="BCH.genericError">Tài khoản của bạn hiện tại không có bất kỳ DBG nào, hoặc bạn đã nhận DBG sau khi chia tách (fork).</string>
-  <!-- Transaction ID copied message -->
-  <string name="BCH.hashCopiedMessage">Đã sao chép mã giao dịch</string>
-  <!-- No address error message -->
-  <string name="BCH.noAddressError">Vui lòng nhập vào địa chỉ</string>
-  <!-- Attempted to scan unsupported qr code error message. -->
-  <string name="BCH.paymentProtocolError">Giao thức thanh toán không được hỗ trợ cho các giao dịch DGB</string>
-  <!-- BCH successfully sent alert message -->
-  <string name="BCH.successMessage">DGB đã gửi đi thành công.</string>
-  <!-- Widthdraw BCH view title -->
-  <string name="BCH.title">Rút DGB</string>
-  <!-- Tx Hash button header -->
-  <string name="BCH.txHashHeader">Mã giao dịch DGB</string>
-  <!-- Approve button label -->
-  <string name="BitID.approve">Đồng ý</string>
-  <!-- <sitename> is requesting authentication using your bitcoin wallet -->
-  <string name="BitID.authenticationRequest">%1$s đang yêu cầu xác thực bằng cách sử dụng ví DigiWallet của bạn.</string>
-  <!-- Deny button label -->
-  <string name="BitID.deny">Từ chối</string>
-  <!-- BitID error alert title -->
-  <string name="BitID.error">Lỗi xác thực</string>
-  <!-- BitID error alert messaage (The payment service you are trying to use isn't working. Please contact them, as you may need to try again) -->
-  <string name="BitID.errorMessage">Vui lòng kiểm tra dịch vụ. Bạn cần thực hiện lại lần nữa</string>
-  <!-- BitID success alert title -->
-  <string name="BitID.success">Xác thực thành công</string>
-  <!-- BitID Authentication Request alert view title -->
-  <string name="BitID.title">Yêu cầu xác thực DigiID</string>
-  <!-- Cancel button label -->
+    <!-- Wallet not ready error message -->
+    <!-- API Token error message -->
+    <!-- Send BCH view body. -->
+    <!-- Confirm sending <$5.00> to <address>? -->
+    <!-- Confirmation alert title -->
+    <!-- Generic bch erorr message -->
+    <!-- Transaction ID copied message -->
+    <!-- No address error message -->
+    <!-- Attempted to scan unsupported qr code error message. -->
+    <!-- BCH successfully sent alert message -->
+    <!-- Widthdraw BCH view title -->
+    <!-- Tx Hash button header -->
+    <!-- Approve button label -->
+    <!-- <sitename> is requesting authentication using your bitcoin wallet -->
+    <!-- Deny button label -->
+    <!-- BitID error alert title -->
+    <!-- BitID error alert messaage (The payment service you are trying to use isn't working. Please contact them, as you may need to try again) -->
+    <!-- BitID success alert title -->
+    <!-- BitID Authentication Request alert view title -->
+    <!-- Cancel button label -->
   <string name="Button.cancel">Hủy</string>
   <!-- Ignore button label -->
-  <string name="Button.ignore">Bỏ qua</string>
-  <!-- menu button -->
-  <string name="Button.menu">Menu</string>
-  <!-- No button -->
-  <string name="Button.no">Không</string>
-  <!-- OK button label -->
+    <!-- menu button -->
+    <!-- No button -->
+    <!-- OK button label -->
   <string name="Button.ok">OK</string>
   <!-- receive button -->
-  <string name="Button.receive">nhận</string>
-  <!-- send button -->
-  <string name="Button.send">Gửi</string>
-  <!-- Settings button label -->
-  <string name="Button.settings">Cài đặt</string>
-  <!-- Settings button label -->
-  <string name="Button.submit">Gửi đi</string>
-  <!-- Yes button -->
-  <string name="Button.yes">Có</string>
-  <!-- Camera plugin instruction -->
-  <string name="CameraPlugin.centerInstruction">Canh ID của bạn vào giữa khung</string>
-  <string name="completed">Đã hoàn thành</string>
+    <!-- send button -->
+    <!-- Settings button label -->
+    <!-- Settings button label -->
+    <!-- Yes button -->
+    <!-- Camera plugin instruction -->
+    <string name="completed">Đã hoàn thành</string>
   <!-- Amount to Send: ($1.00) -->
   <string name="Confirmation.amountLabel">Số lượng cần gửi</string>
   <!-- Network Fee: ($1.00) -->
   <string name="Confirmation.feeLabel">Phí mạng:</string>
   <!-- eg. Processing time: This transaction is predicted to complete in [10-60 minutes]. -->
-  <string name="Confirmation.processingTime">Thời gian xử lý: Giao dịch này được dự đoán sẽ hoàn thành trong %1$s.</string>
-  <!-- Label for "send" button on final confirmation screen -->
-  <string name="Confirmation.send">Gửi</string>
-  <!-- Confirmation Screen title -->
-  <string name="Confirmation.title">Xác nhận</string>
-  <!-- To: (address) -->
-  <string name="Confirmation.to">Đến</string>
-  <!-- Total Cost: ($5.00) -->
+    <!-- Label for "send" button on final confirmation screen -->
+    <!-- Confirmation Screen title -->
+    <!-- To: (address) -->
+    <!-- Total Cost: ($5.00) -->
   <string name="Confirmation.totalLabel">Tổng chi phí:</string>
   <!-- Confirm paper phrase view label. -->
   <string name="ConfirmPaperPhrase.label">Nhằm đảm bảo mọi thứ đã được ghi chép chính xác, vui lòng nhập các từ trong mã khôi phục ví của bạn.</string>
@@ -145,124 +102,88 @@
   <string name="current_amount">Giá trị hiện tại: %s</string>
   <string name="date">Ngày tháng</string>
   <!-- Bitcoin denomination picker label -->
-  <string name="DefaultCurrency.bitcoinLabel">Đơn vị hiển thị DiGiByte</string>
-  <!--
-  Bitcoin denomination picker label
-  Exchange rate label
-  -->
+    <!--
+    Bitcoin denomination picker label
+    Exchange rate label
+    -->
   <string name="DefaultCurrency.rateLabel">Tỷ giá</string>
   <!-- Email unavailable alert title -->
-  <string name="ErrorMessages.emailUnavailableMessage">Thiết bị này không được cấu hình gửi email trên Android</string>
-  <!-- Email unavailable alert title -->
-  <string name="ErrorMessages.emailUnavailableTitle">Email không có sẵn</string>
-  <!-- Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) -->
+    <!-- Email unavailable alert title -->
+    <!-- Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) -->
   <string name="ErrorMessages.loopingLockScreen.android">Không thể xác thực DigiWallet do lỗi trong phiên bản Android của bạn. [Hãy nhấn vào đây để biết thêm thông tin.]</string>
   <!-- Messaging unavailable alert title -->
-  <string name="ErrorMessages.messagingUnavailableMessage">Thiết bị này không được cấu hình để gửi tin</string>
-  <!-- Messaging unavailable alert title -->
-  <string name="ErrorMessages.messagingUnavailableTitle">Không có tin nhắn</string>
-  <!-- Fingerprint was not recognized by the scanner, please try scanning again -->
+    <!-- Messaging unavailable alert title -->
+    <!-- Fingerprint was not recognized by the scanner, please try scanning again -->
   <string name="ErrorMessages.touchIdFailed.android">Chưa đồng bộ dấu vân tay. Thử lại lần nữa</string>
   <!-- Economy fee -->
-  <string name="FeeSelector.economy">Tiết kiệm</string>
-  <!-- E.g. [This transaction is predicted to complete in] 1-24 hours -->
-  <string name="FeeSelector.economyTime">Ước tính: 10+ phút</string>
-  <!-- Warning message for economy fee -->
-  <string name="FeeSelector.economyWarning">Không sử dụng tùy chọn này cho các giao dịch cần phải hoàn tất  trong thời gian ngắn</string>
-  <!-- E.g. Estimated delivery: 10-60 minutes -->
-  <string name="FeeSelector.estimatedDeliver">Thời gian gửi dự kiến: %1$s</string>
-  <!-- Regular fee -->
-  <string name="FeeSelector.regular">Thông thường</string>
-  <!-- E.g. [This transaction is predicted to complete in] 10-60 minutes -->
-  <string name="FeeSelector.regularTime">Thời gian gửi dự tính: 15-30 giây</string>
-  <!-- Fee Selector title -->
-  <string name="FeeSelector.title">Tốc độ xử lí</string>
-  <!-- Checking private key balance progress view text -->
+    <!-- E.g. [This transaction is predicted to complete in] 1-24 hours -->
+    <!-- Warning message for economy fee -->
+    <!-- E.g. Estimated delivery: 10-60 minutes -->
+    <!-- Regular fee -->
+    <!-- E.g. [This transaction is predicted to complete in] 10-60 minutes -->
+    <!-- Fee Selector title -->
+    <!-- Checking private key balance progress view text -->
   <string name="Import.checking">Đang kiểm tra số dư của khóa cá nhân...</string>
   <!-- Sweep private key confirmation message -->
   <string name="Import.confirm">Gửi %1$@ từ khóa cá nhân này vào ví của bạn? Mạng DigiByte sẽ nhận được một khoảng phí %2$@.</string>
   <!-- Duplicate key error message -->
-  <string name="Import.Error.duplicate">Khóa cá nhân này đã tồn tại trong ví của bạn.</string>
-  <!-- empty private key error message -->
+    <!-- empty private key error message -->
   <string name="Import.Error.empty">Khóa cá nhân không chứa nội dung</string>
   <!-- High fees error message -->
-  <string name="Import.Error.highFees">Phí giao dịch sẽ cao hơn số tiền đang có trên khóa cá nhân này.</string>
-  <!-- Not a valid private key error message -->
+    <!-- Not a valid private key error message -->
   <string name="Import.Error.notValid">Khóa cá nhân không hợp lệ</string>
   <!-- Import signing error message -->
   <string name="Import.Error.signing">Lỗi khi xác nhận giao dịch</string>
   <!-- Import button label -->
-  <string name="Import.importButton">Nhập vào</string>
-  <!-- Importing wallet progress view label -->
-  <string name="Import.importing">Đang nhập ví</string>
-  <!-- Caption for graphics -->
-  <string name="Import.leftCaption">Ví cần nhập</string>
-  <!-- Import wallet intro screen message -->
+    <!-- Importing wallet progress view label -->
+    <!-- Caption for graphics -->
+    <!-- Import wallet intro screen message -->
   <string name="Import.message">Động tác nhập ví sẽ chuyển tất cả số DigiByte từ ví hiện tại sang một ví DigiWallet mới trong một giao dịch.</string>
   <!-- Enter password alert view title -->
   <string name="Import.password">Khóa cá nhân này được bảo vệ bằng mật khẩu</string>
   <!-- password textfield placeholder -->
-  <string name="Import.passwordPlaceholder">Mật khẩu</string>
-  <!-- Caption for graphics -->
-  <string name="Import.rightCaption">Ví DigiWallet của bạn</string>
-  <!-- Scan Private key button label -->
+    <!-- Caption for graphics -->
+    <!-- Scan Private key button label -->
   <string name="Import.scan">Quét khóa cá nhân</string>
   <!-- Import wallet success alert title -->
-  <string name="Import.success">Thành công</string>
-  <!-- Successfully imported wallet message body -->
-  <string name="Import.SuccessBody">Ví đã được nhập thành công</string>
-  <!-- Import Wallet screen title -->
-  <string name="Import.title">Nhập ví vào</string>
-  <!-- Unlocking Private key activity view message. -->
-  <string name="Import.unlockingActivity">Mở khóa</string>
-  <!-- Import wallet intro warning message -->
+    <!-- Successfully imported wallet message body -->
+    <!-- Import Wallet screen title -->
+    <!-- Unlocking Private key activity view message. -->
+    <!-- Import wallet intro warning message -->
   <string name="Import.warning">Động tác nhập ví sẽ không bao gồm lịch sử giao dịch hoặc các chi tiết khác.</string>
   <!-- Wrong password alert message -->
-  <string name="Import.wrongPassword">Sai mật khẩu, thử lại lần nữa</string>
-  <!-- Close app button -->
+    <!-- Close app button -->
   <string name="JailbreakWarnings.close">Đóng</string>
   <!-- Ignore jailbreak warning button -->
-  <string name="JailbreakWarnings.ignore">Bỏ qua</string>
-  <!-- Jailbreak warning message -->
-  <string name="JailbreakWarnings.messageWithBalance">THIẾT BỊ KHÔNG AN TOÀN
-Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu của ví DigiWallet và lấy cắp DigiByte của bạn!Hãy xoá ví ra khỏi thiết bị này và khôi phục lại trên một thiết bị an toàn khác.</string>
-  <!--
-  Ignore jailbreak warning button
-  Jailbreak warning message
-  -->
+    <!-- Jailbreak warning message -->
+    <!--
+    Ignore jailbreak warning button
+    Jailbreak warning message
+    -->
   <string name="JailbreakWarnings.messageWithoutBalance">THIẾT BỊ KHÔNG AN TOÀN
 Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu của ví DigiWallet và lấy cắp DigiByte của bạn!Hãy chỉ dùng ví DigiWallet trên thiết bị không bị \'root\'.</string>
   <!-- Jailbreak warning title -->
   <string name="JailbreakWarnings.title">CẢNH BÁO</string>
   <!-- Location services disabled error -->
-  <string name="LocationPlugin.disabled">Định vị đã tắt</string>
-  <!-- No permissions for location services -->
-  <string name="LocationPlugin.notAuthorized">DigiWallet không có quyền truy cập đến dịch vụ định vị.</string>
-  <!-- Wallet creation date prefix -->
-  <string name="ManageWallet.creationDatePrefix">Bạn đã tạo ví của mình trên %1$s</string>
-  <!-- Manage wallet description text -->
-  <string name="ManageWallet.description">Tên ví của bạn chỉ xuất hiện trong lịch sử giao dịch tài khoản của bạn và không ai khác có thể nhìn thấy.</string>
-  <!-- Change Wallet name textfield label -->
-  <string name="ManageWallet.textFeildLabel">Tên ví</string>
-  <!-- Manage wallet modal title -->
-  <string name="ManageWallet.title">Quản lý ví</string>
-  <string name="max">Tối đa</string>
+    <!-- No permissions for location services -->
+    <!-- Wallet creation date prefix -->
+    <!-- Manage wallet description text -->
+    <!-- Change Wallet name textfield label -->
+    <!-- Manage wallet modal title -->
+    <string name="max">Tối đa</string>
   <string name="max_send_enabled">Nút hiển thị: Gửi tối đa</string>
   <!-- Buy bitcoin title -->
-  <string name="MenuButton.buy">Mua DigiByte</string>
-  <!-- Menu button title -->
+    <!-- Menu button title -->
   <string name="MenuButton.lock">Khóa Ví</string>
   <!-- Menu button title -->
   <string name="MenuButton.security">Bảo mật</string>
   <!-- Menu button title -->
   <string name="MenuButton.settings">Cài đặt</string>
   <!-- Menu button title -->
-  <string name="MenuButton.support">Hỗ trợ</string>
-  <!-- button label -->
+    <!-- button label -->
   <string name="MenuViewController.createButton">Tạo ví mới</string>
   <!-- Menu modal title -->
-  <string name="MenuViewController.modalTitle">Menu</string>
-  <!-- button label -->
+    <!-- button label -->
   <string name="MenuViewController.recoverButton">Khôi phục ví</string>
   <!-- Switch to automatic mode button label -->
   <string name="NodeSelector.automaticButton">Chuyển sang chế độ Tự động</string>
@@ -285,79 +206,53 @@ Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu c�
   <string name="no_limit">Không giới hạn</string>
   <string name="original_amount">Giá trị ban đầu: %s</string>
   <!-- Bad Payment request alert title -->
-  <string name="PaymentProtocol.Errors.badPaymentRequest">Yêu cầu thanh toán không hợp lệ</string>
-  <!-- Error opening payment protocol file message -->
-  <string name="PaymentProtocol.Errors.corruptedDocument">Thông tin không được hỗ trợ hoặc bị hỏng</string>
-  <!-- Missing certificate payment protocol error message -->
-  <string name="PaymentProtocol.Errors.missingCertificate">không tìm thấy chứng chỉ xác thực</string>
-  <!-- Request expired payment protocol error message -->
-  <string name="PaymentProtocol.Errors.requestExpired">Yêu cầu bị hết hạn</string>
-  <!-- Payment too small alert title -->
-  <string name="PaymentProtocol.Errors.smallOutputError">Không thể hoàn tất việc chi trả</string>
-  <!-- Amount too small error message -->
+    <!-- Error opening payment protocol file message -->
+    <!-- Missing certificate payment protocol error message -->
+    <!-- Request expired payment protocol error message -->
+    <!-- Payment too small alert title -->
+    <!-- Amount too small error message -->
   <string name="PaymentProtocol.Errors.smallPayment">Không thể thanh toán bằng DigiByte với số lượng nhỏ hơn %1$@.</string>
   <!-- Output too small error message. -->
   <string name="PaymentProtocol.Errors.smallTransaction">Đầu ra của giao dịch bằng DigiByte không thể nhỏ hơn %1$s.</string>
   <!-- Unsupported signature type payment protocol error message -->
-  <string name="PaymentProtocol.Errors.unsupportedSignatureType">Kiểu chữ ký không được hỗ trợ</string>
-  <!-- Untrusted certificate payment protocol error message -->
-  <string name="PaymentProtocol.Errors.untrustedCertificate">Certificate không đáng tin cậy</string>
-  <string name="processed">Sẵn sàng</string>
+    <!-- Untrusted certificate payment protocol error message -->
+    <string name="processed">Sẵn sàng</string>
   <!-- No passcode set warning body -->
-  <string name="Prompts.NoPasscode.body">Bạn cần phải bảo vệ ví của bạn bằng mã bảo vệ thiết bị. Hãy vào Cài đặt và bật mật mã bảo vệ thiết bị lên.</string>
-  <!-- No Passcode set warning title -->
-  <string name="Prompts.NoPasscode.title">Bật mật mã bảo vệ thiết bị</string>
-  <!-- Instruction how to enable device encryption -->
+    <!-- No Passcode set warning title -->
+    <!-- Instruction how to enable device encryption -->
   <string name="Prompts.NoScreenLock.body.android">Cần thiết lập mật khẩu cho màn hình khóa trên thiết bị của bạn để đảm bảo an toàn cho ví. Vào \" Cài đặt\"&gt;\"Bảo mật\"&gt;\"Khóa màn hình\" bật nó lên rồi tiếp tục</string>
   <!-- Device encryption prompt title -->
-  <string name="Prompts.NoScreenLock.title.android">Khóa màn hình đã bị tắt</string>
-  <!-- Warning about paper key. -->
-  <string name="Prompts.PaperKey.body">Khoá Khôi Phục ví của bạn phải được lưu trong trường hợp bạn bị mất hoặc thay đổi điện thoại của mình. Nhấn vào đây để tiếp tục.</string>
-  <!-- An action is required (You must do this action). -->
-  <string name="Prompts.PaperKey.title">Việc cần làm</string>
-  <!-- Transaction rejected prompt body -->
-  <string name="Prompts.RecommendRescan.body">Ví của bạn có thể không đồng bộ. Điều này thường được khắc phục bằng cách đồng bộ lại blockchain.</string>
-  <!-- Transaction rejected prompt title -->
-  <string name="Prompts.RecommendRescan.title">Giao dịch bị từ chối</string>
-  <!-- Share data prompt body -->
-  <string name="Prompts.ShareData.body">Giúp cải tiến DigiWallet bằng cách chia sẻ dữ liệu (nặc danh) của bạn với chúng tôi</string>
-  <!-- Share data prompt title -->
-  <string name="Prompts.ShareData.title">" Chia sẻ dữ liệu (nặc danh)"</string>
-  <!-- Enable touch ID prompt body -->
-  <string name="Prompts.TouchId.body">Chạm để kích hoạt Touch ID</string>
-  <!-- Enable Fingerprint prompt body -->
-  <string name="Prompts.TouchId.body.android">Chạm để bật nhận dạng bằng vân tay</string>
-  <!-- Enable touch ID prompt title -->
-  <string name="Prompts.TouchId.title">Kích hoạt Touch ID</string>
-  <!-- Enable Fingerprint prompt title -->
-  <string name="Prompts.TouchId.title.android">Kích hoạt nhận dạng vân tay</string>
-  <!-- Button on fingerprint prompt so the user can enter their PIN instead -->
+    <!-- Warning about paper key. -->
+    <!-- An action is required (You must do this action). -->
+    <!-- Transaction rejected prompt body -->
+    <!-- Transaction rejected prompt title -->
+    <!-- Share data prompt body -->
+    <!-- Share data prompt title -->
+    <!-- Enable touch ID prompt body -->
+    <!-- Enable Fingerprint prompt body -->
+    <!-- Enable touch ID prompt title -->
+    <!-- Enable Fingerprint prompt title -->
+    <!-- Button on fingerprint prompt so the user can enter their PIN instead -->
   <string name="Prompts.TouchId.usePin.android">Mã PIN</string>
   <!-- Upgrade PIN prompt body. -->
-  <string name="Prompts.UpgradePin.body">DigiWallet đã nâng cấp sử dụng mã PIN gồm 6 chữ số. Nhấn vào đây để nâng cấp.</string>
-  <!-- Upgrade PIN prompt title. -->
-  <string name="Prompts.UpgradePin.title">Nâng cấp mã PIN</string>
-  <!-- Notifications will be added later but users can set their preferences now, which is why we specify "in the future". -->
+    <!-- Upgrade PIN prompt title. -->
+    <!-- Notifications will be added later but users can set their preferences now, which is why we specify "in the future". -->
   <string name="PushNotifications.body">Bật thông báo để các nhận tin nhắn quan trọng từ DigiWallet trong tương lai.</string>
   <!-- Push notifications toggle switch label -->
   <string name="PushNotifications.label">Thông báo</string>
   <!-- Push notifications are off label -->
-  <string name="PushNotifications.off">Tắt</string>
-  <!-- Push notifications are on label -->
-  <string name="PushNotifications.on">Bật</string>
-  <!-- Push notifications settings view title label -->
+    <!-- Push notifications are on label -->
+    <!-- Push notifications settings view title label -->
   <string name="PushNotifications.title">Thông báo</string>
   <!-- Address copied message. -->
   <string name="Receive.copied">Đã sao chép</string>
   <!-- Share via email button label -->
-  <string name="Receive.emailButton">Email</string>
-  <!-- Request button label -->
+    <!-- Request button label -->
   <string name="Receive.request">Số tiền yêu cầu</string>
   <!-- Share button label -->
   <string name="Receive.share">Chia sẻ</string>
   <!-- Share via text message (SMS) -->
-  <string name="Receive.textButton">Tin nhắn văn bản</string>
-  <!-- Receive modal title -->
+    <!-- Receive modal title -->
   <string name="Receive.title">Nhận</string>
   <string name="received">Nhận</string>
   <!-- Done button text -->
@@ -367,32 +262,25 @@ Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu c�
   <!-- Reset PIN with paper key: header -->
   <string name="RecoverWallet.header_reset_pin">Đặt lại mã PIN</string>
   <!-- Enter paper key instruction -->
-  <string name="RecoverWallet.instruction">Nhập Khóa Khôi Phục ví</string>
-  <!-- Recover wallet intro -->
+    <!-- Recover wallet intro -->
   <string name="RecoverWallet.intro">Khôi phục DigiWallet bằng Khóa Khôi Phục ví</string>
   <!-- Invalid paper key message -->
   <string name="RecoverWallet.invalid">Khóa Khôi Phục ví không hợp lệ. Vui lòng kiểm tra kĩ và nhập lại</string>
   <!-- Previous button accessibility label -->
-  <string name="RecoverWallet.leftArrow">Mũi tên bên trái</string>
-  <!-- Next button label -->
+    <!-- Next button label -->
   <string name="RecoverWallet.next">Tiếp</string>
   <!-- Reset PIN with paper key: more information button. -->
-  <string name="RecoverWallet.reset_pin_more_info">Chạm vào đây để xem thêm thông tin</string>
-  <!-- Next button accessibility label -->
-  <string name="RecoverWallet.rightArrow">Bên phải</string>
-  <!-- Recover wallet sub-header -->
+    <!-- Next button accessibility label -->
+    <!-- Recover wallet sub-header -->
   <string name="RecoverWallet.subheader">Nhập Khóa Khôi Phục ví cho ví mà bạn cần phục hồi</string>
   <!-- Reset PIN with paper key: sub-header -->
   <string name="RecoverWallet.subheader_reset_pin">Để thiết lập lại mã PIN, hãy nhập lại Khóa Khôi Phục ví phía dưới</string>
   <!-- No amount entered error message. -->
-  <string name="RequestAnAmount.noAmount">Nhập số lượng trước</string>
-  <!-- Request a specific amount of bitcoin -->
-  <string name="RequestAnAmount.title">Yêu cầu số tiền</string>
-  <!-- Alert action button label -->
+    <!-- Request a specific amount of bitcoin -->
+    <!-- Alert action button label -->
   <string name="ReScan.alertAction">Đồng bộ</string>
   <!-- Alert message body -->
-  <string name="ReScan.alertMessage">Không thể gửi DigiByte khi đang đồng bộ</string>
-  <!-- Alert message title -->
+    <!-- Alert message title -->
   <string name="ReScan.alertTitle">Đồng bộ với Blockchain</string>
   <!-- extimated time -->
   <string name="ReScan.body1">20-45 phút</string>
@@ -405,22 +293,16 @@ Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu c�
   <!-- Sync blockchain view footer -->
   <string name="ReScan.footer">Bạn sẽ không thể gửi tiền trong khi đang đồng bộ với blockchain.</string>
   <!-- Sync Blockchain view header -->
-  <string name="ReScan.header">Đồng bộ Blockchian</string>
-  <!-- Subheader label -->
+    <!-- Subheader label -->
   <string name="ReScan.subheader1">Thời gian dự kiến</string>
   <!-- Subheader label -->
   <string name="ReScan.subheader2">Khi nào sẽ đồng bộ</string>
   <!-- Scan bitcoin address camera flash toggle -->
-  <string name="Scanner.flashButtonLabel">Đèn camera</string>
-  <!-- Complete filter label -->
-  <string name="Search.complete">Hoàn tất</string>
-  <!-- Pending filter label -->
-  <string name="Search.pending">Chưa xong</string>
-  <!-- Received filter label -->
-  <string name="Search.received">Đã nhận</string>
-  <!-- Sent filter label -->
-  <string name="Search.sent">Đã gửi</string>
-  <!-- Security Center Info -->
+    <!-- Complete filter label -->
+    <!-- Pending filter label -->
+    <!-- Received filter label -->
+    <!-- Sent filter label -->
+    <!-- Security Center Info -->
   <string name="SecurityCenter.info">Kích hoạt tất cả các tính năng bảo mật.</string>
   <!-- Paper Key button description -->
   <string name="SecurityCenter.paperKeyDescription">Cách duy nhất để truy cập ví DigiByte nếu bạn mất hoặc nâng cấp điện thoại.</string>
@@ -435,54 +317,41 @@ Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu c�
   <!-- Touch ID button description -->
   <string name="SecurityCenter.touchIdDescription">Mở khóa ví DigiWallet của bạn và gửi Digibyte trong hạn mức cài đặt trước một cách tiện lợi.</string>
   <!-- Touch ID button title -->
-  <string name="SecurityCenter.touchIdTitle">Touch ID</string>
-  <!-- Security center fingerprint authentication button -->
+    <!-- Security center fingerprint authentication button -->
   <string name="SecurityCenter.touchIdTitle.android">Xác nhận Dấu Vân Tay</string>
   <!-- Send money amount label -->
-  <string name="Send.amountLabel">Số lượng</string>
-  <!-- Balance: $4.00 -->
-  <string name="Send.balance">Số dư %1$s</string>
-  <!-- Instructions how to allow the camera access for the app -->
+    <!-- Balance: $4.00 -->
+    <!-- Instructions how to allow the camera access for the app -->
   <string name="Send.cameraUnavailabeMessage.android">Cho phép camera truy xuất vào \"Cài đặt\" &gt; \"Ứng dụng\" &gt; \"Ví Digiwallet\" &gt; \"Cho phép\"</string>
   <!-- Permission required to access camera -->
   <string name="Send.cameraUnavailabeTitle.android">Ví DigiWallet không cho phép truy xuất vào Camera</string>
   <!-- Camera not allowed message -->
-  <string name="Send.cameraunavailableMessage">Vào mục Cài đặt để cho phép camera truy xuất</string>
-  <!-- Camera not allowed alert title -->
-  <string name="Send.cameraUnavailableTitle">Ví DigiWallet không cho phép truy xuất vào Camera</string>
-  <!-- Warning when sending to self. -->
+    <!-- Camera not allowed alert title -->
+    <!-- Warning when sending to self. -->
   <string name="Send.containsAddress">Địa chỉ gửi đến là địa chỉ của chính bạn. Bạn không thể gửi cho chính mình được.</string>
   <!-- Could not create transaction alert title -->
-  <string name="Send.creatTransactionError">Không thể tạo giao dịch.</string>
-  <!-- Description for sending money label -->
+    <!-- Description for sending money label -->
   <string name="Send.descriptionLabel">Gợi nhớ</string>
   <!-- Emtpy pasteboard error message -->
   <string name="Send.emptyPasteboard">Vẫn còn mục trống</string>
   <!-- Network Fee: $0.01 -->
   <string name="Send.fee">Phí dịch vụ mạng lưới: %1$s</string>
   <!-- Payee identity not certified alert title. -->
-  <string name="Send.identityNotCertified">Định danh Payee không được xác nhận.</string>
-  <!-- Invalid address alert message -->
-  <string name="Send.invalidAddressMessage">Địa chỉ nơi đến không phải là địa chỉ DigiByte.</string>
-  <!-- Invalid address on pasteboard message -->
-  <string name="Send.invalidAddressOnPasteboard">Bảng thông tin không có địa chỉ ví DigiByte hợp lệ</string>
-  <!-- Invalid address alert title -->
+    <!-- Invalid address alert message -->
+    <!-- Invalid address on pasteboard message -->
+    <!-- Invalid address alert title -->
   <string name="Send.invalidAddressTitle">Sai địa chỉ</string>
   <!-- Is rescanning error message -->
   <string name="Send.isRescanning">Chức năng gửi tạm thời vô hiệu trong quá trình quét.</string>
   <!-- We are loading the request (now) -->
-  <string name="Send.loadingRequest">Yêu cầu nạp dữ liệu</string>
-  <!-- Empty address alert message -->
+    <!-- Empty address alert message -->
   <string name="Send.noAddress">Vui lòng nhập địa chỉ người nhận</string>
   <!-- Emtpy amount alert message -->
-  <string name="Send.noAmount">Vui lòng nhập số lượng muốn gửi.</string>
-  <!-- Paste button label -->
+    <!-- Paste button label -->
   <string name="Send.pasteLabel">Dán</string>
   <!-- Could not publish transaction alert title -->
-  <string name="Send.publishTransactionError">Không thể thiết lập giao dịch</string>
-  <!-- Could not load remote request error message -->
-  <string name="Send.remoteRequestError">Không thể tải yêu cầu thanh toán</string>
-  <!-- Scan button label -->
+    <!-- Could not load remote request error message -->
+    <!-- Scan button label -->
   <string name="Send.scanLabel">Quét</string>
   <!-- Send button label (the action, "press here to send") -->
   <string name="Send.sendLabel">Gửi</string>
@@ -495,8 +364,7 @@ Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu c�
   <!-- Adress already used alert message - second part -->
   <string name="Send.UsedAddress.secondLIne">Việc sử dụng lại làm giảm sự riêng tư của cả bạn và người nhận và cũng là nguyên nhân của việc mất dữ liệu nếu người nhận không trực tiếp kiểm tra địa chỉ.</string>
   <!-- Adress already used alert title -->
-  <string name="Send.UsedAddress.title">Địa chỉ đã được sử dụng</string>
-  <string name="sent">Gởi</string>
+    <string name="sent">Gởi</string>
   <!-- About label -->
   <string name="Settings.about">Giới thiệu</string>
   <!-- Advanced Settings title -->
@@ -504,10 +372,8 @@ Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu c�
   <!-- i.e. the currency which will be displayed -->
   <string name="Settings.currency">Hiển thị loại tiền tệ</string>
   <!-- Join Early access label -->
-  <string name="Settings.earlyAccess">Tham gia truy xuất sớm</string>
-  <!-- Are you enjoying bread alert message body -->
-  <string name="Settings.enjoying">Bạn có cảm thấy thú vị với DigiWallet không?</string>
-  <!-- Import wallet left message -->
+    <!-- Are you enjoying bread alert message body -->
+    <!-- Import wallet left message -->
   <string name="Settings.importLeftMessage">Ví đã được nhập</string>
   <!-- Import wallet right message -->
   <string name="Settings.importRightMessage">Ví DigiWallet của bạn</string>
@@ -516,60 +382,41 @@ Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu c�
   <!-- Manage settings section header -->
   <string name="Settings.manage">Quản lý</string>
   <!-- Notifications label -->
-  <string name="Settings.notifications">Thông báo</string>
-  <!-- Restore screen lower label. -->
+    <!-- Restore screen lower label. -->
   <string name="Settings.restore_label">Ví DigiWallet của bạn trên thiết bị này</string>
   <!-- Leave review button label -->
-  <string name="Settings.review">Để lại nhận xét cho chúng tôi</string>
-  <!-- Share anonymous data label -->
-  <string name="Settings.shareData">Chia sẽ dữ liệu ẩn danh</string>
-  <!-- Sync blockchain label -->
+    <!-- Share anonymous data label -->
+    <!-- Sync blockchain label -->
   <string name="Settings.sync">Đồng bộ Blockchain</string>
   <!-- Settings title -->
-  <string name="Settings.title">Cài đặt</string>
-  <!-- Touch ID spending limit label -->
-  <string name="Settings.touchIdLimit">Giới hạn chi tiêu Touch ID</string>
-  <!-- The fingerprint spending limit -->
+    <!-- Touch ID spending limit label -->
+    <!-- The fingerprint spending limit -->
   <string name="Settings.touchIdLimit.android">Giới hạn chi tiêu bằng nhận dạng vân tay</string>
   <!-- Wallet Settings section header -->
   <string name="Settings.wallet">Ví</string>
   <!-- Start or recover another wallet menu label. -->
   <string name="Settings.wipe">Bắt đầu/Khôi phục một ví khác</string>
   <!-- Share data view body -->
-  <string name="ShareData.body">Giúp cải tiến DigiWallet bằng cách chia sẽ dữ liệu ẩn danh của bạn với chúng tôi ngoại trừ những thông tin tài chính. Chúng tôi tôn trọng quyền riêng tư những thông tin này.</string>
-  <!-- Share data header -->
-  <string name="ShareData.header">Chia sẽ dữ liệu</string>
-  <!-- Share data switch label. -->
-  <string name="ShareData.toggleLabel">Chia sẽ dữ liệu ẩn danh</string>
-  <!-- button label -->
-  <string name="StartPaperPhrase.againButtonTitle">Ghi lại Mã Khôi Phục ví một lần nữa.</string>
-  <!-- Paper key explanation text. -->
+    <!-- Share data header -->
+    <!-- Share data switch label. -->
+    <!-- button label -->
+    <!-- Paper key explanation text. -->
   <string name="StartPaperPhrase.body">Khóa khôi phục ví là cách duy nhất để phục hồi ví Digiwallet trong trường hợp điện thoại của bạn bị mất, đánh cắp, lỗi hoặc trong lúc nâng cấp.\n\n Chúng tôi sẽ cung cấp một danh sách các từ khóa để bạn viết lên giấy và cất ở một nơi an toàn.</string>
   <!-- button label -->
   <string name="StartPaperPhrase.buttonTitle">Hãy viết Mã Khôi Phục ví xuống</string>
   <!-- Argument is date -->
-  <string name="StartPaperPhrase.date">Lần viết cuối cùng mã khôi phục cá nhân của bạn ở %1$s</string>
-  <!-- Start view message -->
-  <string name="StartViewController.message">Cách bảo mật và an toàn nhất để sử dụng Digibyte</string>
-  <!-- Syncing view connectiong state header text -->
+    <!-- Start view message -->
+    <!-- Syncing view connectiong state header text -->
   <string name="SyncingView.connecting">Đang kết nối</string>
   <!-- Syncing view header text -->
-  <string name="SyncingView.header">Đang đồng bộ</string>
-  <!-- Retry button label -->
-  <string name="SyncingView.retry">Thử lại</string>
-  <!-- Syncing view syncing state header text -->
-  <string name="SyncingView.syncing">Đang đồng bộ</string>
-  <!-- 6 d (6 days) -->
-  <string name="TimeSince.days">%1$s ngày</string>
-  <!-- 6 h (6 hours) -->
-  <string name="TimeSince.hours">%1$s giờ</string>
-  <!-- 6 m (6 minutes) -->
-  <string name="TimeSince.minutes">%1$s phút</string>
-  <!-- 6 s (6 seconds) -->
-  <string name="TimeSince.seconds">%1$s giây</string>
-  <!-- You can customize your Touch ID Spending Limit from the [TouchIdSettings.linkText gets added here as a button] -->
-  <string name="TouchIdSettings.customizeText">Bạn có thể tùy chỉnh thời gian Touch ID từ %1$s</string>
-  <!-- Fingerprint enabling description body -->
+    <!-- Retry button label -->
+    <!-- Syncing view syncing state header text -->
+    <!-- 6 d (6 days) -->
+    <!-- 6 h (6 hours) -->
+    <!-- 6 m (6 minutes) -->
+    <!-- 6 s (6 seconds) -->
+    <!-- You can customize your Touch ID Spending Limit from the [TouchIdSettings.linkText gets added here as a button] -->
+    <!-- Fingerprint enabling description body -->
   <string name="TouchIdSettings.customizeText.android">Bạn có thể tùy biến Giới Hạn Xác Nhận Dấu Vân Tay tại mục Giới Hạn Xác Nhận Dấu Vân Tay</string>
   <!-- Instruction for the fingerprint setup -->
   <string name="TouchIdSettings.disabledWarning.body.android">Bạn vẫn chưa mở chức năng nhận dạng vân tay trên thiết bị. Vào mục Cài đặt -&gt; Bảo mật để cài đặt nhận dạng vân tay.</string>
@@ -578,119 +425,76 @@ Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu c�
   <!-- Touch Id screen label -->
   <string name="TouchIdSettings.label">Dùng vân tay để mở khóa ví Digiwallet của bạn và gửi Digibyte trong mức giới hạn định trước.</string>
   <!-- Link Text (see TouchIdSettings.customizeText) -->
-  <string name="TouchIdSettings.linkText">Mục Giới Hạn Sử Dụng Touch ID</string>
-  <!-- Spending Limit: b100,000 ($100) -->
+    <!-- Spending Limit: b100,000 ($100) -->
   <string name="TouchIdSettings.spendingLimit">Giới hạn gửi: %1$s (%2$s)</string>
   <!-- Touch id switch label. -->
-  <string name="TouchIdSettings.switchLabel">Bật tính năng Touch ID cho ví DigiWallet</string>
-  <!-- Enable fingerprint for this wallet called Bread -->
+    <!-- Enable fingerprint for this wallet called Bread -->
   <string name="TouchIdSettings.switchLabel.android">Bật tính năng Xác Nhận Dấu Vân Tay</string>
   <!-- Touch ID settings view title -->
-  <string name="TouchIdSettings.title">Touch ID</string>
-  <!-- Fingerprint authentication label -->
+    <!-- Fingerprint authentication label -->
   <string name="TouchIdSettings.title.android">Xác Nhận Dấu Vân Tay</string>
   <!-- Touch ID unavailable alert message -->
-  <string name="TouchIdSettings.unavailableAlertMessage">Bạn vẫn chưa cài dặt Touch ID trên thiết bị. Vào mục Cài Đặt -&gt; Touch ID &amp; Mật Khẩu để thiết lập ngay bây giờ.</string>
-  <!-- Touch ID unavailable alert title -->
-  <string name="TouchIdSettings.unavailableAlertTitle">Touch ID chưa cài đặt</string>
-  <!-- Always require passcode option -->
-  <string name="TouchIdSpendingLimit">Luôn luôn yêu cầu Mật Khẩu</string>
-  <!-- Touch ID spending limit screen body -->
+    <!-- Touch ID unavailable alert title -->
+    <!-- Always require passcode option -->
+    <!-- Touch ID spending limit screen body -->
   <string name="TouchIdSpendingLimit.body">Bạn cần nhập 6 số PIN để gửi đi với bất kỳ giao dịch nào vượt quá giới hạn gởi đã cài đặt trước đó, và mỗi 48 giờ kể từ lần cuối bạn nhập 6 số PIN đó.</string>
   <!-- Touch Id spending limit screen title -->
-  <string name="TouchIdSpendingLimit.title">Cài đặt giới hạn sử dụng Touch ID</string>
-  <!--
-  Touch Id spending limit screen title
-  name of spending limit when using fingerprint authorization
-  -->
+    <!--
+    Touch Id spending limit screen title
+    name of spending limit when using fingerprint authorization
+    -->
   <string name="TouchIdSpendingLimit.title.android">Giới hạn sử dụng xác nhận dấu vân tay</string>
   <!-- Availability status text -->
-  <string name="Transaction.available">Đã sẵn sàng để sử dụng</string>
-  <!-- Transaction complete label -->
-  <string name="Transaction.complete">Hoàn thành</string>
-  <!-- eg. Ending balance: $50.00 -->
-  <string name="Transaction.ending">Số dư cuối: %1$s</string>
-  <!-- Exchange rate on date header -->
-  <string name="Transaction.exchangeOnDayReceived">Tỷ giá khi nhận:</string>
-  <!-- Exchange rate on date header -->
-  <string name="Transaction.exchangeOnDaySent">Tỷ giá khi gửi:</string>
-  <!-- (b600 fee) -->
-  <string name="Transaction.fee">(%1$s phí)</string>
-  <!-- Invalid transaction -->
-  <string name="Transaction.invalid">Lỗi</string>
-  <!-- Timestamp label for event that just happened -->
-  <string name="Transaction.justNow">Ngay bây giờ</string>
-  <!-- Receive status text: 'In progress: 20%' -->
-  <string name="Transaction.receivedStatus">Đang xử lý: %1$s</string>
-  <!-- Send status text: 'In progress: 20%' -->
-  <string name="Transaction.sendingStatus">Đang xử lý: %1$s</string>
-  <!-- eg. Starting balance: $50.00 -->
-  <string name="Transaction.starting">Đang bắt đầu số dư : %1$s</string>
-  <!-- Waiting to be confirmed string -->
-  <string name="Transaction.waiting">Đang chờ xác nhận. Một vài thương nhân yêu cầu xác nhận để hoàn tất giao dịch. Ước lượng thời gian: 1-2 phút.</string>
-  <!-- e.g. I received money from an account. -->
-  <string name="TransactionDetails.account">Tài khoản</string>
-  <!-- Amount section header -->
-  <string name="TransactionDetails.amountHeader">Số lượng</string>
-  <!-- Block height label -->
-  <string name="TransactionDetails.blockHeightLabel">Xác nhận khối</string>
-  <!-- Memo section header -->
-  <string name="TransactionDetails.commentsHeader">Tên gợi nhớ</string>
-  <!-- Empty transaction list message. -->
-  <string name="TransactionDetails.emptyMessage">Giao dịch của bạn sẽ xuất hiện ở đây</string>
-  <!-- "Received [$5] at [which of my addresses]" => This is the "at [which of my addresses]" part. -->
-  <string name="TransactionDetails.from">tại %1$s</string>
-  <!-- More button title -->
-  <string name="TransactionDetails.more">tìm hiểu thêm...</string>
-  <!-- Moved $5.00 (as in "I moved $5 to another location") -->
-  <string name="TransactionDetails.moved">Đã di dời %1$s</string>
-  <!-- Moved $5.00 -->
-  <string name="TransactionDetails.movedAmountDescription">Đã di dời <b>%1$s</b></string>
-  <!-- eg. Confirmed in Block: Not Confirmed -->
-  <string name="TransactionDetails.notConfirmedBlockHeightLabel">Chưa xác nhận</string>
-  <!-- "Received [$5] at [which of my addresses]" => This is the "Received [$5]" part. -->
+    <!-- Transaction complete label -->
+    <!-- eg. Ending balance: $50.00 -->
+    <!-- Exchange rate on date header -->
+    <!-- Exchange rate on date header -->
+    <!-- (b600 fee) -->
+    <!-- Invalid transaction -->
+    <!-- Timestamp label for event that just happened -->
+    <!-- Receive status text: 'In progress: 20%' -->
+    <!-- Send status text: 'In progress: 20%' -->
+    <!-- eg. Starting balance: $50.00 -->
+    <!-- Waiting to be confirmed string -->
+    <!-- e.g. I received money from an account. -->
+    <!-- Amount section header -->
+    <!-- Block height label -->
+    <!-- Memo section header -->
+    <!-- Empty transaction list message. -->
+    <!-- "Received [$5] at [which of my addresses]" => This is the "at [which of my addresses]" part. -->
+    <!-- More button title -->
+    <!-- Moved $5.00 (as in "I moved $5 to another location") -->
+    <!-- Moved $5.00 -->
+    <!-- eg. Confirmed in Block: Not Confirmed -->
+    <!-- "Received [$5] at [which of my addresses]" => This is the "Received [$5]" part. -->
   <string name="TransactionDetails.received">Đã nhận %1$s</string>
   <!-- Received $5.00 -->
-  <string name="TransactionDetails.receivedAmountDescription">Đã nhận %1$s<b>%1$s</b></string>
-  <!-- "Sent [$5] to [address]" => This is the "Sent [$5]" part. -->
-  <string name="TransactionDetails.sent">Đã gửi %1$s</string>
-  <!-- Sent $5.00 -->
-  <string name="TransactionDetails.sentAmountDescription">Đã gửi <b>%1$s</b></string>
-  <!-- Status section header -->
+    <!-- "Sent [$5] to [address]" => This is the "Sent [$5]" part. -->
+    <!-- Sent $5.00 -->
+    <!-- Status section header -->
   <string name="TransactionDetails.statusHeader">Tình trạng</string>
   <!-- Transaction Details Title -->
-  <string name="TransactionDetails.title">Chi tiết giao dịch</string>
-  <!-- "Sent [$5] to [address]" => This is the "to [address]" part. -->
-  <string name="TransactionDetails.to">đến %1$s</string>
-  <!-- Transaction ID header -->
-  <string name="TransactionDetails.txHashHeader">Chi tiết mã giao dịch DigiByte</string>
-  <!-- (this transaction was) Received at this address: -->
-  <string name="TransactionDirection.address">Đã nhận tại địa chỉ này</string>
-  <!-- (this transaction was) Sent to this address: -->
-  <string name="TransactionDirection.to">Đã gửi đến địa chỉ này</string>
-  <!-- Disabled until date -->
-  <string name="UnlockScreen.disabled">Bật tắt cho đến: %1$s</string>
-  <!-- My Address button title -->
+    <!-- "Sent [$5] to [address]" => This is the "to [address]" part. -->
+    <!-- Transaction ID header -->
+    <!-- (this transaction was) Received at this address: -->
+    <!-- (this transaction was) Sent to this address: -->
+    <!-- Disabled until date -->
+    <!-- My Address button title -->
   <string name="UnlockScreen.myAddress">Địa chỉ của tôi</string>
   <!-- Reset PIN with Paper Key button label. -->
   <string name="UnlockScreen.resetPin">Đặt lại mã PIN</string>
   <!-- Scan button title -->
-  <string name="UnlockScreen.scan">Quét</string>
-  <!-- Unlock Screen sub-header -->
-  <string name="UnlockScreen.subheader">Nhập mã PIN</string>
-  <!-- Instruction to touch the sensor for fingerprint authentication -->
+    <!-- Unlock Screen sub-header -->
+    <!-- Instruction to touch the sensor for fingerprint authentication -->
   <string name="UnlockScreen.touchIdInstructions.android">Cảm biến Chạm</string>
   <!-- TouchID prompt text -->
-  <string name="UnlockScreen.touchIdPrompt">Mở khóa ví DigiWallet của bạn</string>
-  <!-- Device authentication body -->
+    <!-- Device authentication body -->
   <string name="UnlockScreen.touchIdPrompt.android">Vui lòng mở khóa thiết bị Android của bạn để tiếp tục.</string>
   <!-- Unlock with TouchID accessibility label -->
-  <string name="UnlockScreen.touchIdText">Mở khóa Touch ID</string>
-  <!-- Device authentication title -->
+    <!-- Device authentication title -->
   <string name="UnlockScreen.touchIdTitle.android">Yêu cầu xác thực</string>
   <!-- Wallet unlocked message -->
-  <string name="UnlockScreen.unlocked">Ví được mở khóa</string>
-  <!-- Update PIN caption text -->
+    <!-- Update PIN caption text -->
   <string name="UpdatePin.caption">Hãy ghi nhớ mã PIN này. Nếu quên, sẽ không thể truy cập vào số Digibyte của bạn.</string>
   <!-- PIN creation info. -->
   <string name="UpdatePin.createInstruction">Mã PIN của bạn sẽ được sử dụng để mở khóa ví DigiWallet and gửi Digibyte.</string>
@@ -705,34 +509,21 @@ Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu c�
   <!-- Re-Enter new PIN instruction -->
   <string name="UpdatePin.reEnterNew">Nhập mã PIN của bạn lại</string>
   <!-- Update PIN failure error message. -->
-  <string name="UpdatePin.setPinError">Xin lỗi, không thể cập nhật mã PIN</string>
-  <!-- Update PIN failure alert view title -->
-  <string name="UpdatePin.setPinErrorTitle">Lỗi trong quá trình cập nhật mã PIN</string>
-  <!-- Update PIN title -->
-  <string name="UpdatePin.updateTitle">Cập nhật mã PIN</string>
-  <!-- Authorize to copy wallet addresses alert message -->
-  <string name="URLHandling.addressaddressListAlertMessage">" Sao chép địa chỉ ví vào bộ nhớ tạm thời."</string>
-  <!-- Authorize to copy wallet address PIN view prompt. -->
-  <string name="URLHandling.addressList">Cho phép sao chép địa chỉ ví vào bộ nhớ tạm thời.</string>
-  <!-- Authorize to copy wallet address alert title -->
-  <string name="URLHandling.addressListAlertTitle">Sao chép địa chỉ ví</string>
-  <!-- Copy wallet addresses alert button label -->
-  <string name="URLHandling.copy">Sao chép</string>
-  <!-- Verify PIN for transaction view body -->
-  <string name="VerifyPin.authorize">Vui lòng nhập mã PIN của bạn để cấp phép giao dịch này.</string>
-  <!-- Verify PIN view body -->
+    <!-- Update PIN failure alert view title -->
+    <!-- Update PIN title -->
+    <!-- Authorize to copy wallet addresses alert message -->
+    <!-- Authorize to copy wallet address PIN view prompt. -->
+    <!-- Authorize to copy wallet address alert title -->
+    <!-- Copy wallet addresses alert button label -->
+    <!-- Verify PIN for transaction view body -->
+    <!-- Verify PIN view body -->
   <string name="VerifyPin.continueBody">Vui lòng nhập mã PIN của bạn để tiếp tục.</string>
   <!-- Verify PIN view title -->
-  <string name="VerifyPin.title">Yêu cầu mã PIN</string>
-  <!-- Authorize transaction with touch id message -->
-  <string name="VerifyPin.touchIdMessage">Cho phép giao dịch này</string>
-  <!-- 'No wallet' warning for watch app -->
-  <string name="Watch.noWalletWarning">Mở ứng dụng DigiWallet Android để tiến hành cài đặt.</string>
-  <!-- Dismiss button label -->
-  <string name="Webview.dismiss">Từ chối</string>
-  <!-- Webview loading error message -->
-  <string name="Webview.errorMessage">Có lỗi trong quá trình tải nội dung. Vui lòng thử lại lần nữa.</string>
-  <!-- Updating webview message -->
+    <!-- Authorize transaction with touch id message -->
+    <!-- 'No wallet' warning for watch app -->
+    <!-- Dismiss button label -->
+    <!-- Webview loading error message -->
+    <!-- Updating webview message -->
   <string name="Webview.updating">Đang cập nhật...</string>
   <!-- Welcome screen text. (?) will be replaced with the help icon users should look for. -->
   <string name="Welcome.body">Ví DigiWallet có diện mạo mới và một vài tính năng mới. \n\n Nếu bạn cần giúp đỡ, hãy tìm đến biểu tượng (?) ở ngay phía trên bên phải hầu hết các màn hình.</string>
@@ -743,27 +534,21 @@ Bất kỳ ứng dụng \'root\' nào cũng có thể truy cập dữ liệu c�
   <!-- Wipe wallet alert title -->
   <string name="WipeWallet.alertTitle">Bạn chắc muốn làm sạch ví?</string>
   <!-- Failed wipe wallet alert message -->
-  <string name="WipeWallet.failedMessage">Có lỗi xảy ra trong quá trình làm sạch ví</string>
-  <!-- Failed wipe wallet alert title -->
-  <string name="WipeWallet.failedTitle">Lỗi</string>
-  <!-- Enter phrase to wipe wallet instruction. -->
+    <!-- Failed wipe wallet alert title -->
+    <!-- Enter phrase to wipe wallet instruction. -->
   <string name="WipeWallet.instruction">Để bắt đầu một ví mới hoặc khôi phục ví hiện tại, bạn phải xóa ví đang cài đặt hiện hành trước. Để tiếp tục, nhập Khóa Khôi Phục ví của ví đó.</string>
   <!-- Start wipe wallet view message -->
   <string name="WipeWallet.startMessage">Bắt đầu hoặc khôi phục một ví nào khác cho phép bạn truy xuất và quản lý ví Digiwallet khác trên thiết bị này.</string>
   <!-- Start wipe wallet view warning -->
   <string name="WipeWallet.startWarning">Ví hiện tại của bạn sẽ bị loại bỏ khỏi thiết bị này. Nếu bạn muốn khôi phục sau đó, bạn sẽ cần nhập Khóa Phục Hồi ví.</string>
   <!-- Wipe wallet navigation item title. -->
-  <string name="WipeWallet.title">Bắt đầu hoặc khôi phục một ví nào khác</string>
-  <!-- Wipe wallet button title -->
+    <!-- Wipe wallet button title -->
   <string name="WipeWallet.wipe">Làm sạch</string>
   <!-- Wiping activity message -->
-  <string name="WipeWallet.wiping">Đang làm sạch</string>
-  <!-- Paper key instructions. -->
+    <!-- Paper key instructions. -->
   <string name="WritePaperPhrase.instruction">Viết xuống mỗi từ để lưu trữ ở một nơi an toàn.</string>
   <!-- button label -->
-  <string name="WritePaperPhrase.next">Kế tiếp</string>
-  <!-- button label -->
+    <!-- button label -->
   <string name="WritePaperPhrase.previous">Trước đó</string>
   <!-- 1 of 3 -->
-  <string name="WritePaperPhrase.step">%1$d của %2$d</string>
 </resources>

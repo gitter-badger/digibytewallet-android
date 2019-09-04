@@ -180,30 +180,23 @@
 <string name="Prompts.NoScreenLock.body.android">"為了保護您的錢包需要開啟鎖屏。請在設置-安全-鎖屏選項中開啟"</string>
 
 <!-- Warning about paper key. -->
-<string name="Prompts.PaperKey.body">"您必須保存紙鑰，以防手機弄丟或更換。點擊這裡繼續。"</string>
 
-<!-- An action is required (You must do this action). -->
-<string name="Prompts.PaperKey.title">"請採取措施"</string>
+    <!-- An action is required (You must do this action). -->
 
-<!-- Transaction rejected prompt body -->
-<string name="Prompts.RecommendRescan.body">"您的錢包可能不衕步。從新掃描塊鏈可以解決這問題。"</string>
+    <!-- Transaction rejected prompt body -->
 
-<!-- Enable Fingerprint prompt body -->
-<string name="Prompts.TouchId.body.android">"點擊這裡開啓觸動認證"</string>
+    <!-- Enable Fingerprint prompt body -->
 
-<!-- Enable Fingerprint prompt title -->
-<string name="Prompts.TouchId.title.android">"開啟觸動認證"</string>
+    <!-- Enable Fingerprint prompt title -->
 
-<!-- Button on fingerprint prompt so the user can enter their PIN instead -->
+    <!-- Button on fingerprint prompt so the user can enter their PIN instead -->
 <string name="Prompts.TouchId.usePin.android">"PIN碼"</string>
 
 <!-- Upgrade PIN prompt body. -->
-<string name="Prompts.UpgradePin.body">"極特錢包已經升級用6位數字PIN碼。點擊這裡升級"</string>
 
-<!-- Upgrade PIN prompt title. -->
-<string name="Prompts.UpgradePin.title">"升級PIN碼"</string>
+    <!-- Upgrade PIN prompt title. -->
 
-<!-- Notifications will be added later but users can set their preferences now, which is why we specify "in the future". -->
+    <!-- Notifications will be added later but users can set their preferences now, which is why we specify "in the future". -->
 <string name="PushNotifications.body">"開啓通知來接收極特錢包將來的特別訊息。"</string>
 
 <!-- Push notifications toggle switch label -->
@@ -234,9 +227,8 @@
 <string name="RecoverWallet.header_reset_pin">"重新設置PIN碼"</string>
 
 <!-- Enter paper key instruction -->
-<string name="RecoverWallet.instruction">"輸入紙鑰匙"</string>
 
-<!-- Recover wallet intro -->
+    <!-- Recover wallet intro -->
 <string name="RecoverWallet.intro">"用您的紙鑰匙來恢復極特錢包"</string>
 
 <!-- Invalid paper key message -->
@@ -273,9 +265,8 @@
 <string name="ReScan.footer">"塊鏈衕步的衕時，您將不能發送極特幣"</string>
 
 <!-- Sync Blockchain view header -->
-<string name="ReScan.header">"同步區塊鏈"</string>
 
-<!-- Subheader label -->
+    <!-- Subheader label -->
 <string name="ReScan.subheader1">"預計時間"</string>
 
 <!-- Subheader label -->
@@ -401,9 +392,8 @@
 <string name="SyncingView.connecting">"連接中"</string>
 
 <!-- Syncing view header text -->
-<string name="SyncingView.header">"正在同步"</string>
 
-<!-- Fingerprint enabling description body -->
+    <!-- Fingerprint enabling description body -->
 <string name="TouchIdSettings.customizeText.android">"您可以從觸動支付上限界面設置觸動支付上限"</string>
 
 <!-- Instruction for the fingerprint setup -->

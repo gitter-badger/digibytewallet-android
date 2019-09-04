@@ -3,8 +3,10 @@ package io.digibyte.presenter.activities.utils;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -174,50 +176,7 @@ public class ActivityUtils {
         BRDialog.showCustomDialog(context, context.getString(R.string.JailbreakWarnings_title),
                 context.getString(R.string.JailbreakWarnings_messageWithoutBalance),
                 context.getString(R.string.JailbreakWarnings_close), null,
-                null, null, brDialogView -> {
-                    try {
-                        //TaskRecord com.android.server.am.ActivityRecord.task' on a null object reference
-                        //io.digibyte.presenter.activities.utils.ActivityUtils.lambda$showJailbrokenDialog$4
-                        context.finishAffinity();
-                    } catch (NullPointerException e) {
-                        context.finish();
-                    }
-                }, 0);
-    }
-
-    public static boolean isvm() {
-
-        StringBuilder deviceInfo = new StringBuilder();
-        deviceInfo.append("Build.PRODUCT " + Build.PRODUCT + "\n");
-        deviceInfo.append("Build.FINGERPRINT " + Build.FINGERPRINT + "\n");
-        deviceInfo.append("Build.MANUFACTURER " + Build.MANUFACTURER + "\n");
-        deviceInfo.append("Build.MODEL " + Build.MODEL + "\n");
-        deviceInfo.append("Build.BRAND " + Build.BRAND + "\n");
-        deviceInfo.append("Build.DEVICE " + Build.DEVICE + "\n");
-        String info = deviceInfo.toString();
-
-        Log.i("LOB", info);
-
-        Boolean isvm = false;
-        if (
-                "google_sdk".equals(Build.PRODUCT) ||
-                        "sdk_google_phone_x86".equals(Build.PRODUCT) ||
-                        "sdk".equals(Build.PRODUCT) ||
-                        "sdk_x86".equals(Build.PRODUCT) ||
-                        "vbox86p".equals(Build.PRODUCT) ||
-                        Build.FINGERPRINT.contains("generic") ||
-                        Build.MANUFACTURER.contains("Genymotion") ||
-                        Build.MODEL.contains("Emulator") ||
-                        Build.MODEL.contains("Android SDK built for x86")
-                ) {
-            isvm = true;
-        }
-
-        if (Build.BRAND.contains("generic") && Build.DEVICE.contains("generic")) {
-            isvm = true;
-        }
-
-        return isvm;
+                DialogFragment::dismiss, null, null, 0);
     }
 
     public static char getDecimalSeparator() {
@@ -227,16 +186,6 @@ public class ActivityUtils {
             return sym.getDecimalSeparator();
         }
         return '.';
-    }
-
-    @TargetApi(Build.VERSION_CODES.N)
-    private static Locale getCurrentLocale(Context c) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return c.getResources().getConfiguration().getLocales().get(0);
-        } else {
-            //noinspection deprecation
-            return c.getResources().getConfiguration().locale;
-        }
     }
 
     public static void disableNFC(Context context) {

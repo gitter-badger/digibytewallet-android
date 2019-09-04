@@ -29,6 +29,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.common.io.BaseEncoding;
 import com.google.gson.Gson;
+import com.scottyab.rootbeer.RootBeer;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -138,6 +139,12 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bindings = DataBindingUtil.setContentView(this, R.layout.activity_bread);
+        RootBeer rootBeer = new RootBeer(this);
+        if (rootBeer.isRootedWithoutBusyBoxCheck()) {
+            bindings.rootBanner.setVisibility(View.VISIBLE);
+        }
+
+
         bindings.assetRefresh.setOnRefreshListener(this);
         bindings.digiSymbolBackground.
                 setBackground(AppCompatResources.getDrawable(DigiByte.getContext(),
@@ -552,6 +559,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     }
                 });
         disposables.add(statusDisposable);
+    }
+
+    @OnClick(R.id.root_banner)
+    void onRootBannerClick(View view) {
+        ActivityUtils.showJailbrokenDialog(this);
     }
 
     private void notifyDataSetChangeForAll() {

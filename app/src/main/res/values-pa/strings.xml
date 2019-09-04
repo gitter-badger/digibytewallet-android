@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <!-- App name -->
-  <string name="About.appName.android">"ਡਿਜੀ  ਵਾਲਿਟ "</string>
-  <!-- About screen blog label -->
+    <!-- About screen blog label -->
   <string name="About.blog">https://digibyte.io/</string>
   <!-- About screen footer -->
   <string name="About.footer">ਡਿਜੀ ਬਾਈਟ  ਟੀਮ ਦਾ ਬਣਾਇਆ ਹੋਇਆ ॥ ਵਰਜ਼ਨ %1$s</string>
@@ -11,11 +10,10 @@
   <!-- About screen reddit label -->
   <string name="About.reddit">https://www.reddit.com/r/Digibyte/</string>
   <!-- Terms of Use button label -->
-  <string name="About.terms">ਇਹ ਓਪਨ ਸੋਰਸ ਪ੍ਰਾਜੈਕਟ ਹੈ। ਇਸ ਦਾ ਕੋਡ ਇਥੇ ਦੇਖ ਸਕਦੇ ਹੋ। https://github.com/Racecraft/digibytewallet-android</string>
-  <!--
-  Terms of Use button label
-  About screen title
-  -->
+    <!--
+    Terms of Use button label
+    About screen title
+    -->
   <string name="About.title">"ਸ਼ੇਤੀ, ਸੌਖਾ ਅਤੇ ਸੁਰੱਖਿਅਤ। 
 ਆਨਡਰੋਈਡ ਦਾ ਡੀਜੀ ਵਾਲਿਟ ਆਸਾਨ ਤਰੀਕਾ ਹੈ ਡੀਜੀ ਬਾਈਟ ਭੇਜਣ ਅਤੇ ਲੈਣ ਲਈ। ਇਹ  ਨਵੇਂ ਅਤੇ ਤਜਰਬੇਕਾਰ ਉਪਭੋਗਤਾਵਾਂ ਦੇ ਦਿਮਾਗ ਨਾਲ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ। "</string>
   <!-- About screen twitter label -->
@@ -23,12 +21,9 @@
   <!-- Close modal button accessibility label -->
   <string name="AccessibilityLabels.close">ਬੰਦ</string>
   <!-- Support center accessibiliy label -->
-  <string name="AccessibilityLabels.faq">ਸੁਪੌਰਟ ਸੈਂਟਰ</string>
-  <!-- Loading Wallet Message -->
-  <string name="Account.loadingMessage">"ਵਾਲਿਟ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ "</string>
-  <!-- Default wallet name -->
-  <string name="AccountHeader.defaultWalletName">"ਮੇਰਾ  ਡੀਜੀਬਾਈਟ "</string>
-  <!-- Third party keyboard warning -->
+    <!-- Loading Wallet Message -->
+    <!-- Default wallet name -->
+    <!-- Third party keyboard warning -->
   <string name="Alert.customKeyboard.android">ਇੰਜ ਜਾਪਦਾ ਹੈ ਕਿ ਤੁਸੀਂ ਕਿਸੇ ਤੀਜੀ-ਪਾਰਟੀ ਕੀਬੋਰਡ ਦੀ ਵਰਤੋਂ ਕਰ ਰਹੇ ਹੋ, ਇਹ ਤੁਹਾਡੀ ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ ਨੂੰ ਟਾਈਪ ਕਰਕੇ ਚੋਰੀ ਕਰ ਸਕਦੇ ਹੋ. ਕਿਰਪਾ ਕਰਕੇ ਵਾਧੂ ਸੁਰੱਖਿਆ ਲਈ ਡਿਫੌਲਟ ਆਨਡਰੋਈਡ ਕੀਬੋਰਡ ਤੇ ਸਵਿਚ ਕਰੋ</string>
   <!-- Error alert title -->
   <string name="Alert.error">ਗਲਤੀ</string>
@@ -39,14 +34,10 @@
   <!-- Keystore error title -->
   <string name="Alert.keystore.title.android">ਆਨਡਰੋਈਡ ਕੀ ਸਟੋਰ ਗਲਤੀ</string>
   <!-- No internet alert message -->
-  <string name="Alert.noInternet">ਕੋਈ ਇੰਟਰਨੈਟ ਕਨੈਕਸ਼ਨ ਨਹੀਂ ਮਿਲਿਆ. ਆਪਣੇ ਕਨੈਕਸ਼ਨ ਦੀ ਜਾਂਚ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
-  <!-- Warning alert title -->
-  <string name="Alert.warning">ਚੇਤਾਵਨੀ</string>
-  <!-- 'the addresses were copied'' Alert title -->
-  <string name="Alerts.copiedAddressesHeader">ਪਤੇ ਨਕਲ ਕੀਤੇ ਗਏ</string>
-  <!-- Addresses Copied Alert sub header -->
-  <string name="Alerts.copiedAddressesSubheader">ਸਾਰੇ ਵਾਲਿਟ ਪਤੇ ਨਕਲ ਕੀਤੇ ਗਏ ਹਨ</string>
-  <!-- Alert Header Label (the paper key was set) -->
+    <!-- Warning alert title -->
+    <!-- 'the addresses were copied'' Alert title -->
+    <!-- Addresses Copied Alert sub header -->
+    <!-- Alert Header Label (the paper key was set) -->
   <string name="Alerts.paperKeySet">ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ ਸੈੱਟ</string>
   <!-- Alert Subheader label (playfully positive) -->
   <string name="Alerts.paperKeySetSubheader">ਸ਼ਾਨਦਾਰ</string>
@@ -62,82 +53,48 @@
   <string name="Alerts.touchIdSucceeded.android">ਉਂਗਲੀ ਮਾਨਤਾ ਪ੍ਰਾਪਤ</string>
   <string name="all">ਸਭ</string>
   <!-- JSON Serialization error message -->
-  <string name="ApiClient.jsonError">ਜਾਵਾ ਸੀਰੀਅਲ ਗਲਤੀ</string>
-  <!-- Wallet not ready error message -->
-  <string name="ApiClient.notReady">ਵਾਲਿਟ ਤਿਆਰ ਨਹੀਂ ਹੈ</string>
-  <!-- API Token error message -->
-  <string name="ApiClient.tokenError">
-API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮਰੱਥ</string>
-  <!-- Send BCH view body. -->
-  <string name="BCH.body">ਹੇਠਾਂ ਇੱਕ ਮੰਜ਼ਿਲ DGB ਪਤਾ ਦਾਖਲ ਕਰੋ. ਫੋਰਕ (%1$s) ਦੇ ਸਮੇਂ ਤੁਹਾਡੇ ਵਾਲਿਟ ਵਿੱਚ ਸਾਰੇ ਡੀ ਜੀਬੀ ਭੇਜੇ ਜਾਣਗੇ</string>
-  <!-- Confirm sending <$5.00> to <address>? -->
-  <string name="BCH.confirmationMessage">%1$s  ਤੌਂ %2$s ਭੇਜਣ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ</string>
-  <!-- Confirmation alert title -->
-  <string name="BCH.confirmationTitle">ਪੁਸ਼ਟੀ</string>
-  <!-- Generic bch erorr message -->
-  <string name="BCH.genericError">ਤੁਹਾਡੇ ਅਕੌਂਟ ਵਿੱਚ ਸਪਲਿਟ ਤੋਂ ਬਾਅਦ ਕੋਈ ਵੀ ਡੀਜੀਬਾਈਟ  ਨਹੀਂ ਜਾਂ ਤੁਹਾਡੇ ਪ੍ਰਾਪਤ ਕੀਤੀ ਡੀਜੀਬਾਈਟ ਨਹੀਂ ਹੈ</string>
-  <!-- Transaction ID copied message -->
-  <string name="BCH.hashCopiedMessage">ਟ੍ਰਾਂਸੈਕਸ਼ਨ id ਕਾਪੀ ਕੀਤਾ</string>
-  <!-- No address error message -->
-  <string name="BCH.noAddressError">ਕਿਰਪਾ ਕਰਕੇ ਕੋਈ ਪਤਾ ਦਰਜ ਕਰੋ</string>
-  <!-- Attempted to scan unsupported qr code error message. -->
-  <string name="BCH.paymentProtocolError">ਭੁਗਤਾਨ ਪ੍ਰੋਟੋਕੋਲ ਬੇਨਤੀਆਂ ਡੀਜੀਬਾਈਟ ਟ੍ਰਾਂਸੈਕਸ਼ਨਾਂ ਲਈ ਸਮਰਥਿਤ ਨਹੀਂ ਹਨ</string>
-  <!-- BCH successfully sent alert message -->
-  <string name="BCH.successMessage">ਡੀਜੀਬਾਈਟ ਸਫਲਤਾ ਨਾਲ ਭੇਜਿਆ ਗਿਆ ਹੈ</string>
-  <!-- Widthdraw BCH view title -->
-  <string name="BCH.title">ਡੀਜੀਬਾਈਟ ਵਾਪਸ ਲਓ</string>
-  <!-- Tx Hash button header -->
-  <string name="BCH.txHashHeader">ਡੀਜੀਬਾਈਟ ਟ੍ਰਾਂਸੈਕਸ਼ਨ ਆਈਡੀ</string>
-  <!-- Approve button label -->
-  <string name="BitID.approve">ਮਨਜ਼ੂਰ</string>
-  <!-- <sitename> is requesting authentication using your bitcoin wallet -->
-  <string name="BitID.authenticationRequest">%1$s  ਤੁਹਾਡੀ ਡਿਜੀਬਾਇਟ ਵਾਲਿਟ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਪ੍ਰਮਾਣਿਕਤਾ ਦੀ ਬੇਨਤੀ ਕਰ ਰਿਹਾ ਹੈ</string>
-  <!-- Deny button label -->
-  <string name="BitID.deny">ਇਨਕਾਰ ਕਰੋ</string>
-  <!-- BitID error alert title -->
-  <string name="BitID.error">ਪ੍ਰਮਾਣੀਕਰਨ ਗਲਤੀ</string>
-  <!-- BitID error alert messaage (The payment service you are trying to use isn't working. Please contact them, as you may need to try again) -->
-  <string name="BitID.errorMessage">ਕਿਰਪਾ ਕਰਕੇ ਸੇਵਾ ਦੇ ਨਾਲ ਚੈੱਕ ਕਰੋ ਤੁਹਾਨੂੰ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰਨ ਦੀ ਲੋੜ ਹੋ ਸਕਦੀ ਹੈ</string>
-  <!-- BitID success alert title -->
-  <string name="BitID.success">ਸਫਲਤਾਪੂਰਵਕ ਪਰਮਾਣਿਤ</string>
-  <!-- BitID Authentication Request alert view title -->
-  <string name="BitID.title">ਡਿਜੀਆਈਡੀ ਪ੍ਰਮਾਣਿਕਤਾ ਮੰਗ</string>
-  <!-- Cancel button label -->
+    <!-- Wallet not ready error message -->
+    <!-- API Token error message -->
+    <!-- Send BCH view body. -->
+    <!-- Confirm sending <$5.00> to <address>? -->
+    <!-- Confirmation alert title -->
+    <!-- Generic bch erorr message -->
+    <!-- Transaction ID copied message -->
+    <!-- No address error message -->
+    <!-- Attempted to scan unsupported qr code error message. -->
+    <!-- BCH successfully sent alert message -->
+    <!-- Widthdraw BCH view title -->
+    <!-- Tx Hash button header -->
+    <!-- Approve button label -->
+    <!-- <sitename> is requesting authentication using your bitcoin wallet -->
+    <!-- Deny button label -->
+    <!-- BitID error alert title -->
+    <!-- BitID error alert messaage (The payment service you are trying to use isn't working. Please contact them, as you may need to try again) -->
+    <!-- BitID success alert title -->
+    <!-- BitID Authentication Request alert view title -->
+    <!-- Cancel button label -->
   <string name="Button.cancel">ਰੱਦ ਕਰੋ</string>
   <!-- Ignore button label -->
-  <string name="Button.ignore">ਅਣਡਿੱਠਾ ਕਰੋ</string>
-  <!-- menu button -->
-  <string name="Button.menu">ਮੇਨੂ</string>
-  <!-- No button -->
-  <string name="Button.no">ਨਹੀਂ</string>
-  <!-- OK button label -->
+    <!-- menu button -->
+    <!-- No button -->
+    <!-- OK button label -->
   <string name="Button.ok">ਠੀਕ ਹੈ</string>
   <!-- receive button -->
-  <string name="Button.receive">ਪ੍ਰਾਪਤ ਕਰੋ</string>
-  <!-- send button -->
-  <string name="Button.send">ਭੇਜੋ</string>
-  <!-- Settings button label -->
-  <string name="Button.settings">ਸੈਟਿੰਗਾਂ</string>
-  <!-- Settings button label -->
-  <string name="Button.submit">ਜਮ੍ਹਾਂ ਕਰੋ</string>
-  <!-- Yes button -->
-  <string name="Button.yes">ਹਾਂ</string>
-  <!-- Camera plugin instruction -->
-  <string name="CameraPlugin.centerInstruction">ਬਾਕਸ ਦੇ ਸੈਂਟਰ ਵਿਚ ਆਪਣੀ ID ਕਰੋ</string>
-  <string name="completed">ਮੁਕੰਮਲ</string>
+    <!-- send button -->
+    <!-- Settings button label -->
+    <!-- Settings button label -->
+    <!-- Yes button -->
+    <!-- Camera plugin instruction -->
+    <string name="completed">ਮੁਕੰਮਲ</string>
   <!-- Amount to Send: ($1.00) -->
   <string name="Confirmation.amountLabel">ਭੇਜਣ ਦੀ ਰਕਮ:</string>
   <!-- Network Fee: ($1.00) -->
   <string name="Confirmation.feeLabel">ਨੈੱਟਵਰਕ ਫੀਸ:</string>
   <!-- eg. Processing time: This transaction is predicted to complete in [10-60 minutes]. -->
-  <string name="Confirmation.processingTime">ਪ੍ਰਕਿਰਿਆ ਕਰਨ ਦਾ ਸਮਾਂ: ਇਹ ਟ੍ਰਾਂਸੈਕਸ਼ਨ %1$s ਵਿੱਚ ਪੂਰਾ ਹੋਣ ਦੀ ਉਮੀਦ ਹੈ</string>
-  <!-- Label for "send" button on final confirmation screen -->
-  <string name="Confirmation.send">ਭੇਜੋ</string>
-  <!-- Confirmation Screen title -->
-  <string name="Confirmation.title">ਪੁਸ਼ਟੀ</string>
-  <!-- To: (address) -->
-  <string name="Confirmation.to">ਨੂੰ</string>
-  <!-- Total Cost: ($5.00) -->
+    <!-- Label for "send" button on final confirmation screen -->
+    <!-- Confirmation Screen title -->
+    <!-- To: (address) -->
+    <!-- Total Cost: ($5.00) -->
   <string name="Confirmation.totalLabel">ਕੁੱਲ ਲਾਗਤ:</string>
   <!-- Confirm paper phrase view label. -->
   <string name="ConfirmPaperPhrase.label">ਇਹ ਯਕੀਨੀ ਬਣਾਉਣ ਲਈ ਕਿ ਹਰ ਚੀਜ਼ ਸਹੀ ਢੰਗ ਨਾਲ ਲਿਖੀ ਗਈ ਸੀ, ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਪਰਸਨਲ ਰੀਕਵਰੀ ਕੀ ਤੋਂ ਹੇਠਲੇ ਸ਼ਬਦ ਦਾਖਲ ਕਰੋ</string>
@@ -146,123 +103,88 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <string name="current_amount">ਮੌਜੂਦਾ ਮੁੱਲ: %s</string>
   <string name="date">ਤਾਰੀਖ</string>
   <!-- Bitcoin denomination picker label -->
-  <string name="DefaultCurrency.bitcoinLabel">ਡਿਜਬਾਇਟ ਡਿਸਪਲੇ ਯੂਨਿਟ</string>
-  <!--
-  Bitcoin denomination picker label
-  Exchange rate label
-  -->
+    <!--
+    Bitcoin denomination picker label
+    Exchange rate label
+    -->
   <string name="DefaultCurrency.rateLabel">ਐਕਸਚੇਂਜ ਰੇਟ</string>
   <!-- Email unavailable alert title -->
-  <string name="ErrorMessages.emailUnavailableMessage">ਡਿਵਾਈਸ ਨੂੰ ਮੇਲ ਐਪ ਨਾਲ ਈਮੇਲ ਭੇਜਣ ਲਈ ਕੌਂਫਿਗਰ ਨਹੀਂ ਕੀਤਾ ਗਿਆ ਹੈ</string>
-  <!-- Email unavailable alert title -->
-  <string name="ErrorMessages.emailUnavailableTitle">ਈਮੇਲ ਨਹੀਂ ਮਿਲ ਰਹੀ</string>
-  <!-- Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) -->
+    <!-- Email unavailable alert title -->
+    <!-- Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) -->
   <string name="ErrorMessages.loopingLockScreen.android">
 ਡਿਜੀਬਾਇਟ ਨੂੰ ਐਂਡਰੌਇਡ ਦੇ ਤੁਹਾਡੇ ਵਰਜਨ ਦੇ ਬੱਗ ਦੇ ਕਾਰਨ ਪ੍ਰਮਾਣਿਤ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ (ਕਿਰਪਾ ਕਰਕੇ ਹੋਰ ਜਾਣਕਾਰੀ ਲਈ ਇੱਥੇ ਟੈਪ ਕਰੋ)</string>
   <!-- Messaging unavailable alert title -->
-  <string name="ErrorMessages.messagingUnavailableMessage">ਇਹ ਡਿਵਾਈਸ ਮੈਸੀਜਭੇਜਣ ਭੇਜਣ ਲਈ ਕੌਂਫਿਗਰ ਨਹੀਂ ਕੀਤਾ ਗਿਆ</string>
-  <!-- Messaging unavailable alert title -->
-  <string name="ErrorMessages.messagingUnavailableTitle">ਮੈਸੇਜਿੰਗ ਨਹੀਂ ਮਿਲ ਰਿਹਾ ਹੈ</string>
-  <!-- Fingerprint was not recognized by the scanner, please try scanning again -->
+    <!-- Messaging unavailable alert title -->
+    <!-- Fingerprint was not recognized by the scanner, please try scanning again -->
   <string name="ErrorMessages.touchIdFailed.android">ਉਂਗਲ ਦੇ ਪ੍ਰਿੰਟ ਪਛਾਣਿਆ ਨਹੀਂ ਗਿਆ, ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਜੀ</string>
   <!-- Economy fee -->
-  <string name="FeeSelector.economy">ਇਕਾਨਾਮੀ</string>
-  <!-- E.g. [This transaction is predicted to complete in] 1-24 hours -->
-  <string name="FeeSelector.economyTime">ਅੰਦਾਜਾ ਡਿਲਿਵਰੀ। 10 ਮਿੰਟ ਜਾਂ ਇਸਤੋਂ ਵੱਧ</string>
-  <!-- Warning message for economy fee -->
-  <string name="FeeSelector.economyWarning">ਇਸ ਚੋਣ ਦੀ ਤੁਰੰਤ ਤਜਵੀਜ਼ਾਂ ਲਈ ਸਿਫਾਰਸ਼ ਨਹੀਂ ਕੀਤੀ ਗਈ ਹੈ</string>
-  <!-- E.g. Estimated delivery: 10-60 minutes -->
-  <string name="FeeSelector.estimatedDeliver">ਅੰਦਾਜਾ ਡਿਲਿਵਰੀ: %1$s</string>
-  <!-- Regular fee -->
-  <string name="FeeSelector.regular">ਰੋਜਾਨਾ</string>
-  <!-- E.g. [This transaction is predicted to complete in] 10-60 minutes -->
-  <string name="FeeSelector.regularTime">ਅੰਦਾਜਾ ਡਿਲਿਵਰੀ 15-30 ਸਕਿੰਟ</string>
-  <!-- Fee Selector title -->
-  <string name="FeeSelector.title">ਪ੍ਰੋਸੈਸਿੰਗ ਸਪੀਡ</string>
-  <!-- Checking private key balance progress view text -->
+    <!-- E.g. [This transaction is predicted to complete in] 1-24 hours -->
+    <!-- Warning message for economy fee -->
+    <!-- E.g. Estimated delivery: 10-60 minutes -->
+    <!-- Regular fee -->
+    <!-- E.g. [This transaction is predicted to complete in] 10-60 minutes -->
+    <!-- Fee Selector title -->
+    <!-- Checking private key balance progress view text -->
   <string name="Import.checking">ਪ੍ਰਾਈਵੇਟ ਕਈ ਬੈਲੰਸ ਚੈਕਿੰਗ</string>
   <!-- Sweep private key confirmation message -->
   <string name="Import.confirm">%1$s ਨੂੰ ਇਸ ਪ੍ਰਾਈਵੇਟ ਕਈ ਤੋਂ ਤੁਹਾਡੇ ਵਾਲਿਟ ਵਿੱਚ ਭੇਜੋ? ਡਿਜ਼ੀਬਾਇਟ ਨੈਟਵਰਕ ਨੂੰ %2$s ਦੀ ਫ਼ੀਸ ਪ੍ਰਾਪਤ ਹੋਵੇਗੀ</string>
   <!-- Duplicate key error message -->
-  <string name="Import.Error.duplicate">ਇਹ ਪ੍ਰਾਈਵਟ ਕਈ ਪਹਿਲਾਂ ਹੀ ਤੁਹਾਡੇ ਵਾਲਿਟ ਵਿੱਚ ਹੈ</string>
-  <!-- empty private key error message -->
+    <!-- empty private key error message -->
   <string name="Import.Error.empty">ਇਹ ਪਰਾਇਵਟ ਕੀ ਖਾਲੀ ਹੈ</string>
   <!-- High fees error message -->
-  <string name="Import.Error.highFees">ਟ੍ਰਾਂਸੈਕਸ਼ਨ ਕਸ਼ਨ ਫੀਸਾਂ ਦਾ ਖਰਚ ਇਸ ਪ੍ਰਾਈਵੇਟ ਕੀ ਤੇ ਉਪਲਬਧ ਫੰਡਾਂ ਨਾਲੋਂ ਜ਼ਿਆਦਾ ਹੋਵੇਗਾ</string>
-  <!-- Not a valid private key error message -->
+    <!-- Not a valid private key error message -->
   <string name="Import.Error.notValid">ਇਹ ਸਹੀ ਪ੍ਰਾਈਵੇਟ ਕੀ ਨਹੀਂ</string>
   <!-- Import signing error message -->
   <string name="Import.Error.signing">ਟ੍ਰਾਂਸੈਕਸ਼ਨ ਸਾਈਨ ਵਿਚ ਗਲਤੀ ਹੈ</string>
   <!-- Import button label -->
-  <string name="Import.importButton">ਆਯਾਤ ਕਰੋ</string>
-  <!-- Importing wallet progress view label -->
-  <string name="Import.importing">ਆਯਾਤ ਵਾਲਿਟ</string>
-  <!-- Caption for graphics -->
-  <string name="Import.leftCaption">ਬਰਾਮਦ ਆਯਾਤ ਕਰਨ ਲਈ</string>
-  <!-- Import wallet intro screen message -->
+    <!-- Importing wallet progress view label -->
+    <!-- Caption for graphics -->
+    <!-- Import wallet intro screen message -->
   <string name="Import.message">ਵਾਲਿਟ ਤੋਂ ਸਾਰਾ ਡੀਜੀਬਾਈਟ  ਇਕ ਅਦਾਨ-ਪ੍ਰਦਾਨ ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹੋਏ ਆਪਣੇ ਡਿਜੀਬਾਇਟ ਵਾਲਿਟ ਵਿੱਚ ਟ੍ਰਾਂਸਫਰ ਕਰਨ ਲਈ</string>
   <!-- Enter password alert view title -->
   <string name="Import.password">ਇਹ ਪਰਾਇਵਟ ਕੀ ਪਾਸਵਰਡ ਸੁਰੱਖਿਅਤ ਹੈ</string>
   <!-- password textfield placeholder -->
-  <string name="Import.passwordPlaceholder">ਪਾਸਵਰਡ</string>
-  <!-- Caption for graphics -->
-  <string name="Import.rightCaption">ਤੁਹਾਡੀ ਡਿਜੀਬਾਇਟ ਵਾਲਟ</string>
-  <!-- Scan Private key button label -->
+    <!-- Caption for graphics -->
+    <!-- Scan Private key button label -->
   <string name="Import.scan">ਪ੍ਰਾਈਵੇਟ ਕੀ ਨੂੰ ਸਕੈਨ ਕਰੋ</string>
   <!-- Import wallet success alert title -->
-  <string name="Import.success">ਸਫ਼ਲਤਾ</string>
-  <!-- Successfully imported wallet message body -->
-  <string name="Import.SuccessBody">ਸਫਲਤਾਪੂਰਕ ਵਾਲਿਟ ਇੰਪੋਰਟ ਕੀਤਾ ਗਿਆ</string>
-  <!-- Import Wallet screen title -->
-  <string name="Import.title">ਆਯਾਤ ਵਾਲਟ</string>
-  <!-- Unlocking Private key activity view message. -->
-  <string name="Import.unlockingActivity">ਕੀ  ਅਨਲੌਕੰਗ</string>
-  <!-- Import wallet intro warning message -->
+    <!-- Successfully imported wallet message body -->
+    <!-- Import Wallet screen title -->
+    <!-- Unlocking Private key activity view message. -->
+    <!-- Import wallet intro warning message -->
   <string name="Import.warning">ਇਹ ਵਾਲਿਟ ਨੂੰ ਆਯਾਤ ਕਰਨ ਵਿੱਚ ਲੈਣ-ਦੇਣ ਦਾ ਇਤਿਹਾਸ ਜਾਂ ਹੋਰ ਵੇਰਵੇ ਸ਼ਾਮਲ ਨਹੀਂ ਹੁੰਦੇ ਹਨ</string>
   <!-- Wrong password alert message -->
-  <string name="Import.wrongPassword">ਗਲਤ ਪਾਸਵਰਡ - ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
-  <!-- Close app button -->
+    <!-- Close app button -->
   <string name="JailbreakWarnings.close">ਬੰਦ</string>
   <!-- Ignore jailbreak warning button -->
-  <string name="JailbreakWarnings.ignore">ਅਣਡਿੱਠਾ ਕਰੋ</string>
-  <!-- Jailbreak warning message -->
-  <string name="JailbreakWarnings.messageWithBalance">ਡਿਵਾਈਸ ਸੁਰੱਖਿਆ ਖਰਾਬ \n ਕਿਸੇ ਵੀ ਰੂਟ ਐਪ ਡਿਜੀਬਾਇਟ ਦੀ ਕੀਚੈਨ ਤੱਕ ਪਹੁੰਚ ਕਰ ਸਕਦਾ ਹੈ - ਵਾਲਿਟ ਨੂੰ ਹਟਾਓ ਅਤੇ ਇੱਕ ਸੁਰੱਖਿਅਤ ਡਿਵਾਈਸ ਤੇ ਰੀਸਟੋਰ ਕਰੋ</string>
-  <!--
-  Ignore jailbreak warning button
-  Jailbreak warning message
-  -->
+    <!-- Jailbreak warning message -->
+    <!--
+    Ignore jailbreak warning button
+    Jailbreak warning message
+    -->
   <string name="JailbreakWarnings.messageWithoutBalance">ਡਿਵਾਈਸ ਸੁਰੱਖਿਆ ਖਰਾਬ \n ਕਿਸੇ ਵੀ ਰੂਟ ਐਪ ਡਿਬੀਬਾਇਟ ਦੀ ਕੀਚੈਨ ਤੱਕ ਪਹੁੰਚ ਕਰ ਸਕਦਾ ਹੈ - ਕਿਰਪਾ ਕਰਕੇ ਕਿਸੇ ਡਿਵਾਈਬਾਈਟ ਨੂੰ ਇੱਕ ਆਮ ਡਿਵਾਈਸ ਤੇ ਵਰਤੋ</string>
   <!-- Jailbreak warning title -->
   <string name="JailbreakWarnings.title">ਚੇਤਾਵਨੀ</string>
   <!-- Location services disabled error -->
-  <string name="LocationPlugin.disabled">ਸਥਾਨ ਸੇਵਾਵਾਂ ਅਯੋਗ ਹਨ</string>
-  <!-- No permissions for location services -->
-  <string name="LocationPlugin.notAuthorized">ਡਿਜਬਾਇਟ ਕੋਲ ਸਥਾਨ ਸੇਵਾਵਾਂ ਨੂੰ ਵਰਤਣ ਦੀ ਅਨੁਮਤੀ ਨਹੀਂ ਹੈ</string>
-  <!-- Wallet creation date prefix -->
-  <string name="ManageWallet.creationDatePrefix">ਤੁਸੀਂ %1$s ਤੇ ਆਪਣਾ ਵਾਲਿਟ ਬਣਾਇਆ</string>
-  <!-- Manage wallet description text -->
-  <string name="ManageWallet.description">ਤੁਹਾਡਾ ਵਾਲਿਟ ਨਾਮ ਸਿਰਫ ਤੁਹਾਡੇ ਖਾਤੇ ਦੇ ਟ੍ਰਾਂਸੈਕਸ਼ਨ ਦੇ ਇਤਿਹਾਸ ਵਿੱਚ ਪ੍ਰਗਟ ਹੁੰਦਾ ਹੈ ਅਤੇ ਕਿਸੇ ਹੋਰ ਤੋਂ ਨਹੀਂ ਵੇਖਿਆ ਜਾ ਸਕਦਾ</string>
-  <!-- Change Wallet name textfield label -->
-  <string name="ManageWallet.textFeildLabel">ਵਾਲਿਟ ਨਾਮ</string>
-  <!-- Manage wallet modal title -->
-  <string name="ManageWallet.title">ਵਾਲਿਟ  ਮੈਨੇਜਰ ਕਰਣਾ</string>
-  <string name="max">ਵੱਧ ਤੋਂ ਵੱਧ</string>
+    <!-- No permissions for location services -->
+    <!-- Wallet creation date prefix -->
+    <!-- Manage wallet description text -->
+    <!-- Change Wallet name textfield label -->
+    <!-- Manage wallet modal title -->
+    <string name="max">ਵੱਧ ਤੋਂ ਵੱਧ</string>
   <string name="max_send_enabled">ਬਟਨ ਦਿਖਾਓ: ਅਧਿਕਤਮ ਭੇਜੋ</string>
   <!-- Buy bitcoin title -->
-  <string name="MenuButton.buy">ਡਿਜੀਬਾਇਟ ਖਰੀਦੋ</string>
-  <!-- Menu button title -->
+    <!-- Menu button title -->
   <string name="MenuButton.lock">ਲਾਕ ਵਾਲਟ</string>
   <!-- Menu button title -->
   <string name="MenuButton.security">ਸੁਰੱਖਿਆ ਕੇਂਦਰ</string>
   <!-- Menu button title -->
   <string name="MenuButton.settings">ਸੈਟਿੰਗਾਂ</string>
   <!-- Menu button title -->
-  <string name="MenuButton.support">ਸਹਿਯੋਗ</string>
-  <!-- button label -->
+    <!-- button label -->
   <string name="MenuViewController.createButton">ਨਵਾਂ ਵਾਲਿਟ ਬਣਾਓ</string>
   <!-- Menu modal title -->
-  <string name="MenuViewController.modalTitle">ਮੇਨੂ</string>
-  <!-- button label -->
+    <!-- button label -->
   <string name="MenuViewController.recoverButton">ਵੈਲਟ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰੋ</string>
   <!-- Switch to automatic mode button label -->
   <string name="NodeSelector.automaticButton">ਆਟੋਮੈਟਿਕ ਮੋਡ ਤੇ ਸਵਿਚ ਕਰੋ</string>
@@ -285,79 +207,53 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <string name="no_limit">ਕੋਈ ਸੀਮਾ ਨਹੀਂ</string>
   <string name="original_amount">ਪਿਛਲਾ ਮਾਨ: %s</string>
   <!-- Bad Payment request alert title -->
-  <string name="PaymentProtocol.Errors.badPaymentRequest">ਮਾੜਾ ਭੁਗਤਾਨ ਬੇਨਤੀ</string>
-  <!-- Error opening payment protocol file message -->
-  <string name="PaymentProtocol.Errors.corruptedDocument">ਅਸਮਰਥਿਤ ਜਾਂ ਨਿਕਾਰਾ ਦਸਤਾਵੇਜ਼</string>
-  <!-- Missing certificate payment protocol error message -->
-  <string name="PaymentProtocol.Errors.missingCertificate">ਗੁੰਮ ਸਰਟੀਫਿਕੇਟ</string>
-  <!-- Request expired payment protocol error message -->
-  <string name="PaymentProtocol.Errors.requestExpired">ਬੇਨਤੀ ਦੀ ਮਿਆਦ ਪੁੱਗ ਗਈ ਹੈ</string>
-  <!-- Payment too small alert title -->
-  <string name="PaymentProtocol.Errors.smallOutputError">ਭੁਗਤਾਨ ਨਹੀਂ ਕਰ ਸਕਦਾ</string>
-  <!-- Amount too small error message -->
+    <!-- Error opening payment protocol file message -->
+    <!-- Missing certificate payment protocol error message -->
+    <!-- Request expired payment protocol error message -->
+    <!-- Payment too small alert title -->
+    <!-- Amount too small error message -->
   <string name="PaymentProtocol.Errors.smallPayment">ਡਿਜਬਾਇਟ ਭੁਗਤਾਨ %1$s ਤੋਂ ਘੱਟ ਨਹੀਂ ਹੋ ਸਕਦੇ</string>
   <!-- Output too small error message. -->
   <string name="PaymentProtocol.Errors.smallTransaction">ਡਿਜਬਾਇਟ ਸੰਚਾਰ ਆਊਟਪੁੱਟ %1$s ਤੋਂ ਘੱਟ ਨਹੀਂ ਹੋ ਸਕਦੇ</string>
   <!-- Unsupported signature type payment protocol error message -->
-  <string name="PaymentProtocol.Errors.unsupportedSignatureType">ਨਾ ਸਹਿਯੋਗੀ ਦਸਤਖਤ ਪ੍ਰਕਾਰ</string>
-  <!-- Untrusted certificate payment protocol error message -->
-  <string name="PaymentProtocol.Errors.untrustedCertificate">ਬੇਭਰੋਸੇਯੋਗ ਸਰਟੀਫਿਕੇਟ</string>
-  <string name="processed">ਮੁਕੰਮਲ</string>
+    <!-- Untrusted certificate payment protocol error message -->
+    <string name="processed">ਮੁਕੰਮਲ</string>
   <!-- No passcode set warning body -->
-  <string name="Prompts.NoPasscode.body">ਤੁਹਾਡੇ ਵਾਲਿਟ ਦੀ ਰਾਖੀ ਲਈ ਇੱਕ ਡਿਵਾਈਸ ਪਾਸਕੋਡ ਦੀ ਲੋੜ ਹੈ ਸੈਟਿੰਗਾਂ ਤੇ ਜਾਓ ਅਤੇ ਪਾਸਕੋਡ ਚਾਲੂ ਕਰੋ</string>
-  <!-- No Passcode set warning title -->
-  <string name="Prompts.NoPasscode.title">ਡਿਵਾਈਸ ਪਾਸਕੋਡ ਨੂੰ ਚਾਲੂ ਕਰੋ</string>
-  <!-- Instruction how to enable device encryption -->
+    <!-- No Passcode set warning title -->
+    <!-- Instruction how to enable device encryption -->
   <string name="Prompts.NoScreenLock.body.android">ਤੁਹਾਡੇ  ਵਾਲਿਟ ਦੀ ਰਾਖੀ ਲਈ ਇੱਕ ਡਿਵਾਈਸ ਸਕ੍ਰੀਨ ਲੌਕ ਦੀ ਲੋੜ ਹੈ. ਸੈਟਿੰਗਾਂ&gt; ਸੁਰੱਖਿਆ&gt; ਸਕ੍ਰੀਨ ਲੌਕ ਤੇ ਜਾਓ ਅਤੇ ਜਾਰੀ ਰੱਖਣ ਲਈ ਸਮਰੱਥ ਬਣਾਓ</string>
   <!-- Device encryption prompt title -->
-  <string name="Prompts.NoScreenLock.title.android">ਸਕ੍ਰੀਨ ਲੌਕ ਅਸਮਰਥਿਤ</string>
-  <!-- Warning about paper key. -->
-  <string name="Prompts.PaperKey.body">ਤੁਹਾਡੀ ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ ਸੰਭਾਲਿਆ ਜਾਣਾ ਚਾਹੀਦਾ ਹੈ ਜੇਕਰ ਤੁਸੀਂ ਕਦੇ ਆਪਣਾ ਫ਼ੋਨ ਗੁਆ ​​ਬੈਠਦੇ ਹੋ ਜਾਂ ਬਦਲਦੇ ਹੋ. ਜਾਰੀ ਰੱਖਣ ਲਈ ਇੱਥੇ ਟੈਪ ਕਰੋ</string>
-  <!-- An action is required (You must do this action). -->
-  <string name="Prompts.PaperKey.title">ਕਾਰਵਾਈ ਦੀ ਲੋੜ ਹੈ</string>
-  <!-- Transaction rejected prompt body -->
-  <string name="Prompts.RecommendRescan.body">ਤੁਹਾਡਾ ਵਾਲਿਟ  ਇਕਸਾਰ ਨਹੀਂ ਹੋ ਸਕਦਾ. ਇਸ ਨੂੰ ਬਲੌਕਚੈਨ ਨੂੰ ਦੁਬਾਰਾ ਸੈਟ ਕਰਨ ਦੁਆਰਾ ਨਿਸ਼ਚਤ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ</string>
-  <!-- Transaction rejected prompt title -->
-  <string name="Prompts.RecommendRescan.title">ਟ੍ਰਾਂਸੈਕਸ਼ਨ ਰੱਦ</string>
-  <!-- Share data prompt body -->
-  <string name="Prompts.ShareData.body">ਸਾਡੇ ਨਾਲ ਆਪਣੇ ਗੁਮਨਾਮ ਡੇਟਾ ਨੂੰ ਸਾਂਝਾ ਕਰਕੇ ਡਿਜੀਬਾਈਟ ਵਿੱਚ ਸੁਧਾਰ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰੋ</string>
-  <!-- Share data prompt title -->
-  <string name="Prompts.ShareData.title">ਬੇਨਾਮ ਡਾਟਾ ਸਾਂਝਾ ਕਰੋ</string>
-  <!-- Enable touch ID prompt body -->
-  <string name="Prompts.TouchId.body">ਟਚ ID ਨੂੰ ਸਮਰੱਥ ਬਣਾਉਣ ਲਈ ਇੱਥੇ ਟੈਪ ਕਰੋ</string>
-  <!-- Enable Fingerprint prompt body -->
-  <string name="Prompts.TouchId.body.android">ਫਿੰਗਰਪਰਿੰਟ ਪ੍ਰਮਾਣਿਕਤਾ ਨੂੰ ਸਮਰੱਥ ਕਰਨ ਲਈ ਇੱਥੇ ਟੈਪ ਕਰੋ</string>
-  <!-- Enable touch ID prompt title -->
-  <string name="Prompts.TouchId.title">ਟਚ ID ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
-  <!-- Enable Fingerprint prompt title -->
-  <string name="Prompts.TouchId.title.android">ਫਿੰਗਰਪ੍ਰਿੰਟ ਪ੍ਰਮਾਣੀਕਰਨ ਸਮਰੱਥ ਕਰੋ</string>
-  <!-- Button on fingerprint prompt so the user can enter their PIN instead -->
+    <!-- Warning about paper key. -->
+    <!-- An action is required (You must do this action). -->
+    <!-- Transaction rejected prompt body -->
+    <!-- Transaction rejected prompt title -->
+    <!-- Share data prompt body -->
+    <!-- Share data prompt title -->
+    <!-- Enable touch ID prompt body -->
+    <!-- Enable Fingerprint prompt body -->
+    <!-- Enable touch ID prompt title -->
+    <!-- Enable Fingerprint prompt title -->
+    <!-- Button on fingerprint prompt so the user can enter their PIN instead -->
   <string name="Prompts.TouchId.usePin.android">ਪਿੰਨ</string>
   <!-- Upgrade PIN prompt body. -->
-  <string name="Prompts.UpgradePin.body">ਡਿਜਬਾਇਟ 6 ਡੀਜੀਟ ਪਿੰਨ ਕਰਨ ਲਈ ਅਪਗ੍ਰੇਡ ਕੀਤਾ ਗਿਆ ਹੈ ਅਪਗ੍ਰੇਡ ਕਰਨ ਲਈ ਇੱਥੇ ਟੈਪ ਕਰੋ</string>
-  <!-- Upgrade PIN prompt title. -->
-  <string name="Prompts.UpgradePin.title">ਅਪਗ੍ਰੇਡ ਪਿੰਨ</string>
-  <!-- Notifications will be added later but users can set their preferences now, which is why we specify "in the future". -->
+    <!-- Upgrade PIN prompt title. -->
+    <!-- Notifications will be added later but users can set their preferences now, which is why we specify "in the future". -->
   <string name="PushNotifications.body">ਭਵਿੱਖ ਵਿੱਚ ਡਿਜ਼ੀਬਾਇਟ ਬੈਟ ਤੋਂ ਵਿਸ਼ੇਸ਼ ਸੰਦੇਸ਼ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਸੂਚਨਾਵਾਂ ਨੂੰ ਚਾਲੂ ਕਰੋ</string>
   <!-- Push notifications toggle switch label -->
   <string name="PushNotifications.label">ਪੁਸ਼ ਸੂਚਨਾਵਾਂ</string>
   <!-- Push notifications are off label -->
-  <string name="PushNotifications.off">ਬੰਦ</string>
-  <!-- Push notifications are on label -->
-  <string name="PushNotifications.on">ਤੇ</string>
-  <!-- Push notifications settings view title label -->
+    <!-- Push notifications are on label -->
+    <!-- Push notifications settings view title label -->
   <string name="PushNotifications.title">ਸੂਚਨਾਵਾਂ</string>
   <!-- Address copied message. -->
   <string name="Receive.copied">ਕਲਿਪਬੋਰਡ ਤੇ ਕਾਪੀ ਕੀਤਾ ਗਿਆ</string>
   <!-- Share via email button label -->
-  <string name="Receive.emailButton">ਈ - ਮੇਲ</string>
-  <!-- Request button label -->
+    <!-- Request button label -->
   <string name="Receive.request">ਇੱਕ ਰਕਮ ਦੀ ਬੇਨਤੀ ਕਰੋ</string>
   <!-- Share button label -->
   <string name="Receive.share">ਸਾਂਝਾ ਕਰੋ</string>
   <!-- Share via text message (SMS) -->
-  <string name="Receive.textButton">ਟੈਕਸਟ ਮੈਸੇਜ</string>
-  <!-- Receive modal title -->
+    <!-- Receive modal title -->
   <string name="Receive.title">ਪ੍ਰਾਪਤ ਕਰੋ</string>
   <string name="received">ਪ੍ਰਾਪਤ ਹੋਇਆ</string>
   <!-- Done button text -->
@@ -367,33 +263,25 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <!-- Reset PIN with paper key: header -->
   <string name="RecoverWallet.header_reset_pin">ਪਿੰਨ ਰੀਸੈਟ ਕਰੋ</string>
   <!-- Enter paper key instruction -->
-  <string name="RecoverWallet.instruction">ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ ਐੰਟਰ ਕਰੋ</string>
-  <!-- Recover wallet intro -->
+    <!-- Recover wallet intro -->
   <string name="RecoverWallet.intro">ਆਪਣੀ  ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ  ਨਾਲ ਆਪਣੀ ਡਿਜੀਬਾਇਟ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰੋ</string>
   <!-- Invalid paper key message -->
   <string name="RecoverWallet.invalid">ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ  ਜੋ ਤੁਸੀਂ ਭਰੀ ਹੈ ਗਲਤ ਹੈ. ਕਿਰਪਾ ਕਰਕੇ ਹਰ ਸ਼ਬਦ ਨੂੰ ਚੈਕ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
   <!-- Previous button accessibility label -->
-  <string name="RecoverWallet.leftArrow">ਖੱਬਾ ਤੀਰ</string>
-  <!-- Next button label -->
+    <!-- Next button label -->
   <string name="RecoverWallet.next">ਅਗਲਾ</string>
   <!-- Reset PIN with paper key: more information button. -->
-  <string name="RecoverWallet.reset_pin_more_info">ਹੋਰ ਜਾਣਕਾਰੀ ਲਈ ਇੱਥੇ ਟੈਪ ਕਰੋ</string>
-  <!-- Next button accessibility label -->
-  <string name="RecoverWallet.rightArrow">ਸੱਜਾ ਤੀਰ</string>
-  <!-- Recover wallet sub-header -->
+    <!-- Next button accessibility label -->
+    <!-- Recover wallet sub-header -->
   <string name="RecoverWallet.subheader">ਵਾਲਿਟ ਜੋ ਤੁਸੀਂ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਉਸ ਲਈ ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ ਭਰੋ</string>
   <!-- Reset PIN with paper key: sub-header -->
   <string name="RecoverWallet.subheader_reset_pin">ਆਪਣੀ ਪਿੰਨ ਨੂੰ ਰੀਸੈੱਟ ਕਰਨ ਲਈ, ਆਪਣੀ ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ ਦੇ ਸ਼ਬਦ ਹੇਠਲੇ ਬਕਸੇ ਵਿੱਚ ਭਰੋ</string>
   <!-- No amount entered error message. -->
-  <string name="RequestAnAmount.noAmount">
-ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਰਕਮ ਜਮ੍ਹਾਂ ਕਰੋ</string>
-  <!-- Request a specific amount of bitcoin -->
-  <string name="RequestAnAmount.title">ਇੱਕ ਰਕਮ ਦੀ ਬੇਨਤੀ ਕਰੋ</string>
-  <!-- Alert action button label -->
+    <!-- Request a specific amount of bitcoin -->
+    <!-- Alert action button label -->
   <string name="ReScan.alertAction">ਸਿੰਕ੍ਰੋਨਾਈਜ਼ ਕਰੋ</string>
   <!-- Alert message body -->
-  <string name="ReScan.alertMessage">ਸਿੰਕ੍ਰੋਨਾਈਜ਼ ਹੁੰਦੇ ਵਖਤ ਆਪ ਡੀਜੀਬਾਈਟ ਨਹੀਂ ਭੇਜ ਸਕਦੇ</string>
-  <!-- Alert message title -->
+    <!-- Alert message title -->
   <string name="ReScan.alertTitle">ਬਲਾਕਚੈਨ ਨਾਲ ਸਿੰਕ੍ਰੋਨਾਈਜ਼  ਕਰੋ ?</string>
   <!-- extimated time -->
   <string name="ReScan.body1">20-45 ਮਿੰਟ</string>
@@ -406,22 +294,16 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <!-- Sync blockchain view footer -->
   <string name="ReScan.footer">ਬਲਾਕਚੈਨ ਸਿੰਕ੍ਰੋਨਾਈਜ਼ ਹੌਵਣ ਦੇ ਵਖਤ ਤੁਸੀਂ ਡੀਜੀਬਾਈਟ ਨਹੀਂ ਭੇਜ ਸਕਦੇ</string>
   <!-- Sync Blockchain view header -->
-  <string name="ReScan.header">ਬਲਾਕਚੈਨ ਸਿੰਕ੍ਰੋਨਾਈਜ਼ ਕਰੋ</string>
-  <!-- Subheader label -->
+    <!-- Subheader label -->
   <string name="ReScan.subheader1">ਅੰਦਾਜ਼ਨ ਸਮਾਂ</string>
   <!-- Subheader label -->
   <string name="ReScan.subheader2">ਸਿੰਕ੍ਰੋਨਾਈਜ਼ ਕਦੋਂ ਕਰਣੀ ?</string>
   <!-- Scan bitcoin address camera flash toggle -->
-  <string name="Scanner.flashButtonLabel">ਕੈਮਰਾ ਫਲੈਸ਼</string>
-  <!-- Complete filter label -->
-  <string name="Search.complete">ਮੁਕੰਮਲ</string>
-  <!-- Pending filter label -->
-  <string name="Search.pending">ਲੰਬਿਤ</string>
-  <!-- Received filter label -->
-  <string name="Search.received">ਮਿਲਿਆ</string>
-  <!-- Sent filter label -->
-  <string name="Search.sent">ਭੇਜੇ ਗਏ</string>
-  <!-- Security Center Info -->
+    <!-- Complete filter label -->
+    <!-- Pending filter label -->
+    <!-- Received filter label -->
+    <!-- Sent filter label -->
+    <!-- Security Center Info -->
   <string name="SecurityCenter.info">ਵੱਧ ਤੋਂ ਵੱਧ ਸੁਰੱਖਿਆ ਲਈ ਸਾਰੀਆਂ ਸੁਰੱਖਿਆ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
   <!-- Paper Key button description -->
   <string name="SecurityCenter.paperKeyDescription">ਜੇ ਤੁਸੀਂ ਆਪਣਾ ਫ਼ੋਨ ਗੁਆਉਂਦੇ ਜਾਂ ਬਦਲਦੇ ਹੋ ਤਾਂ ਆਪਣੀ ਡਿਜੀਬਾਈਟ ਨੂੰ ਐਕਸੈਸ ਕਰਨ ਦਾ ਇੱਕੋ ਇੱਕ ਤਰੀਕਾ</string>
@@ -436,58 +318,44 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <!-- Touch ID button description -->
   <string name="SecurityCenter.touchIdDescription">ਸੁਵਿਧਾਜਨਕ ਤੁਹਾਡੇ ਡਿਵਾਈਬੈਟ ਨੂੰ ਅਨਲੌਕ ਕਰੋ ਅਤੇ ਇੱਕ ਸੈੱਟ ਸੀਮਾ ਤੱਕ ਡੀਜੀਬਾਈਟ  ਭੇਜੋ</string>
   <!-- Touch ID button title -->
-  <string name="SecurityCenter.touchIdTitle">ਟਚ ਆਈਡੀ</string>
-  <!-- Security center fingerprint authentication button -->
+    <!-- Security center fingerprint authentication button -->
   <string name="SecurityCenter.touchIdTitle.android">ਫਿੰਗਰਪ੍ਰਿੰਟ ਪ੍ਰਮਾਣਿਕਤਾ</string>
   <!-- Send money amount label -->
-  <string name="Send.amountLabel">ਦੀ ਰਕਮ</string>
-  <!-- Balance: $4.00 -->
-  <string name="Send.balance">ਬਕਾਇਆ %1$s</string>
-  <!-- Instructions how to allow the camera access for the app -->
+    <!-- Balance: $4.00 -->
+    <!-- Instructions how to allow the camera access for the app -->
   <string name="Send.cameraUnavailabeMessage.android">ਸੈਟਿੰਗਾਂ ਵਿਚ ਕੈਮਰਾ ਐਕਸੈਸ ਦੀ ਆਗਿਆ ਦਿਓ&gt; ਐਪਸ&gt; ਡਿਜੀਬਾਇਟ&gt; ਅਨੁਮਤੀਆਂ</string>
   <!-- Permission required to access camera -->
   <string name="Send.cameraUnavailabeTitle.android">
 ਡਿਜੀਬਾਈਟ ਨੂੰ ਕੈਮਰੇ ਤੱਕ ਪਹੁੰਚ ਕਰਨ ਦੀ ਆਗਿਆ ਨਹੀਂ ਹੈ</string>
   <!-- Camera not allowed message -->
-  <string name="Send.cameraunavailableMessage">ਕੈਮਰਾ ਐਕਸੇਸ ਦੀ ਮਨਜ਼ੂਰੀ ਲਈ ਸੈੱਟਿੰਗਜ਼ ਤੇ ਜਾਓ</string>
-  <!-- Camera not allowed alert title -->
-  <string name="Send.cameraUnavailableTitle">ਡਿਜੀਬਾਈਟ ਨੂੰ ਕੈਮਰੇ ਤੱਕ ਪਹੁੰਚ ਕਰਨ ਦੀ ਆਗਿਆ ਨਹੀਂ ਹੈ</string>
-  <!-- Warning when sending to self. -->
+    <!-- Camera not allowed alert title -->
+    <!-- Warning when sending to self. -->
   <string name="Send.containsAddress">ਮੰਜ਼ਿਲ ਤੁਹਾਡਾ ਆਪਣਾ ਪਤਾ ਹੈ ਤੁਸੀਂ ਆਪਣੇ ਆਪ ਨੂੰ ਨਹੀਂ ਭੇਜ ਸਕਦੇ</string>
   <!-- Could not create transaction alert title -->
-  <string name="Send.creatTransactionError">ਟ੍ਰਾਂਸੈਕਸ਼ਨ ਨਹੀਂ ਬਣ ਸਕਿਆ</string>
-  <!-- Description for sending money label -->
+    <!-- Description for sending money label -->
   <string name="Send.descriptionLabel">ਮੈਮੋ</string>
   <!-- Emtpy pasteboard error message -->
   <string name="Send.emptyPasteboard">ਪੇਸਟਬੋਰਡ ਖਾਲੀ ਹੈ</string>
   <!-- Network Fee: $0.01 -->
   <string name="Send.fee">ਨੈਟਵਰਕ ਦੀ ਫੀਸ: %1$s</string>
   <!-- Payee identity not certified alert title. -->
-  <string name="Send.identityNotCertified">ਭੁਗਤਾਨ ਕਰਤਾ ਦੀ ਪਛਾਣ ਤਸਦੀਕ ਨਹੀਂ ਕੀਤੀ ਜਾਂਦੀ</string>
-  <!-- Invalid address alert message -->
-  <string name="Send.invalidAddressMessage">ਮੰਜ਼ਲ ਪਤਾ ਇੱਕ ਯੋਗ ਡਿਜੀਬਾਈਟ ਪਤਾ ਨਹੀਂ ਹੈ</string>
-  <!-- Invalid address on pasteboard message -->
-  <string name="Send.invalidAddressOnPasteboard">ਪੇਸਟਬੋਰਡ ਵਿੱਚ ਇੱਕ ਪ੍ਰਮਾਣਿਕ ​​ਡਿਜੀਬਾਈਟ ਪਤਾ ਸ਼ਾਮਲ ਨਹੀਂ ਹੈ</string>
-  <!-- Invalid address alert title -->
+    <!-- Invalid address alert message -->
+    <!-- Invalid address on pasteboard message -->
+    <!-- Invalid address alert title -->
   <string name="Send.invalidAddressTitle">ਅਵੈਧ ਪਤਾ</string>
   <!-- Is rescanning error message -->
   <string name="Send.isRescanning">
 ਇੱਕ ਪੂਰੀ ਰੀਕੈਨਕ ਦੌਰਾਨ ਭੇਜਣਾ ਅਸਮਰਥ ਹੈ</string>
   <!-- We are loading the request (now) -->
-  <string name="Send.loadingRequest">
-ਲੋਡਿੰਗ ਬੇਨਤੀ</string>
-  <!-- Empty address alert message -->
+    <!-- Empty address alert message -->
   <string name="Send.noAddress">
 ਕਿਰਪਾ ਕਰਕੇ ਪ੍ਰਾਪਤਕਰਤਾ ਦਾ ਪਤਾ ਦਰਜ ਕਰੋ</string>
   <!-- Emtpy amount alert message -->
-  <string name="Send.noAmount">ਭੇਜਣ ਲਈ ਇੱਕ ਰਕਮ ਦਰਜ ਕਰੋ</string>
-  <!-- Paste button label -->
+    <!-- Paste button label -->
   <string name="Send.pasteLabel">ਪੇਸਟ</string>
   <!-- Could not publish transaction alert title -->
-  <string name="Send.publishTransactionError">ਟ੍ਰਾਂਸੈਕਸ਼ਨ ਪ੍ਰਕਾਸ਼ਿਤ ਨਹੀਂ ਕਰ ਸਕਿਆ</string>
-  <!-- Could not load remote request error message -->
-  <string name="Send.remoteRequestError">ਭੁਗਤਾਨ ਬੇਨਤੀ ਲੋਡ ਨਹੀਂ ਕਰ ਸਕਿਆ</string>
-  <!-- Scan button label -->
+    <!-- Could not load remote request error message -->
+    <!-- Scan button label -->
   <string name="Send.scanLabel">ਸਕੈਨ</string>
   <!-- Send button label (the action, "press here to send") -->
   <string name="Send.sendLabel">ਭੇਜੋ</string>
@@ -500,8 +368,7 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <!-- Adress already used alert message - second part -->
   <string name="Send.UsedAddress.secondLIne">ਮੁੜ-ਵਰਤੋਂ ਤੁਹਾਡੇ ਅਤੇ ਪ੍ਰਾਪਤਕਰਤਾ ਦੋਵਾਂ ਲਈ ਗੋਪਨੀਯਤਾ ਘਟਾਉਂਦਾ ਹੈ ਅਤੇ ਨਤੀਜਾ ਹੋ ਸਕਦਾ ਹੈ ਜੇ ਪ੍ਰਾਪਤਕਰਤਾ ਪਤੇ \'ਤੇ ਸਿੱਧਾ ਕਾਬੂ ਨਹੀਂ ਰੱਖਦਾ</string>
   <!-- Adress already used alert title -->
-  <string name="Send.UsedAddress.title">ਪਤਾ ਪਹਿਲਾਂ ਹੀ ਵਰਤਿਆ ਹੈ</string>
-  <string name="sent">ਭੇਜੇ ਗਏ</string>
+    <string name="sent">ਭੇਜੇ ਗਏ</string>
   <!-- About label -->
   <string name="Settings.about">ਬਾਰੇ</string>
   <!-- Advanced Settings title -->
@@ -509,10 +376,8 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <!-- i.e. the currency which will be displayed -->
   <string name="Settings.currency">ਡਿਸਪਲੇ ਕਰੋ ਮੁਦਰਾ</string>
   <!-- Join Early access label -->
-  <string name="Settings.earlyAccess">ਛੇਤੀ ਪਹੁੰਚ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ</string>
-  <!-- Are you enjoying bread alert message body -->
-  <string name="Settings.enjoying">ਕੀ ਤੁਸੀਂ ਡਿਜੀਬਾਈਟ ਦਾ ਆਨੰਦ ਮਾਣ ਰਹੇ ਹੋ?</string>
-  <!-- Import wallet left message -->
+    <!-- Are you enjoying bread alert message body -->
+    <!-- Import wallet left message -->
   <string name="Settings.importLeftMessage">ਬਰਾਮਦ ਆਯਾਤ ਕਰਨ ਲਈ</string>
   <!-- Import wallet right message -->
   <string name="Settings.importRightMessage">"ਤੁਹਾਡੀ ਡਿਜੀਵਾਲਿਟ "</string>
@@ -521,21 +386,16 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <!-- Manage settings section header -->
   <string name="Settings.manage">ਮੈਨਿਜ</string>
   <!-- Notifications label -->
-  <string name="Settings.notifications">ਸੂਚਨਾਵਾਂ</string>
-  <!-- Restore screen lower label. -->
+    <!-- Restore screen lower label. -->
   <string name="Settings.restore_label">ਇਸ ਡਿਵਾਈਸ \'ਤੇ ਤੁਹਾਡਾ ਡਿਜੀਵਾਲਿਟ
 </string>
   <!-- Leave review button label -->
-  <string name="Settings.review">ਸਾਨੂੰ ਇੱਕ ਸਮੀਖਿਆ ਛੱਡ ਦਿਓ</string>
-  <!-- Share anonymous data label -->
-  <string name="Settings.shareData">ਬੇਨਾਮ ਡੇਟਾ ਸਾਂਝਾ ਕਰੋ</string>
-  <!-- Sync blockchain label -->
+    <!-- Share anonymous data label -->
+    <!-- Sync blockchain label -->
   <string name="Settings.sync">ਬਲਾਕਚੈਨ ਸਿੰਕ੍ਰੋਨਾਈਜ਼</string>
   <!-- Settings title -->
-  <string name="Settings.title">ਸੈਟਿੰਗਾਂ</string>
-  <!-- Touch ID spending limit label -->
-  <string name="Settings.touchIdLimit">ਟੁਚ ਆਇਡੀ ਖਰਚ ਦੀ ਹੱਦ</string>
-  <!-- The fingerprint spending limit -->
+    <!-- Touch ID spending limit label -->
+    <!-- The fingerprint spending limit -->
   <string name="Settings.touchIdLimit.android">ਫਿੰਗਰਪ੍ਰਿੰਟ ਪ੍ਰਮਾਣਿਕਤਾ ਦੀ ਖਰਚਾ ਸੀਮਾ
 </string>
   <!-- Wallet Settings section header -->
@@ -543,40 +403,26 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <!-- Start or recover another wallet menu label. -->
   <string name="Settings.wipe">ਕਿਸੇ ਹੋਰ ਵਾਲਿਟ ਨੂੰ ਚਾਲੂ ਕਰਨਾ ਜਾਂ ਪ੍ਰਾਪਤ ਕਰਨਾ</string>
   <!-- Share data view body -->
-  <string name="ShareData.body">ਸਾਡੇ ਨਾਲ ਆਪਣੇ ਗੁਮਨਾਮ ਡੇਟਾ ਨੂੰ ਸਾਂਝਾ ਕਰਕੇ ਡਿਜੀਵਾਲਿਟ ਨੂੰ ਬਿਹਤਰ ਬਣਾਉਣ ਵਿੱਚ ਸਹਾਇਤਾ ਕਰੋ. ਇਸ ਵਿੱਚ ਕਿਸੇ ਵਿੱਤੀ ਜਾਣਕਾਰੀ ਸ਼ਾਮਲ ਨਹੀਂ ਹੈ ਅਸੀਂ ਤੁਹਾਡੇ ਵਿੱਤੀ ਨਿਜਤਾ ਦਾ ਸਤਿਕਾਰ ਕਰਦੇ ਹਾਂ</string>
-  <!-- Share data header -->
-  <string name="ShareData.header">ਡੇਟਾ ਸਾਂਝਾ ਕਰੋ?</string>
-  <!-- Share data switch label. -->
-  <string name="ShareData.toggleLabel">ਬੇਨਾਮ ਡੇਟਾ ਸ਼ੇਅਰ ਕਰੋ?</string>
-  <!-- button label -->
-  <string name="StartPaperPhrase.againButtonTitle">ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ ਨੂੰ ਦੁਬਾਰਾ ਲਿਖੋ</string>
-  <!-- Paper key explanation text. -->
+    <!-- Share data header -->
+    <!-- Share data switch label. -->
+    <!-- button label -->
+    <!-- Paper key explanation text. -->
   <string name="StartPaperPhrase.body">ਜੇ ਤੁਹਾਡਾ ਫੋਨ ਗੁੰਮ ਹੋ ਜਾਂਦਾ ਹੈ, ਚੋਰੀ ਹੋ ਜਾਂਦਾ ਹੈ, ਟੁੱਟੀ ਗਿਆ ਹੈ, ਜਾਂ ਅਪਗਰੇਡ ਕੀਤਾ ਜਾਂਦਾ। \n\n ਤੁਹਾਡੀ ਡਿਜੀਵਾਲਿਟ ਨੂੰ ਰੀਸਟੋਰ ਕਰਨ ਦਾ ਇਕੋ ਇਕ ਤਰੀਕਾ ਹੈ  ਅਸੀਂ ਤੁਹਾਨੂੰ ਕਾਗਜ਼ ਦੇ ਟੁਕੜੇ \'ਤੇ ਲਿਖਣ ਅਤੇ ਸੁਰੱਖਿਅਤ ਰੱਖਣ ਲਈ ਸ਼ਬਦ ਦੀ ਇੱਕ ਸੂਚੀ ਦਿਖਾਵਾਂਗੇ।</string>
   <!-- button label -->
   <string name="StartPaperPhrase.buttonTitle">ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ  ਲਿਖੋ</string>
   <!-- Argument is date -->
-  <string name="StartPaperPhrase.date">ਤੁਸੀਂ ਪਹਿਲਾਂ ਆਪਣੀ ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ ਨੂੰ ਹੇਠਾਂ ਲਿਖਿਆ ਸੀ  %1$s</string>
-  <!-- Start view message -->
-  <string name="StartViewController.message">ਡਿਜੀਬਾਈਟ ਵਰਤਣ ਲਈ ਸਭ ਤੋਂ ਸੁਰੱਖਿਅਤ ਤਰੀਕਾ ਹੈ</string>
-  <!-- Syncing view connectiong state header text -->
+    <!-- Start view message -->
+    <!-- Syncing view connectiong state header text -->
   <string name="SyncingView.connecting">ਜੁੜਨਾ</string>
   <!-- Syncing view header text -->
-  <string name="SyncingView.header">ਸਿੰਕ੍ਰੋਨਾਈਜ਼  ਕਰਨਾ</string>
-  <!-- Retry button label -->
-  <string name="SyncingView.retry">ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
-  <!-- Syncing view syncing state header text -->
-  <string name="SyncingView.syncing">ਸਿੰਕ੍ਰੋਨਾਈਜ਼  ਕਰਨਾ</string>
-  <!-- 6 d (6 days) -->
-  <string name="TimeSince.days">%1$s d</string>
-  <!-- 6 h (6 hours) -->
-  <string name="TimeSince.hours">%1$s h</string>
-  <!-- 6 m (6 minutes) -->
-  <string name="TimeSince.minutes">%1$s m</string>
-  <!-- 6 s (6 seconds) -->
-  <string name="TimeSince.seconds">%1$s s</string>
-  <!-- You can customize your Touch ID Spending Limit from the [TouchIdSettings.linkText gets added here as a button] -->
-  <string name="TouchIdSettings.customizeText">ਤੁਸੀਂ %1$s ਤੋਂ ਆਪਣੀ ਟਚ ਆਈਡੀ ਦੀ ਖਰਚਾ ਦੀ ਸੀਮਾ ਨੂੰ ਅਨੁਕੂਲ ਕਰ ਸਕਦੇ ਹੋ</string>
-  <!-- Fingerprint enabling description body -->
+    <!-- Retry button label -->
+    <!-- Syncing view syncing state header text -->
+    <!-- 6 d (6 days) -->
+    <!-- 6 h (6 hours) -->
+    <!-- 6 m (6 minutes) -->
+    <!-- 6 s (6 seconds) -->
+    <!-- You can customize your Touch ID Spending Limit from the [TouchIdSettings.linkText gets added here as a button] -->
+    <!-- Fingerprint enabling description body -->
   <string name="TouchIdSettings.customizeText.android">ਤੁਸੀਂ ਫਿੰਗਰਪ੍ਰਿੰਟ ਪ੍ਰਮਾਣਿਤ ਖਰਚੇ ਦੀ ਸੀਮਾ ਸਕ੍ਰੀਨ ਤੋਂ ਆਪਣੇ ਫਿੰਗਰਪ੍ਰਿੰਟ ਪ੍ਰਮਾਣੀਕਰਨ ਖਰਚਾ ਸੀਮਾ ਨੂੰ ਅਨੁਕੂਲਿਤ ਕਰ ਸਕਦੇ ਹੋ</string>
   <!-- Instruction for the fingerprint setup -->
   <string name="TouchIdSettings.disabledWarning.body.android">ਤੁਸੀਂ ਇਸ ਡਿਵਾਈਸ ਤੇ ਫਿੰਗਰਪ੍ਰਿੰਟ ਪ੍ਰਮਾਣਿਕਤਾ ਨੂੰ ਸਮਰਥਿਤ ਨਹੀਂ ਕੀਤਾ ਹੈ ਫਿੰਗਰਪ੍ਰਿੰਟ ਪ੍ਰਮਾਣੀਕਰਨ ਸੈਟ ਅਪ ਕਰਨ ਲਈ ਸੈਟਿੰਗਾਂ -&gt; ਸੁਰੱਖਿਆ ਤੇ ਜਾਓ</string>
@@ -586,128 +432,78 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <!-- Touch Id screen label -->
   <string name="TouchIdSettings.label">ਆਪਣੀ ਡਿਗਵਾਲਿਟ ਨੂੰ ਅਨਲੌਕ ਕਰਨ ਲਈ ਆਪਣੀ ਫਿੰਗਰਪ੍ਰਿੰਟ ਦੀ ਵਰਤੋਂ ਕਰੋ ਅਤੇ ਇੱਕ ਸੈੱਟ ਸੀਮਾ ਤੱਕ ਡੀਜੀਬਾਈਟ ਭੇਜੋ</string>
   <!-- Link Text (see TouchIdSettings.customizeText) -->
-  <string name="TouchIdSettings.linkText">ਟਚ ਆਈਡੀ ਖਰਚ ਦੀ ਸੀਮਾ</string>
-  <!-- Spending Limit: b100,000 ($100) -->
+    <!-- Spending Limit: b100,000 ($100) -->
   <string name="TouchIdSettings.spendingLimit">ਖਰਚ ਦੀ ਹੱਦ: %1$s (%2$s)</string>
   <!-- Touch id switch label. -->
-  <string name="TouchIdSettings.switchLabel">ਡਿਜੀਵਾਲਿਟ ਲਈ ਟਚ ਆਈਡੀ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
-  <!-- Enable fingerprint for this wallet called Bread -->
+    <!-- Enable fingerprint for this wallet called Bread -->
   <string name="TouchIdSettings.switchLabel.android">ਫਿੰਗਰਪ੍ਰਿੰਟ ਪ੍ਰਮਾਣੀਕਰਨ ਸਮਰੱਥ ਕਰੋ
 </string>
   <!-- Touch ID settings view title -->
-  <string name="TouchIdSettings.title">ਟਚ ਆਈਡੀ</string>
-  <!-- Fingerprint authentication label -->
+    <!-- Fingerprint authentication label -->
   <string name="TouchIdSettings.title.android">ਫਿੰਗਰਪ੍ਰਿੰਟ ਪ੍ਰਮਾਣਿਕਤਾ</string>
   <!-- Touch ID unavailable alert message -->
-  <string name="TouchIdSettings.unavailableAlertMessage">ਤੁਸੀਂ ਇਸ ਡਿਵਾਈਸ ਤੇ ਟਚ ਆਈਡੀ ਨੂੰ ਸੈਟ ਅਪ ਨਹੀਂ ਕੀਤਾ ਹੈ ਹੁਣ ਇਸ ਨੂੰ ਸੈਟ ਅਪ ਕਰਨ ਲਈ ਸੈਟਿੰਗਜ਼-&gt; ਟਚ ਆਈਡੀ ਅਤੇ ਪਾਸਕੋਡ ਤੇ ਜਾਓ</string>
-  <!-- Touch ID unavailable alert title -->
-  <string name="TouchIdSettings.unavailableAlertTitle">ਟਚ ID ਸੈਟ ਅਪ ਨਹੀਂ ਹੈ</string>
-  <!-- Always require passcode option -->
-  <string name="TouchIdSpendingLimit">
-ਹਮੇਸ਼ਾ ਪਾਸਕੋਡ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ</string>
-  <!-- Touch ID spending limit screen body -->
+    <!-- Touch ID unavailable alert title -->
+    <!-- Always require passcode option -->
+    <!-- Touch ID spending limit screen body -->
   <string name="TouchIdSpendingLimit.body">ਤੁਹਾਨੂੰ ਆਪਣੀ 6-ਡੀਜੀਟ ਪਿੰਨ ਨੂੰ ਦਾਖ਼ਲ ਕਰਨ ਲਈ ਕਿਹਾ ਜਾਵੇਗਾ ਜੋ ਤੁਹਾਡੇ ਖਰਚੇ ਦੀ ਹੱਦ ਨਾਲੋਂ ਕੋਈ ਵੀ ਸੌਦਾ ਭੇਜ ਸਕਦਾ ਹੈ, ਅਤੇ ਆਖਰੀ ਵਾਰ ਜਦੋਂ ਤੁਸੀਂ ਆਪਣਾ 6 ਡੀਜੀਟ ਪਿੰਨ ਦਿੱਤਾ ਹੈ</string>
   <!-- Touch Id spending limit screen title -->
-  <string name="TouchIdSpendingLimit.title">ਟਛ ਆਈਡੀ ਖਰਚ ਦੀ ਸੀਮਾ</string>
-  <!--
-  Touch Id spending limit screen title
-  name of spending limit when using fingerprint authorization
-  -->
+    <!--
+    Touch Id spending limit screen title
+    name of spending limit when using fingerprint authorization
+    -->
   <string name="TouchIdSpendingLimit.title.android">ਫਿੰਗਰਪ੍ਰਿੰਟ ਅਧਿਕਾਰ ਖਰਚ ਦੀ ਸੀਮਾ</string>
   <!-- Availability status text -->
-  <string name="Transaction.available">ਖਰਚ ਕਰਨ ਲਈ ਉਪਲਬਧ</string>
-  <!-- Transaction complete label -->
-  <string name="Transaction.complete">ਮੁਕੰਮਲ</string>
-  <!-- eg. Ending balance: $50.00 -->
-  <string name="Transaction.ending">ਸਮਾਪਤੀ ਸੰਤੁਲਨ: %1$s</string>
-  <!-- Exchange rate on date header -->
-  <string name="Transaction.exchangeOnDayReceived">ਜਦੋਂ ਪ੍ਰਾਪਤ ਕੀਤਾ ਜਾਂਦਾ ਹੈ ਤਾਂ ਐਕਸਚੇਂਜ ਰੇਟ:</string>
-  <!-- Exchange rate on date header -->
-  <string name="Transaction.exchangeOnDaySent">ਐਕਸਚੇਂਜ ਰੇਟਜਦੋਂ ਜਦੋਂ ਭੇਜੀ ਜਾਂਦੀ ਹੈ</string>
-  <!-- (b600 fee) -->
-  <string name="Transaction.fee">(%1$s ਫੀਸ)</string>
-  <!-- Invalid transaction -->
-  <string name="Transaction.invalid">ਅਪ੍ਰਮਾਣਿਕ</string>
-  <!-- Timestamp label for event that just happened -->
-  <string name="Transaction.justNow">ਹੁਣੇ</string>
-  <!-- Receive status text: 'In progress: 20%' -->
-  <string name="Transaction.receivedStatus">ਤਰੱਕੀ ਹੋ ਰਹੀ ਹੈ: %1$s</string>
-  <!-- Send status text: 'In progress: 20%' -->
-  <string name="Transaction.sendingStatus">ਤਰੱਕੀ ਹੋ ਰਹੀ ਹੈ: %1$s</string>
-  <!-- eg. Starting balance: $50.00 -->
-  <string name="Transaction.starting">ਸ਼ੁਰੂ ਕਰਨ ਦਾ ਬੈਲੰਸ: %1$s</string>
-  <!-- Waiting to be confirmed string -->
-  <string name="Transaction.waiting">ਪੁਸ਼ਟੀ ਕੀਤੀ ਜਾ ਰਹੀ ਉਡੀਕ. ਕੁਝ ਵਪਾਰੀਆਂ ਨੂੰ ਟ੍ਰਾਂਸੈਕਸ਼ਨ ਨੂੰ ਪੂਰਾ ਕਰਨ ਲਈ ਪੁਸ਼ਟੀ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ. ਅੰਦਾਜ਼ਨ ਸਮਾਂ: 1-2 ਮਿੰਟ</string>
-  <!-- e.g. I received money from an account. -->
-  <string name="TransactionDetails.account">ਖਾਤਾ</string>
-  <!-- Amount section header -->
-  <string name="TransactionDetails.amountHeader">
-ਦੀ ਰਕਮ</string>
-  <!-- Block height label -->
-  <string name="TransactionDetails.blockHeightLabel">ਬਲਾਕ ਵਿੱਚ ਪੁਸ਼ਟੀ ਕੀਤੀ</string>
-  <!-- Memo section header -->
-  <string name="TransactionDetails.commentsHeader">ਮੈਮੋ</string>
-  <!-- Empty transaction list message. -->
-  <string name="TransactionDetails.emptyMessage">ਤੁਹਾਡੇ ਲੈਣ-ਦੇਣ ਇੱਥੇ ਦਿਖਾਈ ਦੇਣਗੇ</string>
-  <!-- "Received [$5] at [which of my addresses]" => This is the "at [which of my addresses]" part. -->
-  <string name="TransactionDetails.from">
-ਤੇ %1$s</string>
-  <!-- More button title -->
-  <string name="TransactionDetails.more">ਹੋਰ...</string>
-  <!-- Moved $5.00 (as in "I moved $5 to another location") -->
-  <string name="TransactionDetails.moved">%1$s ਨੂੰ ਮੂਵ ਕੀਤਾ</string>
-  <!-- Moved $5.00 -->
-  <string name="TransactionDetails.movedAmountDescription"><b>%1$s</b> ਨੂੰ ਮੂਵ ਕੀਤਾ</string>
-  <!-- eg. Confirmed in Block: Not Confirmed -->
-  <string name="TransactionDetails.notConfirmedBlockHeightLabel">ਪੁਸ਼ਟੀ ਨਹੀਂ ਕੀਤੀ</string>
-  <!-- "Received [$5] at [which of my addresses]" => This is the "Received [$5]" part. -->
+    <!-- Transaction complete label -->
+    <!-- eg. Ending balance: $50.00 -->
+    <!-- Exchange rate on date header -->
+    <!-- Exchange rate on date header -->
+    <!-- (b600 fee) -->
+    <!-- Invalid transaction -->
+    <!-- Timestamp label for event that just happened -->
+    <!-- Receive status text: 'In progress: 20%' -->
+    <!-- Send status text: 'In progress: 20%' -->
+    <!-- eg. Starting balance: $50.00 -->
+    <!-- Waiting to be confirmed string -->
+    <!-- e.g. I received money from an account. -->
+    <!-- Amount section header -->
+    <!-- Block height label -->
+    <!-- Memo section header -->
+    <!-- Empty transaction list message. -->
+    <!-- "Received [$5] at [which of my addresses]" => This is the "at [which of my addresses]" part. -->
+    <!-- More button title -->
+    <!-- Moved $5.00 (as in "I moved $5 to another location") -->
+    <!-- Moved $5.00 -->
+    <!-- eg. Confirmed in Block: Not Confirmed -->
+    <!-- "Received [$5] at [which of my addresses]" => This is the "Received [$5]" part. -->
   <string name="TransactionDetails.received">%1$s ਪ੍ਰਾਪਤ ਕੀਤਾ</string>
   <!-- Received $5.00 -->
-  <string name="TransactionDetails.receivedAmountDescription"><b>%1$s</b> ਪ੍ਰਾਪਤ ਕੀਤਾ</string>
-  <!-- "Sent [$5] to [address]" => This is the "Sent [$5]" part. -->
-  <string name="TransactionDetails.sent">
-%1$s ਭੇਜਿਆ ਗਿਆ</string>
-  <!-- Sent $5.00 -->
-  <string name="TransactionDetails.sentAmountDescription"><b>%1$s</b> ਭੇਜਿਆ ਗਿਆ</string>
-  <!-- Status section header -->
+    <!-- "Sent [$5] to [address]" => This is the "Sent [$5]" part. -->
+    <!-- Sent $5.00 -->
+    <!-- Status section header -->
   <string name="TransactionDetails.statusHeader">ਸਥਿਤੀ</string>
   <!-- Transaction Details Title -->
-  <string name="TransactionDetails.title">ਟ੍ਰਾਂਸੈਕਸ਼ਨ ਵੇਰਵੇ</string>
-  <!-- "Sent [$5] to [address]" => This is the "to [address]" part. -->
-  <string name="TransactionDetails.to">%1$s ਤੋਂ</string>
-  <!-- Transaction ID header -->
-  <string name="TransactionDetails.txHashHeader">ਡਿਜੀਬਾਇਟ ਟ੍ਰਾਂਸੈਕਸ਼ਨ ID</string>
-  <!-- (this transaction was) Received at this address: -->
-  <string name="TransactionDirection.address">ਇਸ ਪਤੇ ਤੇ ਪ੍ਰਾਪਤ ਕੀਤੀ</string>
-  <!-- (this transaction was) Sent to this address: -->
-  <string name="TransactionDirection.to">ਇਸ ਪਤੇ ਨੂੰ ਭੇਜਿਆ</string>
-  <!-- Disabled until date -->
-  <string name="UnlockScreen.disabled">ਅਪਾਹਜ ਹੋਣ ਤੱਕ: %1$s</string>
-  <!-- My Address button title -->
+    <!-- "Sent [$5] to [address]" => This is the "to [address]" part. -->
+    <!-- Transaction ID header -->
+    <!-- (this transaction was) Received at this address: -->
+    <!-- (this transaction was) Sent to this address: -->
+    <!-- Disabled until date -->
+    <!-- My Address button title -->
   <string name="UnlockScreen.myAddress">ਮੇਰਾ ਪਤਾ</string>
   <!-- Reset PIN with Paper Key button label. -->
   <string name="UnlockScreen.resetPin">ਪਿੰਨ ਰੀਸੈਟ ਕਰੋ</string>
   <!-- Scan button title -->
-  <string name="UnlockScreen.scan">
-ਸਕੈਨ</string>
-  <!-- Unlock Screen sub-header -->
-  <string name="UnlockScreen.subheader">ਪਿੰਨ ਦਾਖ਼ਲ ਕਰੋ</string>
-  <!-- Instruction to touch the sensor for fingerprint authentication -->
+    <!-- Unlock Screen sub-header -->
+    <!-- Instruction to touch the sensor for fingerprint authentication -->
   <string name="UnlockScreen.touchIdInstructions.android">ਟਚ ਸੈਸਰ</string>
   <!-- TouchID prompt text -->
-  <string name="UnlockScreen.touchIdPrompt">
-ਆਪਣੀ ਡਿਜ਼ੀ ਵਾਲਿਟ ਅਨਲੌਕ ਕਰੋ</string>
-  <!-- Device authentication body -->
+    <!-- Device authentication body -->
   <string name="UnlockScreen.touchIdPrompt.android">ਜਾਰੀ ਰੱਖਣ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਐਂਡਰਾਇਡ ਡਿਵਾਈਸ ਨੂੰ ਅਨਲੌਕ ਕਰੋ</string>
   <!-- Unlock with TouchID accessibility label -->
-  <string name="UnlockScreen.touchIdText">ਸੰਪਰਕ ID ਨਾਲ ਅਨਲੌਕ ਕਰੋ</string>
-  <!-- Device authentication title -->
+    <!-- Device authentication title -->
   <string name="UnlockScreen.touchIdTitle.android">ਪ੍ਰਮਾਣੀਕਰਨ ਦੀ ਲੋੜ ਹੈ
 </string>
   <!-- Wallet unlocked message -->
-  <string name="UnlockScreen.unlocked">
-ਵਾਲਿਟ ਅਨਲੌਕ</string>
-  <!-- Update PIN caption text -->
+    <!-- Update PIN caption text -->
   <string name="UpdatePin.caption">
 ਇਹ ਪਿਨ ਯਾਦ ਰੱਖੋ - ਜੇ ਤੁਸੀਂ ਇਸ ਨੂੰ ਭੁੱਲ ਜਾਂਦੇ ਹੋ, ਤਾਂ ਤੁਸੀਂ ਆਪਣੇ ਡਿਜੀਬਾਈਟ ਤੱਕ ਨਹੀਂ ਪਹੁੰਚ ਸਕੋਗੇ</string>
   <!-- PIN creation info. -->
@@ -726,35 +522,21 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <string name="UpdatePin.reEnterNew">
 ਆਪਣਾ ਨਵਾਂ ਪਿੰਨ ਦੁਬਾਰਾ ਦਾਖ਼ਲ ਕਰੋ</string>
   <!-- Update PIN failure error message. -->
-  <string name="UpdatePin.setPinError">ਮਾਫ ਕਰਨਾ ਤੁਹਾਡਾ ਪਿੰਨ ਅਪਡੇਟ ਨਹੀਂ ਕਰ ਸਕਿਆ</string>
-  <!-- Update PIN failure alert view title -->
-  <string name="UpdatePin.setPinErrorTitle">ਅਪਡੇਟ ਪਿੰਨ ਗਲਤੀ</string>
-  <!-- Update PIN title -->
-  <string name="UpdatePin.updateTitle">ਅਪਡੇਟ ਪਿੰਨ</string>
-  <!-- Authorize to copy wallet addresses alert message -->
-  <string name="URLHandling.addressaddressListAlertMessage">
-ਕੀ ਵਾਲਿਟ ਪਤੇ ਕਲਿਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰਨੇ ਹਨ?</string>
-  <!-- Authorize to copy wallet address PIN view prompt. -->
-  <string name="URLHandling.addressList">ਵਾਲਿਟ ਪਤੇ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰਨ ਦਾ ਅਧਿਕਾਰ</string>
-  <!-- Authorize to copy wallet address alert title -->
-  <string name="URLHandling.addressListAlertTitle">ਵਾਲਿਟ ਪਤੇ ਦੀ ਕਾਪੀ ਕਰੋ</string>
-  <!-- Copy wallet addresses alert button label -->
-  <string name="URLHandling.copy">ਕਾਪੀ ਕਰੋ</string>
-  <!-- Verify PIN for transaction view body -->
-  <string name="VerifyPin.authorize">ਕਿਰਪਾ ਕਰਕੇ ਇਸ ਟ੍ਰਾਂਸੈਕਸ਼ਨ ਨੂੰ ਅਧਿਕ੍ਰਿਤ ਕਰਨ ਲਈ ਆਪਣਾ ਪਿੰਨ ਦਾਖ਼ਲ ਕਰੋ</string>
-  <!-- Verify PIN view body -->
+    <!-- Update PIN failure alert view title -->
+    <!-- Update PIN title -->
+    <!-- Authorize to copy wallet addresses alert message -->
+    <!-- Authorize to copy wallet address PIN view prompt. -->
+    <!-- Authorize to copy wallet address alert title -->
+    <!-- Copy wallet addresses alert button label -->
+    <!-- Verify PIN for transaction view body -->
+    <!-- Verify PIN view body -->
   <string name="VerifyPin.continueBody">ਜਾਰੀ ਰੱਖਣ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਪਿੰਨ ਦਾਖਲ ਕਰੋ</string>
   <!-- Verify PIN view title -->
-  <string name="VerifyPin.title">ਪਿੰਨ ਦੀ ਲੋੜ ਹੈ</string>
-  <!-- Authorize transaction with touch id message -->
-  <string name="VerifyPin.touchIdMessage">ਇਸ ਟ੍ਰਾਂਸੈਕਸ਼ਨ ਨੂੰ ਅਧਿਕਾਰਤ ਕਰੋ</string>
-  <!-- 'No wallet' warning for watch app -->
-  <string name="Watch.noWalletWarning">ਆਪਣੇ ਵਾਲਿਟ ਨੂੰ ਸਥਾਪਤ ਕਰਨ ਲਈ ਡਿਜੀਵਾਲਿਟ ਐਂਡਰੌਇਡ ਐਪ ਖੋਲ੍ਹੋ</string>
-  <!-- Dismiss button label -->
-  <string name="Webview.dismiss">ਬਰਖਾਸਤ ਕਰੋ</string>
-  <!-- Webview loading error message -->
-  <string name="Webview.errorMessage">ਸਮਗਰੀ ਨੂੰ ਲੋਡ ਕਰਨ ਵਿੱਚ ਕੋਈ ਗਲਤੀ ਆਈ ਮੁੜ ਕੋਸ਼ਿਸ ਕਰੋ ਜੀ</string>
-  <!-- Updating webview message -->
+    <!-- Authorize transaction with touch id message -->
+    <!-- 'No wallet' warning for watch app -->
+    <!-- Dismiss button label -->
+    <!-- Webview loading error message -->
+    <!-- Updating webview message -->
   <string name="Webview.updating">ਅਪਡੇਟ ਕਰ ਰਿਹਾ ਹੈ ...</string>
   <!-- Welcome screen text. (?) will be replaced with the help icon users should look for. -->
   <string name="Welcome.body">ਡਿਜੀਵਾਲਿਟ ਦੇ ਬਿਲਕੁਲ ਨਵੇਂ ਫੀਚਰ ਅਤੇ ਕੁਝ ਨਵੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਹਨ। ਜੇ ਤੁਹਾਨੂੰ ਮਦਦ ਦੀ ਜ਼ਰੂਰਤ ਹੈ ਤਾਂ ਇਸ ਦੀ ਭਾਲ ਕਰੋ (?) ਜ਼ਿਆਦਾਤਰ ਸਕਰੀਨਾਂ ਦੇ ਸੱਜੇ ਪਾਸੇ ਵਿਚ</string>
@@ -765,28 +547,21 @@ API ਟੋਕਨ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮ�
   <!-- Wipe wallet alert title -->
   <string name="WipeWallet.alertTitle">ਵਾਲਿਟ ਪੂੰਝੇਗਾ?</string>
   <!-- Failed wipe wallet alert message -->
-  <string name="WipeWallet.failedMessage">ਵਾਲਿਟ ਪੂੰਝਣ ਵਿੱਚ ਅਸਫਲ</string>
-  <!-- Failed wipe wallet alert title -->
-  <string name="WipeWallet.failedTitle">ਫੇਲ੍ਹ ਹੋਈ</string>
-  <!-- Enter phrase to wipe wallet instruction. -->
+    <!-- Failed wipe wallet alert title -->
+    <!-- Enter phrase to wipe wallet instruction. -->
   <string name="WipeWallet.instruction">ਇੱਕ ਨਵੇਂ ਵਾਲਿਟ ਨੂੰ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਜਾਂ ਮੌਜੂਦਾ ਵਾਲਿਟ ਨੂੰ ਬਹਾਲ ਕਰਨ ਲਈ, ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ ਉਹ ਵਾਲਿਟ ਮਿਟਾਉਣਾ ਚਾਹੀਦਾ ਹੈ ਜੋ ਇਸ ਸਮੇਂ ਇੰਸਟਾਲ ਹੈ. ਜਾਰੀ ਰੱਖਣ ਲਈ, ਮੌਜੂਦਾ ਵਾਲਿਟ ਦੇ ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ ਦਿਓ</string>
   <!-- Start wipe wallet view message -->
   <string name="WipeWallet.startMessage">ਕਿਸੇ ਹੋਰ ਵਾਲਿਟ ਨੂੰ ਸ਼ੁਰੂ ਕਰਨਾ ਜਾਂ ਪ੍ਰਾਪਤ ਕਰਨਾ ਤੁਹਾਨੂੰ ਇਸ ਡਿਵਾਈਸ \'ਤੇ ਇੱਕ ਵੱਖਰੀ ਡਿਜੀਆਲੇਟ ਐਕਸੈਸ ਕਰਨ ਅਤੇ ਪ੍ਰਬੰਧਨ ਦੀ ਆਗਿਆ ਦਿੰਦਾ ਹੈ</string>
   <!-- Start wipe wallet view warning -->
   <string name="WipeWallet.startWarning">ਤੁਹਾਡੇ ਮੌਜੂਦਾ ਵਾਲਿਟ ਨੂੰ ਇਸ ਡਿਵਾਈਸ ਤੋਂ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ. ਜੇਕਰ ਤੁਸੀਂ ਇਸ ਨੂੰ ਭਵਿੱਖ ਵਿੱਚ ਪੁਨਰ ਸਥਾਪਿਤ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ, ਤੁਹਾਨੂੰ ਆਪਣੀ ਪਰਸਨਾਲ ਰਿਕਵਰੀ ਕੀ ਦਰਜ ਕਰਨ ਦੀ ਲੋੜ ਹੋਵੇਗੀ</string>
   <!-- Wipe wallet navigation item title. -->
-  <string name="WipeWallet.title">ਕਿਸੇ ਹੋਰ ਵਾਲਿਟ ਨੂੰ ਚਾਲੂ ਕਰਨਾ ਜਾਂ ਪ੍ਰਾਪਤ ਕਰਨਾ</string>
-  <!-- Wipe wallet button title -->
+    <!-- Wipe wallet button title -->
   <string name="WipeWallet.wipe">ਪੂੰਝੋ</string>
   <!-- Wiping activity message -->
-  <string name="WipeWallet.wiping">
-ਪੂੰਝਣਾ</string>
-  <!-- Paper key instructions. -->
+    <!-- Paper key instructions. -->
   <string name="WritePaperPhrase.instruction">ਹਰ ਇੱਕ ਸ਼ਬਦ ਲਿਖੋ ਅਤੇ ਇੱਕ ਸੁਰੱਖਿਅਤ ਜਗ੍ਹਾ ਤੇ ਸਟੋਰ ਕਰੋ</string>
   <!-- button label -->
-  <string name="WritePaperPhrase.next">ਅਗਲਾ</string>
-  <!-- button label -->
+    <!-- button label -->
   <string name="WritePaperPhrase.previous">ਪਿਛਲੇ</string>
   <!-- 1 of 3 -->
-  <string name="WritePaperPhrase.step">%1$d ਦੇ %2$d</string>
 </resources>

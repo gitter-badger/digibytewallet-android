@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <!-- App name -->
-  <string name="About.appName.android">DigiWallet</string>
-  <!-- About screen blog label -->
+    <!-- About screen blog label -->
   <string name="About.blog">https://digibyte.io/</string>
   <!-- About screen footer -->
   <string name="About.footer">"  global DigiWallet баг бүтээсэн. Хувилбар %1$s"</string>
@@ -11,12 +10,10 @@
   <!-- About screen reddit label -->
   <string name="About.reddit">https://www.reddit.com/r/Digibyte/</string>
   <!-- Terms of Use button label -->
-  <string name="About.terms">Энэ төсөл нээлттэй бөгөөд та энэ кодыг эндээс үзэж болно:
-https://github.com/Racecraft/digibytewallet-android</string>
-  <!--
-  Terms of Use button label
-  About screen title
-  -->
+    <!--
+    Terms of Use button label
+    About screen title
+    -->
   <string name="About.title">
 DigiWallet нь DigiByte-д зориулсан гар утасны түрийвч юм.</string>
   <!-- About screen twitter label -->
@@ -24,13 +21,9 @@ DigiWallet нь DigiByte-д зориулсан гар утасны түрийв�
   <!-- Close modal button accessibility label -->
   <string name="AccessibilityLabels.close">Хаах</string>
   <!-- Support center accessibiliy label -->
-  <string name="AccessibilityLabels.faq">
-Дэмжих төв</string>
-  <!-- Loading Wallet Message -->
-  <string name="Account.loadingMessage">Түрийвчийг ачаалж байна</string>
-  <!-- Default wallet name -->
-  <string name="AccountHeader.defaultWalletName">Миний DigiWallet</string>
-  <!-- Third party keyboard warning -->
+    <!-- Loading Wallet Message -->
+    <!-- Default wallet name -->
+    <!-- Third party keyboard warning -->
   <string name="Alert.customKeyboard.android">Та гуравдагч этгээдийн гар ашиглаж байгаа бөгөөд таны бичсэн зүйлээ бичиж, хувийн сэргээх түлхүүрийг хулгайлж чадна. Анхдагч Андройд гарыг нэмэлт хамгаалалтанд шилжүүлээрэй.</string>
   <!-- Error alert title -->
   <string name="Alert.error">
@@ -44,15 +37,10 @@ DigiWallet нь DigiByte-д зориулсан гар утасны түрийв�
   <!-- Keystore error title -->
   <string name="Alert.keystore.title.android">Android KeyStore алдаа</string>
   <!-- No internet alert message -->
-  <string name="Alert.noInternet">Интернет холболт олдсонгүй. Холболтоо шалгаад дахин оролдоно уу.</string>
-  <!-- Warning alert title -->
-  <string name="Alert.warning">
-Анхааруулга</string>
-  <!-- 'the addresses were copied'' Alert title -->
-  <string name="Alerts.copiedAddressesHeader">Хаяг хуулбарласан</string>
-  <!-- Addresses Copied Alert sub header -->
-  <string name="Alerts.copiedAddressesSubheader">Бүх түрийвч амжилттай хуулагдсан.</string>
-  <!-- Alert Header Label (the paper key was set) -->
+    <!-- Warning alert title -->
+    <!-- 'the addresses were copied'' Alert title -->
+    <!-- Addresses Copied Alert sub header -->
+    <!-- Alert Header Label (the paper key was set) -->
   <string name="Alerts.paperKeySet">Хувийн сэргээх түлхүүр тохиргоо</string>
   <!-- Alert Subheader label (playfully positive) -->
   <string name="Alerts.paperKeySetSubheader">Гайхалтай!</string>
@@ -68,87 +56,48 @@ DigiWallet нь DigiByte-д зориулсан гар утасны түрийв�
   <string name="Alerts.touchIdSucceeded.android">Хурууны хээ танигдсан</string>
   <string name="all">Бүгд</string>
   <!-- JSON Serialization error message -->
-  <string name="ApiClient.jsonError">JSON Serialization алдаа</string>
-  <!-- Wallet not ready error message -->
-  <string name="ApiClient.notReady">Түрийвч бэлэн биш байна</string>
-  <!-- API Token error message -->
-  <string name="ApiClient.tokenError">API токеныг татаж авах боломжгүй байна</string>
-  <!-- Send BCH view body. -->
-  <string name="BCH.body">" DGB хаягийг доор оруулна уу. Салах үеийн түрийвч дэх бүх DGB (% 1 $ s) илгээгдэх болно."</string>
-  <!-- Confirm sending <$5.00> to <address>? -->
-  <string name="BCH.confirmationMessage">Илгээхийг баталгаажуулна уу %1$s рүү %2$s</string>
-  <!-- Confirmation alert title -->
-  <string name="BCH.confirmationTitle">Баталгаажуулалт</string>
-  <!-- Generic bch erorr message -->
-  <string name="BCH.genericError">
-Таны дансанд ямар ч DGB-г агуулаагүй, эсвэл сэрээ дууссаны дараа DGB хүлээн авсан болно.</string>
-  <!-- Transaction ID copied message -->
-  <string name="BCH.hashCopiedMessage">Transaction ID хуулбарласан</string>
-  <!-- No address error message -->
-  <string name="BCH.noAddressError">Хаягаа оруулна уу</string>
-  <!-- Attempted to scan unsupported qr code error message. -->
-  <string name="BCH.paymentProtocolError">Төлбөрийн протокол хүсэлт DGB-ийн гүйлгээг дэмжих боломжгүй</string>
-  <!-- BCH successfully sent alert message -->
-  <string name="BCH.successMessage">
-DGB амжилттай илгээгдсэн.</string>
-  <!-- Widthdraw BCH view title -->
-  <string name="BCH.title">DGB Шилжүүлэх</string>
-  <!-- Tx Hash button header -->
-  <string name="BCH.txHashHeader">DGB гүйлгээний утга ID</string>
-  <!-- Approve button label -->
-  <string name="BitID.approve">Зөвшөөрөх</string>
-  <!-- <sitename> is requesting authentication using your bitcoin wallet -->
-  <string name="BitID.authenticationRequest">
- %1$s таны DigiWallet ашиглан authentication хүсч байна.</string>
-  <!-- Deny button label -->
-  <string name="BitID.deny">үгүйсгэх</string>
-  <!-- BitID error alert title -->
-  <string name="BitID.error">Баталгаажуулах алдаа</string>
-  <!-- BitID error alert messaage (The payment service you are trying to use isn't working. Please contact them, as you may need to try again) -->
-  <string name="BitID.errorMessage">
-Үйлчилгээг шалгана уу. Та дахин оролдож үзэх хэрэгтэй байж магадгүй.</string>
-  <!-- BitID success alert title -->
-  <string name="BitID.success">
-Амжилттай баталгаажсан</string>
-  <!-- BitID Authentication Request alert view title -->
-  <string name="BitID.title">DigiID Таних хүсэлт</string>
-  <!-- Cancel button label -->
+    <!-- Wallet not ready error message -->
+    <!-- API Token error message -->
+    <!-- Send BCH view body. -->
+    <!-- Confirm sending <$5.00> to <address>? -->
+    <!-- Confirmation alert title -->
+    <!-- Generic bch erorr message -->
+    <!-- Transaction ID copied message -->
+    <!-- No address error message -->
+    <!-- Attempted to scan unsupported qr code error message. -->
+    <!-- BCH successfully sent alert message -->
+    <!-- Widthdraw BCH view title -->
+    <!-- Tx Hash button header -->
+    <!-- Approve button label -->
+    <!-- <sitename> is requesting authentication using your bitcoin wallet -->
+    <!-- Deny button label -->
+    <!-- BitID error alert title -->
+    <!-- BitID error alert messaage (The payment service you are trying to use isn't working. Please contact them, as you may need to try again) -->
+    <!-- BitID success alert title -->
+    <!-- BitID Authentication Request alert view title -->
+    <!-- Cancel button label -->
   <string name="Button.cancel">Цуцлах</string>
   <!-- Ignore button label -->
-  <string name="Button.ignore">Үл ойшоох</string>
-  <!-- menu button -->
-  <string name="Button.menu">цэс</string>
-  <!-- No button -->
-  <string name="Button.no">Үгүй</string>
-  <!-- OK button label -->
+    <!-- menu button -->
+    <!-- No button -->
+    <!-- OK button label -->
   <string name="Button.ok">БОЛЖ БАЙНА УУ</string>
   <!-- receive button -->
-  <string name="Button.receive">хүлээн авах</string>
-  <!-- send button -->
-  <string name="Button.send">илгээх</string>
-  <!-- Settings button label -->
-  <string name="Button.settings">
-Тохиргоо</string>
-  <!-- Settings button label -->
-  <string name="Button.submit">Илгээх</string>
-  <!-- Yes button -->
-  <string name="Button.yes">Тийм</string>
-  <!-- Camera plugin instruction -->
-  <string name="CameraPlugin.centerInstruction">Өөрийн ID-г  хайрцагт байрлуулна уу</string>
-  <string name="completed">Дууссан</string>
+    <!-- send button -->
+    <!-- Settings button label -->
+    <!-- Settings button label -->
+    <!-- Yes button -->
+    <!-- Camera plugin instruction -->
+    <string name="completed">Дууссан</string>
   <!-- Amount to Send: ($1.00) -->
   <string name="Confirmation.amountLabel">Илгээх дүн:</string>
   <!-- Network Fee: ($1.00) -->
   <string name="Confirmation.feeLabel">Сүлжээний төлбөр:</string>
   <!-- eg. Processing time: This transaction is predicted to complete in [10-60 minutes]. -->
-  <string name="Confirmation.processingTime">Боловсруулах хугацаа: Энэ ажил гүйлгээ нь дуусгахаар төлөвлөж байна %1$s.</string>
-  <!-- Label for "send" button on final confirmation screen -->
-  <string name="Confirmation.send">Илгээх</string>
-  <!-- Confirmation Screen title -->
-  <string name="Confirmation.title">Баталгаажуулалт</string>
-  <!-- To: (address) -->
-  <string name="Confirmation.to">-лүү</string>
-  <!-- Total Cost: ($5.00) -->
+    <!-- Label for "send" button on final confirmation screen -->
+    <!-- Confirmation Screen title -->
+    <!-- To: (address) -->
+    <!-- Total Cost: ($5.00) -->
   <string name="Confirmation.totalLabel">Нийт зардал:</string>
   <!-- Confirm paper phrase view label. -->
   <string name="ConfirmPaperPhrase.label">Бүгдийг зөв бичсэн эсэхийг баталгаажуулахын тулд өөрийн хувийн сэргээх түлхүүрээс дараах үгсийг оруулна уу.</string>
@@ -157,127 +106,88 @@ DGB амжилттай илгээгдсэн.</string>
   <string name="current_amount">Одоогийн үнэ цэнэ: %s</string>
   <string name="date">Огноо</string>
   <!-- Bitcoin denomination picker label -->
-  <string name="DefaultCurrency.bitcoinLabel">DigiByte харуулах нэгж</string>
-  <!--
-  Bitcoin denomination picker label
-  Exchange rate label
-  -->
+    <!--
+    Bitcoin denomination picker label
+    Exchange rate label
+    -->
   <string name="DefaultCurrency.rateLabel">Валютын ханш</string>
   <!-- Email unavailable alert title -->
-  <string name="ErrorMessages.emailUnavailableMessage">Энэ төхөөрөмжийг iOS мэйл програмаар имэйл илгээхээр тохируулаагүй байна.</string>
-  <!-- Email unavailable alert title -->
-  <string name="ErrorMessages.emailUnavailableTitle">И-мэйл байхгүй байна</string>
-  <!-- Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) -->
+    <!-- Email unavailable alert title -->
+    <!-- Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) -->
   <string name="ErrorMessages.loopingLockScreen.android">DigiWallet нь таны Android хувилбарт алдаатай тул баталгаажуулах боломжгүй байна. [Дэлгэрэнгүй мэдээллийг энд дарж үзнэ үү.]</string>
   <!-- Messaging unavailable alert title -->
-  <string name="ErrorMessages.messagingUnavailableMessage">Энэ төхөөрөмж мессеж илгээхээр тохируулагдаагүй байна.</string>
-  <!-- Messaging unavailable alert title -->
-  <string name="ErrorMessages.messagingUnavailableTitle">Зурвасгүй байна</string>
-  <!-- Fingerprint was not recognized by the scanner, please try scanning again -->
+    <!-- Messaging unavailable alert title -->
+    <!-- Fingerprint was not recognized by the scanner, please try scanning again -->
   <string name="ErrorMessages.touchIdFailed.android">Хурууны хээ танигдахгүй байна. Дахин оролдоно уу.</string>
   <!-- Economy fee -->
-  <string name="FeeSelector.economy">Хэмнэлттэй</string>
-  <!-- E.g. [This transaction is predicted to complete in] 1-24 hours -->
-  <string name="FeeSelector.economyTime">Тооцоолол: 10+ минут</string>
-  <!-- Warning message for economy fee -->
-  <string name="FeeSelector.economyWarning">
-Энэ сонголтыг цаг хугацааны мэдрэмтгий гүйлгээнд ашиглахыг зөвлөдөггүй.</string>
-  <!-- E.g. Estimated delivery: 10-60 minutes -->
-  <string name="FeeSelector.estimatedDeliver">Хүргэх төлөвлөсөн хугацаа: %1$s</string>
-  <!-- Regular fee -->
-  <string name="FeeSelector.regular">Энгийн</string>
-  <!-- E.g. [This transaction is predicted to complete in] 10-60 minutes -->
-  <string name="FeeSelector.regularTime">" Хүргэлт тооцоолсон: 15-30 секунд"</string>
-  <!-- Fee Selector title -->
-  <string name="FeeSelector.title">Боловсруулах хурд</string>
-  <!-- Checking private key balance progress view text -->
+    <!-- E.g. [This transaction is predicted to complete in] 1-24 hours -->
+    <!-- Warning message for economy fee -->
+    <!-- E.g. Estimated delivery: 10-60 minutes -->
+    <!-- Regular fee -->
+    <!-- E.g. [This transaction is predicted to complete in] 10-60 minutes -->
+    <!-- Fee Selector title -->
+    <!-- Checking private key balance progress view text -->
   <string name="Import.checking">Хувийн түлхүүрийн үлдэгдэл шалгаж байна...</string>
   <!-- Sweep private key confirmation message -->
   <string name="Import.confirm">Энэ хувийн түлхүүрийн %1$s-г түрийвчдээ илгээх үү? DigiByte сүлжээ нь %2$s төлбөр авдаг.</string>
   <!-- Duplicate key error message -->
-  <string name="Import.Error.duplicate">Энэ хувийн түлхүүр таны түрийвч дээр аль хэдийн орсон байна.</string>
-  <!-- empty private key error message -->
+    <!-- empty private key error message -->
   <string name="Import.Error.empty">Энэ хувийн түлхүүр хоосон байна.</string>
   <!-- High fees error message -->
-  <string name="Import.Error.highFees">Гүйлгээний хураамж нь энэ хувийн түлхүүр дээр байгаа санхүүжилтээс илүү өртөгтэй болно.</string>
-  <!-- Not a valid private key error message -->
+    <!-- Not a valid private key error message -->
   <string name="Import.Error.notValid">Хувийн түлхүүр биш</string>
   <!-- Import signing error message -->
   <string name="Import.Error.signing">
 Гүйлгээ хийх үед алдаа гарлаа</string>
   <!-- Import button label -->
-  <string name="Import.importButton">Импорт</string>
-  <!-- Importing wallet progress view label -->
-  <string name="Import.importing">Түрийвч импортлох</string>
-  <!-- Caption for graphics -->
-  <string name="Import.leftCaption">Түрийвчийг импортлох боломжтой</string>
-  <!-- Import wallet intro screen message -->
+    <!-- Importing wallet progress view label -->
+    <!-- Caption for graphics -->
+    <!-- Import wallet intro screen message -->
   <string name="Import.message">Бүх хэтэвчээс DigiWallet-ыг нэг гүйлгээ ашиглан DigiByte руу түрийвч шилжүүлэн импортлоорой.</string>
   <!-- Enter password alert view title -->
   <string name="Import.password">Энэ хувийн түлхүүр нь нууц үгээр хамгаалагдсан.</string>
   <!-- password textfield placeholder -->
-  <string name="Import.passwordPlaceholder">нууц үг</string>
-  <!-- Caption for graphics -->
-  <string name="Import.rightCaption">
-Таны DigiWallet</string>
-  <!-- Scan Private key button label -->
+    <!-- Caption for graphics -->
+    <!-- Scan Private key button label -->
   <string name="Import.scan">Хувийн түлхүүрийг хайх</string>
   <!-- Import wallet success alert title -->
-  <string name="Import.success">
-Амжилттай</string>
-  <!-- Successfully imported wallet message body -->
-  <string name="Import.SuccessBody">Түрийвчээ амжилттай хийлээ.</string>
-  <!-- Import Wallet screen title -->
-  <string name="Import.title">Түрийвч импорт хийх</string>
-  <!-- Unlocking Private key activity view message. -->
-  <string name="Import.unlockingActivity">Түлхүүрийг нээж байна</string>
-  <!-- Import wallet intro warning message -->
+    <!-- Successfully imported wallet message body -->
+    <!-- Import Wallet screen title -->
+    <!-- Unlocking Private key activity view message. -->
+    <!-- Import wallet intro warning message -->
   <string name="Import.warning">Түрийвчийг оруулсан нь гүйлгээний түүх эсвэл бусад дэлгэрэнгүй мэдээллийг агуулдаггүй.</string>
   <!-- Wrong password alert message -->
-  <string name="Import.wrongPassword">Нууц үг буруу, дахин оролдоно уу.</string>
-  <!-- Close app button -->
+    <!-- Close app button -->
   <string name="JailbreakWarnings.close">Хаах</string>
   <!-- Ignore jailbreak warning button -->
-  <string name="JailbreakWarnings.ignore">зөвшөөрөхгүй</string>
-  <!-- Jailbreak warning message -->
-  <string name="JailbreakWarnings.messageWithBalance">ТӨХӨӨРӨМЖИЙН АЮУЛГҮЙ БАЙДАЛ ЭВДЭГДЭХ \n ямар нэг \'jailbreak\' апп DigiWallet-ийн гол түлхүүрийн өгөгдөлд хандах боломжтой ба DigiByte-ийг хулгайлж авна! Энэ түрүүвчийг нэн даруй арчиж аюулгүй төхөөрөмж дээр сэргээнэ үү.</string>
-  <!--
-  Ignore jailbreak warning button
-  Jailbreak warning message
-  -->
+    <!-- Jailbreak warning message -->
+    <!--
+    Ignore jailbreak warning button
+    Jailbreak warning message
+    -->
   <string name="JailbreakWarnings.messageWithoutBalance">ТӨХӨӨРӨМЖИЙН АЮУЛГҮЙ БАЙДАЛ ЭВДЭГДЭХ \n ямар нэг \'jailbreak\' апп DigiWallet-ийн гол түлхүүрийн өгөгдөлд хандах боломжтой ба DigiByte-ийг хулгайлж авна! DigiWallet ииг зөвхөн non-jailbroken төхөөрөмж дээр ашиглаарай</string>
   <!-- Jailbreak warning title -->
   <string name="JailbreakWarnings.title">АНХААРУУЛГА</string>
   <!-- Location services disabled error -->
-  <string name="LocationPlugin.disabled">Байршлын үйлчилгээ хаагдсан байна.</string>
-  <!-- No permissions for location services -->
-  <string name="LocationPlugin.notAuthorized">
-DigiWallet нь байршлын үйлчилгээнд хандах зөвшөөрөлгүй байна.</string>
-  <!-- Wallet creation date prefix -->
-  <string name="ManageWallet.creationDatePrefix">Та хэтэвчээ  %1$s дээр үүсгэсэн</string>
-  <!-- Manage wallet description text -->
-  <string name="ManageWallet.description">Таны түрийвчний нэр зөвхөн таны дансны гүйлгээний түүхэнд гарч ирдэг бөгөөд хэнд ч харагдахгүй.</string>
-  <!-- Change Wallet name textfield label -->
-  <string name="ManageWallet.textFeildLabel">Wallet нэр</string>
-  <!-- Manage wallet modal title -->
-  <string name="ManageWallet.title">Wallet удирдах</string>
-  <string name="max">Макс</string>
+    <!-- No permissions for location services -->
+    <!-- Wallet creation date prefix -->
+    <!-- Manage wallet description text -->
+    <!-- Change Wallet name textfield label -->
+    <!-- Manage wallet modal title -->
+    <string name="max">Макс</string>
   <string name="max_send_enabled">Харуулах товч: хамгийн ихийг илгээх</string>
   <!-- Buy bitcoin title -->
-  <string name="MenuButton.buy">DigiByte худалдан авах</string>
-  <!-- Menu button title -->
+    <!-- Menu button title -->
   <string name="MenuButton.lock">Түрийвч түгжих</string>
   <!-- Menu button title -->
   <string name="MenuButton.security">Аюулгүй байдлын төв</string>
   <!-- Menu button title -->
   <string name="MenuButton.settings">Тохиргоо</string>
   <!-- Menu button title -->
-  <string name="MenuButton.support">Дэмжлэг</string>
-  <!-- button label -->
+    <!-- button label -->
   <string name="MenuViewController.createButton">Шинэ хэтэвч үүсгэх</string>
   <!-- Menu modal title -->
-  <string name="MenuViewController.modalTitle">Цэс</string>
-  <!-- button label -->
+    <!-- button label -->
   <string name="MenuViewController.recoverButton">Түрийвч сэргээх</string>
   <!-- Switch to automatic mode button label -->
   <string name="NodeSelector.automaticButton">Автомат горим луу шилжих</string>
@@ -300,84 +210,55 @@ DigiWallet нь байршлын үйлчилгээнд хандах зөвшө�
   <string name="no_limit">Хязгааргүй</string>
   <string name="original_amount">Эх үнэ:</string>
   <!-- Bad Payment request alert title -->
-  <string name="PaymentProtocol.Errors.badPaymentRequest">Муу төлбөрийн хүсэлт</string>
-  <!-- Error opening payment protocol file message -->
-  <string name="PaymentProtocol.Errors.corruptedDocument">Дэмжигдээгүй эсвэл гэмтсэн баримт бичиг</string>
-  <!-- Missing certificate payment protocol error message -->
-  <string name="PaymentProtocol.Errors.missingCertificate">гэрчилгээ байхгүй байна</string>
-  <!-- Request expired payment protocol error message -->
-  <string name="PaymentProtocol.Errors.requestExpired">Хүсэлт хугацаа нь дууссан</string>
-  <!-- Payment too small alert title -->
-  <string name="PaymentProtocol.Errors.smallOutputError">Төлбөр хийх боломжгүй</string>
-  <!-- Amount too small error message -->
+    <!-- Error opening payment protocol file message -->
+    <!-- Missing certificate payment protocol error message -->
+    <!-- Request expired payment protocol error message -->
+    <!-- Payment too small alert title -->
+    <!-- Amount too small error message -->
   <string name="PaymentProtocol.Errors.smallPayment">DigiByte төлбөрүүд нь үүнээс бага байж болохгүй %1$s</string>
   <!-- Output too small error message. -->
   <string name="PaymentProtocol.Errors.smallTransaction">
 DigiByte гүйлгээний гаралт  %1$s  -с бага байж болохгүй.</string>
   <!-- Unsupported signature type payment protocol error message -->
-  <string name="PaymentProtocol.Errors.unsupportedSignatureType">гарын үсгийн хэлбэрийг дэмждэггүй</string>
-  <!-- Untrusted certificate payment protocol error message -->
-  <string name="PaymentProtocol.Errors.untrustedCertificate">Баталгаагүй сертификат</string>
-  <string name="processed">Боловсруулсан</string>
+    <!-- Untrusted certificate payment protocol error message -->
+    <string name="processed">Боловсруулсан</string>
   <!-- No passcode set warning body -->
-  <string name="Prompts.NoPasscode.body">
-Таны түрийвчийг хамгаалахын тулд төхөөрөмжийн нууц код шаардлагатай. Тохиргоо руу орж, нууц кодыг асаах.</string>
-  <!-- No Passcode set warning title -->
-  <string name="Prompts.NoPasscode.title">Төхөөрөмжийн нууц код идэвхижүүлэх</string>
-  <!-- Instruction how to enable device encryption -->
+    <!-- No Passcode set warning title -->
+    <!-- Instruction how to enable device encryption -->
   <string name="Prompts.NoScreenLock.body.android">
 Төхөөрөмжийн цоожны түгжээ нь түрийвчээ хамгаалахад хэрэгтэй. \"Тохиргоо\"&gt; \"Аюулгүй байдал\"&gt; \"Дэлгэцийн түгжээг\" дарж үргэлжлүүлэх боломжтой.</string>
   <!-- Device encryption prompt title -->
-  <string name="Prompts.NoScreenLock.title.android">Дэлгэц цоож түгжигдсэн байна</string>
-  <!-- Warning about paper key. -->
-  <string name="Prompts.PaperKey.body">Таны утсаа алдагдах эсвэл өөрчлөх тохиолдолд таны хувийн сэргээх түлхүүр хадгалагдах ёстой. Үргэлжлүүлэх бол энд дарна уу.</string>
-  <!-- An action is required (You must do this action). -->
-  <string name="Prompts.PaperKey.title">Шаардлагатай үйлдэл</string>
-  <!-- Transaction rejected prompt body -->
-  <string name="Prompts.RecommendRescan.body">
-Таны түрийвч синк хийлгүйгээр байж магадгүй. Энэ нь ихэвчлэн blockchain-ыг дахин хайх замаар засч болно.</string>
-  <!-- Transaction rejected prompt title -->
-  <string name="Prompts.RecommendRescan.title">Гүйлгээ татгалзсан</string>
-  <!-- Share data prompt body -->
-  <string name="Prompts.ShareData.body">DigiWallet-ийг сайжруулахад тусална уу</string>
-  <!-- Share data prompt title -->
-  <string name="Prompts.ShareData.title">Нэргүй дата хуваалцах</string>
-  <!-- Enable touch ID prompt body -->
-  <string name="Prompts.TouchId.body">Touch ID-г идэвхжүүлнэ үү</string>
-  <!-- Enable Fingerprint prompt body -->
-  <string name="Prompts.TouchId.body.android">Хурууны хээгээр таниулалтыг идэвхжүүлэхийн тулд энд товшино уу</string>
-  <!-- Enable touch ID prompt title -->
-  <string name="Prompts.TouchId.title">Touch ID-г идэвхжүүлэх</string>
-  <!-- Enable Fingerprint prompt title -->
-  <string name="Prompts.TouchId.title.android">Хурууны хээгийн баталгаажуулалтыг идэвхжүүлэх</string>
-  <!-- Button on fingerprint prompt so the user can enter their PIN instead -->
+    <!-- Warning about paper key. -->
+    <!-- An action is required (You must do this action). -->
+    <!-- Transaction rejected prompt body -->
+    <!-- Transaction rejected prompt title -->
+    <!-- Share data prompt body -->
+    <!-- Share data prompt title -->
+    <!-- Enable touch ID prompt body -->
+    <!-- Enable Fingerprint prompt body -->
+    <!-- Enable touch ID prompt title -->
+    <!-- Enable Fingerprint prompt title -->
+    <!-- Button on fingerprint prompt so the user can enter their PIN instead -->
   <string name="Prompts.TouchId.usePin.android">PIN</string>
   <!-- Upgrade PIN prompt body. -->
-  <string name="Prompts.UpgradePin.body">
-DigiWallet нь 6 оронтой ПИН кодыг ашиглан сайжруулсан. Шинэчлэхийн тулд энд дарна уу.</string>
-  <!-- Upgrade PIN prompt title. -->
-  <string name="Prompts.UpgradePin.title">PIN шинэчлэх</string>
-  <!-- Notifications will be added later but users can set their preferences now, which is why we specify "in the future". -->
+    <!-- Upgrade PIN prompt title. -->
+    <!-- Notifications will be added later but users can set their preferences now, which is why we specify "in the future". -->
   <string name="PushNotifications.body">DigiWallet-с тусгай мессеж хүлээн авахын тулд мэдэгдлийг асаана уу.</string>
   <!-- Push notifications toggle switch label -->
   <string name="PushNotifications.label">Мэдэгдлүүдийг Түлхэх</string>
   <!-- Push notifications are off label -->
-  <string name="PushNotifications.off">Off</string>
-  <!-- Push notifications are on label -->
-  <string name="PushNotifications.on">Дээр</string>
-  <!-- Push notifications settings view title label -->
+    <!-- Push notifications are on label -->
+    <!-- Push notifications settings view title label -->
   <string name="PushNotifications.title">Мэдэгдэл</string>
   <!-- Address copied message. -->
   <string name="Receive.copied">Clipboard руу хуулсан.</string>
   <!-- Share via email button label -->
-  <string name="Receive.emailButton">И-мэйл хаяг</string>
-  <!-- Request button label -->
+    <!-- Request button label -->
   <string name="Receive.request">Хэмжээ хүснэ үү</string>
   <!-- Share button label -->
   <string name="Receive.share">Хуваалцах</string>
   <!-- Share via text message (SMS) -->
-  <string name="Receive.textButton">Текст зурвас</string>
-  <!-- Receive modal title -->
+    <!-- Receive modal title -->
   <string name="Receive.title">Хүлээн авах</string>
   <string name="received">Хүлээн авсан</string>
   <!-- Done button text -->
@@ -388,34 +269,26 @@ Wallet сэргээх</string>
   <!-- Reset PIN with paper key: header -->
   <string name="RecoverWallet.header_reset_pin">PIN дахин тохируулах</string>
   <!-- Enter paper key instruction -->
-  <string name="RecoverWallet.instruction">Хувийн сэргээх түлхүүрийг оруулна уу</string>
-  <!-- Recover wallet intro -->
+    <!-- Recover wallet intro -->
   <string name="RecoverWallet.intro">DigiWallet-г өөрийн хувийн сэргээх түлхүүрээр сэргээх.</string>
   <!-- Invalid paper key message -->
   <string name="RecoverWallet.invalid">
 Таны оруулсан хувийн сэргээх түлхүүр буруу байна. Үг бүрийг дахин шалгаад дахин оролдоно уу.</string>
   <!-- Previous button accessibility label -->
-  <string name="RecoverWallet.leftArrow">Зүүн Arrow</string>
-  <!-- Next button label -->
+    <!-- Next button label -->
   <string name="RecoverWallet.next">Дараачийн</string>
   <!-- Reset PIN with paper key: more information button. -->
-  <string name="RecoverWallet.reset_pin_more_info">Дэлгэрэнгүй мэдээллийг энд дарна уу.</string>
-  <!-- Next button accessibility label -->
-  <string name="RecoverWallet.rightArrow">Баруун сум</string>
-  <!-- Recover wallet sub-header -->
+    <!-- Next button accessibility label -->
+    <!-- Recover wallet sub-header -->
   <string name="RecoverWallet.subheader">Дахин сэргээхийг хүссэн DigiWallet-д зориулсан хувийн сэргээх түлхүүрийг оруулна уу.</string>
   <!-- Reset PIN with paper key: sub-header -->
   <string name="RecoverWallet.subheader_reset_pin">Өөрийн PIN-ыг дахин тохируулахын тулд өөрийн хувийн сэргээх түлхүүрээс үгсийг доорх хайрцагт оруулна уу.</string>
   <!-- No amount entered error message. -->
-  <string name="RequestAnAmount.noAmount">
-Эхний дүнг оруулна уу.</string>
-  <!-- Request a specific amount of bitcoin -->
-  <string name="RequestAnAmount.title">Хэмжээ хүснэ үү</string>
-  <!-- Alert action button label -->
+    <!-- Request a specific amount of bitcoin -->
+    <!-- Alert action button label -->
   <string name="ReScan.alertAction">Синк хийх</string>
   <!-- Alert message body -->
-  <string name="ReScan.alertMessage">Та синхрон хийж бх үед DigiByte-г илгээх боломжгүй болно.</string>
-  <!-- Alert message title -->
+    <!-- Alert message title -->
   <string name="ReScan.alertTitle">Блокчейнтэй синк хийх?</string>
   <!-- extimated time -->
   <string name="ReScan.body1">20-45 минут</string>
@@ -429,25 +302,17 @@ Wallet сэргээх</string>
   <string name="ReScan.footer">
 Та DigiByte-г Block-тай синхрончлох үед илгээж чадахгүй.</string>
   <!-- Sync Blockchain view header -->
-  <string name="ReScan.header">
-Blockchain-ыг холбох</string>
-  <!-- Subheader label -->
+    <!-- Subheader label -->
   <string name="ReScan.subheader1">
 Тооцоолсон цаг</string>
   <!-- Subheader label -->
   <string name="ReScan.subheader2">Хэзээ вэ?</string>
   <!-- Scan bitcoin address camera flash toggle -->
-  <string name="Scanner.flashButtonLabel">Камерын флаш</string>
-  <!-- Complete filter label -->
-  <string name="Search.complete">дууссан</string>
-  <!-- Pending filter label -->
-  <string name="Search.pending">хүлээгдэж байна</string>
-  <!-- Received filter label -->
-  <string name="Search.received">хүлээн авсан</string>
-  <!-- Sent filter label -->
-  <string name="Search.sent">
-илгээсэн</string>
-  <!-- Security Center Info -->
+    <!-- Complete filter label -->
+    <!-- Pending filter label -->
+    <!-- Received filter label -->
+    <!-- Sent filter label -->
+    <!-- Security Center Info -->
   <string name="SecurityCenter.info">Хамгаалалтын бүх боломжуудыг дээд хэмжээгээр хамгаалах боломжтой болгоно.</string>
   <!-- Paper Key button description -->
   <string name="SecurityCenter.paperKeyDescription">Хэрэв та утсаа алдаж эсвэл шинэчлэх бол DigiByte-д хандах цорын ганц арга зам юм.</string>
@@ -463,56 +328,43 @@ Blockchain-ыг холбох</string>
   <!-- Touch ID button description -->
   <string name="SecurityCenter.touchIdDescription">DigiWallet-гээ онгойлгож, DigiByte-г багцын хязгаар хүртэл нь илгээх боломжтой.</string>
   <!-- Touch ID button title -->
-  <string name="SecurityCenter.touchIdTitle">Touch ID</string>
-  <!-- Security center fingerprint authentication button -->
+    <!-- Security center fingerprint authentication button -->
   <string name="SecurityCenter.touchIdTitle.android">
 Хурууны хээг таниулах</string>
   <!-- Send money amount label -->
-  <string name="Send.amountLabel">Дүн</string>
-  <!-- Balance: $4.00 -->
-  <string name="Send.balance">Үлдэгдэл: %1$s</string>
-  <!-- Instructions how to allow the camera access for the app -->
+    <!-- Balance: $4.00 -->
+    <!-- Instructions how to allow the camera access for the app -->
   <string name="Send.cameraUnavailabeMessage.android">Камерыг зөвшөөрөх \"Тохиргоо\"&gt; \"Apps\"&gt; \"DigiWallet\"&gt; \"Permissions\" дээр</string>
   <!-- Permission required to access camera -->
   <string name="Send.cameraUnavailabeTitle.android">
 DigiWallet камер руу нэвтрэх эрхгүй</string>
   <!-- Camera not allowed message -->
-  <string name="Send.cameraunavailableMessage">Камераар нэвтэрмээр байвал Тохиргоо руу очно уу.</string>
-  <!-- Camera not allowed alert title -->
-  <string name="Send.cameraUnavailableTitle">DigiWallet камер руу нэвтрэх эрхгүй</string>
-  <!-- Warning when sending to self. -->
+    <!-- Camera not allowed alert title -->
+    <!-- Warning when sending to self. -->
   <string name="Send.containsAddress">Очих газар бол таны хаяг юм. Та өөр лүүгээ явуулж чадахгүй.</string>
   <!-- Could not create transaction alert title -->
-  <string name="Send.creatTransactionError">Гүйлгээг үүсгэж чадахгүй байна.</string>
-  <!-- Description for sending money label -->
+    <!-- Description for sending money label -->
   <string name="Send.descriptionLabel">Уг санамж</string>
   <!-- Emtpy pasteboard error message -->
   <string name="Send.emptyPasteboard">Самбар хоосон байна</string>
   <!-- Network Fee: $0.01 -->
   <string name="Send.fee">Сүлжээний төлбөр: %1$s</string>
   <!-- Payee identity not certified alert title. -->
-  <string name="Send.identityNotCertified">Хүлээн авагчийн үнэмлэх баталгаажаагүй байна.</string>
-  <!-- Invalid address alert message -->
-  <string name="Send.invalidAddressMessage">Очих хаяг нь зөв DigiByte хаяг биш байна.</string>
-  <!-- Invalid address on pasteboard message -->
-  <string name="Send.invalidAddressOnPasteboard">Самбарын цайвар DigiByte хаягийг агуулаагүй байна.</string>
-  <!-- Invalid address alert title -->
+    <!-- Invalid address alert message -->
+    <!-- Invalid address on pasteboard message -->
+    <!-- Invalid address alert title -->
   <string name="Send.invalidAddressTitle">Буруу хаяг</string>
   <!-- Is rescanning error message -->
   <string name="Send.isRescanning">Илгээх нь бүрэн дахин хянах үед идэвхгүй болсон байна.</string>
   <!-- We are loading the request (now) -->
-  <string name="Send.loadingRequest">Хүсэлтийг ачаалж байна</string>
-  <!-- Empty address alert message -->
+    <!-- Empty address alert message -->
   <string name="Send.noAddress">Хүлээн авагчийн хаягаа оруулна уу.</string>
   <!-- Emtpy amount alert message -->
-  <string name="Send.noAmount">Илгээх дүнг оруулна уу.</string>
-  <!-- Paste button label -->
+    <!-- Paste button label -->
   <string name="Send.pasteLabel">Наах</string>
   <!-- Could not publish transaction alert title -->
-  <string name="Send.publishTransactionError">Гүйлгээг нийтлэх боломжгүй байна.</string>
-  <!-- Could not load remote request error message -->
-  <string name="Send.remoteRequestError">Төлбөрийн хүсэлтийг ачаалж чадсангүй</string>
-  <!-- Scan button label -->
+    <!-- Could not load remote request error message -->
+    <!-- Scan button label -->
   <string name="Send.scanLabel">Скан</string>
   <!-- Send button label (the action, "press here to send") -->
   <string name="Send.sendLabel">Илгээх</string>
@@ -527,8 +379,7 @@ DigiByte хаягууд нь зөвхөн ганц хэрэглээнд зори
   <string name="Send.UsedAddress.secondLIne">
 Дахин ашиглах нь танд болон хүлээн авагч хоёулангийнх нь хувийн нууцыг бууруулж, хүлээн авагч шууд хаягыг хянадаггүй тохиолдолд алдагдлыг үүсгэж болно.</string>
   <!-- Adress already used alert title -->
-  <string name="Send.UsedAddress.title">Аль хэдийн ашиглагдсан хаяг</string>
-  <string name="sent">Илгээсэн</string>
+    <string name="sent">Илгээсэн</string>
   <!-- About label -->
   <string name="Settings.about">Тухай</string>
   <!-- Advanced Settings title -->
@@ -537,11 +388,8 @@ DigiByte хаягууд нь зөвхөн ганц хэрэглээнд зори
   <string name="Settings.currency">
 Харуулах валют</string>
   <!-- Join Early access label -->
-  <string name="Settings.earlyAccess">Өмнөх хандалт руу орох</string>
-  <!-- Are you enjoying bread alert message body -->
-  <string name="Settings.enjoying">
-DigiWallet-г та үздэг үү?</string>
-  <!-- Import wallet left message -->
+    <!-- Are you enjoying bread alert message body -->
+    <!-- Import wallet left message -->
   <string name="Settings.importLeftMessage">" Wallet Импортлосон байх"</string>
   <!-- Import wallet right message -->
   <string name="Settings.importRightMessage">Таны DigiWallet</string>
@@ -550,21 +398,16 @@ DigiWallet-г та үздэг үү?</string>
   <!-- Manage settings section header -->
   <string name="Settings.manage">Удирдах</string>
   <!-- Notifications label -->
-  <string name="Settings.notifications">Мэдэгдэл</string>
-  <!-- Restore screen lower label. -->
+    <!-- Restore screen lower label. -->
   <string name="Settings.restore_label">
 Таны төхөөрөмж дээрх DigiWallet</string>
   <!-- Leave review button label -->
-  <string name="Settings.review">Сэтгэгдэл үлдээх</string>
-  <!-- Share anonymous data label -->
-  <string name="Settings.shareData">Нэргүй дата хуваалцах</string>
-  <!-- Sync blockchain label -->
+    <!-- Share anonymous data label -->
+    <!-- Sync blockchain label -->
   <string name="Settings.sync">Blockchain-ыг холбох</string>
   <!-- Settings title -->
-  <string name="Settings.title">Тохиргоо</string>
-  <!-- Touch ID spending limit label -->
-  <string name="Settings.touchIdLimit">Touch ID зарцуулалтын хязгаар</string>
-  <!-- The fingerprint spending limit -->
+    <!-- Touch ID spending limit label -->
+    <!-- The fingerprint spending limit -->
   <string name="Settings.touchIdLimit.android">Хурууны хээ таниулах хязгаарлалт</string>
   <!-- Wallet Settings section header -->
   <string name="Settings.wallet">
@@ -572,42 +415,27 @@ DigiWallet-г та үздэг үү?</string>
   <!-- Start or recover another wallet menu label. -->
   <string name="Settings.wipe">Өөр нэг Wallet-г эхлүүлэх/сэргээх</string>
   <!-- Share data view body -->
-  <string name="ShareData.body">DigiWallet-ийг сайжруулахад тусална уу. Энэ нь санхүүгийн ямар ч мэдээлэл ороогүй болно. Бид таны санхүүгийн нууцлалыг хүндэтгэдэг.</string>
-  <!-- Share data header -->
-  <string name="ShareData.header">Мэдээлэл хуваалцах уу?</string>
-  <!-- Share data switch label. -->
-  <string name="ShareData.toggleLabel">Нэргүй дата хуваалцах уу?</string>
-  <!-- button label -->
-  <string name="StartPaperPhrase.againButtonTitle">Өөрийн хувийн сэргээх түлхүүрийг дахин бичнэ үү</string>
-  <!-- Paper key explanation text. -->
+    <!-- Share data header -->
+    <!-- Share data switch label. -->
+    <!-- button label -->
+    <!-- Paper key explanation text. -->
   <string name="StartPaperPhrase.body">Таны Хувийн Сэргээх Түлхүүр бол таны утас алдагдсан, хулгайд алдсан, эвдэрч, эсвэл сайжруулагдсан бол DigiWallet-ийг сэргээх цорын ганц арга юм. \n\n Бид цаасан дээр бичиж тэмдэглэх үгсийн жагсаалтыг танд үзүүлэх болно.</string>
   <!-- button label -->
   <string name="StartPaperPhrase.buttonTitle">
 Хувийн сэргээх түлхүүрийг бичих</string>
   <!-- Argument is date -->
-  <string name="StartPaperPhrase.date">Та сүүлд өөрийн хувийн сэргээх түлхүүрийг бичсэн %1$s</string>
-  <!-- Start view message -->
-  <string name="StartViewController.message">DigiByte-ийг ашиглах хамгийн найдвартай, хамгийн аюулгүй арга.</string>
-  <!-- Syncing view connectiong state header text -->
+    <!-- Start view message -->
+    <!-- Syncing view connectiong state header text -->
   <string name="SyncingView.connecting">Холбогдож байна</string>
   <!-- Syncing view header text -->
-  <string name="SyncingView.header">Синк хийж бна</string>
-  <!-- Retry button label -->
-  <string name="SyncingView.retry">Дахин оролдоно уу</string>
-  <!-- Syncing view syncing state header text -->
-  <string name="SyncingView.syncing">Синк хийж бна</string>
-  <!-- 6 d (6 days) -->
-  <string name="TimeSince.days">%1$s өдөр</string>
-  <!-- 6 h (6 hours) -->
-  <string name="TimeSince.hours">%1$s цаг</string>
-  <!-- 6 m (6 minutes) -->
-  <string name="TimeSince.minutes">%1$s мин</string>
-  <!-- 6 s (6 seconds) -->
-  <string name="TimeSince.seconds">%1$s сек</string>
-  <!-- You can customize your Touch ID Spending Limit from the [TouchIdSettings.linkText gets added here as a button] -->
-  <string name="TouchIdSettings.customizeText">
-Та өөрийн Touch ID зарцуулалтын хязгаарыг өөрчлөх боломжтой %1$s .</string>
-  <!-- Fingerprint enabling description body -->
+    <!-- Retry button label -->
+    <!-- Syncing view syncing state header text -->
+    <!-- 6 d (6 days) -->
+    <!-- 6 h (6 hours) -->
+    <!-- 6 m (6 minutes) -->
+    <!-- 6 s (6 seconds) -->
+    <!-- You can customize your Touch ID Spending Limit from the [TouchIdSettings.linkText gets added here as a button] -->
+    <!-- Fingerprint enabling description body -->
   <string name="TouchIdSettings.customizeText.android">" Хурууны хээг таниулан ашиглах хязгаарыг та тохируулах боломжтой"</string>
   <!-- Instruction for the fingerprint setup -->
   <string name="TouchIdSettings.disabledWarning.body.android">Та энэ төхөөрөмж дээр хурууны хээгээр нэвтрээгүй байна. Тохиргоо руу орно -&gt; Аюулгүй байдал хурууны хээг таниулах тохируулах.</string>
@@ -616,124 +444,76 @@ DigiWallet-г та үздэг үү?</string>
   <!-- Touch Id screen label -->
   <string name="TouchIdSettings.label">DigiWallet-г онгойлгохын тулд хурууны хээ ашиглан уу. DigiByte ийг тогтоосон хязгаар хүртэл явуулаарай.</string>
   <!-- Link Text (see TouchIdSettings.customizeText) -->
-  <string name="TouchIdSettings.linkText">Touch ID Хязгаарлах дэлгэцийг зарцуулах</string>
-  <!-- Spending Limit: b100,000 ($100) -->
+    <!-- Spending Limit: b100,000 ($100) -->
   <string name="TouchIdSettings.spendingLimit">Хязгаар: %1$s (%2$s)</string>
   <!-- Touch id switch label. -->
-  <string name="TouchIdSettings.switchLabel">DigiWallet-д зориулж Touch ID-г идэвхжүүлэх</string>
-  <!-- Enable fingerprint for this wallet called Bread -->
+    <!-- Enable fingerprint for this wallet called Bread -->
   <string name="TouchIdSettings.switchLabel.android">Хурууны хээгийн баталгаажуулалтыг идэвхжүүлэх</string>
   <!-- Touch ID settings view title -->
-  <string name="TouchIdSettings.title">Touch ID</string>
-  <!-- Fingerprint authentication label -->
+    <!-- Fingerprint authentication label -->
   <string name="TouchIdSettings.title.android">Хурууны хээг таниулах</string>
   <!-- Touch ID unavailable alert message -->
-  <string name="TouchIdSettings.unavailableAlertMessage">
-Та энэ төхөөрөмж дээр Touch ID тохируулахгүй байна. Одоо тохируулахын тулд Тохиргоо-&gt; Touch ID &amp; Passcode руу очно уу.</string>
-  <!-- Touch ID unavailable alert title -->
-  <string name="TouchIdSettings.unavailableAlertTitle">
-Touch ID Тохируулаагүй байна</string>
-  <!-- Always require passcode option -->
-  <string name="TouchIdSpendingLimit">Үргэлж нууц код шаардана</string>
-  <!-- Touch ID spending limit screen body -->
+    <!-- Touch ID unavailable alert title -->
+    <!-- Always require passcode option -->
+    <!-- Touch ID spending limit screen body -->
   <string name="TouchIdSpendingLimit.body">Та хамгийн сүүлд 6 оронтой Пин-ыг оруулснаас хойш 48 цагийн дараа ба зардлын хязгаараас илүү шилжүүлэг хийх бол 6-digit PIN шаардах болно.</string>
   <!-- Touch Id spending limit screen title -->
-  <string name="TouchIdSpendingLimit.title">"Touch ID зарцуулалтын хязгаар "</string>
-  <!--
-  Touch Id spending limit screen title
-  name of spending limit when using fingerprint authorization
-  -->
+    <!--
+    Touch Id spending limit screen title
+    name of spending limit when using fingerprint authorization
+    -->
   <string name="TouchIdSpendingLimit.title.android">Хурууны хээ зөвшөөрлийн зардлын хязгаарлалт</string>
   <!-- Availability status text -->
-  <string name="Transaction.available">Зарцуулах боломжтой</string>
-  <!-- Transaction complete label -->
-  <string name="Transaction.complete">Дууссан</string>
-  <!-- eg. Ending balance: $50.00 -->
-  <string name="Transaction.ending">Эцсийн үлдэгдэл: %1$s</string>
-  <!-- Exchange rate on date header -->
-  <string name="Transaction.exchangeOnDayReceived">Хүлээн авсан өдрийн ханш:</string>
-  <!-- Exchange rate on date header -->
-  <string name="Transaction.exchangeOnDaySent">Илгээсэн хугацааны ханш:</string>
-  <!-- (b600 fee) -->
-  <string name="Transaction.fee">
-(%1$s төлбөр)</string>
-  <!-- Invalid transaction -->
-  <string name="Transaction.invalid">хүчингүй байна</string>
-  <!-- Timestamp label for event that just happened -->
-  <string name="Transaction.justNow">саяхан</string>
-  <!-- Receive status text: 'In progress: 20%' -->
-  <string name="Transaction.receivedStatus">Хэрэгжиж байна: %1$s</string>
-  <!-- Send status text: 'In progress: 20%' -->
-  <string name="Transaction.sendingStatus">Хэрэгжиж байна: %1$s</string>
-  <!-- eg. Starting balance: $50.00 -->
-  <string name="Transaction.starting">Эхний үлдэгдэл: %1$s</string>
-  <!-- Waiting to be confirmed string -->
-  <string name="Transaction.waiting">Батлахыг хүлээж байна. Зарим худалдаачид гүйлгээ хийхийг баталгаажуулахыг шаарддаг. Тооцоолсон цаг: 1-2 минут.</string>
-  <!-- e.g. I received money from an account. -->
-  <string name="TransactionDetails.account">данс</string>
-  <!-- Amount section header -->
-  <string name="TransactionDetails.amountHeader">Дүн</string>
-  <!-- Block height label -->
-  <string name="TransactionDetails.blockHeightLabel">Блокод баталгаажсан байна</string>
-  <!-- Memo section header -->
-  <string name="TransactionDetails.commentsHeader">Уг санамж</string>
-  <!-- Empty transaction list message. -->
-  <string name="TransactionDetails.emptyMessage">Таны гүйлгээнүүд энд гарч ирнэ.</string>
-  <!-- "Received [$5] at [which of my addresses]" => This is the "at [which of my addresses]" part. -->
-  <string name="TransactionDetails.from">%1$s -д</string>
-  <!-- More button title -->
-  <string name="TransactionDetails.more">Дэлгэрэнгүй ...</string>
-  <!-- Moved $5.00 (as in "I moved $5 to another location") -->
-  <string name="TransactionDetails.moved">Шилжсэн %1$s</string>
-  <!-- Moved $5.00 -->
-  <string name="TransactionDetails.movedAmountDescription">Шилжсэн <b> %1$s </b></string>
-  <!-- eg. Confirmed in Block: Not Confirmed -->
-  <string name="TransactionDetails.notConfirmedBlockHeightLabel">Баталгаажаагүй байна</string>
-  <!-- "Received [$5] at [which of my addresses]" => This is the "Received [$5]" part. -->
+    <!-- Transaction complete label -->
+    <!-- eg. Ending balance: $50.00 -->
+    <!-- Exchange rate on date header -->
+    <!-- Exchange rate on date header -->
+    <!-- (b600 fee) -->
+    <!-- Invalid transaction -->
+    <!-- Timestamp label for event that just happened -->
+    <!-- Receive status text: 'In progress: 20%' -->
+    <!-- Send status text: 'In progress: 20%' -->
+    <!-- eg. Starting balance: $50.00 -->
+    <!-- Waiting to be confirmed string -->
+    <!-- e.g. I received money from an account. -->
+    <!-- Amount section header -->
+    <!-- Block height label -->
+    <!-- Memo section header -->
+    <!-- Empty transaction list message. -->
+    <!-- "Received [$5] at [which of my addresses]" => This is the "at [which of my addresses]" part. -->
+    <!-- More button title -->
+    <!-- Moved $5.00 (as in "I moved $5 to another location") -->
+    <!-- Moved $5.00 -->
+    <!-- eg. Confirmed in Block: Not Confirmed -->
+    <!-- "Received [$5] at [which of my addresses]" => This is the "Received [$5]" part. -->
   <string name="TransactionDetails.received">Хүлээн авсан %1$s</string>
   <!-- Received $5.00 -->
-  <string name="TransactionDetails.receivedAmountDescription">Хүлээн авсан <b> %1$s </b></string>
-  <!-- "Sent [$5] to [address]" => This is the "Sent [$5]" part. -->
-  <string name="TransactionDetails.sent">Илгээсэн %1$s</string>
-  <!-- Sent $5.00 -->
-  <string name="TransactionDetails.sentAmountDescription">Илгээсэн <b> %1$s </b></string>
-  <!-- Status section header -->
+    <!-- "Sent [$5] to [address]" => This is the "Sent [$5]" part. -->
+    <!-- Sent $5.00 -->
+    <!-- Status section header -->
   <string name="TransactionDetails.statusHeader">Статус</string>
   <!-- Transaction Details Title -->
-  <string name="TransactionDetails.title">Гүйлгээний дэлгэрэнгүй мэдээлэл</string>
-  <!-- "Sent [$5] to [address]" => This is the "to [address]" part. -->
-  <string name="TransactionDetails.to">лүү %1$s</string>
-  <!-- Transaction ID header -->
-  <string name="TransactionDetails.txHashHeader">DigiByte гүйлгээний ID</string>
-  <!-- (this transaction was) Received at this address: -->
-  <string name="TransactionDirection.address">Энэ хаягаар хүлээн авсан</string>
-  <!-- (this transaction was) Sent to this address: -->
-  <string name="TransactionDirection.to">Энэ хаяг руу илгээсэн</string>
-  <!-- Disabled until date -->
-  <string name="UnlockScreen.disabled">"Энэ хүртэл идэвхгүй  %1$s "</string>
-  <!-- My Address button title -->
+    <!-- "Sent [$5] to [address]" => This is the "to [address]" part. -->
+    <!-- Transaction ID header -->
+    <!-- (this transaction was) Received at this address: -->
+    <!-- (this transaction was) Sent to this address: -->
+    <!-- Disabled until date -->
+    <!-- My Address button title -->
   <string name="UnlockScreen.myAddress">Миний хаяг</string>
   <!-- Reset PIN with Paper Key button label. -->
   <string name="UnlockScreen.resetPin">PIN дахин тохируулах</string>
   <!-- Scan button title -->
-  <string name="UnlockScreen.scan">Скан</string>
-  <!-- Unlock Screen sub-header -->
-  <string name="UnlockScreen.subheader">
-PIN оруулна уу</string>
-  <!-- Instruction to touch the sensor for fingerprint authentication -->
+    <!-- Unlock Screen sub-header -->
+    <!-- Instruction to touch the sensor for fingerprint authentication -->
   <string name="UnlockScreen.touchIdInstructions.android">Touch Sensor</string>
   <!-- TouchID prompt text -->
-  <string name="UnlockScreen.touchIdPrompt">
-DigiWallet-г нээх.</string>
-  <!-- Device authentication body -->
+    <!-- Device authentication body -->
   <string name="UnlockScreen.touchIdPrompt.android">Үргэлжлүүлэхийн тулд Андройд төхөөрөмжийн түгжээг тайлна уу</string>
   <!-- Unlock with TouchID accessibility label -->
-  <string name="UnlockScreen.touchIdText">TouchID-тай хамт түгжээг тайл</string>
-  <!-- Device authentication title -->
+    <!-- Device authentication title -->
   <string name="UnlockScreen.touchIdTitle.android">Баталгаажуулалт шаардлагатай</string>
   <!-- Wallet unlocked message -->
-  <string name="UnlockScreen.unlocked">Түрийвч Нээгдсэн</string>
-  <!-- Update PIN caption text -->
+    <!-- Update PIN caption text -->
   <string name="UpdatePin.caption">Энэ PIN-г санаарай. Хэрэв та мартсан бол DigiByte-д хандаж чадахгүй.</string>
   <!-- PIN creation info. -->
   <string name="UpdatePin.createInstruction">
@@ -749,36 +529,21 @@ DigiWallet-г нээх.</string>
   <!-- Re-Enter new PIN instruction -->
   <string name="UpdatePin.reEnterNew">Шинэ PIN-г дахин оруулна уу.</string>
   <!-- Update PIN failure error message. -->
-  <string name="UpdatePin.setPinError">
-Уучлаарай, PIN кодыг шинэчлэх боломжгүй байна.</string>
-  <!-- Update PIN failure alert view title -->
-  <string name="UpdatePin.setPinErrorTitle">PIN кодыг шинэчлэх</string>
-  <!-- Update PIN title -->
-  <string name="UpdatePin.updateTitle">PIN кодыг шинэчлэх</string>
-  <!-- Authorize to copy wallet addresses alert message -->
-  <string name="URLHandling.addressaddressListAlertMessage">Түрийвчийг clipboard рүү хуулах уу?</string>
-  <!-- Authorize to copy wallet address PIN view prompt. -->
-  <string name="URLHandling.addressList">хэтэвч хаягийг клипрүү хуулбарлахыг зөвшөөрөх</string>
-  <!-- Authorize to copy wallet address alert title -->
-  <string name="URLHandling.addressListAlertTitle">Wallet хаягыг хуулах</string>
-  <!-- Copy wallet addresses alert button label -->
-  <string name="URLHandling.copy">Хуулах</string>
-  <!-- Verify PIN for transaction view body -->
-  <string name="VerifyPin.authorize">Энэ гүйлгээг зөвшөөрөхийн тулд өөрийн PIN-г оруулна уу.</string>
-  <!-- Verify PIN view body -->
+    <!-- Update PIN failure alert view title -->
+    <!-- Update PIN title -->
+    <!-- Authorize to copy wallet addresses alert message -->
+    <!-- Authorize to copy wallet address PIN view prompt. -->
+    <!-- Authorize to copy wallet address alert title -->
+    <!-- Copy wallet addresses alert button label -->
+    <!-- Verify PIN for transaction view body -->
+    <!-- Verify PIN view body -->
   <string name="VerifyPin.continueBody">Үргэлжлүүлэхийн тулд өөрийн PIN хаягаа оруулна уу.</string>
   <!-- Verify PIN view title -->
-  <string name="VerifyPin.title">
-PIN шаардлагатай байна</string>
-  <!-- Authorize transaction with touch id message -->
-  <string name="VerifyPin.touchIdMessage">Энэ гүйлгээг зөвшөөрөх</string>
-  <!-- 'No wallet' warning for watch app -->
-  <string name="Watch.noWalletWarning">DigiWallet Андройд апп нээгээд түрийвчээ тохируулаарай.</string>
-  <!-- Dismiss button label -->
-  <string name="Webview.dismiss">Дуусах</string>
-  <!-- Webview loading error message -->
-  <string name="Webview.errorMessage">Агуулгыг ачаалах үед алдаа гарлаа. Дахин оролдоно уу.</string>
-  <!-- Updating webview message -->
+    <!-- Authorize transaction with touch id message -->
+    <!-- 'No wallet' warning for watch app -->
+    <!-- Dismiss button label -->
+    <!-- Webview loading error message -->
+    <!-- Updating webview message -->
   <string name="Webview.updating">Шинэчлэж байна ...</string>
   <!-- Welcome screen text. (?) will be replaced with the help icon users should look for. -->
   <string name="Welcome.body">DigiWallet нь цоо шинэ харагдах байдал болон зарим шинэ боломжуудтай. \n\n Хэрэв танд тусламж хэрэгтэй бол олон дэлгэцийн баруун дээд хэсэгт (?) Хайх хэрэгтэй.</string>
@@ -789,10 +554,8 @@ PIN шаардлагатай байна</string>
   <!-- Wipe wallet alert title -->
   <string name="WipeWallet.alertTitle">Түрийвч арчих уу?</string>
   <!-- Failed wipe wallet alert message -->
-  <string name="WipeWallet.failedMessage">Түрийвчийг арчиж чадаагүй.</string>
-  <!-- Failed wipe wallet alert title -->
-  <string name="WipeWallet.failedTitle">Амжилтгүй болсон</string>
-  <!-- Enter phrase to wipe wallet instruction. -->
+    <!-- Failed wipe wallet alert title -->
+    <!-- Enter phrase to wipe wallet instruction. -->
   <string name="WipeWallet.instruction">Шинэ хэтэвчийг эхлүүлэх эсвэл одоо байгаа түрийвчээ сэргээхийн тулд эхлээд түр сууж буй хэтэвчийг арилгах хэрэгтэй. Үргэлжлүүлэхийн тулд одоогийн түрийвчний хувийн сэргээх түлхүүр оруулах</string>
   <!-- Start wipe wallet view message -->
   <string name="WipeWallet.startMessage">
@@ -800,20 +563,15 @@ PIN шаардлагатай байна</string>
   <!-- Start wipe wallet view warning -->
   <string name="WipeWallet.startWarning">Таны одоогийн түрийвч энэ төхөөрөмжөөс устах болно. Хэрэв та ирээдүйд үүнийг сэргээх хүсэлтэй байгаа бол хувийн сэргээх түлхүүрээ оруулах хэрэгтэй болно.</string>
   <!-- Wipe wallet navigation item title. -->
-  <string name="WipeWallet.title">Өөр нэг Wallet-г эхлүүлэх эсвэл сэргээх</string>
-  <!-- Wipe wallet button title -->
+    <!-- Wipe wallet button title -->
   <string name="WipeWallet.wipe">
 Арчих</string>
   <!-- Wiping activity message -->
-  <string name="WipeWallet.wiping">Арчиж бна...</string>
-  <!-- Paper key instructions. -->
+    <!-- Paper key instructions. -->
   <string name="WritePaperPhrase.instruction">
 Үг бүрийг дарааллаар нь бичиж, аюулгүй газар хадгал.</string>
   <!-- button label -->
-  <string name="WritePaperPhrase.next">Дараачийн</string>
-  <!-- button label -->
+    <!-- button label -->
   <string name="WritePaperPhrase.previous">Өмнөх</string>
   <!-- 1 of 3 -->
-  <string name="WritePaperPhrase.step">
-%1$d -ийн %2$d</string>
 </resources>

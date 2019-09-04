@@ -37,7 +37,6 @@
 
     //fingerprint
     <color name="warning_color">#f04a5d</color>
-    <color name="hint_color">#42000000</color>
     <color name="success_color">#009688</color>
 
     //the QR
