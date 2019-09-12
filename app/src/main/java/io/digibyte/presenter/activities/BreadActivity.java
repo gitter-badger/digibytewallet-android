@@ -42,6 +42,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -393,7 +394,10 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     RetrofitManager.instance.clearMetaCache(asset.assetId);
                 }
                 Observable<MetaModel> metaObservable = RetrofitManager.instance.getAssetMeta(asset.assetId, asset.txid, String.valueOf(asset.getIndex()))
-                        .onErrorResumeNext(Observable.just(MetaModel.empty())).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).doOnNext(metaModel -> {
+                        .onErrorResumeNext(Observable.fromCallable(() -> {
+                            Crashlytics.logException(new Exception("Meta Failure: " + asset.assetId + ", " + asset.txid + ", " + asset.getIndex()));
+                            return MetaModel.empty();
+                        })).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).doOnNext(metaModel -> {
                             if (metaModel.empty) return;
                             AssetModel assetModel = new AssetModel(metaModel, asset);
                             if (!assetAdapter.containsItem(assetModel)) {
@@ -416,7 +420,10 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             List<Observable<MetaModel>> metaObservables = new LinkedList<>();
             for (final AddressInfo.Asset asset : addressInfo.getAssets(listItemTransactionData.transactionItem.txReversed)) {
                 Observable<MetaModel> metaObservable = RetrofitManager.instance.getAssetMeta(asset.assetId, asset.txid, String.valueOf(asset.getIndex()))
-                        .onErrorResumeNext(Observable.just(MetaModel.empty())).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).doOnNext(metaModel -> {
+                        .onErrorResumeNext(Observable.fromCallable(() -> {
+                            Crashlytics.logException(new Exception("Meta Failure: " + asset.assetId + ", " + asset.txid + ", " + asset.getIndex()));
+                            return MetaModel.empty();
+                        })).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).doOnNext(metaModel -> {
                             if (metaModel.empty) return;
                             Database.instance.saveAssetName(metaModel.metadataOfIssuence.data.assetName, listItemTransactionData);
                         });
@@ -633,7 +640,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         SyncManager.getInstance().stopSyncingProgressThread();
         handler.removeCallbacks(nodeConnectionCheck);
         disposables.dispose();
-        disposables.clear();
+        disposables = new CompositeDisposable();
     }
 
     @Override
