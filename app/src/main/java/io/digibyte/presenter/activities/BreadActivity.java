@@ -42,7 +42,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -322,13 +321,16 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     adapter.getReceivedAdapter().updateTransactions(newTransactions);
                 });
             }
-            if (isPossibleNewAssetSend(transactionsToAdd)) {
+
+            boolean isAssetSend = isPossibleNewAssetSend(transactionsToAdd);
+            if (isAssetSend) {
                 RetrofitManager.instance.clearCache(transactionsToAdd.get(0).transactionItem.getTo());
-                processTxAssets(new CopyOnWriteArrayList<>(adapter.getAllAdapter().getTransactions()), true, true
-                );
-            } else if (transactionsToAdd.size() > 0) {
-                processTxAssets(new CopyOnWriteArrayList<>(transactionsToAdd), false, false);
             }
+            processTxAssets(
+                    new CopyOnWriteArrayList<>(isAssetSend ? adapter.getAllAdapter().getTransactions() : transactionsToAdd),
+                    isAssetSend,
+                    isAssetSend
+            );
         });
     }
 
@@ -336,10 +338,13 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     public void onRefresh() {
         assetAdapter.clear();
         assetAdapter.notifyDataSetChanged();
-        disposables.add(Observable.fromCallable(() -> {
+        disposables.add(Completable.fromRunnable(() -> {
             RetrofitManager.instance.clearCache();
-            processTxAssets(new CopyOnWriteArrayList<>(adapter.getAllAdapter().getTransactions()), true, false);
-            return true;
+            processTxAssets(
+                    new CopyOnWriteArrayList<>(adapter.getAllAdapter().getTransactions()),
+                    true,
+                    false
+            );
         }).subscribeOn(Schedulers.io()).subscribe());
     }
 
@@ -355,13 +360,15 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 continue;
             }
             for (String address : transaction.transactionItem.getTo()) {
-                if (!TextUtils.isEmpty(address) && BRWalletManager.addressContainedInWallet(address)) {
-                    outputs.add(new AddressTxSet(address, transaction));
+                if (!TextUtils.isEmpty(address)) {
+                    if (BRWalletManager.addressContainedInWallet(address)) {
+                        outputs.add(new AddressTxSet(address, transaction));
+                    }
                     allAddresses.add(new AddressTxSet(address, transaction));
                 }
             }
             for (String address : transaction.transactionItem.getFrom()) {
-                if (!TextUtils.isEmpty(address) && BRWalletManager.addressContainedInWallet(address)) {
+                if (!TextUtils.isEmpty(address)) {
                     allAddresses.add(new AddressTxSet(address, transaction));
                 }
             }
@@ -372,10 +379,10 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             assetObservables.add(processAssets(set.address, forceAssetMeta, clearAssetUtxo));
         }
         for (AddressTxSet set : allAddresses) {
-            nameObservables.add(processAssetNames(set.address, set.listItemTransactionData));
+            nameObservables.add(processAssetNames(set.address, set.listItemTransactionData, forceAssetMeta));
         }
-        Observable<MetaModel> addresses = Observable.merge(assetObservables).onErrorResumeNext(Observable.just(MetaModel.empty()));
-        Observable<MetaModel> names = Observable.merge(nameObservables).onErrorResumeNext(Observable.just(MetaModel.empty()));
+        Observable<MetaModel> assets = Observable.merge(assetObservables);
+        Observable<MetaModel> names = Observable.merge(nameObservables);
         Observable<Boolean> completion = Observable.fromCallable(() -> {
             bindings.assetRefresh.setRefreshing(false);
             if (assetAdapter.getItemCount() > 0 && bindings.noAssetsSwitcher.getDisplayedChild() != 1) {
@@ -383,18 +390,18 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             }
             return true;
         }).subscribeOn(AndroidSchedulers.mainThread()).delay(3, TimeUnit.SECONDS);
-        disposables.add(Observable.concat(addresses, names, completion).delaySubscription(1, TimeUnit.SECONDS).subscribe());
+        disposables.add(Observable.concat(assets, names, completion).delaySubscription(1, TimeUnit.SECONDS).subscribe());
     }
 
     private Observable<MetaModel> processAssets(@NonNull final String address, boolean forceAssetMeta, boolean clearAssetUtxo) {
-        return RetrofitManager.instance.getAssets(address).onErrorResumeNext(Observable.just(AddressInfo.Companion.empty())).flatMap(addressInfo -> {
+        return RetrofitManager.instance.getAssets(address).onErrorResumeNext(Observable.empty()).flatMap(addressInfo -> {
             List<Observable<MetaModel>> metaObservables = new LinkedList<>();
             for (final AddressInfo.Asset asset : addressInfo.getAssets()) {
                 if (forceAssetMeta) {
                     RetrofitManager.instance.clearMetaCache(asset.assetId);
                 }
                 Observable<MetaModel> metaObservable = RetrofitManager.instance.getAssetMeta(asset.assetId, asset.txid, String.valueOf(asset.getIndex()))
-                        .onErrorResumeNext(Observable.fromCallable(() -> {
+                        .onErrorResumeNext(RetrofitManager.instance.getAssetMetaSparse(asset.assetId)).onErrorResumeNext(Observable.fromCallable(() -> {
                             Crashlytics.logException(new Exception("Meta Failure: " + asset.assetId + ", " + asset.txid + ", " + asset.getIndex()));
                             return MetaModel.empty();
                         })).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).doOnNext(metaModel -> {
@@ -415,16 +422,15 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private Observable<MetaModel> processAssetNames(@NonNull final String address,
-                                                    @NonNull final ListItemTransactionData listItemTransactionData) {
-        return RetrofitManager.instance.getAssets(address).onErrorResumeNext(Observable.just(AddressInfo.Companion.empty())).flatMap(addressInfo -> {
+                                                    @NonNull final ListItemTransactionData listItemTransactionData, boolean forceAssetMeta) {
+        return RetrofitManager.instance.getAssets(address).onErrorResumeNext(Observable.empty()).flatMap(addressInfo -> {
             List<Observable<MetaModel>> metaObservables = new LinkedList<>();
             for (final AddressInfo.Asset asset : addressInfo.getAssets(listItemTransactionData.transactionItem.txReversed)) {
+                if (forceAssetMeta) {
+                    RetrofitManager.instance.clearMetaCache(asset.assetId);
+                }
                 Observable<MetaModel> metaObservable = RetrofitManager.instance.getAssetMeta(asset.assetId, asset.txid, String.valueOf(asset.getIndex()))
-                        .onErrorResumeNext(Observable.fromCallable(() -> {
-                            Crashlytics.logException(new Exception("Meta Failure: " + asset.assetId + ", " + asset.txid + ", " + asset.getIndex()));
-                            return MetaModel.empty();
-                        })).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).doOnNext(metaModel -> {
-                            if (metaModel.empty) return;
+                        .onErrorResumeNext(Observable.empty()).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).doOnNext(metaModel -> {
                             Database.instance.saveAssetName(metaModel.metadataOfIssuence.data.assetName, listItemTransactionData);
                         });
                 metaObservables.add(metaObservable);

@@ -13,7 +13,7 @@ public class MetaModel {
     float totalSupply;
     int numOfHolders;
     String issueAddress;
-    public IsuanceModel metadataOfIssuence;
+    public IsuanceModel metadataOfIssuence = new IsuanceModel();
     public boolean empty;
 
     public static MetaModel empty() {
@@ -37,14 +37,14 @@ public class MetaModel {
 
     public class IsuanceModel {
         String sha2Issue;
-        public IsuanceData data;
+        public IssuanceData data = new IssuanceData();
         public String description;
     }
 
-    public class IsuanceData {
+    public class IssuanceData {
         public String assetName;
         String description;
-        Urls[] urls;
+        Urls[] urls = new Urls[0];
     }
 
     public class Urls {

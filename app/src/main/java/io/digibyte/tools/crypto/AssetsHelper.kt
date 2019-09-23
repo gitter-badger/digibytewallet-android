@@ -47,6 +47,7 @@ class AssetsHelper {
                     throw IllegalStateException()
                 }
                 RetrofitManager.instance.clearCache(assetTx.changeAddress)
+                RetrofitManager.instance.clearCache(assetTx.destinationAddress.toString())
                 SendAsset(
                         Integer.toString(1400),
                         assetTx.changeAddress,

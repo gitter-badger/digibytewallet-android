@@ -25,7 +25,9 @@ import io.digibyte.DigiByte;
 import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.MetaModel;
 import io.digibyte.presenter.activities.models.SendAssetResponse;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.MediaType;
@@ -52,6 +54,7 @@ public class RetrofitManager {
 
     private RetrofitManager() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.retryOnConnectionFailure(true);
         builder.cache(cache);
         builder.addNetworkInterceptor(chain -> {
             okhttp3.Response response = chain.proceed(chain.request());
@@ -73,20 +76,28 @@ public class RetrofitManager {
                 .build();
     }
 
-    public void clearCache(String... addresses) {
-        try {
-            Iterator<String> urls = cache.urls();
-            while (urls.hasNext()) {
-                String url = urls.next();
-                for (String address : addresses) {
-                    if (!TextUtils.isEmpty(address) && url.contains(address)) {
-                        urls.remove();
+    public void clearCache(String[] addresses) {
+        Completable.fromRunnable(() -> {
+            synchronized (this) {
+                try {
+                    Iterator<String> urls = cache.urls();
+                    while (urls.hasNext()) {
+                        String url = urls.next();
+                        for (String address : addresses) {
+                            if (!TextUtils.isEmpty(address) && url.toLowerCase().contains(address.toLowerCase())) {
+                                urls.remove();
+                            }
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).subscribeOn(Schedulers.io()).subscribe();
+    }
+
+    public void clearCache(String address) {
+        clearCache(new String[]{address});
     }
 
     public void clearMetaCache(String assetId) {
@@ -94,7 +105,7 @@ public class RetrofitManager {
             Iterator<String> urls = cache.urls();
             while (urls.hasNext()) {
                 String url = urls.next();
-                if (url.contains(assetId)) {
+                if (url.toLowerCase().contains(assetId.toLowerCase())) {
                     urls.remove();
                 }
             }
@@ -124,6 +135,9 @@ public class RetrofitManager {
         Observable<MetaModel> getMeta(@Path("assetid") String assetid, @Path("utxotxid") String utxotxid,
                                       @Path("index") String index);
 
+        @GET("assetmetadata/{assetid}")
+        Observable<MetaModel> getMetaSparse(@Path("assetid") String assetid);
+
         @POST("sendasset/")
         @Headers({"cache-control: no-cache", "Content-Type: application/json"})
         Call<ResponseBody> sendAsset(@Body RequestBody body);
@@ -140,6 +154,11 @@ public class RetrofitManager {
     public Observable<MetaModel> getAssetMeta(String assetid, String utxotdid, String index) {
         AssetEndpoints apiService = assetsApi.create(AssetEndpoints.class);
         return apiService.getMeta(assetid, utxotdid, index);
+    }
+
+    public Observable<MetaModel> getAssetMetaSparse(String assetid) {
+        AssetEndpoints apiService = assetsApi.create(AssetEndpoints.class);
+        return apiService.getMetaSparse(assetid);
     }
 
     public interface SendAssetCallback {

@@ -36,7 +36,7 @@ class AddressInfo {
     fun getAssets(txid: String): LinkedList<Asset> {
         val assets = LinkedList<Asset>()
         for (utxo in utxos) {
-            if (utxo.used or !utxo.txid.equals(txid)) {
+            if (utxo.used or (utxo.txid.toLowerCase() != txid.toLowerCase())) {
                 continue
             }
             for (asset in utxo.assets) {

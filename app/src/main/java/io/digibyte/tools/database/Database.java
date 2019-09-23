@@ -7,6 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -70,6 +71,9 @@ public class Database {
     }
 
     public void saveAssetName(String asset_name, ListItemTransactionData... transactions) {
+        if (TextUtils.isEmpty(asset_name)) {
+            return;
+        }
         executor.execute(() -> {
             for (ListItemTransactionData listItemTransactionData : transactions) {
                 AssetName assetName = new AssetName();
