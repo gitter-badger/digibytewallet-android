@@ -50,7 +50,7 @@ public class MetaModel {
     public class Urls {
         String name;
         String mimeType;
-        String url;
+        public String url;
     }
 
     public boolean isAggregable() {

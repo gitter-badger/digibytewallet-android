@@ -57,6 +57,7 @@ import io.digibyte.R;
 import io.digibyte.databinding.ActivityBreadBinding;
 import io.digibyte.presenter.activities.adapters.TxAdapter;
 import io.digibyte.presenter.activities.base.BRActivity;
+import io.digibyte.presenter.activities.callbacks.AssetClickCallback;
 import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.presenter.activities.models.AddressInfo;
 import io.digibyte.presenter.activities.models.AssetModel;
@@ -122,7 +123,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class BreadActivity extends BRActivity implements BRWalletManager.OnBalanceChanged,
-        BRPeerManager.OnTxStatusUpdate, BRSharedPrefs.OnIsoChangedListener,
+        BRPeerManager.OnTxStatusUpdate, BRSharedPrefs.OnIsoChangedListener, AssetClickCallback,
         TransactionDataSource.OnTxAddedListener, SyncManager.onStatusListener, onStatusListener, SwipeRefreshLayout.OnRefreshListener {
 
     ActivityBreadBinding bindings;
@@ -143,8 +144,6 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         if (rootBeer.isRootedWithoutBusyBoxCheck()) {
             bindings.rootBanner.setVisibility(View.VISIBLE);
         }
-
-
         bindings.assetRefresh.setOnRefreshListener(this);
         bindings.digiSymbolBackground.
                 setBackground(AppCompatResources.getDrawable(DigiByte.getContext(),
@@ -171,7 +170,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         animator.setDuration(1000);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.start();
-        assetAdapter = new MultiTypeDataBoundAdapter(null, (Object[]) null);
+        assetAdapter = new MultiTypeDataBoundAdapter(this, (Object[]) null);
         assetRecycler.setLayoutManager(new LinearLayoutManager(this));
         assetRecycler.setAdapter(assetAdapter);
         bindings.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
@@ -324,7 +323,11 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
             boolean isAssetSend = isPossibleNewAssetSend(transactionsToAdd);
             if (isAssetSend) {
-                RetrofitManager.instance.clearCache(transactionsToAdd.get(0).transactionItem.getTo());
+                //Clear entire cache
+                //Optimally this would only clear specific cached paths relevant
+                //to the new tx, but... it has been proving difficult to clear the specifically
+                //needed entries
+                RetrofitManager.instance.clearCache();
             }
             processTxAssets(
                     new CopyOnWriteArrayList<>(isAssetSend ? adapter.getAllAdapter().getTransactions() : transactionsToAdd),
@@ -497,6 +500,14 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                         }
                     });
         });
+    }
+
+    @Override
+    public void onAssetClick(View v, AssetModel assetModel) {
+        if (assetModel.getAssetImage() == null) {
+            return;
+        }
+        AssetImageActivity.show(this, v.findViewById(R.id.asset_drawable), assetModel.getAssetImage().url);
     }
 
     @OnClick(R.id.balance_visibility)

@@ -1,6 +1,7 @@
 package io.digibyte.presenter.activities;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
 import android.net.Uri;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import androidx.annotation.Nullable;
+
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -43,6 +46,8 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingNfcIntent;
     private boolean paused;
+    private Vibrator vibrator;
+
 
     private LoginActivityCallback callback = () -> {
         if (!paused) {
@@ -56,6 +61,7 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_pin);
         binding.setData(new PinActivityModel());
         binding.setCallback(callback);
@@ -167,6 +173,9 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private void handleClick(String key) {
+        if (vibrator != null && vibrator.hasVibrator()) {
+            vibrator.vibrate(150);
+        }
         if (!inputAllowed) {
             Log.e(TAG, "handleClick: input not allowed");
             return;

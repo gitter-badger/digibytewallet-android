@@ -49,7 +49,7 @@ import retrofit2.http.Path;
 public class RetrofitManager {
     public static RetrofitManager instance = new RetrofitManager();
     private Retrofit assetsApi;
-    private Cache cache = new Cache(new File(DigiByte.getContext().getCacheDir(), "assets"), 1024 * 1024 * 10);
+    private final Cache cache = new Cache(new File(DigiByte.getContext().getCacheDir(), "assets"), 1024 * 1024 * 10);
     private Handler handler = new Handler(Looper.getMainLooper());
 
     private RetrofitManager() {
@@ -78,7 +78,7 @@ public class RetrofitManager {
 
     public void clearCache(String[] addresses) {
         Completable.fromRunnable(() -> {
-            synchronized (this) {
+            synchronized (cache) {
                 try {
                     Iterator<String> urls = cache.urls();
                     while (urls.hasNext()) {
@@ -90,6 +90,7 @@ public class RetrofitManager {
                         }
                     }
                 } catch (Exception e) {
+                    Crashlytics.logException(e);
                     e.printStackTrace();
                 }
             }
@@ -101,30 +102,39 @@ public class RetrofitManager {
     }
 
     public void clearMetaCache(String assetId) {
-        try {
-            Iterator<String> urls = cache.urls();
-            while (urls.hasNext()) {
-                String url = urls.next();
-                if (url.toLowerCase().contains(assetId.toLowerCase())) {
-                    urls.remove();
+        Completable.fromRunnable(() -> {
+            synchronized (cache) {
+                try {
+                    Iterator<String> urls = cache.urls();
+                    while (urls.hasNext()) {
+                        String url = urls.next();
+                        if (url.toLowerCase().contains(assetId.toLowerCase())) {
+                            urls.remove();
+                        }
+                    }
+                } catch (IOException e) {
+                    Crashlytics.logException(e);
+                    e.printStackTrace();
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        }).subscribeOn(Schedulers.io()).subscribe();
     }
 
     public void clearCache() {
-        try {
-            Iterator<String> urls = cache.urls();
-            while (urls.hasNext()) {
-                urls.next();
-                urls.remove();
+        Completable.fromRunnable(() -> {
+            synchronized (cache) {
+                try {
+                    Iterator<String> urls = cache.urls();
+                    while (urls.hasNext()) {
+                        urls.next();
+                        urls.remove();
+                    }
+                } catch (IOException e) {
+                    Crashlytics.logException(e);
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).subscribeOn(Schedulers.io()).subscribe();
     }
 
     private interface AssetEndpoints {

@@ -24,6 +24,7 @@ import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -103,7 +104,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         if (metaModel == null) {
             return "";
         }
-        return metaModel.metadataOfIssuence.data.assetName;
+        return metaModel.metadataOfIssuence.data != null ? metaModel.metadataOfIssuence.data.assetName : "";
     }
 
     @NonNull
@@ -144,7 +145,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
 
     @Bindable
     public String getAssetDescription() {
-        return metaModel.metadataOfIssuence.data.description;
+        return metaModel.metadataOfIssuence.data != null ? metaModel.metadataOfIssuence.data.description : "";
     }
 
     @Bindable
@@ -328,7 +329,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                 }
             } else if (imageData.url.contains("http")) {
                 if (imageData.url.endsWith(".gif")) {
-                    handler.post(() -> Glide.with(DigiByte.getContext()).load(imageData.url).into(imageView));
+                    handler.post(() -> Glide.with(DigiByte.getContext()).load(imageData.url).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView));
                 } else {
                     handler.post(() -> Picasso.get().load(imageData.url).resize(512, 384).onlyScaleDown().into(imageView));
                 }

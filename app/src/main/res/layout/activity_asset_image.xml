@@ -1,0 +1,24 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="callback"
+            type="io.digibyte.presenter.activities.callbacks.ActivityAssetImageCallback" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:onClick="@{() ->  callback.onCloseClick()}"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:id="@+id/background">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:transitionName="asset_image" />
+
+    </LinearLayout>
+</layout>
