@@ -179,19 +179,19 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     }
 
     private String[] getAddresses() {
-        Set<String> addresses = new HashSet<>();
-        for (AddressInfo.Asset asset : assets) {
-            addresses.add(asset.address);
+        String[] addresses = new String[assets.size()];
+        for (int i = 0; i < assets.size(); i++) {
+            addresses[i] = assets.get(i).address;
         }
-        return addresses.toArray(new String[]{});
+        return addresses;
     }
 
     private String[] getUTXOTxIds() {
-        Set<String> txids = new HashSet<>();
-        for (AddressInfo.Asset asset : assets) {
-            txids.add(asset.txid + ":" + asset.getIndex());
+        String[] txids = new String[assets.size()];
+        for (int i = 0; i < assets.size(); i++) {
+            txids[i] = assets.get(i).txid + ":" + assets.get(i).getIndex();
         }
-        return txids.toArray(new String[]{});
+        return txids;
     }
 
     @Override
