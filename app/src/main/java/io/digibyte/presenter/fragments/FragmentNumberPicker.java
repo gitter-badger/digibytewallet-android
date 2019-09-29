@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -19,9 +20,11 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
 
     public static void show(AppCompatActivity activity, BRAuthCompletion.AuthType type) {
         FragmentNumberPicker fragmentNumberPicker = new FragmentNumberPicker();
-        Bundle args = new Bundle();
-        args.putSerializable(AUTH_TYPE, type);
-        fragmentNumberPicker.setArguments(args);
+        //We cannot use fragment arguments for asset AuthType as it's potentially too large
+        //We override getType in this implementation of Fragment pin, and pass it directly into the
+        //fragment. We also pop the back stack in onActivityCreated if there's a saved state,
+        //because in such a scenario the AuthType will not be stored in the arguments, thus unavailable.
+        fragmentNumberPicker.setAuthType(type);
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.animator.from_bottom, R.animator.to_bottom,
                 R.animator.from_bottom, R.animator.to_bottom);
@@ -29,6 +32,12 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
                 FragmentNumberPicker.class.getName());
         transaction.addToBackStack(FragmentNumberPicker.class.getName());
         transaction.commitAllowingStateLoss();
+    }
+
+    private BRAuthCompletion.AuthType authType = null;
+
+    private void setAuthType(BRAuthCompletion.AuthType authType) {
+        this.authType = authType;
     }
 
     @Override
@@ -40,6 +49,14 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
         view.findViewById(R.id.complete).setOnClickListener(this);
         ((BRKeyboard) view.findViewById(R.id.brkeyboard)).setShowDot(true);
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (authType == null) {
+            getFragmentManager().popBackStack();
+        }
     }
 
     @Override
@@ -66,7 +83,6 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
 
     @Override
     protected BRAuthCompletion.AuthType getType() {
-        BRAuthCompletion.AuthType authType = super.getType();
         if (pin.length() > 0) {
             try {
                 double quantity = Double.parseDouble(pin.toString());
