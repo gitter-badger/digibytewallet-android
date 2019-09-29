@@ -3,9 +3,8 @@ package io.digibyte;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import androidx.multidex.MultiDex;
 
@@ -13,13 +12,9 @@ import com.crashlytics.android.Crashlytics;
 import com.evernote.android.job.JobManager;
 import com.facebook.soloader.SoLoader;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.zxing.client.android.PreferencesActivity;
 import com.orm.SchemaGenerator;
 import com.orm.SugarContext;
 import com.orm.SugarDb;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
 
 import io.digibyte.presenter.activities.DisabledActivity;
 import io.digibyte.presenter.activities.LoginActivity;
@@ -31,7 +26,6 @@ import io.digibyte.tools.security.BRKeyStore;
 import io.digibyte.tools.util.BRConstants;
 import io.fabric.sdk.android.Fabric;
 import io.reactivex.Completable;
-import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -96,7 +90,12 @@ public class DigiByte extends Application implements
             SoLoader.init(this, false);
             Fabric.with(this, new Crashlytics());
             FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(!BuildConfig.DEBUG);
-            JobManager.create(this).addJobCreator(new JobsHelper.DigiByteJobCreator());
+            try {
+                JobManager.create(this).addJobCreator(new JobsHelper.DigiByteJobCreator());
+            } catch (Exception e) {
+                Crashlytics.logException(e);
+                Toast.makeText(this, R.string.recurring_payments_not_supported, Toast.LENGTH_SHORT).show();
+            }
             BRSharedPrefs.putFeePerKb(this, 40000);
             Database.instance.init();
 
@@ -104,7 +103,6 @@ public class DigiByte extends Application implements
             //SugarContext.terminate();
             SchemaGenerator schemaGenerator = new SchemaGenerator(DigiByte.this);
             //schemaGenerator.deleteTables(new SugarDb(this).getDB());
-            SugarContext.init(DigiByte.this);
             schemaGenerator.createDatabase(new SugarDb(DigiByte.this).getDB());
         }).subscribeOn(Schedulers.io()).subscribe();
         application = this;

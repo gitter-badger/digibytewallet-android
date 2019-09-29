@@ -4,7 +4,7 @@
     <!-- About screen blog label -->
   <string name="About.blog">https://digibyte.io/</string>
   <!-- About screen footer -->
-  <string name="About.footer">वैश्विक डिगवालेट टीम द्वारा बनाया गया संस्करण% 1 $ @</string>
+    <string name="About.footer">वैश्विक डिगवालेट टीम द्वारा बनाया गया संस्करण% 1 $ </string>
   <!-- Privay Policy button label -->
   <string name="About.privacy">गोपनीयता नीति</string>
   <!-- About screen reddit label -->

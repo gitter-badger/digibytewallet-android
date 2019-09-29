@@ -728,7 +728,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             RetrofitManager.instance.broadcast(txHex, new RetrofitManager.BroadcastTransaction() {
                 @Override
                 public void success(String txId) {
-                    //TODO need to come back here to ensure the dialog has proper/accurate contextual info
+                    copyTxToClipboard();
                     if (sendAsset.isCompleteSpend()) {
                         assetAdapter.removeItem(sendAsset.assetModel);
                     }
@@ -738,11 +738,15 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                 @Override
                 public void onError(String errorMessage) {
+                    copyTxToClipboard();
+                    Crashlytics.logException(new Exception("tx_hex: " + txHex));
+                    showSendConfirmDialog(1, TextUtils.isEmpty(errorMessage) ? getString(R.string.Alerts_sendFailure) : errorMessage);
+                }
+
+                private void copyTxToClipboard() {
                     Gson gson = new Gson();
                     final String payload = gson.toJson(sendAsset);
                     BRClipboardManager.putClipboard(BreadActivity.this, payload + ":" + txHex);
-                    Crashlytics.logException(new Exception("tx_hex: " + txHex));
-                    showSendConfirmDialog(1, TextUtils.isEmpty(errorMessage) ? getString(R.string.Alerts_sendFailure) : errorMessage);
                 }
             });
         } catch (Exception e) {

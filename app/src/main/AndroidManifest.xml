@@ -255,8 +255,7 @@
         <activity
             android:name=".presenter.activities.AssetImageActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Translucent"
-            android:screenOrientation="portrait" />
+            android:theme="@style/Theme.AppCompat.Translucent" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

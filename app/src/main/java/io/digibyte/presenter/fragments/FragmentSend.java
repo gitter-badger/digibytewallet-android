@@ -173,7 +173,7 @@ public class FragmentSend extends Fragment implements OnBackPressListener {
             boolean allFilled = true;
 
             String address = sendFragmentModel.getAddress();
-            String amountStr = sendFragmentModel.getAmount();
+            String amountStr = sendFragmentModel.getAmount().replace("-", "");
             String iso = sendFragmentModel.getSelectedIso();
             String comment = sendFragmentModel.getMemo();
 
