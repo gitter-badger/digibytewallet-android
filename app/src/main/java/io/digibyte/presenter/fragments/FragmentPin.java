@@ -118,8 +118,10 @@ public class FragmentPin extends Fragment implements OnBackPressListener {
         binding.mainLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
         Bundle bundle = getArguments();
         PinFragmentViewModel viewModel = new PinFragmentViewModel();
-        viewModel.setTitle(bundle.getString("title"));
-        viewModel.setMessage(bundle.getString("message"));
+        if (bundle != null) {
+            viewModel.setTitle(bundle.getString("title"));
+            viewModel.setMessage(bundle.getString("message"));
+        }
         binding.setData(viewModel);
         binding.executePendingBindings();
         return binding.getRoot();
