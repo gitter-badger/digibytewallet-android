@@ -76,12 +76,15 @@ public class Database {
         }
         executor.execute(() -> {
             for (ListItemTransactionData listItemTransactionData : transactions) {
-                AssetName assetName = new AssetName();
-                assetName.setHash(listItemTransactionData.transactionItem.txReversed);
-                assetName.setAssetName(asset_name);
-                assetNamesDao.insertAll(assetName);
-                assetNames = assetNamesDao.getAll();
-                handler.post(listItemTransactionData::updateAssetName);
+                AssetName currentAssetName = findAssetNameFromHash(listItemTransactionData.transactionItem.txReversed);
+                if (currentAssetName == null || !asset_name.equals(currentAssetName.getAssetName())) {
+                    AssetName assetName = new AssetName();
+                    assetName.setHash(listItemTransactionData.transactionItem.txReversed);
+                    assetName.setAssetName(asset_name);
+                    assetNamesDao.insertAll(assetName);
+                    assetNames = assetNamesDao.getAll();
+                    handler.post(listItemTransactionData::updateAssetName);
+                }
             }
         });
     }

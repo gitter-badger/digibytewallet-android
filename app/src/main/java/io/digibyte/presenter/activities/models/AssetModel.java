@@ -25,13 +25,11 @@ import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.squareup.picasso.Picasso;
+import com.google.common.base.CharMatcher;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -284,8 +282,9 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
                     ClipData clipData = clipboard.getPrimaryClip();
                     if (clipData != null && clipData.getItemCount() > 0) {
                         CharSequence destinationAddress = clipData.getItemAt(0).getText().toString().trim();
-                        if (BRWalletManager.validateAddress(destinationAddress.toString())) {
-                            assetTx.setDestinationAddress(destinationAddress);
+                        String cleanAddress = CharMatcher.ascii().retainFrom(destinationAddress);
+                        if (BRWalletManager.validateAddress(cleanAddress)) {
+                            assetTx.setDestinationAddress(cleanAddress);
                             AssetsHelper.Companion.getInstance().processAssetTx(v.getContext(), assetTx);
                         } else {
                             Toast.makeText(context, R.string.Send_invalidAddressTitle, Toast.LENGTH_SHORT).show();

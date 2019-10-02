@@ -69,6 +69,7 @@ public class FragmentPin extends Fragment implements OnBackPressListener {
     private FragmentBreadPinBinding binding;
     protected StringBuilder pin = new StringBuilder();
     private boolean authComplete = false;
+    protected BRAuthCompletion.AuthType authType;
 
     private PinFragmentCallback mPinFragmentCallback = new PinFragmentCallback() {
         @Override
@@ -103,8 +104,6 @@ public class FragmentPin extends Fragment implements OnBackPressListener {
         transaction.addToBackStack(FragmentPin.class.getName());
         transaction.commitAllowingStateLoss();
     }
-
-    private BRAuthCompletion.AuthType authType;
 
     private void setAuthType(BRAuthCompletion.AuthType authType) {
         this.authType = authType;

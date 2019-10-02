@@ -36,8 +36,6 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
         transaction.commitAllowingStateLoss();
     }
 
-    private BRAuthCompletion.AuthType authType = null;
-
     private void setAuthType(BRAuthCompletion.AuthType authType) {
         this.authType = authType;
     }
@@ -51,14 +49,6 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
         view.findViewById(R.id.complete).setOnClickListener(this);
         ((BRKeyboard) view.findViewById(R.id.brkeyboard)).setShowDot(true);
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (authType == null) {
-            getFragmentManager().popBackStack();
-        }
     }
 
     @Override

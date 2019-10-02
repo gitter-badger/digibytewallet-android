@@ -321,19 +321,17 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 });
             }
 
-            boolean isAssetSend = isPossibleNewAssetSend(transactionsToAdd);
-            if (isAssetSend) {
-                //Clear entire cache
-                //Optimally this would only clear specific cached paths relevant
-                //to the new tx, but... it has been proving difficult to clear the specifically
-                //needed entries
-                RetrofitManager.instance.clearCache();
-            }
-            processTxAssets(
-                    new CopyOnWriteArrayList<>(isAssetSend ? adapter.getAllAdapter().getTransactions() : transactionsToAdd),
-                    isAssetSend,
-                    isAssetSend
-            );
+            handler.post(() -> {
+                boolean isAssetSend = isPossibleNewAssetSend(transactionsToAdd);
+                if (isAssetSend) {
+                    RetrofitManager.instance.clearCache(transactionsToAdd.get(0).transactionItem.getTo());
+                }
+                processTxAssets(
+                        new CopyOnWriteArrayList<>(isAssetSend ? adapter.getAllAdapter().getTransactions() : transactionsToAdd),
+                        isAssetSend,
+                        isAssetSend
+                );
+            });
         });
     }
 
