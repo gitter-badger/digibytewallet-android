@@ -20,11 +20,13 @@ public class FragmentNumberPicker extends FragmentPin implements View.OnClickLis
 
     public static void show(AppCompatActivity activity, BRAuthCompletion.AuthType type) {
         FragmentNumberPicker fragmentNumberPicker = new FragmentNumberPicker();
+
         //We cannot use fragment arguments for asset AuthType as it's potentially too large
         //We override getType in this implementation of Fragment pin, and pass it directly into the
         //fragment. We also pop the back stack in onActivityCreated if there's a saved state,
         //because in such a scenario the AuthType will not be stored in the arguments, thus unavailable.
         fragmentNumberPicker.setAuthType(type);
+
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.animator.from_bottom, R.animator.to_bottom,
                 R.animator.from_bottom, R.animator.to_bottom);

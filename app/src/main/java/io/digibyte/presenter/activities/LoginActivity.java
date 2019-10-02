@@ -174,7 +174,13 @@ public class LoginActivity extends BRActivity implements BRWalletManager.OnBalan
 
     private void handleClick(String key) {
         if (vibrator != null && vibrator.hasVibrator()) {
-            vibrator.vibrate(150);
+            try {
+                //Fatal Exception: java.lang.NullPointerException
+                //Attempt to read from field 'android.os.VibrationEffect com.android.server.VibratorService$Vibration.mEffect' on a null object reference
+                vibrator.vibrate(150);
+            } catch (NullPointerException e) {
+                //Platform malfunction
+            }
         }
         if (!inputAllowed) {
             Log.e(TAG, "handleClick: input not allowed");

@@ -504,7 +504,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
     @Override
     public void onAssetClick(View v, AssetModel assetModel) {
-        if (assetModel.getAssetImage() == null) {
+        if (assetModel == null || assetModel.getAssetImage() == null) {
             return;
         }
         AssetImageActivity.show(this, v.findViewById(R.id.asset_drawable), assetModel.getAssetImage().url);

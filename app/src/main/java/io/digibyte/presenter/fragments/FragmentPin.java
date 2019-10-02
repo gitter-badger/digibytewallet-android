@@ -64,7 +64,6 @@ import io.digibyte.tools.security.AuthManager;
 
 public class FragmentPin extends Fragment implements OnBackPressListener {
     private static final String TAG = FragmentPin.class.getName();
-    protected static final String AUTH_TYPE = "FragmentPin:AuthType";
 
     private BRAuthCompletion completion;
     private FragmentBreadPinBinding binding;
@@ -91,13 +90,24 @@ public class FragmentPin extends Fragment implements OnBackPressListener {
             message = activity.getString(R.string.VerifyPin_continueBody);
         }
         args.putString("message", message);
-        args.putSerializable(AUTH_TYPE, type);
+
+        //We cannot use fragment arguments for asset AuthType as it's potentially too large
+        //We also pop the back stack in onActivityCreated if there's a saved state,
+        //because in such a scenario the AuthType will not be stored in the arguments, thus unavailable.
+        fragmentPin.setAuthType(type);
+
         fragmentPin.setArguments(args);
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.animator.from_bottom, R.animator.to_bottom, R.animator.from_bottom, R.animator.to_bottom);
         transaction.add(android.R.id.content, fragmentPin, FragmentPin.class.getName());
         transaction.addToBackStack(FragmentPin.class.getName());
         transaction.commitAllowingStateLoss();
+    }
+
+    private BRAuthCompletion.AuthType authType;
+
+    private void setAuthType(BRAuthCompletion.AuthType authType) {
+        this.authType = authType;
     }
 
     @Override
@@ -130,6 +140,10 @@ public class FragmentPin extends Fragment implements OnBackPressListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (authType == null) {
+            getFragmentManager().popBackStack();
+            return;
+        }
         ObjectAnimator colorFade = BRAnimator.animateBackgroundDim(binding.mainLayout, false, null);
         colorFade.setStartDelay(350);
         colorFade.setDuration(500);
@@ -146,7 +160,6 @@ public class FragmentPin extends Fragment implements OnBackPressListener {
         super.onResume();
         updateDots();
     }
-
 
     private void handleClick(@Nullable final String key) {
         if (key == null) {
@@ -200,7 +213,7 @@ public class FragmentPin extends Fragment implements OnBackPressListener {
     }
 
     protected BRAuthCompletion.AuthType getType() {
-        return (BRAuthCompletion.AuthType) getArguments().getSerializable(AUTH_TYPE);
+        return authType;
     }
 
     protected void fadeOutRemove(boolean authenticated) {

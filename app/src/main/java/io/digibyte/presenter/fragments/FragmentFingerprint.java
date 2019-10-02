@@ -52,7 +52,6 @@ import io.digibyte.tools.security.FingerprintUiHelper;
 public class FragmentFingerprint extends Fragment implements FingerprintUiHelper.Callback,
         OnBackPressListener {
     public static final String TAG = FragmentFingerprint.class.getName();
-    private static final String AUTH_TYPE = "FragmentFingerprint:AuthType";
     private FingerprintUiHelper.FingerprintUiHelperBuilder mFingerprintUiHelperBuilder;
     private FingerprintUiHelper mFingerprintUiHelper;
     private FingerprintFragmentViewModel viewModel;
@@ -82,8 +81,13 @@ public class FragmentFingerprint extends Fragment implements FingerprintUiHelper
         Bundle args = new Bundle();
         args.putString("title", title);
         args.putString("message", message);
-        args.putSerializable(AUTH_TYPE, type);
         fingerprintFragment.setArguments(args);
+
+        //We cannot use fragment arguments for asset AuthType as it's potentially too large
+        //We also pop the back stack in onActivityCreated if there's a saved state,
+        //because in such a scenario the AuthType will not be stored in the arguments, thus unavailable.
+        fingerprintFragment.setAuthType(type);
+
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.animator.from_bottom, R.animator.to_bottom,
                 R.animator.from_bottom, R.animator.to_bottom);
@@ -91,6 +95,12 @@ public class FragmentFingerprint extends Fragment implements FingerprintUiHelper
                 FragmentFingerprint.class.getName());
         transaction.addToBackStack(FragmentFingerprint.class.getName());
         transaction.commitAllowingStateLoss();
+    }
+
+    private BRAuthCompletion.AuthType authType;
+
+    private void setAuthType(BRAuthCompletion.AuthType authType) {
+        this.authType = authType;
     }
 
     @Override
@@ -127,6 +137,10 @@ public class FragmentFingerprint extends Fragment implements FingerprintUiHelper
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (authType == null) {
+            getFragmentManager().popBackStack();
+            return;
+        }
         ObjectAnimator colorFade = BRAnimator.animateBackgroundDim(binding.background, false, null);
         colorFade.setStartDelay(350);
         colorFade.setDuration(500);
@@ -159,10 +173,6 @@ public class FragmentFingerprint extends Fragment implements FingerprintUiHelper
         fadeOutRemove(true, false);
     }
 
-    private BRAuthCompletion.AuthType getType() {
-        return (BRAuthCompletion.AuthType) getArguments().getSerializable(AUTH_TYPE);
-    }
-
     private void fadeOutRemove(boolean authenticated, boolean goToBackup) {
         if (authComplete) {
             return;
@@ -174,14 +184,14 @@ public class FragmentFingerprint extends Fragment implements FingerprintUiHelper
                     Handler handler = new Handler(Looper.getMainLooper());
                     if (authenticated) {
                         handler.postDelayed(() -> {
-                            if (completion != null) completion.onComplete(getType());
+                            if (completion != null) completion.onComplete(authType);
                         }, 350);
                     }
                     if (goToBackup) {
                         handler.postDelayed(() -> {
                             AuthManager.getInstance().authPrompt(getContext(),
                                     viewModel.getTitle(),
-                                    viewModel.getMessage(), false, getType());
+                                    viewModel.getMessage(), false, authType);
                         }, 350);
                     }
                 });
