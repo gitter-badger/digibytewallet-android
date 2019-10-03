@@ -41,7 +41,7 @@ class AssetsHelper {
             Log.d(AssetModel::class.java.simpleName, "Clipped Address: ${assetTx.destinationAddress}")
 
             Observable.fromCallable {
-                val financeUTXO = getNeededUTXOTxid(1400)
+                val financeUTXO = getNeededUTXOTxid(1600)
                 if (financeUTXO.txid.isNullOrEmpty()) {
                     Toast.makeText(context, R.string.not_enough_digi, Toast.LENGTH_SHORT).show()
                     throw IllegalStateException()
@@ -49,7 +49,7 @@ class AssetsHelper {
                 RetrofitManager.instance.clearCache(assetTx.changeAddress)
                 RetrofitManager.instance.clearCache(assetTx.destinationAddress.toString())
                 SendAsset(
-                        Integer.toString(1400),
+                        Integer.toString(1600),
                         assetTx.changeAddress,
                         assetTx.utxoTxids,
                         financeUTXO.vout,

@@ -158,26 +158,6 @@ public class BRAnimator {
         FragmentMenu.show(app);
     }
 
-    public static boolean isClickAllowed() {
-        if (clickAllowed) {
-            clickAllowed = false;
-            BRExecutor.getInstance().forLightWeightBackgroundTasks().execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    clickAllowed = true;
-                }
-            });
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public static void startBreadActivity(Context from, boolean auth) {
         if (from == null) return;
         Log.e(TAG, "startBreadActivity: " + from.getClass().getName());

@@ -83,9 +83,7 @@ public class FragmentFingerprint extends Fragment implements FingerprintUiHelper
         args.putString("message", message);
         fingerprintFragment.setArguments(args);
 
-        //We cannot use fragment arguments for asset AuthType as it's potentially too large
-        //We also pop the back stack in onActivityCreated if there's a saved state,
-        //because in such a scenario the AuthType will not be stored in the arguments, thus unavailable.
+        //We cannot use fragment arguments for AuthType as it's potentially too large
         fingerprintFragment.setAuthType(type);
 
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();

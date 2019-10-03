@@ -92,9 +92,7 @@ public class FragmentPin extends Fragment implements OnBackPressListener {
         }
         args.putString("message", message);
 
-        //We cannot use fragment arguments for asset AuthType as it's potentially too large
-        //We also pop the back stack in onActivityCreated if there's a saved state,
-        //because in such a scenario the AuthType will not be stored in the arguments, thus unavailable.
+        //We cannot use fragment arguments for AuthType as it's potentially too large
         fragmentPin.setAuthType(type);
 
         fragmentPin.setArguments(args);

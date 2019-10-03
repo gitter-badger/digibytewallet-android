@@ -2,17 +2,16 @@
 package io.digibyte.presenter.activities.introactivities;
 
 import android.content.Intent;
-import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.Serializable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import io.digibyte.R;
 import io.digibyte.databinding.ActivityIntroBinding;
 import io.digibyte.presenter.activities.UpdatePinActivity;
-import io.digibyte.presenter.activities.callbacks.IntroActivityCallback;
 import io.digibyte.presenter.activities.base.BRActivity;
+import io.digibyte.presenter.activities.callbacks.IntroActivityCallback;
 import io.digibyte.tools.manager.BRSharedPrefs;
 import io.digibyte.tools.security.BRKeyStore;
 import io.digibyte.tools.security.SmartValidator;
@@ -44,7 +43,7 @@ import io.digibyte.wallet.BRWalletManager;
  * THE SOFTWARE.
  */
 
-public class IntroActivity extends BRActivity implements Serializable {
+public class IntroActivity extends BRActivity {
 
     private IntroActivityCallback callback = new IntroActivityCallback() {
         @Override

@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.common.io.ByteStreams;
 import com.google.zxing.BinaryBitmap;
@@ -32,11 +33,15 @@ import com.platform.tools.BRBitId;
 import com.scottyab.rootbeer.RootBeer;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import io.digibyte.R;
 import io.digibyte.presenter.activities.BreadActivity;
 import io.digibyte.presenter.activities.utils.ActivityUtils;
+import io.digibyte.presenter.fragments.FragmentFingerprint;
+import io.digibyte.presenter.fragments.FragmentNumberPicker;
+import io.digibyte.presenter.fragments.FragmentPin;
 import io.digibyte.presenter.fragments.interfaces.OnBackPressListener;
 import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
@@ -112,6 +117,21 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
             }
         }
         super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        for (Fragment fragment : fragments) {
+            if (FragmentFingerprint.class.getSimpleName().equals(fragment.getTag()) ||
+                    FragmentPin.class.getSimpleName().equals(fragment.getTag()) ||
+                    FragmentNumberPicker.class.getSimpleName().equals(fragment.getTag())) {
+                transaction.remove(fragment);
+            }
+        }
+        transaction.commitAllowingStateLoss();
     }
 
     @Override
