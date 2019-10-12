@@ -385,7 +385,7 @@
   <string name="asset_confirm_message">Destination Address: %s\nAsset: %s\nAmount: %d</string>
   <string name="rooted_device">Rooted Device Warning</string>
   <string name="recurring_payments_not_supported">Recurring payments not supported</string>
-  <string name="block_heights">Current Height: %d\nWallet Height: %d</string>
+  <string name="block_heights">Chain Height: %d\nWallet Height: %d</string>
   <string name="heights_error">Error Evaluating Heights</string>
 
 </resources>
