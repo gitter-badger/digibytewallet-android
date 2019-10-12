@@ -692,7 +692,14 @@ public class BRWalletManager {
     }
 
     private void createPeerManagerFromCurrentHeadBlock(int walletTime, int blocksCount,
-            int peersCount) throws JSONException {
+                                                       int peersCount) throws JSONException {
+        JSONObject latestBlockData = getLatestBlockData();
+        BRPeerManager.getInstance().createNew(walletTime, blocksCount, peersCount,
+                latestBlockData.getString("hash"),
+                latestBlockData.getInt("height"), latestBlockData.getLong("time"), 0);
+    }
+
+    public static JSONObject getLatestBlockData() throws JSONException {
         JSONObject latestBlockHashJson = new JSONObject(
                 BRApiManager.getInstance().getBlockInfo(
                         DigiByte.getContext(),
@@ -701,9 +708,7 @@ public class BRWalletManager {
         JSONObject latestBlockData = new JSONObject(BRApiManager.getInstance().getBlockInfo(
                 DigiByte.getContext(),
                 DIGIEXPLORER_URL + "/api/block/" + lastBlockHash));
-        BRPeerManager.getInstance().createNew(walletTime, blocksCount, peersCount,
-                latestBlockData.getString("hash"),
-                latestBlockData.getInt("height"), latestBlockData.getLong("time"), 0);
+        return latestBlockData;
     }
 
     private void createPeerManagerFromOldestBlock(LinkedList<String> transactions, int walletTime,

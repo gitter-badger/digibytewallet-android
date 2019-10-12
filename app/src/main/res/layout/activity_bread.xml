@@ -168,6 +168,13 @@
                         app:lottie_fileName="node_connection.json"
                         app:lottie_loop="true" />
 
+                    <TextView
+                        android:id="@+id/height_check"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_height="wrap_content" />
+
                     <io.digibyte.presenter.customviews.BRTabLayout
                         android:id="@+id/tab_layout"
                         style="@style/MyCustomTabLayout"

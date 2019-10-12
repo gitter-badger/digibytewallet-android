@@ -182,11 +182,26 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
     }
 
     private Runnable nodeConnectionCheck = new Runnable() {
+        private String heights;
+        private boolean heightsMatch = false;
         @Override
         public void run() {
             txDataExecutor.execute(() -> {
+
+                try {
+                    int currentBlockHeight = BRWalletManager.getLatestBlockData().getInt("height");
+                    int walletBlockHeight = BRSharedPrefs.getLastBlockHeight(BreadActivity.this);
+                    heightsMatch = walletBlockHeight == currentBlockHeight;
+                    heights = String.format(getString(R.string.block_heights), currentBlockHeight, walletBlockHeight);
+                } catch (Exception e) {
+                    heights = getString(R.string.heights_error);
+                    heightsMatch = false;
+                }
                 int connectionStatus = BRPeerManager.connectionStatus();
                 handler.post(() -> {
+                    bindings.heightCheck.setText(heights);
+                    bindings.heightCheck.setTextColor(
+                            heightsMatch ? getResources().getColor(R.color.blue) : getResources().getColor(R.color.red_text));
                     switch (connectionStatus) {
                         case 1:
                             if (!bindings.nodeConnectionStatus.isAnimating()) {
