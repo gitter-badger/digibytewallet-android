@@ -218,7 +218,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                             bindings.nodeConnectionStatus.setFrame(150);
                             break;
                     }
-                    handler.postDelayed(nodeConnectionCheck, 1000);
+                    handler.postDelayed(nodeConnectionCheck, 5000);
                 });
             });
         }
