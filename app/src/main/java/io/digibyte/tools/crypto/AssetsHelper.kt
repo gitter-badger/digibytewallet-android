@@ -41,7 +41,7 @@ class AssetsHelper {
             Log.d(AssetModel::class.java.simpleName, "Clipped Address: ${assetTx.destinationAddress}")
 
             Observable.fromCallable {
-                val fee = 44 + (180 * assetTx.utxoTxids.size) + (34 * 5)
+                val fee = 360 * assetTx.utxoTxids.size + 214
                 val financeUTXO = getNeededUTXOTxid(fee)
                 if (financeUTXO.txid.isNullOrEmpty()) {
                     Toast.makeText(context, R.string.not_enough_digi, Toast.LENGTH_SHORT).show()
