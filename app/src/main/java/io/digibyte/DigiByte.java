@@ -18,6 +18,7 @@ import com.orm.SugarDb;
 
 import io.digibyte.presenter.activities.DisabledActivity;
 import io.digibyte.presenter.activities.LoginActivity;
+import io.digibyte.presenter.activities.utils.AssetVideos;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.database.Database;
 import io.digibyte.tools.manager.BRSharedPrefs;
@@ -87,6 +88,7 @@ public class DigiByte extends Application implements
         super.onCreate();
         Completable.fromRunnable(() -> {
             SugarContext.init(DigiByte.this);
+            AssetVideos.INSTANCE.init(this);
             SoLoader.init(this, false);
             Fabric.with(this, new Crashlytics());
             FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(!BuildConfig.DEBUG);

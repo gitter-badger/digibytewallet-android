@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.databinding.BaseObservable;
@@ -92,6 +93,27 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         for (MetaModel.Urls urls : metaModel.metadataOfIssuence.data.urls) {
             if ("icon".equals(urls.name)) {
                 return urls;
+            }
+        }
+        return null;
+    }
+
+    public boolean hasVideo() {
+        return getVideoUrl() != null;
+    }
+
+    @Nullable
+    public String getVideoUrl() {
+        if (metaModel == null ||
+                metaModel.metadataOfIssuence == null ||
+                metaModel.metadataOfIssuence.data == null ||
+                metaModel.metadataOfIssuence.data.urls == null ||
+                metaModel.metadataOfIssuence.data.urls.length == 0) {
+            return null;
+        }
+        for (MetaModel.Urls urls : metaModel.metadataOfIssuence.data.urls) {
+            if (urls.mimeType.startsWith("video")) {
+                return urls.url;
             }
         }
         return null;
@@ -196,7 +218,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     public boolean equals(Object o) {
         if (this == o) return true;
         AssetModel that = (AssetModel) o;
-        return metaModel.assetId.equals(that.metaModel.assetId);
+        return metaModel.assetId.equals(that.metaModel.assetId) && metaModel.issuanceTxid.equals(that.metaModel.issuanceTxid);
     }
 
     @Override

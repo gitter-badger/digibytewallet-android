@@ -520,7 +520,9 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
         if (assetModel == null || assetModel.getAssetImage() == null) {
             return;
         }
-        AssetImageActivity.show(this, v.findViewById(R.id.asset_drawable), assetModel.getAssetImage().url);
+        String url = assetModel.hasVideo() ? assetModel.getVideoUrl() : assetModel.getAssetImage().url;
+        String mime = assetModel.hasVideo() ? "video" : "image";
+        AssetViewerActivity.Companion.show(this, v.findViewById(R.id.asset_drawable), url, mime);
     }
 
     @OnClick(R.id.balance_visibility)

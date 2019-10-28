@@ -31,8 +31,8 @@ android {
         applicationId = 'io.digibyte'
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 2568
-        versionName "3.0.2.6"
+        versionCode 2569
+        versionName "3.0.2.7"
         multiDexEnabled true
     }
 
@@ -201,5 +201,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
     implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.1'
+    implementation 'com.google.android.exoplayer:exoplayer:2.10.6'
 
 }
