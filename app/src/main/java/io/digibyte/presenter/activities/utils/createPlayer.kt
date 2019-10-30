@@ -2,6 +2,7 @@ package io.digibyte.presenter.activities.utils
 
 import android.content.Context
 import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.database.ExoDatabaseProvider
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.upstream.cache.*
@@ -10,10 +11,10 @@ import java.io.File
 fun createPlayer(context: Context?): SimpleExoPlayer {
     val loadController = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
-                    2000,
                     10000,
-                    2000,
-                    2000
+                    100000,
+                    10000,
+                    10000
             ).createDefaultLoadControl()
     return ExoPlayerFactory.newSimpleInstance(
             context,
@@ -35,11 +36,12 @@ class LocalCacheDataSourceFactory(context: Context) : DataSource.Factory {
 
     private val cache: Cache = SimpleCache(
             File(context.externalCacheDir, "assetVideoCache"),
-            LeastRecentlyUsedCacheEvictor(10 * 1024 * 1024)
+            LeastRecentlyUsedCacheEvictor(10 * 1024 * 1024),
+            ExoDatabaseProvider(context)
     )
 
     private val defaultDataSourceFactory: DefaultDataSourceFactory
-    private val cacheDataSink: CacheDataSink = CacheDataSink(cache, 100)
+    private val cacheDataSink: CacheDataSink = CacheDataSink(cache, 1000)
     private val fileDataSource: FileDataSource = FileDataSource()
 
     init {

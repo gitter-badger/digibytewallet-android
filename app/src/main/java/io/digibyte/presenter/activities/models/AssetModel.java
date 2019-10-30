@@ -218,7 +218,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     public boolean equals(Object o) {
         if (this == o) return true;
         AssetModel that = (AssetModel) o;
-        return metaModel.assetId.equals(that.metaModel.assetId) && metaModel.issuanceTxid.equals(that.metaModel.issuanceTxid);
+        return metaModel.assetId.equals(that.metaModel.assetId);
     }
 
     @Override
