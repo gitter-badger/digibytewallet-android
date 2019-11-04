@@ -252,7 +252,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".presenter.activities.AssetViewerActivity"
+            android:name=".presenter.activities.AssetImageActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Translucent" />
 

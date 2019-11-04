@@ -26,7 +26,7 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
-class AssetViewerActivity : BRActivity() {
+class AssetImageActivity : BRActivity() {
     private lateinit var background: ViewGroup
 
     private var videoBinding: ActivityAssetVideoPlayerBinding? = null
@@ -103,11 +103,11 @@ class AssetViewerActivity : BRActivity() {
 
     companion object {
 
-        private const val CONTENT_URL = "AssetViewerActivity:AssetContentUrl"
-        private const val MIME = "AssetViewerActivity:Mime"
+        private const val CONTENT_URL = "AssetImageActivity:AssetContentUrl"
+        private const val MIME = "AssetImageActivity:Mime"
 
         fun show(activity: AppCompatActivity, view: View, assetContentUrl: String, mime: String) {
-            val intent = Intent(activity, AssetViewerActivity::class.java)
+            val intent = Intent(activity, AssetImageActivity::class.java)
             intent.putExtra(CONTENT_URL, assetContentUrl)
             intent.putExtra(MIME, mime)
             activity.startActivity(intent)
