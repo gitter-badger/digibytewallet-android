@@ -177,11 +177,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
     public String getAssetQuantity() {
         BigDecimal quantity = BigDecimal.ZERO;
         for (AddressInfo.Asset asset : assets) {
-            if (asset.getDivisibility() == 0) {
-                quantity = quantity.add(new BigDecimal(asset.getAmount()));
-            } else {
-                quantity = quantity.add(new BigDecimal((double) asset.getAmount() / (Math.pow(10, asset.getDivisibility()))));
-            }
+            quantity = quantity.add(new BigDecimal((double) asset.getAmount() / (Math.pow(10, asset.getDivisibility()))));
         }
         if (quantity.scale() > 0) {
             quantity = quantity.setScale(10, BigDecimal.ROUND_DOWN);
@@ -190,7 +186,7 @@ public class AssetModel extends BaseObservable implements LayoutBinding, Dynamic
         return quantity.toPlainString();
     }
 
-    private int getAssetQuantityInt() {
+    public int getAssetQuantityInt() {
         int quantity = 0;
         for (AddressInfo.Asset asset : assets) {
             quantity += asset.getAmount();

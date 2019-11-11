@@ -387,6 +387,7 @@
   <string name="recurring_payments_not_supported">Recurring payments not supported</string>
   <string name="block_heights">Chain Height: %d\nWallet Height: %d</string>
   <string name="heights_error">Error Evaluating Heights</string>
-    <string name="error_playing_asset_video">Error playing asset video</string>
+  <string name="error_playing_asset_video">Error playing asset video</string>
+  <string name="asset_counts">Asset Types: %d\nTotal Assets: %d</string>
 
 </resources>

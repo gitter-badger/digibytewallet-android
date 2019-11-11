@@ -430,6 +430,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                             } else {
                                 assetAdapter.addItem(assetModel);
                             }
+                            updateAssetCounts();
                         });
                 metaObservables.add(metaObservable);
             }
@@ -453,6 +454,16 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
             }
             return Observable.merge(metaObservables);
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private void updateAssetCounts() {
+        int totalQuantity = 0;
+        for (Object object : assetAdapter.getItems()) {
+            AssetModel model = (AssetModel) object;
+            totalQuantity += model.getAssetQuantityInt();
+        }
+        String assetCountsText = String.format(getString(R.string.asset_counts), assetAdapter.getItems().size(), totalQuantity);
+        bindings.assetCounts.setText(assetCountsText);
     }
 
     private void addAssetToModel(final AssetModel assetModel, final AddressInfo.Asset asset, boolean clear) {
@@ -704,7 +715,7 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                 String message = String.format(getString(R.string.asset_confirm_message),
                         authType.sendAsset.getDestinationAddress(),
                         authType.sendAsset.assetModel.getAssetName(),
-                        authType.sendAsset.getDestinationAmount());
+                        authType.sendAsset.getDisplayDestinationAmount());
                 Gson gson = new Gson();
                 final String payload = gson.toJson(authType.sendAsset);
                 Log.d(BRActivity.class.getSimpleName(), payload);

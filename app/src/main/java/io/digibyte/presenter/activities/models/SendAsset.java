@@ -50,6 +50,10 @@ public class SendAsset implements Serializable {
         return to[TO_DESTINATION].amount;
     }
 
+    public int getDisplayDestinationAmount() {
+        return Double.valueOf((double) getDisplayDestinationAmount() / Math.pow(10, divisibility)).intValue();
+    }
+
     public void setQuantity(int amount) {
         to[TO_DESTINATION].amount = amount;
         to[TO_CHANGE].amount -= amount;

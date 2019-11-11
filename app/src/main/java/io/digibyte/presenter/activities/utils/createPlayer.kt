@@ -10,12 +10,15 @@ import java.io.File
 
 fun createPlayer(context: Context?): SimpleExoPlayer {
     val loadController = DefaultLoadControl.Builder()
+            .setAllocator(DefaultAllocator(true, 16))
             .setBufferDurationsMs(
+                    4000,
                     10000,
-                    100000,
-                    10000,
-                    10000
-            ).createDefaultLoadControl()
+                    4000,
+                    2000
+            ).setTargetBufferBytes(-1)
+            .setPrioritizeTimeOverSizeThresholds(true)
+            .createDefaultLoadControl()
     return ExoPlayerFactory.newSimpleInstance(
             context,
             DefaultRenderersFactory(context),
