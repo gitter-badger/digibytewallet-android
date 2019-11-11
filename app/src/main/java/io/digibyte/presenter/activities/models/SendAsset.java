@@ -51,7 +51,7 @@ public class SendAsset implements Serializable {
     }
 
     public int getDisplayDestinationAmount() {
-        return Double.valueOf((double) getDisplayDestinationAmount() / Math.pow(10, divisibility)).intValue();
+        return Double.valueOf((double) getDestinationAmount() / Math.pow(10, divisibility)).intValue();
     }
 
     public void setQuantity(int amount) {
