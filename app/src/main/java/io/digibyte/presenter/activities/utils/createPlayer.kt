@@ -13,7 +13,7 @@ fun createPlayer(context: Context?): SimpleExoPlayer {
             .setAllocator(DefaultAllocator(true, 16))
             .setBufferDurationsMs(
                     4000,
-                    10000,
+                    150000,
                     4000,
                     2000
             ).setTargetBufferBytes(-1)
