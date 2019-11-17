@@ -194,11 +194,14 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
                     heightsMatch = walletBlockHeight == currentBlockHeight;
                     heights = String.format(getString(R.string.block_heights), currentBlockHeight, walletBlockHeight);
                 } catch (Exception e) {
-                    heights = getString(R.string.heights_error);
                     heightsMatch = false;
+                    handler.post(() -> {
+                        bindings.heightCheck.setVisibility(View.INVISIBLE);
+                    });
                 }
                 int connectionStatus = BRPeerManager.connectionStatus();
                 handler.post(() -> {
+                    bindings.heightCheck.setVisibility(View.VISIBLE);
                     bindings.heightCheck.setText(heights);
                     bindings.heightCheck.setTextColor(
                             heightsMatch ? getResources().getColor(R.color.blue) : getResources().getColor(R.color.red_text));

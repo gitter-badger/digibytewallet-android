@@ -14,7 +14,6 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(0, 0);
-        PostAuth.instance.onCanaryCheck(this, false);
         BRWalletManager wallet = BRWalletManager.getInstance();
         if (wallet.noWallet(this)) {
             IntroActivity.open(this);

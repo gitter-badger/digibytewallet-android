@@ -479,17 +479,6 @@ public class BRKeyStore {
         }
     }
 
-    private static void showKeyInvalidated(final Context app) {
-        BRDialog.showCustomDialog(app, app.getString(R.string.Alert_keystore_title_android),
-                app.getString(R.string.Alert_keystore_invalidated_android),
-                app.getString(R.string.Button_ok), null,
-                brDialogView -> brDialogView.dismissWithAnimation(), null, dialog -> {
-                    BRWalletManager.getInstance().wipeWalletButKeystore(app);
-                    BRWalletManager.getInstance().wipeKeyStore(app);
-                    dialog.dismiss();
-                }, 0);
-    }
-
     private synchronized static String getFilePath(String fileName, Context context) {
         String filesDirectory = context.getFilesDir().getAbsolutePath();
         return filesDirectory + File.separator + fileName;
@@ -514,42 +503,6 @@ public class BRKeyStore {
         }
         AliasObject obj = aliasObjectMap.get(PHRASE_ALIAS);
         return _getData(context, obj.alias, obj.datafileName, obj.ivFileName, requestCode);
-    }
-
-    public synchronized static boolean putCanary(String strToStore, Context context,
-            int requestCode) throws InvalidKeyException {
-        if (PostAuth.isStuckWithAuthLoop) {
-            showLoopBugMessage(context);
-            throw new InvalidKeyException();
-        }
-        if (strToStore == null || strToStore.isEmpty()) return false;
-        AliasObject obj = aliasObjectMap.get(CANARY_ALIAS);
-        byte[] strBytes = new byte[0];
-        try {
-            strBytes = strToStore.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return strBytes.length != 0 && _setData(context, strBytes, obj.alias, obj.datafileName,
-                obj.ivFileName, requestCode, true);
-    }
-
-    public synchronized static String getCanary(final Context context, int requestCode)
-            throws InvalidKeyException {
-        if (PostAuth.isStuckWithAuthLoop) {
-            showLoopBugMessage(context);
-            throw new InvalidKeyException();
-        }
-        AliasObject obj = aliasObjectMap.get(CANARY_ALIAS);
-        byte[] data;
-        data = _getData(context, obj.alias, obj.datafileName, obj.ivFileName, requestCode);
-        String result = null;
-        try {
-            result = data == null ? null : new String(data, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return result;
     }
 
     public synchronized static boolean putMasterPublicKey(byte[] masterPubKey, Context context) {
