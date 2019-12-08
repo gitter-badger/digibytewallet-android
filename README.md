@@ -9,7 +9,7 @@
 
 #####a completely standalone DigiByte wallet
 
-The DigiWallet is a rapidly developing mobile wallet for the Android platform. With extensive work done to enhance sync timing, and innovative features such Digi-ID, the DigiWallet is the premier mobile product of the DigiByte platform.
+The DigiWallet is a rapidly developing mobile wallet for the Android platform including support for DigiAssets. With extensive work done to enhance sync timing, and innovative features such Digi-ID, the DigiWallet is the premier mobile product of the DigiByte platform.
 
 #####beautiful simplicity:
 
