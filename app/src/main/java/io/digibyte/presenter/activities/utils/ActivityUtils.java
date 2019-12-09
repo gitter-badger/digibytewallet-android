@@ -179,10 +179,8 @@ public class ActivityUtils {
     public static void showCryptoFailureDialog(AppCompatActivity context) {
         BRDialog.showCustomDialog(context, context.getString(R.string.crypto_failed_title),
                 context.getString(R.string.crypto_failed_message),
-                context.getString(R.string.AccessibilityLabels_close), null, brDialogView -> {
-                    brDialogView.dismiss();
-                    context.finishAffinity();
-                }, null, null, 0);
+                context.getString(R.string.AccessibilityLabels_close), null, DialogFragment::dismiss,
+                null, dialog -> context.finishAffinity(), 0);
     }
 
     public static char getDecimalSeparator() {
