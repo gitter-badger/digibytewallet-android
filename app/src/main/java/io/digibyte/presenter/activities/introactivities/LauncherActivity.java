@@ -2,13 +2,12 @@ package io.digibyte.presenter.activities.introactivities;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
+import io.digibyte.presenter.activities.base.BRActivity;
 import io.digibyte.tools.animation.BRAnimator;
-import io.digibyte.tools.security.PostAuth;
 import io.digibyte.wallet.BRWalletManager;
 
-public class LauncherActivity extends AppCompatActivity {
+public class LauncherActivity extends BRActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

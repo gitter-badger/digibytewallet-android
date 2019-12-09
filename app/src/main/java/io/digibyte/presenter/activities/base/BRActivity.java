@@ -47,6 +47,7 @@ import io.digibyte.presenter.activities.callbacks.BRAuthCompletion;
 import io.digibyte.tools.animation.BRAnimator;
 import io.digibyte.tools.crypto.AssetsHelper;
 import io.digibyte.tools.security.AuthManager;
+import io.digibyte.tools.security.BRKeyStore;
 import io.digibyte.tools.security.BitcoinUrlHandler;
 import io.digibyte.tools.security.PostAuth;
 import io.digibyte.tools.threads.BRExecutor;
@@ -89,6 +90,9 @@ public abstract class BRActivity extends AppCompatActivity implements FragmentMa
         super.onCreate(savedInstanceState);
         Bungee.slideRight(this);
         getSupportFragmentManager().addOnBackStackChangedListener(this);
+        if (!BRKeyStore.initCrypto(this)) {
+            ActivityUtils.showCryptoFailureDialog(this);
+        }
     }
 
     protected void setupToolbar() {

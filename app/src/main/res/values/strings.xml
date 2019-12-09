@@ -388,5 +388,7 @@
   <string name="block_heights">Chain Height: %d\nWallet Height: %d</string>
   <string name="error_playing_asset_video">Error playing asset video</string>
   <string name="asset_counts">Asset Types: %d\nTotal Assets: %d</string>
+  <string name="crypto_failed_title">Issue loading Encryption Library</string>
+  <string name="crypto_failed_message">The main encryption library has failed to load, the app will now close to allow re-opening the app to retry.</string>
 
 </resources>

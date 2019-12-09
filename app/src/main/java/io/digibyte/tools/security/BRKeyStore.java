@@ -139,7 +139,7 @@ public class BRKeyStore {
     private static final String TOKEN_FILENAME = "my_token";
     private static final String PASS_TIME_FILENAME = "my_pass_time";
     private static KeyStore keyStore = null;
-
+    private static Crypto crypto;
     public static final int AUTH_DURATION_SEC = 300;
 
     static {
@@ -177,6 +177,20 @@ public class BRKeyStore {
                 new AliasObject(TOTAL_LIMIT_ALIAS, TOTAL_LIMIT_FILENAME, TOTAL_LIMIT_IV));
     }
 
+    public static boolean initCrypto(Context context) {
+        try {
+            if (crypto == null || !crypto.isAvailable()) {
+                KeyChain keyChain = new SharedPrefsBackedKeyChain(context, CryptoConfig.KEY_256);
+                crypto = AndroidConceal.get().createDefaultCrypto(keyChain);
+                return crypto != null && crypto.isAvailable();
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private static boolean useNewStorage(Context context) {
         if (BRSharedPrefs.useNewStorageSet(context)) {
             return BRSharedPrefs.getUseNewStorage(context);
@@ -202,16 +216,6 @@ public class BRKeyStore {
 
         if (useNewStorage(context)) {
             try {
-                // Creates a new Crypto object with default implementations of a key chain
-                KeyChain keyChain = new SharedPrefsBackedKeyChain(context, CryptoConfig.KEY_256);
-                Crypto crypto = AndroidConceal.get().createDefaultCrypto(keyChain);
-
-                // Check for whether the crypto functionality is available
-                // This might fail if Android does not load libaries correctly.
-                if (!crypto.isAvailable()) {
-                    return false;
-                }
-
                 byte[] cipherText = crypto.encrypt(data, Entity.create(alias));
                 storeEncryptedData(context, cipherText, alias_iv);
                 return true;
@@ -300,18 +304,7 @@ public class BRKeyStore {
 
         if (useNewStorage(context)) {
             try {
-                // Creates a new Crypto object with default implementations of a key chain
-                KeyChain keyChain = new SharedPrefsBackedKeyChain(context, CryptoConfig.KEY_256);
-                Crypto crypto = AndroidConceal.get().createDefaultCrypto(keyChain);
-
-                // Check for whether the crypto functionality is available
-                // This might fail if Android does not load libaries correctly.
-                if (!crypto.isAvailable()) {
-                    return null;
-                }
-
-                return crypto.decrypt(retrieveEncryptedData(context, alias_iv),
-                        Entity.create(alias));
+                return crypto.decrypt(retrieveEncryptedData(context, alias_iv), Entity.create(alias));
             } catch (Exception e) {
                 return null;
             }

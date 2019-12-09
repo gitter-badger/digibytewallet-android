@@ -1,15 +1,12 @@
 package io.digibyte.presenter.activities.utils;
 
 import android.animation.ValueAnimator;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import androidx.appcompat.app.AppCompatActivity;
@@ -177,6 +174,15 @@ public class ActivityUtils {
                 context.getString(R.string.JailbreakWarnings_messageWithoutBalance),
                 context.getString(R.string.JailbreakWarnings_close), null,
                 DialogFragment::dismiss, null, null, 0);
+    }
+
+    public static void showCryptoFailureDialog(AppCompatActivity context) {
+        BRDialog.showCustomDialog(context, context.getString(R.string.crypto_failed_title),
+                context.getString(R.string.crypto_failed_message),
+                context.getString(R.string.AccessibilityLabels_close), null, brDialogView -> {
+                    brDialogView.dismiss();
+                    context.finishAffinity();
+                }, null, null, 0);
     }
 
     public static char getDecimalSeparator() {
