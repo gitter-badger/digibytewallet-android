@@ -734,8 +734,8 @@ public class BreadActivity extends BRActivity implements BRWalletManager.OnBalan
 
                     @Override
                     public void error(String message, Throwable throwable) {
-                        BRClipboardManager.putClipboard(BreadActivity.this, payload);
-                        Crashlytics.logException(new Exception("payload: " + payload));
+                        BRClipboardManager.putClipboard(BreadActivity.this, "message: " + message + "payload: " + payload);
+                        Crashlytics.logException(new Exception("message: " + message + "payload: " + payload));
                         showSendConfirmDialog(1, TextUtils.isEmpty(message) ? getString(R.string.Alerts_sendFailure) : message);
                     }
                 });
