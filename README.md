@@ -1,4 +1,4 @@
-![ƀ](/images/icon.png) DigiByte for Android
+![ƀ](/images/icon.png) <p align="center">DigiByte for Android</p>
 
 <p align="right">
 <a href="https://play.google.com/store/apps/details?id=io.digibyte">
