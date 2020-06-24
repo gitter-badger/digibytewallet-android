@@ -1,6 +1,4 @@
-![ƀ](/images/icon.png)
-
-<p align="middle">**DigiByte for Android**</p>
+![ƀ](/images/icon.png)<p align="middle">**DigiByte for Android**</p>
 
 <p align="right">
 <a href="https://play.google.com/store/apps/details?id=io.digibyte">
