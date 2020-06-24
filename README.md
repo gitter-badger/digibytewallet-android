@@ -7,7 +7,7 @@
         src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
     </a>
         </p>
-____________________________________________________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________________________________________
 
 
 Fast, simple and safe! DigiByte Wallet is the easiest way to get started sending and receiving DigiByte. Designed with both new and experienced users in-mind, DigiByte Wallet is simple enough for a first-time novice to use, yet powerful enough for regular power-users.
