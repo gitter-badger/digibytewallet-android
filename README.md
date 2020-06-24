@@ -1,13 +1,16 @@
 
 
-<p align="center" **DigiByte for Android**
-    <a href="https://play.google.com/store/apps/details?id=io.digibyte">
+  
+<h1 margin="0 auto">DigiByte for Android</h1>
+    
+    
+
+<a href="https://play.google.com/store/apps/details?id=fr.gaulupeau.apps.InThePoche">
     <img alt="Get it on Google Play"
         height="80"
         src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
-        </a>
-            </p>
-                <br>
+</a>
+
 ___________________________________________________________________________________________________________________________________________________
 
 <br>
