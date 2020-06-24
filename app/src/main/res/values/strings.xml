@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!-- About screen blog label -->
   <string name="About.blog">https://digibyte.io/</string>
   <!-- About screen footer -->
@@ -390,5 +390,6 @@
   <string name="asset_counts">Asset Types: %d\nTotal Assets: %d</string>
   <string name="crypto_failed_title">Issue loading Encryption Library</string>
   <string name="crypto_failed_message">The main encryption library has failed to load, the app will now close to allow re-opening the app to retry.</string>
+  <string name="insufficient_fee">Insufficient amount for transaction fee</string>
 
 </resources>
