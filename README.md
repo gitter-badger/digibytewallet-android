@@ -17,12 +17,12 @@ Safer than a vault: DigiByte Wallet is based on the latest security features to 
 
 Your first Digital wallet: DigiByte Wallet was engineered from the ground-up to be as friendly to first-time users as possible. Central to this ideal is your Personal Recovery Key, that is all that is required to restore your DigiByte in the event you ever lose your phone or happen to flush it away. DigiByte Wallet uses “Brain wallet” techniques (A phrase you keep in your brain) to allow you to easily get back up and running on a new phone.
 
-A complete new and innovative feature is Digi-ID. This will allow you to securely authenticate and login to any website that supports Digi-ID. Simply by scanning QR and entering your PIN or your finger print in your DigiWallet.
+A complete new and innovative feature is Digi-ID. This will allow you to securely authenticate and login to any website that supports Digi-ID. Simply by scanning QR and entering your PIN or your finger print in your DigiByte Wallet.
 
 **Features**
 
 * Simplified Payment Verification for fast mobile performance
-* Start using DigiWallet immediately, thanks SPV (Lite) wallet technology
+* Start using DigiByte Wallet immediately, thanks SPV (Lite) wallet technology
 * Safety with your fingerprint, for easy unlocking of your wallet
 * Easily import paper wallets, or restore from another phone
 * No server to get hacked or go down
