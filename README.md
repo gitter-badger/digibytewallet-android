@@ -17,6 +17,8 @@ Your first Digital wallet: DigiByte Wallet was engineered from the ground-up to 
 
 A complete new and innovative feature is Digi-ID. This will allow you to securely authenticate and login to any website that supports Digi-ID. Simply by scanning QR and entering your PIN or your finger print in your DigiByte Wallet.
 
+<br>
+
 **Features**
 
 * Simplified Payment Verification for fast mobile performance
@@ -31,6 +33,7 @@ A complete new and innovative feature is Digi-ID. This will allow you to securel
 * Currency conversion, to quickly and easily see the value of your DigiByte in other fiat currencies
 * Digi-ID for secure and fast authentication and login into websites
 
+<br>
 
 **How to set up the development environment:**
 
