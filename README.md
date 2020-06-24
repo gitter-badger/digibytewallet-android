@@ -8,17 +8,17 @@
 
 <br>
 
-Fast, simple and safe! DigiByte Wallet is the easiest way to get started sending and receiving DigiByte. Designed with both new and experienced users in-mind, DigiByte Wallet is simple enough for a first-time novice to use, yet powerful enough for regular power-users.
+Fast, simple and safe! DigiByte for Android is the easiest way to get started sending and receiving DigiByte. Designed with both new and experienced users in-mind, DigiByte for Android is simple enough for a first-time novice to use, yet powerful enough for regular power-users.
 
-Part of the DigiByte Network: DigiByte Wallet uses the very large DigiByte Network, the worlds most robust and decentralized Blockchain, to allow you to access your DigiByte at any time. Your app connects directly as an [SPV](https://en.bitcoinwiki.org/wiki/Simplified_Payment_Verification) (Lite) wallet, so you can start sending and receiving DigiByte right away. No lengthy downloads or syncing!
+Part of the DigiByte Network: DigiByte for Android uses the very large DigiByte Network, the worlds most robust and decentralized Blockchain, to allow you to access your DigiBytes at any time. Your app connects directly as an [SPV](https://en.bitcoinwiki.org/wiki/Simplified_Payment_Verification) (Lite) wallet, so you can start sending and receiving DigiByte right away. No lengthy downloads or syncing!
 
-Safer than a vault: DigiByte Wallet is based on the latest security features to protect you and your precious DigiByte. Utilizing secure hardware encryption and a variety of other measures, you can rest assured that your DigiByte are accessible to you and you alone.
+Safer than a vault: DigiByte for Android is based on the latest security features to protect you and your precious DigiBytes. Utilizing secure hardware encryption and a variety of other measures, you can rest assured that your DigiBytes are accessible to you and you alone.
 
-Your first Digital wallet: DigiByte Wallet was engineered from the ground-up to be as friendly to first-time users as possible. Central to this ideal is your Personal Recovery Key, that is all that is required to restore your DigiByte in the event you ever lose your phone or happen to flush it away. DigiByte Wallet uses “Brain wallet” techniques (A phrase you keep in your brain) to allow you to easily get back up and running on a new phone.
+Your first Digital wallet: DigiByte for Android was engineered from the ground-up to be as friendly to first-time users as possible. Central to this ideal is your Personal Recovery Key, that is all that is required to restore your DigiBytes in the event you ever lose your phone or happen to flush it away. DigiByte for Android uses “Brain wallet” techniques (A phrase you keep in your brain) to allow you to easily get back up and running on a new phone.
 
-Digi-ID: this will allow you to securely authenticate and login to any website that supports Digi-ID. Simply by scanning QR and entering your PIN or your finger print in your DigiByte Wallet.
+[Digi-ID](https://digibyte.io/#digi-id): this will allow you to securely authenticate and login to any website that supports Digi-ID. Simply by scanning QR and entering your PIN or your finger print in your DigiByte Wallet.
 
-DigiAssets: is a secure, scalable layer on top of the DigiByte blockchain that allows for the decentralized issuance of digital assets, tokens, smart contracts,   digital identity and more.
+[DigiAssets](https://digibyte.io/nl/#digiassets): is a secure, scalable layer on top of the DigiByte blockchain that allows for the decentralized issuance of digital assets, tokens, smart contracts,   digital identity and more.
 
 <br>
 
@@ -58,3 +58,25 @@ DigiAssets: is a secure, scalable layer on top of the DigiByte blockchain that a
 8. Update the submodules - <code>git submodule update</code>
 
 9. Build -> Rebuild Project
+
+
+### Localization
+
+**DigiByte for Android** is available in the following languages:
+
+English, Afrikaans, Albanian, Arabic, Bengali, Bosnian, Bulgarian, Catalan, Croatian, Czech, Danish, Dutch, Filipino, Finnish, French, German, Greek, Gujarati, Hebrew, Hindi, Hungarian, Icelandic, Indonesian, Italian, Japanese, Kannada, Korean, Macedonian, Malay, Malayalam, Maltese, Marathi, Mongolian, Norwegian Bokmål, Oriya, Persian, Polish, Portuguese, Punjabi, Romanian, Russian, Serbian, Simplified Chinese, Slovak, Slovenian, Spanish, Swahili, Swedish, Tamil, Telugu, Thai, Traditional Chinese, Turkish, Turkmen, Ukrainian, Urdu, Vietnamese
+
+We manage all translations with:
+
+[POEditor](https://poeditor.com)
+
+
+## Donate
+
+[Donate to the DigiByte Foundation](https://digibytefoundation.io/donate/)
+<br>
+<br>
+[Donate to the DigiByte Awareness Team](https://dgbat.org/#donate)
+
+
+We appreciate your support!
