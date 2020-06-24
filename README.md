@@ -11,6 +11,7 @@
 ___________________________________________________________________________________________________________________________________________________
 
 <br>
+<br>
 
 Fast, simple and safe! DigiByte Wallet is the easiest way to get started sending and receiving DigiByte. Designed with both new and experienced users in-mind, DigiByte Wallet is simple enough for a first-time novice to use, yet powerful enough for regular power-users.
 
