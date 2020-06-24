@@ -1,7 +1,7 @@
-![ƀ](/images/icon.png) DigiWallet for Android
+![ƀ](/images/icon.png) DigiByte for Android
 ----------------------------------
 
-[![download](/images/icon-google-play.png)]
+[!download(/images/icon-google-play.png)]
 (https://play.google.com/store/apps/details?id=io.digibyte)
 
 ###DigiByte done right
@@ -9,11 +9,11 @@
 
 #####a completely standalone DigiByte wallet
 
-The DigiWallet is a rapidly developing mobile wallet for the Android platform including support for DigiAssets. With extensive work done to enhance sync timing, and innovative features such Digi-ID, the DigiWallet is the premier mobile product of the DigiByte platform.
+The DigiByte app is a rapidly developing mobile wallet for the Android platform including support for DigiAssets. With extensive work done to enhance sync timing, and innovative features such Digi-ID, the DigiByte app is the premier mobile product of the DigiByte platform.
 
 #####beautiful simplicity:
 
-DigiWallet is an extremely simple presenation of how to store, receive, and send DigiByte. As we progress the Beta, currently released on the Google Play Store, new innovative user interface components will breath life into the product, and truly make it stand out amongst the croud.
+The DigiByte app is an extremely simple presenation of how to store, receive, and send DigiByte.
 
 ##How to set up the development environment:
 1. Download and install Java 7 or up
