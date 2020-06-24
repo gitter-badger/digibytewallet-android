@@ -19,7 +19,7 @@ A complete new and innovative feature is Digi-ID. This will allow you to securel
 
 <br>
 
-**Features**
+**Features:**
 
 * Simplified Payment Verification for fast mobile performance
 * Start using DigiByte Wallet immediately, thanks SPV (Lite) wallet technology
