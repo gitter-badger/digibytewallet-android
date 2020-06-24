@@ -10,7 +10,7 @@
         height="80"
         src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"/>
 </a>
-
+<br>
 Fast, simple and safe! DigiByte Wallet is the easiest way to get started sending and receiving DigiByte. Designed with both new and experienced users in-mind, DigiByte Wallet is simple enough for a first-time novice to use, yet powerful enough for regular power-users.
 
 Part of the DigiByte Network: DigiByte Wallet uses the very large DigiByte Network, the worlds most robust and decentralized Blockchain, to allow you to access your DigiByte at any time. Your app connects directly as an SPV (Lite) wallet, so you can start sending and receiving DigiByte right away. No lengthy downloads or syncing!
