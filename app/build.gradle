@@ -20,7 +20,7 @@ crashlytics {
 }
 
 android {
-    compileSdkVersion = 28
+    compileSdkVersion = 29
 
     dataBinding {
         enabled = true
@@ -30,9 +30,9 @@ android {
         testInstrumentationRunner = 'androidx.test.runner.AndroidJUnitRunner'
         applicationId = 'io.digibyte'
         minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 2579
-        versionName "3.0.3.6"
+        targetSdkVersion 29
+        versionCode 2581
+        versionName "3.0.3.7"
         multiDexEnabled true
     }
 

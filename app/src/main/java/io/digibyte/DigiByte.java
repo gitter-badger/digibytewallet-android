@@ -56,7 +56,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DigiByte extends Application implements
         Application.ActivityLifecycleCallbacks {
-    public static final String HOST = "digibyte.io";
+    public static final String HOST = "digibyte.org";
     //public static final String FEE_URL = "https://go.digibyte.co/bws/api/v2/feelevels";
 
     private static DigiByte application;
