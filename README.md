@@ -62,6 +62,8 @@ Your first Digital wallet: DigiByte for Android was engineered from the ground-u
 
 ### Localization
 
+[![Join the chat at https://gitter.im/DigiByte-Core/Android-Wallet](https://badges.gitter.im/DigiByte-Core/Android-Wallet.svg)](https://gitter.im/DigiByte-Core/Android-Wallet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 **DigiByte for Android** is available in the following languages:
 
 English, Afrikaans, Albanian, Arabic, Bengali, Bosnian, Bulgarian, Catalan, Croatian, Czech, Danish, Dutch, Filipino, Finnish, French, German, Greek, Gujarati, Hebrew, Hindi, Hungarian, Icelandic, Indonesian, Italian, Japanese, Kannada, Korean, Macedonian, Malay, Malayalam, Maltese, Marathi, Mongolian, Norwegian Bokmål, Oriya, Persian, Polish, Portuguese, Punjabi, Romanian, Russian, Serbian, Simplified Chinese, Slovak, Slovenian, Spanish, Swahili, Swedish, Tamil, Telugu, Thai, Traditional Chinese, Turkish, Turkmen, Ukrainian, Urdu, Vietnamese
